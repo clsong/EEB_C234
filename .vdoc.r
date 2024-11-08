@@ -43,11 +43,9 @@
 #
 #
 #
-#
 #| eval: false
 eat(dressed(shower(brush(wakeup(you)))))
 ```
-#
 #
 #
 #| eval: false
@@ -65,6 +63,7 @@ you %>%
   shower() %>% 
   get_dressed() %>% 
   eat() 
+#
 #
 #
 #

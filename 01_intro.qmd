@@ -38,17 +38,15 @@ With `ggplot2`, you’ll learn the Grammar of Graphics, one of the most powerful
 
 While `ggplot2` is powerful, its defaults aren’t always perfect. We’ll cover design principles that enhance both the appeal and informativeness of your figures—a skill that’s invaluable since figures often make the first impression on readers.
 
-### Taming Wild Data
-Data in the real world is rarely tidy. Before you can analyze it, you’ll likely spend hours wrangling it into a usable format. Fortunately, `dplyr` and `tidyr` make this much easier, turning data wrangling into a clear, logical process.
+### The Art of Data Wrangling
+In real-world research, data is rarely neat. Before you can start analyzing, you’ll likely spend hours organizing it into a usable format. Fortunately, `dplyr` and `tidyr` make this much easier, turning data wrangling into a clear, logical workflow.
 
-Think how you would describe your morning routine. In base R, it might look like a messy, nested sequence of functions:
-Copy code
+Imagine describing your morning routine. In base R, it might look like a jumbled nest of functions:
 ```{r}
 #| eval: false
 eat(dressed(shower(brush(wakeup(you)))))
 ```
 Or, a series of confusing, intermediate variables:
-Copy code
 ```{r}
 #| eval: false
 you_w <- wakeup(you)
@@ -56,7 +54,7 @@ you_bw <- brush(you_w)
 you_sbw <- shower(you_bw)
 ...
 ```
-In `dplyr`, however, it becomes a simple, logical sequence:
+With `dplyr`, however, it transforms into a straightforward, logical flow:
 ```{r}
 #| eval: false
 you %>% 
@@ -67,12 +65,13 @@ you %>%
   eat() 
 ```
 
-With the tidyverse ecosystem, each step is deliberate and clear. You’ll learn to filter, sort, and transform your data like a pro, letting you focus on what you want to do with your data rather than wrestling with it. 
+In the tidyverse ecosystem, each step of data wrangling becomes clear, easy to follow, and—importantly—easy to debug. You’ll be introduced to a handful of core verbs, fewer than ten in total, which handle around 90% of the everyday tasks you’ll encounter. 
+And just as promised, coding languages are easier than human languages
 
 ### Scientific typsetting
-Yes, Microsoft Word is great. But it can be annoying when you need to update figures or refeences. We will learn to use `Quarto`—a document preparation system designed for researchers. You can seamlessly integrate code, references, and figures, producing output in formats like Word or LaTeX.
+Yes, Microsoft Word is great. But updating figures, managing references, or keeping layouts consistent can quickly turn into a headache. Enter `Quarto`, a document preparation system crafted for researchers. It lets you seamlessly integrate code, references, and figures, generating polished outputs in formats like Word or LaTeX.
 
-We’ll also briefly explore `Typst`, a modern alternative to LaTeX that’s more user-friendly and powerful. It’s a great way to create beautiful, publication-ready documents without the steep learning curve of LaTeX.
+We’ll also touch on `Typst`, a modern alternative to `LaTeX` that’s powerful yet more intuitive. It offers a user-friendly way to create beautiful, publication-ready documents without the steep learning curve of `LaTeX`, giving you a smooth and efficient experience in scientific typesetting.
 
 ### Reproducible Research
 As a data editor in a journal, I’m often surprised by how many papers are difficult to reproduce. This is a big problem in science. In this course, you’ll learn to make your research fully reproducible, which benefits not only the scientific community but also you—it makes it easier to revisit and build upon your work.

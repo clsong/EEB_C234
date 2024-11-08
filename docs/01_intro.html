@@ -166,7 +166,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#fluency-with-r" id="toc-fluency-with-r" class="nav-link" data-scroll-target="#fluency-with-r"><span class="header-section-number">1.2.1</span> Fluency with R</a></li>
   <li><a href="#making-publication-ready-figures" id="toc-making-publication-ready-figures" class="nav-link" data-scroll-target="#making-publication-ready-figures"><span class="header-section-number">1.2.2</span> Making Publication-Ready Figures</a></li>
-  <li><a href="#taming-wild-data" id="toc-taming-wild-data" class="nav-link" data-scroll-target="#taming-wild-data"><span class="header-section-number">1.2.3</span> Taming Wild Data</a></li>
+  <li><a href="#the-art-of-data-wrangling" id="toc-the-art-of-data-wrangling" class="nav-link" data-scroll-target="#the-art-of-data-wrangling"><span class="header-section-number">1.2.3</span> The Art of Data Wrangling</a></li>
   <li><a href="#scientific-typsetting" id="toc-scientific-typsetting" class="nav-link" data-scroll-target="#scientific-typsetting"><span class="header-section-number">1.2.4</span> Scientific typsetting</a></li>
   <li><a href="#reproducible-research" id="toc-reproducible-research" class="nav-link" data-scroll-target="#reproducible-research"><span class="header-section-number">1.2.5</span> Reproducible Research</a></li>
   </ul></li>
@@ -246,21 +246,21 @@ Who’s Behind the Tidyverse?
 <p>With <code>ggplot2</code>, you’ll learn the Grammar of Graphics, one of the most powerful plotting systems out there. Beyond just producing high-quality figures, it will teach you a structured approach to data visualization.</p>
 <p>While <code>ggplot2</code> is powerful, its defaults aren’t always perfect. We’ll cover design principles that enhance both the appeal and informativeness of your figures—a skill that’s invaluable since figures often make the first impression on readers.</p>
 </section>
-<section id="taming-wild-data" class="level3" data-number="1.2.3">
-<h3 data-number="1.2.3" class="anchored" data-anchor-id="taming-wild-data"><span class="header-section-number">1.2.3</span> Taming Wild Data</h3>
-<p>Data in the real world is rarely tidy. Before you can analyze it, you’ll likely spend hours wrangling it into a usable format. Fortunately, <code>dplyr</code> and <code>tidyr</code> make this much easier, turning data wrangling into a clear, logical process.</p>
-<p>Think how you would describe your morning routine. In base R, it might look like a messy, nested sequence of functions: Copy code</p>
+<section id="the-art-of-data-wrangling" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="the-art-of-data-wrangling"><span class="header-section-number">1.2.3</span> The Art of Data Wrangling</h3>
+<p>In real-world research, data is rarely neat. Before you can start analyzing, you’ll likely spend hours organizing it into a usable format. Fortunately, <code>dplyr</code> and <code>tidyr</code> make this much easier, turning data wrangling into a clear, logical workflow.</p>
+<p>Imagine describing your morning routine. In base R, it might look like a jumbled nest of functions:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eat</span>(<span class="fu">dressed</span>(<span class="fu">shower</span>(<span class="fu">brush</span>(<span class="fu">wakeup</span>(you)))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Or, a series of confusing, intermediate variables: Copy code</p>
+<p>Or, a series of confusing, intermediate variables:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>you_w <span class="ot">&lt;-</span> <span class="fu">wakeup</span>(you)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>you_bw <span class="ot">&lt;-</span> <span class="fu">brush</span>(you_w)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>you_sbw <span class="ot">&lt;-</span> <span class="fu">shower</span>(you_bw)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In <code>dplyr</code>, however, it becomes a simple, logical sequence:</p>
+<p>With <code>dplyr</code>, however, it transforms into a straightforward, logical flow:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>you <span class="sc">%&gt;%</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wakeup</span>() <span class="sc">%&gt;%</span> </span>
@@ -269,12 +269,12 @@ Who’s Behind the Tidyverse?
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_dressed</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eat</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>With the tidyverse ecosystem, each step is deliberate and clear. You’ll learn to filter, sort, and transform your data like a pro, letting you focus on what you want to do with your data rather than wrestling with it.</p>
+<p>In the tidyverse ecosystem, each step of data wrangling becomes clear, easy to follow, and—importantly—easy to debug. You’ll be introduced to a handful of core verbs, fewer than ten in total, which handle around 90% of the everyday tasks you’ll encounter. And just as promised, coding languages are easier than human languages</p>
 </section>
 <section id="scientific-typsetting" class="level3" data-number="1.2.4">
 <h3 data-number="1.2.4" class="anchored" data-anchor-id="scientific-typsetting"><span class="header-section-number">1.2.4</span> Scientific typsetting</h3>
-<p>Yes, Microsoft Word is great. But it can be annoying when you need to update figures or refeences. We will learn to use <code>Quarto</code>—a document preparation system designed for researchers. You can seamlessly integrate code, references, and figures, producing output in formats like Word or LaTeX.</p>
-<p>We’ll also briefly explore <code>Typst</code>, a modern alternative to LaTeX that’s more user-friendly and powerful. It’s a great way to create beautiful, publication-ready documents without the steep learning curve of LaTeX.</p>
+<p>Yes, Microsoft Word is great. But updating figures, managing references, or keeping layouts consistent can quickly turn into a headache. Enter <code>Quarto</code>, a document preparation system crafted for researchers. It lets you seamlessly integrate code, references, and figures, generating polished outputs in formats like Word or LaTeX.</p>
+<p>We’ll also touch on <code>Typst</code>, a modern alternative to <code>LaTeX</code> that’s powerful yet more intuitive. It offers a user-friendly way to create beautiful, publication-ready documents without the steep learning curve of <code>LaTeX</code>, giving you a smooth and efficient experience in scientific typesetting.</p>
 </section>
 <section id="reproducible-research" class="level3" data-number="1.2.5">
 <h3 data-number="1.2.5" class="anchored" data-anchor-id="reproducible-research"><span class="header-section-number">1.2.5</span> Reproducible Research</h3>
