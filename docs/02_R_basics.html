@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Chuliang Song">
-<meta name="dcterms.date" content="2025-01-01">
 
-<title>EE BIOL C234</title>
+<title>2&nbsp; R and RStudio – EE BIOL C234</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -32,7 +64,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01_intro.html" rel="next">
+<link href="./01_intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Logistics</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_R_basics.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R and RStudio</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -109,7 +141,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Logistics</span></a>
   </div>
 </li>
@@ -121,7 +153,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02_R_basics.html" class="sidebar-item-text sidebar-link">
+  <a href="./02_R_basics.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R and RStudio</span></span></a>
   </div>
 </li>
@@ -135,7 +167,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#logistics" id="toc-logistics" class="nav-link active" data-scroll-target="#logistics">Logistics</a></li>
+  <li><a href="#installing-r" id="toc-installing-r" class="nav-link active" data-scroll-target="#installing-r"><span class="header-section-number">2.1</span> Installing R</a></li>
+  <li><a href="#installing-rstudio" id="toc-installing-rstudio" class="nav-link" data-scroll-target="#installing-rstudio"><span class="header-section-number">2.2</span> Installing RStudio</a></li>
+  <li><a href="#a-simple-calculation" id="toc-a-simple-calculation" class="nav-link" data-scroll-target="#a-simple-calculation"><span class="header-section-number">2.3</span> A simple calculation</a></li>
+  <li><a href="#install-r-packages" id="toc-install-r-packages" class="nav-link" data-scroll-target="#install-r-packages"><span class="header-section-number">2.4</span> Install R packages</a></li>
   </ul>
 </nav>
     </div>
@@ -144,27 +179,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">EE BIOL C234</h1>
-<p class="subtitle lead">Practical Computing for Evolutionary Biologists and Ecologists</p>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R and RStudio</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Chuliang Song </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">January 1, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -174,16 +196,50 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="logistics" class="level1 unnumbered">
-<h1 class="unnumbered">Logistics</h1>
-<p>Welcome to <strong>EE BIOL C234: Practical Computing for Evolutionary Biologists and Ecologists</strong>—or as I like to call it, “21st century Kung-Fu!”</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Class Objective
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li><strong>Where and When</strong>: We’ll be meeting Mondays and Wednesdays, 11:00 AM to 11:50 AM, in Botany 108.</li>
-<li><strong>The Grind</strong>: Yes, there will be weekly assignments. If you want to build computational muscle, you’re going to have to sweat a bit. But rest easy, no terrifying final exam to ruin your holidays!</li>
-<li><strong>What to Bring</strong>: Your laptop and, more importantly, your intellectual curiosity. A basic understanding of R will be helpful, but not required.</li>
-<li><strong>Course Material</strong>: This lecture note will be updated as the course progresses. <!-- - **The Escape Hatch**: You don't even have to show up to every class! Frankly, some of the class might already be old hat to you. Before each lecture, I'll post the lecture notes, so if you're already up to speed, feel free to skip out. Just make sure you deliver on those assignments. --></li>
+<li>To install R and RStudio</li>
+<li>Get R to do basic math</li>
 </ul>
-<p>This is the inaugural run of this course for me. So if I’m losing you, boring you, talking too fast, too slow, whatever – <em>speak up</em>! Your feedback is my compass.</p>
+</div>
+</div>
+<section id="installing-r" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="installing-r"><span class="header-section-number">2.1</span> Installing R</h2>
+</section>
+<section id="installing-rstudio" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="installing-rstudio"><span class="header-section-number">2.2</span> Installing RStudio</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To make RStuido look better, you may want to install the fira font. Instruction can be found <a href="https://github.com/tonsky/FiraCode/wiki/RStudio-instructions">here</a> and <a href="https://firacode.org/using-fira-code-ligatures-in-rstudio/">here</a>.</p>
+<p>Without Fira, you code could look like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="a-simple-calculation" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="a-simple-calculation"><span class="header-section-number">2.3</span> A simple calculation</h2>
+</section>
+<section id="install-r-packages" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="install-r-packages"><span class="header-section-number">2.4</span> Install R packages</h2>
 
 
 </section>
@@ -611,11 +667,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./01_intro.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01_intro.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

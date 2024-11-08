@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "EE BIOL C234",
     "section": "",
-    "text": "Logistics\nWelcome to EE BIOL C234: Practical Computing for Evolutionary Biologists and Ecologists—or as I like to call it, “21st century Kung-Fu!”\n\nWhere and When: We’ll be meeting Mondays and Wednesdays, 11:00 AM to 11:50 AM, in Botany 108.\nThe Grind: Yes, there will be weekly assignments. If you want to build computational muscle, you’re going to have to sweat a bit. But rest easy, no terrifying final exam to ruin your holidays!\nWhat to Bring: Your laptop and, more importantly, your intellectual curiosity. A basic understanding of R will be useful, but not required.\nCourse Material: This lecture note will be updated as the course progresses. \n\nThis is the inaugural run of this course for me. So if I’m losing you, boring you, talking too fast, too slow, whatever – speak up! Your feedback is my compass.",
+    "text": "Logistics\nWelcome to EE BIOL C234: Practical Computing for Evolutionary Biologists and Ecologists—or as I like to call it, “21st century Kung-Fu!”\n\nWhere and When: We’ll be meeting Mondays and Wednesdays, 11:00 AM to 11:50 AM, in Botany 108.\nThe Grind: Yes, there will be weekly assignments. If you want to build computational muscle, you’re going to have to sweat a bit. But rest easy, no terrifying final exam to ruin your holidays!\nWhat to Bring: Your laptop and, more importantly, your intellectual curiosity. A basic understanding of R will be helpful, but not required.\nCourse Material: This lecture note will be updated as the course progresses. \n\nThis is the inaugural run of this course for me. So if I’m losing you, boring you, talking too fast, too slow, whatever – speak up! Your feedback is my compass.",
     "crumbs": [
       "Logistics"
     ]
@@ -52,7 +52,7 @@
     "href": "01_intro.html#what-youll-learn",
     "title": "1  Introduction",
     "section": "1.2 What You’ll Learn",
-    "text": "1.2 What You’ll Learn\nWe will cover the following topics in this course, which I believe are the most essential computing skills.\n\n1.2.1 Fluency with R\nWhat is our weapon of choice in this course? The R programming language. It is not the most well-polished language. It is not the fastest language. It is not the most user-friendly language. So, why R? Well, it is the lingua franca in our community. The computational tools in ecology are largely R-based. So, if you want to tap into this wealth, you’ll need a working knowledge of R.\n\n\n\n\n\n\nAlternatives\n\n\n\nNot sold on R? You could try Julia, a newer language that’s faster, more elegant, and gaining popularity. The syntax is similar enough to R to make it a relatively easy transition, and it can even load R packages, so you can have the best of both worlds.\n\n\nR has also evolved dramatically in the past decade with the rise of the tidyverse. When I started grad school, I absolutely hated using R. has completely changed how I felt about this language. It introduced a whole new way of handling and visualizing data — a way that feels logical and intuitive — and I stringly believe that it is the right approach of thinking about data manipulation and plotting (yes I meant the).\n\n\n\n\n\n\nWho’s Behind the Tidyverse?\n\n\n\n\n\nThe tidyverse revolution is largely thanks to Hadley Wickham, whose contributions earned him the COPSS Presidents’ Award, the top honor in statistics.\nBut it’s not just him—the tidyverse is a community effort, a group of people with a shared vision (link).\n\n\n\n\n\n1.2.2 Making Publication-Ready Figures\nWith ggplot2, you’ll learn the Grammar of Graphics, one of the most powerful plotting systems out there. Beyond just producing high-quality figures, it will teach you a structured approach to data visualization.\nWhile ggplot2 is powerful, its defaults aren’t always perfect. We’ll cover design principles that enhance both the appeal and informativeness of your figures—a skill that’s invaluable since figures often make the first impression on readers.\n\n\n1.2.3 The Art of Data Wrangling\nIn real-world research, data is rarely neat. Before you can start analyzing, you’ll likely spend hours organizing it into a usable format. Fortunately, dplyr and tidyr make this much easier, turning data wrangling into a clear, logical workflow.\nImagine describing your morning routine. In base R, it might look like a jumbled nest of functions:\n\neat(dressed(shower(brush(wakeup(you)))))\n\nOr, a series of confusing, intermediate variables:\n\nyou_w &lt;- wakeup(you)\nyou_bw &lt;- brush(you_w)\nyou_sbw &lt;- shower(you_bw)\n...\n\nWith dplyr, however, it transforms into a straightforward, logical flow:\n\nyou %&gt;% \n  wakeup() %&gt;% \n  brush() %&gt;% \n  shower() %&gt;% \n  get_dressed() %&gt;% \n  eat() \n\nIn the tidyverse ecosystem, each step of data wrangling becomes clear, easy to follow, and—importantly—easy to debug. You’ll be introduced to a handful of core verbs, fewer than ten in total, which handle around 90% of the everyday tasks you’ll encounter. And just as promised, coding languages are easier than human languages\n\n\n1.2.4 Scientific typsetting\nYes, Microsoft Word is great. But updating figures, managing references, or keeping layouts consistent can quickly turn into a headache. Enter Quarto, a document preparation system crafted for researchers. It lets you seamlessly integrate code, references, and figures, generating polished outputs in formats like Word or LaTeX.\nWe’ll also touch on Typst, a modern alternative to LaTeX that’s powerful yet more intuitive. It offers a user-friendly way to create beautiful, publication-ready documents without the steep learning curve of LaTeX, giving you a smooth and efficient experience in scientific typesetting.\n\n\n1.2.5 Reproducible Research\nAs a data editor in a journal, I’m often surprised by how many papers are difficult to reproduce. This is a big problem in science. In this course, you’ll learn to make your research fully reproducible, which benefits not only the scientific community but also you—it makes it easier to revisit and build upon your work.\nWe’ll cover version control with Git and GitHub to help you track changes, back up your work, and collaborate with others. Additionally, we’ll dive into specific techniques in R that support reproducible workflows.",
+    "text": "1.2 What You’ll Learn\nWe will cover the following topics in this course, which I believe are the most essential computing skills.\n\n1.2.1 Fluency with R\nWhat is our weapon of choice in this course? The R programming language. It is not the most well-polished language. It is not the fastest language. It is not the most user-friendly language. So, why R? Well, it is the lingua franca in our community. The computational tools in ecology are largely R-based. So, if you want to tap into this wealth, you’ll need a working knowledge of R.\n\n\n\n\n\n\nAlternatives\n\n\n\nNot sold on R? You could try Julia, a newer language that’s faster, more elegant, and gaining popularity. The syntax is similar enough to R to make it a relatively easy transition, and it can even load R packages, so you can have the best of both worlds.\n\n\nR has also evolved dramatically in the past decade with the rise of the tidyverse. When I started grad school, I absolutely hated using R. has completely changed how I felt about this language. It introduced a whole new way of handling and visualizing data — a way that feels logical and intuitive — and I stringly believe that it is the right approach of thinking about data manipulation and plotting (yes I meant the).\n\n\n\n\n\n\nWho’s Behind the Tidyverse?\n\n\n\n\n\nThe tidyverse revolution is largely thanks to Hadley Wickham, whose contributions earned him the COPSS Presidents’ Award, the top honor in statistics.\nBut it’s not just him—the tidyverse is a community effort, a group of people with a shared vision (link).\n\n\n\n\n\n1.2.2 Making Publication-Ready Figures\nWith ggplot2, you’ll learn the Grammar of Graphics, one of the most powerful plotting systems out there. Beyond just producing high-quality figures, it will teach you a structured approach to data visualization.\nWhile ggplot2 is powerful, its defaults aren’t always perfect. We’ll cover design principles that enhance both the appeal and informativeness of your figures—a skill that’s invaluable since figures often make the first impression on readers.\n\n\n1.2.3 The Art of Data Wrangling\nIn real-world research, data is rarely neat. Before you can start analyzing, you’ll likely spend hours organizing it into a usable format. Fortunately, dplyr and tidyr make this much easier, turning data wrangling into a clear, logical workflow.\nImagine describing your morning routine. In base R, it might look like a jumbled nest of functions:\n\neat(dressed(shower(brush(wakeup(you)))))\n\nOr, a series of confusing, intermediate variables:\n\nyou_w &lt;- wakeup(you)\nyou_bw &lt;- brush(you_w)\nyou_sbw &lt;- shower(you_bw)\n...\n\nWith dplyr, however, it transforms into a straightforward, logical flow:\n\nyou |&gt; \n  wakeup() |&gt; \n  brush() |&gt; \n  shower() |&gt; \n  get_dressed() |&gt; \n  eat() \n\nIn the tidyverse ecosystem, each step of data wrangling becomes clear, easy to follow, and—importantly—easy to debug. You’ll be introduced to a handful of core verbs, fewer than ten in total, which handle around 90% of the everyday tasks you’ll encounter. And just as promised, coding languages are easier than human languages\n\n\n1.2.4 Scientific typsetting\nYes, Microsoft Word is great. But updating figures, managing references, or keeping layouts consistent can quickly turn into a headache. Enter Quarto, a document preparation system crafted for researchers. It lets you seamlessly integrate code, references, and figures, generating polished outputs in formats like Word or LaTeX.\nWe’ll also touch on Typst, a modern alternative to LaTeX that’s powerful yet more intuitive. It offers a user-friendly way to create beautiful, publication-ready documents without the steep learning curve of LaTeX, giving you a smooth and efficient experience in scientific typesetting.\n\n\n1.2.5 Reproducible Research\nAs a data editor in a journal, I’m often surprised by how many papers are difficult to reproduce. This is a big problem in science. In this course, you’ll learn to make your research fully reproducible, which benefits not only the scientific community but also you—it makes it easier to revisit and build upon your work.\nWe’ll cover version control with Git and GitHub to help you track changes, back up your work, and collaborate with others. Additionally, we’ll dive into specific techniques in R that support reproducible workflows.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
@@ -84,5 +84,45 @@
     "title": "R and RStudio",
     "section": "",
     "text": "Tip\n\n\n\nTo make RStuido look better, you may want to install the fira font. Instruction can be found here and here."
+  },
+  {
+    "objectID": "02_R_basics.html",
+    "href": "02_R_basics.html",
+    "title": "2  R and RStudio",
+    "section": "",
+    "text": "2.1 Installing R",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>R and RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "02_R_basics.html#installing-rstudio",
+    "href": "02_R_basics.html#installing-rstudio",
+    "title": "2  R and RStudio",
+    "section": "2.2 Installing RStudio",
+    "text": "2.2 Installing RStudio\n\n\n\n\n\n\nTip\n\n\n\nTo make RStuido look better, you may want to install the fira font. Instruction can be found here and here.\nWithout Fira, you code could look like this:\n\nx",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>R and RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "02_R_basics.html#a-simple-calculation",
+    "href": "02_R_basics.html#a-simple-calculation",
+    "title": "2  R and RStudio",
+    "section": "2.3 A simple calculation",
+    "text": "2.3 A simple calculation",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>R and RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "02_R_basics.html#install-r-packages",
+    "href": "02_R_basics.html#install-r-packages",
+    "title": "2  R and RStudio",
+    "section": "2.4 Install R packages",
+    "text": "2.4 Install R packages",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>R and RStudio</span>"
+    ]
   }
 ]

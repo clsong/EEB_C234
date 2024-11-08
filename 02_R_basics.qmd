@@ -1,0 +1,26 @@
+# R and RStudio
+
+::: {.callout-note}
+## Class Objective
+- To install R and RStudio
+- Get R to do basic math
+:::
+
+## Installing R
+
+## Installing RStudio
+
+::: {.callout-tip}
+To make RStuido look better, you may want to install the fira font. Instruction can be found [here](https://github.com/tonsky/FiraCode/wiki/RStudio-instructions) and [here](https://firacode.org/using-fira-code-ligatures-in-rstudio/).
+
+Without Fira, you code could look like this: 
+```{r}
+#| eval: false
+x
+```
+:::
+
+## A simple calculation
+
+## Install R packages
+

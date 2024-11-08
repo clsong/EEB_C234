@@ -57,11 +57,11 @@ you_sbw <- shower(you_bw)
 #
 #
 #| eval: false
-you %>% 
-  wakeup() %>% 
-  brush() %>% 
-  shower() %>% 
-  get_dressed() %>% 
+you |> 
+  wakeup() |> 
+  brush() |> 
+  shower() |> 
+  get_dressed() |> 
   eat() 
 #
 #
