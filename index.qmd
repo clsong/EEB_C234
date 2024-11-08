@@ -4,7 +4,7 @@ Welcome to **EE BIOL C234: Practical Computing for Evolutionary Biologists and E
 
 - **Where and When**: We'll be meeting Mondays and Wednesdays, 11:00 AM to 11:50 AM, in Botany 108. 
 - **The Grind**: Yes, there will be weekly assignments. If you want to build computational muscle, you're going to have to sweat a bit. But rest easy, no terrifying final exam to ruin your holidays!
-- **What to Bring**: Your laptop and, more importantly, your intellectual curiosity.
+- **What to Bring**: Your laptop and, more importantly, your intellectual curiosity. A basic understanding of R will be useful, but not required.
 - **Course Material**: This lecture note will be updated as the course progresses.
 <!-- - **The Escape Hatch**: You don't even have to show up to every class! Frankly, some of the class might already be old hat to you. Before each lecture, I'll post the lecture notes, so if you're already up to speed, feel free to skip out. Just make sure you deliver on those assignments. -->
 
