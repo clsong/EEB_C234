@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>dplyr</title>
+<title>intro</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,38 +20,216 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="dplyr_files/libs/clipboard/clipboard.min.js"></script>
-<script src="dplyr_files/libs/quarto-html/quarto.js"></script>
-<script src="dplyr_files/libs/quarto-html/popper.min.js"></script>
-<script src="dplyr_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="dplyr_files/libs/quarto-html/anchor.min.js"></script>
-<link href="dplyr_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="dplyr_files/libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="dplyr_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="dplyr_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="dplyr_files/libs/bootstrap/bootstrap-677b520d69fcc55ab41b4b425631e74d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5462d0dc975739fea4b7814f85fabdb2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
 
 
 </head>
 
-<body class="fullcontent">
+<body>
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#why-take-this-course-in-the-age-of-ai" id="toc-why-take-this-course-in-the-age-of-ai" class="nav-link" data-scroll-target="#why-take-this-course-in-the-age-of-ai">Why Take This Course in the Age of AI?</a></li>
+  <li><a href="#what-youll-learn" id="toc-what-youll-learn" class="nav-link" data-scroll-target="#what-youll-learn">What You’ll Learn</a>
+  <ul class="collapse">
+  <li><a href="#fluency-with-r" id="toc-fluency-with-r" class="nav-link" data-scroll-target="#fluency-with-r">Fluency with R</a></li>
+  <li><a href="#making-publication-ready-figures" id="toc-making-publication-ready-figures" class="nav-link" data-scroll-target="#making-publication-ready-figures">Making Publication-Ready Figures</a></li>
+  <li><a href="#taming-wild-data" id="toc-taming-wild-data" class="nav-link" data-scroll-target="#taming-wild-data">Taming Wild Data</a></li>
+  <li><a href="#scientific-typsetting" id="toc-scientific-typsetting" class="nav-link" data-scroll-target="#scientific-typsetting">Scientific typsetting</a></li>
+  <li><a href="#reproducible-research" id="toc-reproducible-research" class="nav-link" data-scroll-target="#reproducible-research">Reproducible Research</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="01_intro.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
 
 
 
-<section id="title" class="level1">
-<h1>Title</h1>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<section id="why-take-this-course-in-the-age-of-ai" class="level2">
+<h2 class="anchored" data-anchor-id="why-take-this-course-in-the-age-of-ai">Why Take This Course in the Age of AI?</h2>
+<p>Okay, let’s be honest. You signed up to study Ecology and Evolutionary Biology, not Computer Science. You probably envision yourself out in the field, knee-deep in mud, observing the subtle interactions of ecosystems—not stuck behind a screen, wrestling with semicolons and syntax errors. And now, with these fancy new AI tools that seem to do everything but your taxes, you might be wondering: why bother learning this stuff at all? Can’t a chatbot handle it all—generate analyses, whip up some plots, and call it a day?</p>
+<p>Well, you’re not wrong to wonder. Technology <em>is</em> reshaping everything, and science is no exception. But here’s the thing: just as biologists in the past had to master the microscope, today’s biologists need a strong foundation in computing. This course isn’t about turning you into a programmer; it’s about equipping you with the skills to make technology work for you—so you’re the one in control.</p>
+<p>And don’t worry, this class won’t throw you into the deep end. We’re going step by step, almost like learning a new language. (Good news: coding languages are much easier than human languages!) Examples, exercises, and patience will be our path.</p>
+<p>Now, back to those AI tools. Yes, they’re handy, but relying on it without understanding the basics is like cooking from a recipe in a language you barely know. Sure, you might finish the dish, but there’s a good chance you’ll miss something critical—maybe misinterpret a step, add the wrong ingredient, or end up with a surprise result. Becoming computationally literate helps you recognize when AI has gone off track, saving you from mess you’d rather avoid.</p>
+<p>I get the allure of the “easy button.” But investing in these skills now will pay off many times over. You’ll be a more efficient, happier researcher—and, franky, it will increase your chances of publishing in high-profile journals.</p>
+</section>
+<section id="what-youll-learn" class="level2">
+<h2 class="anchored" data-anchor-id="what-youll-learn">What You’ll Learn</h2>
+<p>We will cover the following topics in this course, which I believe are the most essential computing skills.</p>
+<section id="fluency-with-r" class="level3">
+<h3 class="anchored" data-anchor-id="fluency-with-r">Fluency with R</h3>
+<p>What is our weapon of choice in this course? The R programming language. It is not the most well-polished language. It is not the fastest language. It is not the most user-friendly language. So, why R? Well, it is the lingua franca in our community. The computational tools in ecology are largely R-based. So, if you want to tap into this wealth, you’ll need a working knowledge of R.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Alternatives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Not sold on R? You could try <a href="https://julialang.org/">Julia</a>, a newer language that’s faster, more elegant, and gaining popularity. The syntax is similar enough to R to make it a relatively easy transition, and it can even load R packages, so you can have the best of both worlds.</p>
+</div>
+</div>
+<p>R has also evolved dramatically in the past decade with the rise of the <em>tidyverse</em>. When I started grad school, I absolutely hated using R. has completely changed how I felt about this language. It introduced a whole new way of handling and visualizing data — a way that feels logical and intuitive — and I stringly believe that it is the right approach of thinking about data manipulation and plotting (yes I meant the).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Who’s Behind the Tidyverse?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The tidyverse revolution is largely thanks to <a href="https://hadley.nz/">Hadley Wickham</a>, whose contributions earned him the COPSS Presidents’ Award, the top honor in statistics.</p>
+<p>But it’s not just him—the tidyverse is a community effort, a group of people with a shared vision (<a href="https://joss.theoj.org/papers/10.21105/joss.01686">link</a>).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="making-publication-ready-figures" class="level3">
+<h3 class="anchored" data-anchor-id="making-publication-ready-figures">Making Publication-Ready Figures</h3>
+<p>With <code>ggplot2</code>, you’ll learn the Grammar of Graphics, one of the most powerful plotting systems out there. Beyond just producing high-quality figures, it will teach you a structured approach to data visualization.</p>
+<p>While <code>ggplot2</code> is powerful, its defaults aren’t always perfect. We’ll cover design principles that enhance both the appeal and informativeness of your figures—a skill that’s invaluable since figures often make the first impression on readers.</p>
+</section>
+<section id="taming-wild-data" class="level3">
+<h3 class="anchored" data-anchor-id="taming-wild-data">Taming Wild Data</h3>
+<p>Data in the real world is rarely tidy. Before you can analyze it, you’ll likely spend hours wrangling it into a usable format. Fortunately, <code>dplyr</code> and <code>tidyr</code> make this much easier, turning data wrangling into a clear, logical process.</p>
+<p>Think how you would describe your morning routine. In base R, it might look like a messy, nested sequence of functions: Copy code</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eat</span>(<span class="fu">dressed</span>(<span class="fu">shower</span>(<span class="fu">brush</span>(<span class="fu">wakeup</span>(you)))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Or, a series of confusing, intermediate variables: Copy code</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>you_w <span class="ot">&lt;-</span> <span class="fu">wakeup</span>(you)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>you_bw <span class="ot">&lt;-</span> <span class="fu">brush</span>(you_w)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>you_sbw <span class="ot">&lt;-</span> <span class="fu">shower</span>(you_bw)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In <code>dplyr</code>, however, it becomes a simple, logical sequence:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>you <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wakeup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brush</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shower</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_dressed</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">eat</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>With the tidyverse ecosystem, each step is deliberate and clear. You’ll learn to filter, sort, and transform your data like a pro, letting you focus on what you want to do with your data rather than wrestling with it.</p>
+</section>
+<section id="scientific-typsetting" class="level3">
+<h3 class="anchored" data-anchor-id="scientific-typsetting">Scientific typsetting</h3>
+<p>Yes, Microsoft Word is great. But it can be annoying when you need to update figures or refeences. We will learn to use <code>Quarto</code>—a document preparation system designed for researchers. You can seamlessly integrate code, references, and figures, producing output in formats like Word or LaTeX.</p>
+<p>We’ll also briefly explore <code>Typst</code>, a modern alternative to LaTeX that’s more user-friendly and powerful. It’s a great way to create beautiful, publication-ready documents without the steep learning curve of LaTeX.</p>
+</section>
+<section id="reproducible-research" class="level3">
+<h3 class="anchored" data-anchor-id="reproducible-research">Reproducible Research</h3>
+<p>As a data editor in a journal, I’m often surprised by how many papers are difficult to reproduce. This is a big problem in science. In this course, you’ll learn to make your research fully reproducible, which benefits not only the scientific community but also you—it makes it easier to revisit and build upon your work.</p>
+<p>We’ll cover version control with Git and GitHub to help you track changes, back up your work, and collaborate with others. Additionally, we’ll dive into specific techniques in R that support reproducible workflows.</p>
+
+
+</section>
+</section>
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

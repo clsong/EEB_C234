@@ -1,5 +1,7 @@
 project:
+  # type: book
   type: book
+  output-dir: docs
 
 book:
   title: "EE BIOL C234"

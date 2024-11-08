@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Chuliang Song">
+<meta name="dcterms.date" content="2025-01-01">
 
-<title>r_basics</title>
+<title>EE BIOL C234</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,93 +25,164 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="R_basics_files/libs/clipboard/clipboard.min.js"></script>
-<script src="R_basics_files/libs/quarto-html/quarto.js"></script>
-<script src="R_basics_files/libs/quarto-html/popper.min.js"></script>
-<script src="R_basics_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="R_basics_files/libs/quarto-html/anchor.min.js"></script>
-<link href="R_basics_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="R_basics_files/libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="R_basics_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="R_basics_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="R_basics_files/libs/bootstrap/bootstrap-677b520d69fcc55ab41b4b425631e74d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./01_intro.html" rel="next">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-ed6da6eef3892af8a4b5ed59bfb951f5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
 
 
 </head>
 
-<body class="fullcontent">
+<body class="nav-sidebar floating">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Logistics</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">EE BIOL C234</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Logistics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#logistics" id="toc-logistics" class="nav-link active" data-scroll-target="#logistics">Logistics</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">EE BIOL C234</h1>
+<p class="subtitle lead">Practical Computing for Evolutionary Biologists and Ecologists</p>
+</div>
 
 
 
-<section id="r-and-rstudio" class="level1">
-<h1>R and RStudio</h1>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Class Objective
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Chuliang Song </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 1, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="logistics" class="level1 unnumbered">
+<h1 class="unnumbered">Logistics</h1>
+<p>Welcome to <strong>EE BIOL C234: Practical Computing for Evolutionary Biologists and Ecologists</strong>—or as I like to call it, “21st century Kung-Fu!”</p>
 <ul>
-<li>To install R and RStudio</li>
-<li>Get R to do basic math</li>
+<li><strong>Where and When</strong>: We’ll be meeting Mondays and Wednesdays, 11:00 AM to 11:50 AM, in Botany 108.</li>
+<li><strong>The Grind</strong>: Yes, there will be weekly assignments. If you want to build computational muscle, you’re going to have to sweat a bit. But rest easy, no terrifying final exam to ruin your holidays!</li>
+<li><strong>What to Bring</strong>: Your laptop and, more importantly, your intellectual curiosity.</li>
+<li><strong>Course Material</strong>: This lecture note will be updated as the course progresses. <!-- - **The Escape Hatch**: You don't even have to show up to every class! Frankly, some of the class might already be old hat to you. Before each lecture, I'll post the lecture notes, so if you're already up to speed, feel free to skip out. Just make sure you deliver on those assignments. --></li>
 </ul>
-</div>
-</div>
-<p>What is our weapon of choice in this endeavor? The R programming language.</p>
-<p>R is undoubtably the most used language among ecologists. It is not the most well-defined language. It is not the most efficient language. It is not the most user-friendly language. But it is the most used language in our community. Most packages in ecology are written in R, and most ecologists use R. So, if you want to be able to use the tools that are available, you need to learn R, at least how R is.And that is a good reason to learn it.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If you are serious about computing, then learn <a href="https://julialang.org/">Julia</a>, which is much better designed and fast.</p>
-</div>
-</div>
-<p>Most imortantly, in the last decade, R has undergone a revolution with the advent of the <em>tidyverse</em>. When I started grad school, I had almost no experience with programming, and I absolutely hated using R. However, learning tiduyverse has completely changed how I felt about this language. It is <em>the</em> right way of thinking about data manipulation and plot, and yes, I meant the.</p>
-<p>This revolution largely thanks to <a href="https://hadley.nz/">Hadley Wickham</a>. Because of his revoluntionary contribution, he has been awarded COPSS Presidents’ Award-the most imoportant award given to a statistican.</p>
-<section id="installing-r" class="level2">
-<h2 class="anchored" data-anchor-id="installing-r">Installing R</h2>
-</section>
-<section id="installing-rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="installing-rstudio">Installing RStudio</h2>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>To make RStuido look better, you may want to install the fira font. Instruction can be found <a href="https://github.com/tonsky/FiraCode/wiki/RStudio-instructions">here</a> and <a href="https://firacode.org/using-fira-code-ligatures-in-rstudio/">here</a>.</p>
-</div>
-</div>
-</section>
-<section id="a-simple-calculation" class="level2">
-<h2 class="anchored" data-anchor-id="a-simple-calculation">A simple calculation</h2>
-</section>
-<section id="install-r-packages" class="level2">
-<h2 class="anchored" data-anchor-id="install-r-packages">Install R packages</h2>
-</section>
+<p>This is the inaugural run of this course for me. So if I’m losing you, boring you, talking too fast, too slow, whatever – <em>speak up</em>! Your feedback is my compass.</p>
+
+
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -530,6 +603,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./01_intro.html" class="pagination-link" aria-label="Introduction">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
