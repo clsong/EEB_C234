@@ -1,0 +1,80 @@
+# Introduction
+
+## Why Take This Course in the Age of AI?
+
+Okay, let's be honest. You signed up to study Ecology and Evolutionary Biology, not Computer Science. You probably envision yourself out in the field, knee-deep in mud, observing the subtle interactions of ecosystems—not stuck behind a screen, wrestling with semicolons and syntax errors. And now, with these fancy new AI tools that seem to do everything but your taxes, you might be wondering: why bother learning this stuff at all? Can’t a chatbot handle it all—generate analyses, whip up some plots, and call it a day?
+
+Well, you're not wrong to wonder. Technology *is* reshaping everything, and science is no exception. But here’s the thing: just as biologists in the past had to master the microscope, today’s biologists need a strong foundation in computing. This course isn’t about turning you into a programmer; it’s about equipping you with the skills to make technology work for you—so you’re the one in control.
+
+And don’t worry, this class won’t throw you into the deep end. We’re going step by step, almost like learning a new language. (Good news: coding languages are much easier than human languages!) Examples, exercises, and patience will be our path.
+
+Now, back to those AI tools. Yes, they’re handy, but relying on it without understanding the basics is like cooking from a recipe in a language you barely know. Sure, you might finish the dish, but there’s a good chance you’ll miss something critical—maybe misinterpret a step, add the wrong ingredient, or end up with a surprise result. Becoming computationally literate helps you recognize when AI has gone off track, saving you from mess you’d rather avoid.
+
+I get the allure of the “easy button.” But investing in these skills now will pay off many times over. You’ll be a more efficient, happier researcher—and, franky, it will increase your chances of publishing in high-profile journals.
+
+## What You'll Learn
+We will cover the following topics in this course, which I believe are the most essential computing skills.
+
+### Fluency with R
+What is our weapon of choice in this course?  The R programming language. It is not the most well-polished language. It is not the fastest language. It is not the most user-friendly language. So, why R? Well, it is the lingua franca in our community. The computational tools in ecology are largely R-based. So, if you want to tap into this wealth, you’ll need a working knowledge of R.
+
+::: {.callout-tip}
+## Alternatives
+Not sold on R? You could try [Julia](https://julialang.org/), a newer language that’s faster, more elegant, and gaining popularity. The syntax is similar enough to R to make it a relatively easy transition, and it can even load R packages, so you can have the best of both worlds.
+:::
+
+R has also evolved dramatically in the past decade with the rise of the *tidyverse*. When I started grad school, I absolutely hated using R. has completely changed how I felt about this language. It introduced a whole new way of handling and visualizing data — a way that feels logical and intuitive — and I stringly believe that it is the right approach of thinking about data manipulation and plotting (yes I meant the).
+
+::: {.callout-tip collapse="true"}
+## Who’s Behind the Tidyverse?
+The tidyverse revolution is largely thanks to [Hadley Wickham](https://hadley.nz/), whose contributions earned him the COPSS Presidents’ Award, the top honor in statistics. 
+
+But it’s not just him—the tidyverse is a community effort, a group of people with a shared vision ([link](https://joss.theoj.org/papers/10.21105/joss.01686)).
+:::
+
+### Making Publication-Ready Figures
+
+With `ggplot2`, you’ll learn the Grammar of Graphics, one of the most powerful plotting systems out there. Beyond just producing high-quality figures, it will teach you a structured approach to data visualization.
+
+While `ggplot2` is powerful, its defaults aren’t always perfect. We’ll cover design principles that enhance both the appeal and informativeness of your figures—a skill that’s invaluable since figures often make the first impression on readers.
+
+### Taming Wild Data
+Data in the real world is rarely tidy. Before you can analyze it, you’ll likely spend hours wrangling it into a usable format. Fortunately, `dplyr` and `tidyr` make this much easier, turning data wrangling into a clear, logical process.
+
+Think how you would describe your morning routine. In base R, it might look like a messy, nested sequence of functions:
+Copy code
+```{r}
+#| eval: false
+eat(dressed(shower(brush(wakeup(you)))))
+```
+Or, a series of confusing, intermediate variables:
+Copy code
+```{r}
+#| eval: false
+you_w <- wakeup(you)
+you_bw <- brush(you_w)
+you_sbw <- shower(you_bw)
+...
+```
+In `dplyr`, however, it becomes a simple, logical sequence:
+```{r}
+#| eval: false
+you %>% 
+  wakeup() %>% 
+  brush() %>% 
+  shower() %>% 
+  get_dressed() %>% 
+  eat() 
+```
+
+With the tidyverse ecosystem, each step is deliberate and clear. You’ll learn to filter, sort, and transform your data like a pro, letting you focus on what you want to do with your data rather than wrestling with it. 
+
+### Scientific typsetting
+Yes, Microsoft Word is great. But it can be annoying when you need to update figures or refeences. We will learn to use `Quarto`—a document preparation system designed for researchers. You can seamlessly integrate code, references, and figures, producing output in formats like Word or LaTeX.
+
+We’ll also briefly explore `Typst`, a modern alternative to LaTeX that’s more user-friendly and powerful. It’s a great way to create beautiful, publication-ready documents without the steep learning curve of LaTeX.
+
+### Reproducible Research
+As a data editor in a journal, I’m often surprised by how many papers are difficult to reproduce. This is a big problem in science. In this course, you’ll learn to make your research fully reproducible, which benefits not only the scientific community but also you—it makes it easier to revisit and build upon your work.
+
+We’ll cover version control with Git and GitHub to help you track changes, back up your work, and collaborate with others. Additionally, we’ll dive into specific techniques in R that support reproducible workflows.

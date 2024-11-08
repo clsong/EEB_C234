@@ -1,0 +1,26 @@
+project:
+  type: book
+
+book:
+  title: "EE BIOL C234"
+  subtitle: "Practical Computing for Evolutionary Biologists and Ecologists"
+  author: "Chuliang Song"
+  date: "Winter 2025"
+  chapters:
+    - index.qmd
+    - 01_intro.qmd
+    # - R_basics.qmd
+    # - ggplot_basic.qmd
+    # - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+  pdf:
+    documentclass: scrreprt
+
+
+

@@ -1,0 +1,112 @@
+[
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1  Introduction: Why Bother with this class?",
+    "section": "",
+    "text": "Okay, let’s be honest. You signed up for a degree in Ecology and Evolutionary Biology, not Computer Science. You want to be out in the field, knee-deep in mud, studying the intricate dance of life, not hunched over a keyboard battling lines of code and staring at a screen wrestling with semicolons and syntax errors. And now, with these fancy new AI tools that seem to do everything but your taxes, you might be wondering: why bother learning this stuff at all? Can’t I just ask a Large Language Model to write my code, analyze my data, and even write my papers?\nWell, you’re not wrong to wonder. Technology is changing everything, and science is no exception. But here’s the thing: just like a biologist a century ago needed to master the microscope, a biologist today needs to be fluent in the language of computers. This isn’t about replacing your hard-earned scientific knowledge; it’s about supercharging it.\nWhat is our weapon of choice in this endeavor? The R programming language. Now, before you start sweating, hear me out. R is free, it’s open-source, and it’s purpose-built for data analysis and visualization. It’s powerful, flexible, and most importantly, it’s designed with scientists like you in mind. And the best part? In the last decade, R has undergone a revolution with the advent of the tidyverse. When I started grad school, I had almost no experience with programming, and I absolutely hated using R. However, learning tiduyverse has completely changed how I felt about this language. This amazing collection of tools introduces a whole new way of thinking about programming, making it more intuitive and, dare I say, even enjoyable.\nWe’ll take it slow, step by step, just like learning a new language (but without the awkward silences and fear of mispronunciation). Plenty of examples and exercises will be your guide, so fear not, you won’t be left wandering lost in a jungle of code.\nNow, back to those AI assistants. While they’re certainly impressive (and a bit unnerving), they’re not infallible. Relying on them blindly is like navigating with a map drawn by a pigeon – you might get lucky, or you might end up hopelessly lost. You need a basic grasp of code to ensure those algorithms are actually doing what you intend, not hallucinating their way to a spurious conclusion that torpedoes your entire paper.\nLook, I get the appeal of the “easy” button. But a little investment in these skills will pay off in spades. You’ll be a more efficient, more effective researcher, and frankly, your chances of gracing the pages of Nature or Science will skyrocket. Think of it as an investment in your future scientific glory. Now, let’s get this show on the road!",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction: Why Bother with this class?</span>"
+    ]
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "2  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Summary</span>"
+    ]
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "crumbs": [
+      "References"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "EE BIOL C234",
+    "section": "",
+    "text": "Logistics\nWelcome to EE BIOL C234: Practical Computing for Evolutionary Biologists and Ecologists—or as I like to call it, “21st century Kung-Fu!”\n\nWhere and When: We’ll be meeting Mondays and Wednesdays, 11:00 AM to 11:50 AM, in Botany 108.\nThe Grind: Yes, there will be weekly assignments. If you want to build computational muscle, you’re going to have to sweat a bit. But rest easy, no terrifying final exam to ruin your holidays!\nWhat to Bring: Your laptop and, more importantly, your intellectual curiosity.\nCourse Material: This lecture note will be updated as the course progresses. \n\nThis is the inaugural run of this course for me. So if I’m losing you, boring you, talking too fast, too slow, whatever – speak up! Your feedback is my compass.",
+    "crumbs": [
+      "Logistics"
+    ]
+  },
+  {
+    "objectID": "R_basics.html",
+    "href": "R_basics.html",
+    "title": "2  R and RStudio",
+    "section": "",
+    "text": "2.1 Installing R\nWhat is our weapon of choice in this endeavor? The R programming language.\nR is undoubtably the most used language among ecologists. It is not the most well-defined language. It is not the most efficient language. It is not the most user-friendly language. But it is the most used language in our community. Most packages in ecology are written in R, and most ecologists use R. So, if you want to be able to use the tools that are available, you need to learn R, at least how R is.And that is a good reason to learn it.\nMost imortantly, in the last decade, R has undergone a revolution with the advent of the tidyverse. When I started grad school, I had almost no experience with programming, and I absolutely hated using R. However, learning tiduyverse has completely changed how I felt about this language. It is the right way of thinking about data manipulation and plot, and yes, I meant the.\nThis revolution largely thanks to Hadley Wickham. Because of his revoluntionary contribution, he has been awarded COPSS Presidents’ Award-the most imoportant award given to a statistican.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>R and RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "01_intro.html",
+    "href": "01_intro.html",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "1.1 Why Bother with this class?\nOkay, let’s be honest. You signed up for a degree in Ecology and Evolutionary Biology, not Computer Science. You want to be out in the field, knee-deep in mud, studying the intricate dance of life, not hunched over a keyboard battling lines of code and staring at a screen wrestling with semicolons and syntax errors. And now, with these fancy new AI tools that seem to do everything but your taxes, you might be wondering: why bother learning this stuff at all? Can’t I just ask a Large Language Model to write my code, analyze my data, and make fancy plots?\nWell, you’re not wrong to wonder. Technology is changing everything, and science is no exception. But here’s the thing: just like a biologist a century ago needed to master the microscope, a biologist today needs to be fluent in the language of computers. This isn’t about replacing your hard-earned scientific knowledge; it’s about supercharging it.\nWe’ll take it slow, step by step, just like learning a new human language. The better part is that computer language is generally well-designed and have less exception cases than human languages. So it is much easier to become a multilinguist in computer than in acutal life. Plenty of examples and exercises will be your guide, so fear not, you won’t be left wandering lost in a jungle of code.\nNow, back to those AI assistants. While they’re certainly impressive, they’re not infallible. Relying on them blindly is like navigating with a map drawn by a pigeon – you might get lucky, or you might end up hopelessly lost. You need a basic grasp of code to ensure those algorithms are actually doing what you intend, not hallucinating their way to a spurious conclusion that torpedoes your entire paper.\nLook, I get the appeal of the “easy” button. But a little investment in these skills will pay off in spades. You’ll be a more efficient, more effective researcher, and frankly, your chances of publishing in high-profile journals would increase. Now, let’s get this show on the road!",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "ggplot_basic.html",
+    "href": "ggplot_basic.html",
+    "title": "3  Grammar of Graphics",
+    "section": "",
+    "text": "We will use a dataset\n\n# install.packages(\"palmerpenguins\")\nlibrary(palmerpenguins)\ndata(package = \"palmerpenguins\")\n\nThe data format we are using is called tibble. It is a modern version of the data.frame in R. It is part of the tidyverse package. For most of your daily works, tibble is the only format you need to know.\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g)) +\n    geom_point(\n        aes(\n            color = species,\n            shape = species\n        ),\n        size = 2\n    ) +\n    scale_color_manual(values = c(\"darkorange\", \"darkorchid\", \"cyan4\"))\n\nWarning: Removed 2 rows containing missing values or values outside the scale range\n(`geom_point()`).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "R_basics.html#installing-rstudio",
+    "href": "R_basics.html#installing-rstudio",
+    "title": "2  R and RStudio",
+    "section": "2.2 Installing RStudio",
+    "text": "2.2 Installing RStudio\n\n\n\n\n\n\nTip\n\n\n\nTo make RStuido look better, you may want to install the fira font. Instruction can be found here and here.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>R and RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "R_basics.html#a-simple-calculation",
+    "href": "R_basics.html#a-simple-calculation",
+    "title": "2  R and RStudio",
+    "section": "2.3 A simple calculation",
+    "text": "2.3 A simple calculation",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>R and RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "R_basics.html#install-r-packages",
+    "href": "R_basics.html#install-r-packages",
+    "title": "2  R and RStudio",
+    "section": "2.4 Install R packages",
+    "text": "2.4 Install R packages",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>R and RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#what-youll-learn",
+    "href": "01_intro.html#what-youll-learn",
+    "title": "1  Introduction",
+    "section": "1.2 What You’ll Learn",
+    "text": "1.2 What You’ll Learn\nThe aim is to introduce computational thinking and literacy.\nFocusing on programming, R is gonna be our main programming language. What is our weapon of choice in this endeavor? The R programming language.\nR is undoubtably the most used language among ecologists. It is not the most well-defined language. It is not the most efficient language. It is not the most user-friendly language. But it is the most used language in our community. Most packages in ecology are written in R, and most ecologists use R. So, if you want to be able to use the tools that are available, you need to learn R, at least how R is.And that is a good reason to learn it.\n\n\n\n\n\n\nTip\n\n\n\nIf you are serious about computing, then learn Julia, which is much better designed and fast.\n\n\nMost imortantly, in the last decade, R has undergone a revolution with the advent of the tidyverse. When I started grad school, I had almost no experience with programming, and I absolutely hated using R. However, learning tiduyverse has completely changed how I felt about this language. It is the right way of thinking about data manipulation and plot, and yes, I meant the.\nThis revolution largely thanks to Hadley Wickham. Because of his revoluntionary contribution, he has been awarded COPSS Presidents’ Award-the most imoportant award given to a statistican.\n\nGrammar of Graphics with ggplot2. This is the most powerful plotting package, and it’s not even close. The main benefit is that it introduces a right way of thining about data visualization.\nData wrangling with dplyr and tidyr. This",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  }
+]

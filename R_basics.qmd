@@ -1,0 +1,32 @@
+# R and RStudio
+
+::: {.callout-note}
+## Class Objective
+- To install R and RStudio
+- Get R to do basic math
+:::
+
+What is our weapon of choice in this endeavor?  The R programming language. 
+
+R is undoubtably the most used language among ecologists. It is not the most well-defined language. It is not the most efficient language. It is not the most user-friendly language. But it is the most used language in our community. Most packages in ecology are written in R, and most ecologists use R. So, if you want to be able to use the tools that are available, you need to learn R, at least how R is.And that is a good reason to learn it.
+
+::: {.callout-tip}
+If you are serious about computing, then learn [Julia](https://julialang.org/), which is much better designed and fast. 
+:::
+
+Most imortantly, in the last decade, R has undergone a revolution with the advent of the *tidyverse*. When I started grad school, I had almost no experience with programming, and I absolutely hated using R. However, learning tiduyverse has completely changed how I felt about this language. It is *the* right way of thinking about data manipulation and plot, and yes, I meant the.
+
+This revolution largely thanks to [Hadley Wickham](https://hadley.nz/). Because of his revoluntionary contribution, he has been awarded COPSS Presidents' Award-the most imoportant award given to a statistican.
+
+## Installing R
+
+## Installing RStudio
+
+::: {.callout-tip}
+To make RStuido look better, you may want to install the fira font. Instruction can be found [here](https://github.com/tonsky/FiraCode/wiki/RStudio-instructions) and [here](https://firacode.org/using-fira-code-ligatures-in-rstudio/).
+:::
+
+## A simple calculation
+
+## Install R packages
+

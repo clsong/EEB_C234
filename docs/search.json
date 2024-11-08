@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "dplyr.html",
+    "href": "dplyr.html",
+    "title": "Title",
+    "section": "",
+    "text": "Title"
+  },
+  {
+    "objectID": "R_basics.html",
+    "href": "R_basics.html",
+    "title": "R and RStudio",
+    "section": "",
+    "text": "R and RStudio\nR is un doubtably the most used language among ecologists. It is not the most well-defined language. It is not the most efficient language. It is not the most user-friendly language. But it is the most used language. And that is a good reason to learn it.\nIf you are serious about computing, then learn Julia, which is much better designed. However, most packages in ecology are written in R, and most ecologists use R. So, if you want to be able to use the tools that are available, you need to learn R, at least how R is.\nR has seen a revoluntiomnary change in the past decade, largely thanks to Hadley Wickham. He has written a number of packages that have made R much more user-friendly. The most important of these packages is dplyr. We will use dplyr in this course."
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "Summary",
+    "section": "",
+    "text": "Summary\nIn summary, this book has no content whatsoever."
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "Introduction: Why Bother with this class?",
+    "section": "",
+    "text": "Introduction: Why Bother with this class?\nOkay, let’s be honest. You signed up for a degree in Ecology and Evolutionary Biology, not Computer Science. You want to be out in the field, knee-deep in mud, studying the intricate dance of life, not hunched over a keyboard battling lines of code and staring at a screen wrestling with semicolons and syntax errors. And now, with these fancy new AI tools that seem to do everything but your taxes, you might be wondering: why bother learning this stuff at all? Can’t I just ask a Large Language Model to write my code, analyze my data, and even write my papers?\nWell, you’re not wrong to wonder. Technology is changing everything, and science is no exception. But here’s the thing: just like a biologist a century ago needed to master the microscope, a biologist today needs to be fluent in the language of computers. This isn’t about replacing your hard-earned scientific knowledge; it’s about supercharging it.\nWhat is our weapon of choice in this endeavor? The R programming language. Now, before you start sweating, hear me out. R is free, it’s open-source, and it’s purpose-built for data analysis and visualization. It’s powerful, flexible, and most importantly, it’s designed with scientists like you in mind. And the best part? In the last decade, R has undergone a revolution with the advent of the tidyverse. When I started grad school, I had almost no experience with programming, and I absolutely hated using R. However, learning tiduyverse has completely changed how I felt about this language. This amazing collection of tools introduces a whole new way of thinking about programming, making it more intuitive and, dare I say, even enjoyable.\nWe’ll take it slow, step by step, just like learning a new language (but without the awkward silences and fear of mispronunciation). Plenty of examples and exercises will be your guide, so fear not, you won’t be left wandering lost in a jungle of code.\nNow, back to those AI assistants. While they’re certainly impressive (and a bit unnerving), they’re not infallible. Relying on them blindly is like navigating with a map drawn by a pigeon – you might get lucky, or you might end up hopelessly lost. You need a basic grasp of code to ensure those algorithms are actually doing what you intend, not hallucinating their way to a spurious conclusion that torpedoes your entire paper.\nLook, I get the appeal of the “easy” button. But a little investment in these skills will pay off in spades. You’ll be a more efficient, more effective researcher, and frankly, your chances of gracing the pages of Nature or Science will skyrocket. Think of it as an investment in your future scientific glory. Now, let’s get this show on the road!"
+  },
+  {
+    "objectID": "ggplot_basic.html",
+    "href": "ggplot_basic.html",
+    "title": "Title",
+    "section": "",
+    "text": "Title"
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "References"
+  }
+]

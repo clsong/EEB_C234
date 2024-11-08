@@ -1,0 +1,23 @@
+# Grammar of Graphics
+
+We will use a dataset
+```{r}
+# install.packages("palmerpenguins")
+library(palmerpenguins)
+data(package = "palmerpenguins")
+```
+
+The data format we are using is called `tibble`. It is a modern version of the `data.frame` in R. It is part of the `tidyverse` package. For most of your daily works, tibble is the only format you need to know.
+
+```{r}
+library(tidyverse)
+ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+    geom_point(
+        aes(
+            color = species,
+            shape = species
+        ),
+        size = 2
+    ) +
+    scale_color_manual(values = c("darkorange", "darkorchid", "cyan4"))
+```
