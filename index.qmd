@@ -1,11 +1,34 @@
-# Logistics {.unnumbered}
+# Weclome {.unnumbered}
 
-Welcome to **EE BIOL C234: Practical Computing for Evolutionary Biologists and Ecologists**—or as I like to call it, "21st century Kung-Fu!"
+Welcome to **EE BIOL C234: Practical Computing for Evolutionary Biologists and Ecologists**—or, as I like to say, a crash course in "computational Kung-Fu".
 
+## Course Info
 - **Where and When**: We'll be meeting Mondays and Wednesdays, 11:00 AM to 11:50 AM, in Botany 108. 
 - **The Grind**: Yes, there will be weekly assignments. If you want to build computational muscle, you're going to have to sweat a bit. But rest easy, no terrifying final exam to ruin your holidays!
-- **What to Bring**: Your laptop and, more importantly, your intellectual curiosity. A basic understanding of R will be helpful, but not required.
+- **What to Bring**: Just your laptop and a healthy dose of intellectual curiosity. If you have played with R before, great; if not, don’t worry—you’ll pick it up.
 - **Course Material**: This lecture note will be updated as the course progresses.
 <!-- - **The Escape Hatch**: You don't even have to show up to every class! Frankly, some of the class might already be old hat to you. Before each lecture, I'll post the lecture notes, so if you're already up to speed, feel free to skip out. Just make sure you deliver on those assignments. -->
 
 This is the inaugural run of this course for me. So if I'm losing you, boring you, talking too fast, too slow, whatever – *speak up*! Your feedback is my compass.
+
+## Navigating the Lecture Notes
+Your left sidebar is your map to the course, showing all lectures—just a click away. On the right, you’ll see a table of contents specific to each lecture.
+
+In this course, code examples will appear in blocks like this:
+```{r}
+#| eval: false
+x <- 1+1 # <1>
+x^2 # <2>
+```
+1. Calculate 1+1 and assign it to the variable `x`.
+2. Calculate the square of `x`.
+
+See the little circle on the right? Hover over it for a quick explanation of the code. When you hover over the code block itself, you’ll also spot a “copy” button—perfect for copying and pasting it into your R console to try it out yourself (fun fact: that’s how most coding is done in real life).
+
+Throughout the course, expect tips, tricks, and even a few fun facts sprinkled in. While not essential, these extras might give you an edge or deeper insight. Some of them are collapsible, so you can click to expand and explore them at your own pace. Look out for these in green boxes, like this:
+
+::: {.callout-tip collapse="true"}
+## A Tip Box
+![As promised, this is a tips box.](img/syllabus_tip.png)
+:::
+

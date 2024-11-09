@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Basics of R and RStudio – EE BIOL C234</title>
+<title>4&nbsp; Grammar of Graphics – EE BIOL C234</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./03_data_structure.html" rel="next">
-<link href="./01_intro.html" rel="prev">
+<link href="./03_data_structure.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -117,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_R_basics.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basics of R and RStudio</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_ggplot_basic.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Grammar of Graphics</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -145,7 +144,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Weclome</span></a>
+ <span class="menu-text">Logistics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -156,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02_R_basics.html" class="sidebar-item-text sidebar-link active">
+  <a href="./02_R_basics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basics of R and RStudio</span></span></a>
   </div>
 </li>
@@ -168,7 +167,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04_ggplot_basic.html" class="sidebar-item-text sidebar-link">
+  <a href="./04_ggplot_basic.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Grammar of Graphics</span></span></a>
   </div>
 </li>
@@ -182,11 +181,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#installing-r-and-rstudio" id="toc-installing-r-and-rstudio" class="nav-link active" data-scroll-target="#installing-r-and-rstudio"><span class="header-section-number">2.1</span> Installing R and RStudio</a></li>
-  <li><a href="#what-exactly-is-rstudio" id="toc-what-exactly-is-rstudio" class="nav-link" data-scroll-target="#what-exactly-is-rstudio"><span class="header-section-number">2.2</span> What Exactly Is RStudio?</a></li>
-  <li><a href="#getting-r-to-work-for-you" id="toc-getting-r-to-work-for-you" class="nav-link" data-scroll-target="#getting-r-to-work-for-you"><span class="header-section-number">2.3</span> Getting R to Work for You</a></li>
-  <li><a href="#installing-packages-expanding-rs-horizons" id="toc-installing-packages-expanding-rs-horizons" class="nav-link" data-scroll-target="#installing-packages-expanding-rs-horizons"><span class="header-section-number">2.4</span> Installing Packages: Expanding R’s Horizons</a></li>
-  <li><a href="#meet-the-tidyverse" id="toc-meet-the-tidyverse" class="nav-link" data-scroll-target="#meet-the-tidyverse"><span class="header-section-number">2.5</span> Meet the tidyverse</a></li>
+  <li><a href="#why-graphs" id="toc-why-graphs" class="nav-link active" data-scroll-target="#why-graphs"><span class="header-section-number">4.1</span> Why Graphs?</a></li>
+  <li><a href="#our-first-graphwith-ggplot2" id="toc-our-first-graphwith-ggplot2" class="nav-link" data-scroll-target="#our-first-graphwith-ggplot2"><span class="header-section-number">4.2</span> Our first graphwith <code>ggplot2</code></a></li>
+  <li><a href="#why-always-plot-your-data" id="toc-why-always-plot-your-data" class="nav-link" data-scroll-target="#why-always-plot-your-data"><span class="header-section-number">4.3</span> Why Always Plot Your Data</a></li>
   </ul>
 </nav>
     </div>
@@ -195,7 +192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basics of R and RStudio</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Grammar of Graphics</span></h1>
 </div>
 
 
@@ -212,191 +209,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<!-- <style>
-.column { padding-right: 3ex }
-.column + .column { padding-left: 0ex }
-</style> -->
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Class Objectives
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Get R and RStudio up and running on your machine</li>
-<li>Learn how to install and load packages</li>
-</ul>
-</div>
-</div>
-<section id="installing-r-and-rstudio" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="installing-r-and-rstudio"><span class="header-section-number">2.1</span> Installing R and RStudio</h2>
-<p>To get started, I recommend this comprehensive <a href="https://datacarpentry.org/R-ecology-lesson/index.html">installation guide</a> that will walk you through the process seamlessly.</p>
+<section id="why-graphs" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="why-graphs"><span class="header-section-number">4.1</span> Why Graphs?</h2>
+<!-- Graphs are a critical aspect of compelling data stories. They allow us to see both broad patterns and details (Cleveland [1985] 1994, 5)
+. Graphs enable a familiarity with our data that is hard to get from any other method. Every variable of interest should be graphed.
+
+The most important objective of a graph is to convey as much of the actual data, and its context, as possible. In a way, graphing is an information encoding process where we construct a deliberate representation to convey information to our audience. The audience must decode that representation. The success of our graph depends on how much information is lost in this process so the decoding is a critical aspect (Cleveland [1985] 1994, 221). This means that we must focus on creating effective graphs that are suitable for our specific audience. -->
 </section>
-<section id="what-exactly-is-rstudio" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="what-exactly-is-rstudio"><span class="header-section-number">2.2</span> What Exactly Is RStudio?</h2>
-<p>Think of R as a high-performance engine, capable of incredible feats but not particularly user-friendly on its own. RStudio is the well-designed vehicle that lets you harness that power efficiently. While you could interact with R through a basic terminal (much like driving a sports car without a dashboard), RStudio provides an intuitive interface that makes your life easier.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Alternative Options Worth Considering
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>While RStudio is a remarkable tool, it’s not the only option out there. <a href="https://code.visualstudio.com/">VSCode</a> has emerged as a popular alternative—a versatile, general-purpose IDE that supports multiple programming languages. It’s well-designed, feature-rich, and, importantly, free and open-source. Personally, I use VSCode for most of my R programming work.</p>
-<p>Another option on the horizon is <a href="https://positron.posit.co/">Positron</a>, developed by the same innovative team behind RStudio. It’s the modern evolution of RStudio, currently in beta but already showing great promise. It will eventually replace RStudio as the go-to IDE for R programming.</p>
-</div>
-</div>
-</div>
-<p>RStudio is an incredible well-designed software that makes your life easier when working with R (and Python). It has a lot of features that make your life easier. We will explore many of the features as we go along. The first feature is to make your R code look better.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Making R look prettier
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>One of the subtle joys of programming is crafting code that’s not only functional but also aesthetically pleasing—call it the art of code. To enhance the readability of your R scripts, consider installing the Fira Code font. Instruction can be found <a href="https://github.com/tonsky/FiraCode/wiki/RStudio-instructions">here</a> and <a href="https://firacode.org/using-fira-code-ligatures-in-rstudio/">here</a>.</p>
-<!-- ::::: columns
-::: column
-
-
-
-::: {.cell}
-
-```{.r .cell-code}
-# Standard Appearance
-1 != 0
-x <- 5  |> 
-    sqrt() |> 
-    round(2)
-```
-:::
-
-
-
-:::
-
-::: column
-```r
-# Enhanced Appearance with Fira Code
-1 != 0
-x <- 5  |> 
-    sqrt() |> 
-    round(2)
-```
-:::
-::::: -->
-</div>
-</div>
-</section>
-<section id="getting-r-to-work-for-you" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="getting-r-to-work-for-you"><span class="header-section-number">2.3</span> Getting R to Work for You</h2>
-<p>In the grand tradition of programming tutorials, let’s start with the classic “Hello, World!”—a humble beginning to our journey with R.</p>
+<section id="our-first-graphwith-ggplot2" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="our-first-graphwith-ggplot2"><span class="header-section-number">4.2</span> Our first graphwith <code>ggplot2</code></h2>
+<p>Then we quickly visualize the data using the <code>ggplot2</code> package. Suppose we want to see how the flipper length of penguins (encoded as <code>flipper_length_mm</code> in the dataset) is related to their body mass (encoded as <code>body_mass_g</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Hello, World!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Hello, World!"</code></pre>
-</div>
-</div>
-<p>You can use it as a calculator</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4</code></pre>
-</div>
-</div>
-</section>
-<section id="installing-packages-expanding-rs-horizons" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="installing-packages-expanding-rs-horizons"><span class="header-section-number">2.4</span> Installing Packages: Expanding R’s Horizons</h2>
-<p>To unlock R’s full potential, you’ll often need to install additional packages—think of them as apps that extend your smartphone’s capabilities. This is a one-time process for each package on your computer. For example, to install the <code>ggplot2</code> package:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>And when you want to use the package, just use <code>library()</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-A Quirk Worth Mentioning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Here’s one of many design inconsistencies we will run into when using R: when installing a package, you enclose its name in quotes, but when loading it, you don’t.</p>
-<p>To streamline your workflow, consider using the <code>pacman</code> package. It automatically detects if the pointed package is installed and installs it if it’s not, and then load it. Here’s how you can use it:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-1" class="code-annotation-target"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("pacman")</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2">2</button><span id="annotated-cell-8-2" class="code-annotation-target"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pacman)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="3">3</button><span id="annotated-cell-8-3" class="code-annotation-target"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">p_load</span>(ggplot2)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins) </span>
+<span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="at">package =</span> <span class="st">"palmerpenguins"</span>) </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-3" class="code-annotation-target"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-5" class="code-annotation-target"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> penguins,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-6" class="code-annotation-target"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g)</span>
+<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4">4</button><span id="annotated-cell-1-8" class="code-annotation-target"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="1" data-code-annotation="1">Keep in mind that you’ll need to install pacman first, as it’s not part of R’s base packages.</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="3" data-code-annotation="1">Load the <code>ggplot2</code> package.</span>
 </dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="2" data-code-annotation="2">Load the pacman package.</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="5" data-code-annotation="2">Specify the dataset used in the plot.</span>
 </dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="3" data-code-annotation="3">Use <code>p_load()</code> to install and load the ggplot2 package in one go.</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="6" data-code-annotation="3">Define the aesthetics of the plot. Here, we map the flipper length to the x-axis and body mass to the y-axis.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="8" data-code-annotation="4">Add a layer of points to the plot.</span>
 </dd>
 </dl>
 </div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_ggplot_basic_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
 </div>
 </section>
-<section id="meet-the-tidyverse" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="meet-the-tidyverse"><span class="header-section-number">2.5</span> Meet the tidyverse</h2>
-<p>As descirbed in the officical <a href="https://www.tidyverse.org/">website</a>:</p>
-<blockquote class="blockquote">
-<p>The tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.</p>
-</blockquote>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'tidyr' was built under R version 4.2.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'readr' was built under R version 4.2.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'dplyr' was built under R version 4.2.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'stringr' was built under R version 4.2.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ lubridate 1.9.3     ✔ tibble    3.2.1
-✔ purrr     1.0.2     ✔ tidyr     1.3.1
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-</div>
-<p>As you can see, Looking at the message generated by executing the above line, we see that nine packages are now loaded.1 They are called ggplot2, tibble, and so on. We will get to know these in more detail throughout the book. Almost all my codes start with the command.</p>
+<section id="why-always-plot-your-data" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="why-always-plot-your-data"><span class="header-section-number">4.3</span> Why Always Plot Your Data</h2>
+<!-- https://tellingstorieswithdata.com/05-graphs_tables_maps.html -->
 
 
 </section>
@@ -863,14 +726,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./01_intro.html" class="pagination-link" aria-label="Course goal">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Course goal</span></span>
+      <a href="./03_data_structure.html" class="pagination-link" aria-label="Data Structure">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Structure</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./03_data_structure.html" class="pagination-link" aria-label="Data Structure">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Structure</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

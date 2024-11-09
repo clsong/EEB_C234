@@ -1,0 +1,41 @@
+# Data Structure
+
+Surpring or not, data stycutrie is tuypicaly the first thing you need to know when you start working with data.
+What do we mean by data structure? Data structure is the way we organize our data. Humans are good at organizing things. We organize our clothes in a closet, our books on a shelf, and our data in a data structure.
+
+
+In R, there are two main data structures: `vector` and `tibble`. Believe it or not, you can do almost everything with these two data structures.
+
+Data structures are usually the most challenging part of any programming language. If you know how to manipulate data structures, you can easily translate the skill in one language to another.
+
+## Our dataset: `penguins`
+We will use a dataset called `penguins` from the `palmerpenguins` package. We will use this dataset throughout our course. This dataset contains measurements of penguins collected from three species: Adelie, Chinstrap, and Gentoo. 
+
+![Artwork by allison_horst](img/penguins.png)
+
+
+First things first, let us load the `penguins` dataset.
+```{r}
+# install.packages("palmerpenguins")   # <1>
+library(palmerpenguins) # <2>
+data(package = "palmerpenguins") # <3>
+```
+1. If you have not installed the `palmerpenguins` package, you can install it by uncommenting this line.
+2. Load the `palmerpenguins` package.
+3. Load the `penguins` dataset.
+
+As a first rule, always, always take a look at your data. One way is just to display the data.
+```{r}
+penguins # <1>
+``` 
+1. Display the `penguins` dataset.
+
+The data format we are using is called `tibble`. It is a modern version of the `data.frame` in R. It is part of the `tidyverse` package. For most of your daily works, tibble is the only two formats (the other is vector) you need to know.
+
+However, if you want to see the data in a more structured way, you can use the `skim()` function in the package `skimr`.
+```{r}
+pacman::p_load(skimr) # <1>
+skim(penguins) # <2>
+```
+1. Load the `skimr` package.
+2. Display the summary of the `penguins` dataset.

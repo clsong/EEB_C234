@@ -16,65 +16,10 @@
 #
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #| eval: false
-eat(dressed(shower(brush(wakeup(you)))))
+x <- 1+1 # <1>
+x^2 # <2>
 ```
-#
-#
-#| eval: false
-you_w <- wakeup(you)
-you_bw <- brush(you_w)
-you_sbw <- shower(you_bw)
-...
-```
-#
-#
-#| eval: false
-you |> 
-  wakeup() |> 
-  brush() |> 
-  shower() |> 
-  get_dressed() |> 
-  eat() 
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #

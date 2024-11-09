@@ -6,14 +6,14 @@ Alright, let's cut to the chase. You signed up to study Ecology and Evolutionary
 
 It's a fair question. Technology *is* reshaping everything, and science is no exception. But here’s the thing: just as biologists in the past had to master the microscope, today’s biologists need a strong foundation in computing. This course isn’t about turning you into a programmer; it's about giving you the keys to harness technology effectively—so you're steering the ship, not just along for the ride.
 
-Before any anxiety sets in, let me assure you that this course isn't a sink-or-swim experience. We'll embark on a guided journey into computing, building your skills step by step. Think of it as learning a new language—with much simpler grammar, thankfully. We'll use concrete example with annonated codes and hands-on exercises to support you along the way.
-
 And about those AI tools? Yes, they can be incredibly useful, no doubt. But relying on them blindly, without understanding the underlying principles, is like cooking from a recipe in a language you barely know. Sure, you might finish the dish, but there’s a good chance you’ll miss something critical—maybe misinterpret a step, add the wrong ingredient, or be puzzled by the end result. Computational literacy helps you to catch when the AI is leading you astray, saving you from headaches (and potentially flawed results) down the line.
 
 I get the temptation of the "easy button", we all do. But investing in these skills now will pay off many times over. You’ll be a more efficient, more confident researcher—and, franky, it will boost your chances of publishing in those coveted high-profile journals.
 
+Before any anxiety sets in, let me assure you that this course isn't a sink-or-swim experience. We'll embark on a guided journey into computing, building your skills step by step. Think of it as learning a new language—with much simpler grammar, thankfully. We'll use concrete example with annonated codes and hands-on exercises to support you along the way.
+
 ## What You'll Learn
-We'll cover the following topics, which are, in my view, the most essential computing skills for modern ecologists.
+We'll cover the following topics, which are, in my view, the most essential computing skills for modern ecologists. In some sense, these are what I wish I had the chance to learn in the beginning of my grad school.
 
 ### Fluency with R
 What is our weapon of choice in this course?  The R programming language. It is not the most well-polished language. It is not the fastest language. It is not the most user-friendly language. So, why R? Well, it is the lingua franca in our community. The computational tools in ecology are largely R-based. So, if you want to tap into this wealth, you’ll need a working knowledge of R.
@@ -88,3 +88,38 @@ As a data editor for a journal, I'm often struck by how many papers are challeng
 ![PhD comics by Jorge Cham](img/intro_phd_comic.png)
 
 We'll get into version control using Git and GitHub, tools that help you track changes, back up your work, and collaborate effectively. Additionally, we'll cover specific techniques in R that support reproducible workflows, ensuring your research stands on a solid foundation.
+
+## Plan (Tentative)
+- Introduction to R and RStudio 
+- Basic data types: `tibble` and `vector`
+- Introduction to `ggplot2`
+- Data wrangling with `dplyr`
+  - `dplyr::filter()`
+  - `dplyr::select()`
+  - `dplyr::mutate()`
+  - `dplyr::arrange()`
+  - `dplyr::group_by()`
+  - `dplyr::summarize()`
+- Principles of data visualization
+  -  Color theory
+  -  Effective caption
+- Practicle tools in ggplot ecosystem
+  - Annotation with `ggrepel` and `gghighlight`
+  - Labeling with `ggtext`
+  - Multi-panel plots with `patchwork`
+  - Interactive plots with `ggiraph`
+  - Animated plots with `gganimate`
+  - Too many points in scatter plot with `ggpointdensity` and `ggdensity`
+  - Handing overlapping points with
+- Introduction to Functional Programming with `purrr` 
+  - Parallel processing with `furrr`
+- Introduction to `Quarto`
+  - Blocks and chunk options
+  - Reference management with `bibtex`
+- Introduction to `Typst`
+
+## What We Won't Cover
+There is so much to learn with computing. There is a reason why programmers are paid so well. 
+
+- **Machine Learning**: This is a vast field that deserves its own course. We'll touch on the basics, but we won't dive deep.
+- **Web Development**: This is a whole different beast. We won't cover it.

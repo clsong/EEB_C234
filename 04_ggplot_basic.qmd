@@ -1,0 +1,31 @@
+# Grammar of Graphics
+
+## Why Graphs?
+<!-- Graphs are a critical aspect of compelling data stories. They allow us to see both broad patterns and details (Cleveland [1985] 1994, 5)
+. Graphs enable a familiarity with our data that is hard to get from any other method. Every variable of interest should be graphed.
+
+The most important objective of a graph is to convey as much of the actual data, and its context, as possible. In a way, graphing is an information encoding process where we construct a deliberate representation to convey information to our audience. The audience must decode that representation. The success of our graph depends on how much information is lost in this process so the decoding is a critical aspect (Cleveland [1985] 1994, 221). This means that we must focus on creating effective graphs that are suitable for our specific audience. -->
+
+
+
+## Our first graphwith `ggplot2`
+Then we quickly visualize the data using the `ggplot2` package. Suppose we want to see how the flipper length of penguins (encoded as `flipper_length_mm` in the dataset) is related to their body mass (encoded as `body_mass_g`).
+```{r}
+#| warning: false
+library(palmerpenguins) 
+data(package = "palmerpenguins") 
+library(ggplot2) # <1>
+ggplot(
+  data = penguins, # <2>
+  aes(x = flipper_length_mm, y = body_mass_g) # <3>
+) + 
+  geom_point() # <4>
+```
+1. Load the `ggplot2` package.
+2. Specify the dataset used in the plot.
+3. Define the aesthetics of the plot. Here, we map the flipper length to the x-axis and body mass to the y-axis.
+4. Add a layer of points to the plot.
+
+
+## Why Always Plot Your Data
+<!-- https://tellingstorieswithdata.com/05-graphs_tables_maps.html -->

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Grammar of Graphics – EE BIOL C234</title>
+<title>3&nbsp; Data Structure – EE BIOL C234</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./04_ggplot_basic.html" rel="next">
 <link href="./02_R_basics.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -116,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_ggplot_basic.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Grammar of Graphics</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_data_structure.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Structure</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -161,8 +162,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03_ggplot_basic.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Grammar of Graphics</span></span></a>
+  <a href="./03_data_structure.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Structure</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_ggplot_basic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Grammar of Graphics</span></span></a>
   </div>
 </li>
     </ul>
@@ -175,10 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#why-graphs" id="toc-why-graphs" class="nav-link active" data-scroll-target="#why-graphs"><span class="header-section-number">3.1</span> Why Graphs?</a></li>
-  <li><a href="#our-dataset-penguins" id="toc-our-dataset-penguins" class="nav-link" data-scroll-target="#our-dataset-penguins"><span class="header-section-number">3.2</span> Our dataset: <code>penguins</code></a></li>
-  <li><a href="#our-first-graphwith-ggplot2" id="toc-our-first-graphwith-ggplot2" class="nav-link" data-scroll-target="#our-first-graphwith-ggplot2"><span class="header-section-number">3.3</span> Our first graphwith <code>ggplot2</code></a></li>
-  <li><a href="#why-always-plot-your-data" id="toc-why-always-plot-your-data" class="nav-link" data-scroll-target="#why-always-plot-your-data"><span class="header-section-number">3.4</span> Why Always Plot Your Data</a></li>
+  <li><a href="#our-dataset-penguins" id="toc-our-dataset-penguins" class="nav-link active" data-scroll-target="#our-dataset-penguins"><span class="header-section-number">3.1</span> Our dataset: <code>penguins</code></a></li>
   </ul>
 </nav>
     </div>
@@ -187,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Grammar of Graphics</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Structure</span></h1>
 </div>
 
 
@@ -204,15 +208,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="why-graphs" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="why-graphs"><span class="header-section-number">3.1</span> Why Graphs?</h2>
-<!-- Graphs are a critical aspect of compelling data stories. They allow us to see both broad patterns and details (Cleveland [1985] 1994, 5)
-. Graphs enable a familiarity with our data that is hard to get from any other method. Every variable of interest should be graphed.
-
-The most important objective of a graph is to convey as much of the actual data, and its context, as possible. In a way, graphing is an information encoding process where we construct a deliberate representation to convey information to our audience. The audience must decode that representation. The success of our graph depends on how much information is lost in this process so the decoding is a critical aspect (Cleveland [1985] 1994, 221). This means that we must focus on creating effective graphs that are suitable for our specific audience. -->
-</section>
-<section id="our-dataset-penguins" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="our-dataset-penguins"><span class="header-section-number">3.2</span> Our dataset: <code>penguins</code></h2>
+<p>Surpring or not, data stycutrie is tuypicaly the first thing you need to know when you start working with data. What do we mean by data structure? Data structure is the way we organize our data. Humans are good at organizing things. We organize our clothes in a closet, our books on a shelf, and our data in a data structure.</p>
+<p>In R, there are two main data structures: <code>vector</code> and <code>tibble</code>. Believe it or not, you can do almost everything with these two data structures.</p>
+<p>Data structures are usually the most challenging part of any programming language. If you know how to manipulate data structures, you can easily translate the skill in one language to another.</p>
+<section id="our-dataset-penguins" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="our-dataset-penguins"><span class="header-section-number">3.1</span> Our dataset: <code>penguins</code></h2>
 <p>We will use a dataset called <code>penguins</code> from the <code>palmerpenguins</code> package. We will use this dataset throughout our course. This dataset contains measurements of penguins collected from three species: Adelie, Chinstrap, and Gentoo.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -467,49 +467,6 @@ The most important objective of a graph is to convey as much of the actual data,
 </table>
 </div>
 </div>
-</section>
-<section id="our-first-graphwith-ggplot2" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="our-first-graphwith-ggplot2"><span class="header-section-number">3.3</span> Our first graphwith <code>ggplot2</code></h2>
-<p>Then we quickly visualize the data using the <code>ggplot2</code> package. Suppose we want to see how the flipper length of penguins (encoded as <code>flipper_length_mm</code> in the dataset) is related to their body mass (encoded as <code>body_mass_g</code>).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2">2</button><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> penguins,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="3">3</button><span id="annotated-cell-4-4" class="code-annotation-target"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g)</span>
-<span id="annotated-cell-4-5"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="4">4</button><span id="annotated-cell-4-6" class="code-annotation-target"><a href="#annotated-cell-4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="1" data-code-annotation="1">Load the <code>ggplot2</code> package.</span>
-</dd>
-<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="2">Specify the dataset used in the plot.</span>
-</dd>
-<dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="4" data-code-annotation="3">Define the aesthetics of the plot. Here, we map the flipper length to the x-axis and body mass to the y-axis.</span>
-</dd>
-<dt data-target-cell="annotated-cell-4" data-target-annotation="4">4</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="6" data-code-annotation="4">Add a layer of points to the plot.</span>
-</dd>
-</dl>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="03_ggplot_basic_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="why-always-plot-your-data" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="why-always-plot-your-data"><span class="header-section-number">3.4</span> Why Always Plot Your Data</h2>
-<!-- https://tellingstorieswithdata.com/05-graphs_tables_maps.html -->
 
 
 </section>
@@ -981,6 +938,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./04_ggplot_basic.html" class="pagination-link" aria-label="Grammar of Graphics">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Grammar of Graphics</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
