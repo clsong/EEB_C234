@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.33">
+<meta name="generator" content="quarto-1.6.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,10 +70,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-86b0efa2460cd378948dc2f68bdd414f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-857f1d5f411f36398542cd62bf9c4f83.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-706d47e59303ecb561a7787d3c9b597f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-74d410878893cc97fd31203e5d114f5e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -144,7 +144,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Logistics</span></a>
+ <span class="menu-text">Weclome</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -182,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#why-graphs" id="toc-why-graphs" class="nav-link active" data-scroll-target="#why-graphs"><span class="header-section-number">4.1</span> Why Graphs?</a></li>
-  <li><a href="#our-first-graphwith-ggplot2" id="toc-our-first-graphwith-ggplot2" class="nav-link" data-scroll-target="#our-first-graphwith-ggplot2"><span class="header-section-number">4.2</span> Our first graphwith <code>ggplot2</code></a></li>
+  <li><a href="#our-first-graph-with-ggplot2" id="toc-our-first-graph-with-ggplot2" class="nav-link" data-scroll-target="#our-first-graph-with-ggplot2"><span class="header-section-number">4.2</span> Our first graph with <code>ggplot2</code></a></li>
   <li><a href="#why-always-plot-your-data" id="toc-why-always-plot-your-data" class="nav-link" data-scroll-target="#why-always-plot-your-data"><span class="header-section-number">4.3</span> Why Always Plot Your Data</a></li>
   </ul>
 </nav>
@@ -211,13 +211,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="why-graphs" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="why-graphs"><span class="header-section-number">4.1</span> Why Graphs?</h2>
-<!-- Graphs are a critical aspect of compelling data stories. They allow us to see both broad patterns and details (Cleveland [1985] 1994, 5)
-. Graphs enable a familiarity with our data that is hard to get from any other method. Every variable of interest should be graphed.
-
-The most important objective of a graph is to convey as much of the actual data, and its context, as possible. In a way, graphing is an information encoding process where we construct a deliberate representation to convey information to our audience. The audience must decode that representation. The success of our graph depends on how much information is lost in this process so the decoding is a critical aspect (Cleveland [1985] 1994, 221). This means that we must focus on creating effective graphs that are suitable for our specific audience. -->
+<p>As you can see from the syllabus, we will spend a lot of time on making graphs. Why? Because humans are visual animals. We can understand things better when we see them. There are reasons why New York Times hire the best graphic designers to make their graphs.</p>
+<p>Graphs are no replacement for text. We need both. Text is essnetial to convey complex ideas, caveats, which are always essential in scientific writings. However, graphs are also essential. People are busy, most people will only skim through your papers, so if you want maximum impact, you need to essemtailly make the big pictures and main results as clear as possible in figures.</p>
+<p>The software development has seen a huge burst in making figures. There are many frameworks to do thing, But I will focus on <code>ggplot2</code> because it is the right way about thinking about graphs. Just as we learn grammar when we learn a new human language, we need to learn the grammar of graphics when we learn the language of data visualization.</p>
 </section>
-<section id="our-first-graphwith-ggplot2" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="our-first-graphwith-ggplot2"><span class="header-section-number">4.2</span> Our first graphwith <code>ggplot2</code></h2>
+<section id="our-first-graph-with-ggplot2" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="our-first-graph-with-ggplot2"><span class="header-section-number">4.2</span> Our first graph with <code>ggplot2</code></h2>
 <p>Then we quickly visualize the data using the <code>ggplot2</code> package. Suppose we want to see how the flipper length of penguins (encoded as <code>flipper_length_mm</code> in the dataset) is related to their body mass (encoded as <code>body_mass_g</code>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins) </span>

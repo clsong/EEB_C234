@@ -6,11 +6,11 @@ Alright, let's cut to the chase. You signed up to study Ecology and Evolutionary
 
 It's a fair question. Technology *is* reshaping everything, and science is no exception. But here’s the thing: just as biologists in the past had to master the microscope, today’s biologists need a strong foundation in computing. This course isn’t about turning you into a programmer; it's about giving you the keys to harness technology effectively—so you're steering the ship, not just along for the ride.
 
+Before any anxiety sets in, let me assure you that this course isn't a sink-or-swim experience. We'll embark on a guided journey into computing, building your skills step by step. Think of it as learning a new language—with much simpler grammar, thankfully. We'll use concrete example with annonated codes and hands-on exercises to support you along the way.
+
 And about those AI tools? Yes, they can be incredibly useful, no doubt. But relying on them blindly, without understanding the underlying principles, is like cooking from a recipe in a language you barely know. Sure, you might finish the dish, but there’s a good chance you’ll miss something critical—maybe misinterpret a step, add the wrong ingredient, or be puzzled by the end result. Computational literacy helps you to catch when the AI is leading you astray, saving you from headaches (and potentially flawed results) down the line.
 
 I get the temptation of the "easy button", we all do. But investing in these skills now will pay off many times over. You’ll be a more efficient, more confident researcher—and, franky, it will boost your chances of publishing in those coveted high-profile journals.
-
-Before any anxiety sets in, let me assure you that this course isn't a sink-or-swim experience. We'll embark on a guided journey into computing, building your skills step by step. Think of it as learning a new language—with much simpler grammar, thankfully. We'll use concrete example with annonated codes and hands-on exercises to support you along the way.
 
 ## What You'll Learn
 We'll cover the following topics, which are, in my view, the most essential computing skills for modern ecologists. In some sense, these are what I wish I had the chance to learn in the beginning of my grad school.
@@ -163,7 +163,7 @@ We'll get into version control using Git and GitHub, tools that help you track c
 - Introduction to `GitHub Copilot`
 
 ## What We Won't Cover
-There's a vast universe of computing out there, and we have to draw the line somewhere (before we all get lost in a black hole of code). There's a reason why programmers in the Silicon Valley are paid so well—computing is hard! Here are some exciting realms we'll gracefully sidestep (but I envourgae you to explore in the future):
+There's a vast universe of computing out there, and we have to draw the line somewhere (before we all get lost in a black hole of code). There's a reason why programmers in the Silicon Valley are paid so well—computing is hard! Here are some intriguing areas we won't cover in this course, but I encourage you to explore them in the future:
 
 - **Advanced Statistics and Machine Learning**: These areas are extensive and deserve dedicated courses. To dive deeper into the world of algorithms and data models, I'd recommend starting with [Tidymodels](https://www.tidymodels.org/), which shares the same design philosophy as the `tidyverse` and should make for a smooth transition.
 

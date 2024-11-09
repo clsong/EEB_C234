@@ -1,14 +1,13 @@
 # Grammar of Graphics
 
 ## Why Graphs?
-<!-- Graphs are a critical aspect of compelling data stories. They allow us to see both broad patterns and details (Cleveland [1985] 1994, 5)
-. Graphs enable a familiarity with our data that is hard to get from any other method. Every variable of interest should be graphed.
+As you can see from the syllabus, we will spend a lot of time on making graphs. Why? Because humans are visual animals. We can understand things better when we see them. There are reasons why New York Times hire the best graphic designers to make their graphs.
 
-The most important objective of a graph is to convey as much of the actual data, and its context, as possible. In a way, graphing is an information encoding process where we construct a deliberate representation to convey information to our audience. The audience must decode that representation. The success of our graph depends on how much information is lost in this process so the decoding is a critical aspect (Cleveland [1985] 1994, 221). This means that we must focus on creating effective graphs that are suitable for our specific audience. -->
+Graphs are no replacement for text. We need both. Text is essnetial to convey complex ideas, caveats, which are always essential in scientific writings. However, graphs are also essential. People are busy, most people will only skim through your papers, so if you want maximum impact, you need to essemtailly make the big pictures and main results as clear as possible in figures. 
 
+The software development has seen a huge burst in making figures. There are many frameworks to do thing, But I will focus on `ggplot2` because it is the right way about thinking about graphs. Just as we learn grammar when we learn a new human language, we need to learn the grammar of graphics when we learn the language of data visualization.
 
-
-## Our first graphwith `ggplot2`
+## Our first graph with `ggplot2`
 Then we quickly visualize the data using the `ggplot2` package. Suppose we want to see how the flipper length of penguins (encoded as `flipper_length_mm` in the dataset) is related to their body mass (encoded as `body_mass_g`).
 ```{r}
 #| warning: false

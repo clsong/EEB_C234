@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.33">
+<meta name="generator" content="quarto-1.6.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -64,17 +64,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./03_data_structure.html" rel="next">
 <link href="./01_intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-86b0efa2460cd378948dc2f68bdd414f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-857f1d5f411f36398542cd62bf9c4f83.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-706d47e59303ecb561a7787d3c9b597f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-74d410878893cc97fd31203e5d114f5e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -160,18 +159,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basics of R and RStudio</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./03_data_structure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Structure</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04_ggplot_basic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Grammar of Graphics</span></span></a>
-  </div>
-</li>
     </ul>
     </div>
 </nav>
@@ -183,9 +170,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#installing-r-and-rstudio" id="toc-installing-r-and-rstudio" class="nav-link active" data-scroll-target="#installing-r-and-rstudio"><span class="header-section-number">2.1</span> Installing R and RStudio</a></li>
-  <li><a href="#what-exactly-is-rstudio" id="toc-what-exactly-is-rstudio" class="nav-link" data-scroll-target="#what-exactly-is-rstudio"><span class="header-section-number">2.2</span> What Exactly Is RStudio?</a></li>
+  <li><a href="#why-do-we-need-rstudio" id="toc-why-do-we-need-rstudio" class="nav-link" data-scroll-target="#why-do-we-need-rstudio"><span class="header-section-number">2.2</span> Why Do We Need RStudio?</a></li>
   <li><a href="#getting-r-to-work-for-you" id="toc-getting-r-to-work-for-you" class="nav-link" data-scroll-target="#getting-r-to-work-for-you"><span class="header-section-number">2.3</span> Getting R to Work for You</a></li>
-  <li><a href="#installing-packages-expanding-rs-horizons" id="toc-installing-packages-expanding-rs-horizons" class="nav-link" data-scroll-target="#installing-packages-expanding-rs-horizons"><span class="header-section-number">2.4</span> Installing Packages: Expanding R’s Horizons</a></li>
+  <li><a href="#installing-packages" id="toc-installing-packages" class="nav-link" data-scroll-target="#installing-packages"><span class="header-section-number">2.4</span> Installing Packages</a>
+  <ul class="collapse">
+  <li><a href="#standard-approach" id="toc-standard-approach" class="nav-link" data-scroll-target="#standard-approach"><span class="header-section-number">2.4.1</span> Standard approach</a></li>
+  <li><a href="#an-alternative-approach" id="toc-an-alternative-approach" class="nav-link" data-scroll-target="#an-alternative-approach"><span class="header-section-number">2.4.2</span> An alternative approach</a></li>
+  </ul></li>
   <li><a href="#meet-the-tidyverse" id="toc-meet-the-tidyverse" class="nav-link" data-scroll-target="#meet-the-tidyverse"><span class="header-section-number">2.5</span> Meet the tidyverse</a></li>
   </ul>
 </nav>
@@ -212,10 +203,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<!-- <style>
-.column { padding-right: 3ex }
-.column + .column { padding-left: 0ex }
-</style> -->
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -236,9 +223,9 @@ Class Objectives
 <h2 data-number="2.1" class="anchored" data-anchor-id="installing-r-and-rstudio"><span class="header-section-number">2.1</span> Installing R and RStudio</h2>
 <p>To get started, I recommend this comprehensive <a href="https://datacarpentry.org/R-ecology-lesson/index.html">installation guide</a> that will walk you through the process seamlessly.</p>
 </section>
-<section id="what-exactly-is-rstudio" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="what-exactly-is-rstudio"><span class="header-section-number">2.2</span> What Exactly Is RStudio?</h2>
-<p>Think of R as a high-performance engine, capable of incredible feats but not particularly user-friendly on its own. RStudio is the well-designed vehicle that lets you harness that power efficiently. While you could interact with R through a basic terminal (much like driving a sports car without a dashboard), RStudio provides an intuitive interface that makes your life easier.</p>
+<section id="why-do-we-need-rstudio" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="why-do-we-need-rstudio"><span class="header-section-number">2.2</span> Why Do We Need RStudio?</h2>
+<p>Think of R as a high-performance engine—capable of incredible feats but not particularly user-friendly on its own. RStudio is the sleek vehicle that lets you harness that power efficiently. While you could interact with R through a basic terminal, RStudio provides an intuitive interface that makes your life easier.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -256,7 +243,7 @@ Alternative Options Worth Considering
 </div>
 </div>
 </div>
-<p>RStudio is an incredible well-designed software that makes your life easier when working with R (and Python). It has a lot of features that make your life easier. We will explore many of the features as we go along. The first feature is to make your R code look better.</p>
+<p>RStudio is an incredible well-designed software that makes your life easier when working with R (and Python). It has a lot of features that make your life easier. We’ll explore many of these features as we progress, starting with making your R code look better.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -267,37 +254,7 @@ Making R look prettier
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>One of the subtle joys of programming is crafting code that’s not only functional but also aesthetically pleasing—call it the art of code. To enhance the readability of your R scripts, consider installing the Fira Code font. Instruction can be found <a href="https://github.com/tonsky/FiraCode/wiki/RStudio-instructions">here</a> and <a href="https://firacode.org/using-fira-code-ligatures-in-rstudio/">here</a>.</p>
-<!-- ::::: columns
-::: column
-
-
-
-::: {.cell}
-
-```{.r .cell-code}
-# Standard Appearance
-1 != 0
-x <- 5  |> 
-    sqrt() |> 
-    round(2)
-```
-:::
-
-
-
-:::
-
-::: column
-```r
-# Enhanced Appearance with Fira Code
-1 != 0
-x <- 5  |> 
-    sqrt() |> 
-    round(2)
-```
-:::
-::::: -->
+<p>One of the subtle joys of programming is crafting code that’s not only functional but also aesthetically pleasing. To enhance the readability of your R scripts, consider installing the Fira Code font. Instruction can be found <a href="https://github.com/tonsky/FiraCode/wiki/RStudio-instructions">here</a> and <a href="https://firacode.org/using-fira-code-ligatures-in-rstudio/">here</a>.</p>
 </div>
 </div>
 </section>
@@ -305,21 +262,72 @@ x <- 5  |>
 <h2 data-number="2.3" class="anchored" data-anchor-id="getting-r-to-work-for-you"><span class="header-section-number">2.3</span> Getting R to Work for You</h2>
 <p>In the grand tradition of programming tutorials, let’s start with the classic “Hello, World!”—a humble beginning to our journey with R.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Hello, World!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Hello, World!"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="1" data-code-annotation="1">The <code>print()</code> function displays the text within on the console.</span>
+</dd>
+</dl>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Hello, World!"</code></pre>
 </div>
 </div>
 <p>You can use it as a calculator</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4</code></pre>
+<pre><code>[1] 5</code></pre>
+</div>
+</div>
+<p>You can also assign it to a variable</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-2" class="code-annotation-target"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a>x</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="1" data-code-annotation="1">Assigns the value of <code>3 + 2</code> to the variable <code>x</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="2" data-code-annotation="2">The <code>x</code> displays the value of <code>x</code> on the console.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+</div>
+<p>One thing worth noting is that we get the</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Why does R use <code>&lt;-</code>?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In R, <code>&lt;-</code> is for assignment while <code>=</code> is for function arguments. You can technically use <code>=</code> for assignment in almost all cases, meaning <code>x &lt;- 3 + 2</code> is equivalent to <code>x = 3 + 2</code>. But then why does R continue to favor <code>&lt;-</code>?</p>
+<p>One reason is conceptual clarity. In R, the distinction between assignment and function arguments is explicit, providing a cleaner syntax and helping avoid ambiguity in complex code. By differentiating assignment with <code>&lt;-</code>, R signals that an action is being performed, where data is transferred from one entity to another. This reinforces the principle that assignment and function arguments are inherently distinct constructs.</p>
+<p>A second reason is flexibility. R allows for the reverse assignment arrow, <code>-&gt;</code>, which lets you assign values in the opposite direction. For instance, <code>3 -&gt; x</code> assigns the value <code>3</code> to <code>x</code>, a feature that can sometimes be handy.</p>
+<p>But why don’t most other languages use a similar convention? One factor is typing efficiency: <code>&lt;-</code> requires three keystrokes, while <code>=</code> only requires one (although you eventantually get used to it). However, there’s also a historical element here: early keyboards designed for statistical computing actually had a dedicated <code>&lt;-</code> key, which made the operator as convenient as <code>=</code> (<a href="https://colinfay.me/r-assignment/">source</a>):</p>
+<p><img src="img/rbasic_keyboard.png" class="img-fluid"></p>
+</div>
 </div>
 </div>
 </section>
-<section id="installing-packages-expanding-rs-horizons" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="installing-packages-expanding-rs-horizons"><span class="header-section-number">2.4</span> Installing Packages: Expanding R’s Horizons</h2>
+<section id="installing-packages" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="installing-packages"><span class="header-section-number">2.4</span> Installing Packages</h2>
+<section id="standard-approach" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="standard-approach"><span class="header-section-number">2.4.1</span> Standard approach</h3>
 <p>To unlock R’s full potential, you’ll often need to install additional packages—think of them as apps that extend your smartphone’s capabilities. This is a one-time process for each package on your computer. For example, to install the <code>ggplot2</code> package:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -328,41 +336,64 @@ x <- 5  |>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-A Quirk Worth Mentioning
+A Quirk to Watch Out For
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Here’s one of many design inconsistencies we will run into when using R: when installing a package, you enclose its name in quotes, but when loading it, you don’t.</p>
-<p>To streamline your workflow, consider using the <code>pacman</code> package. It automatically detects if the pointed package is installed and installs it if it’s not, and then load it. Here’s how you can use it:</p>
+<p>This is the first design inconsistencies when using R: when installing a package, you enclose its name in quotes, but when loading it, you don’t. It’s a small quirk, but one that can trip you up if you’re not careful (speaking from experience).</p>
+<p>There will be many others along the way. I will try to point them out as we go along.</p>
+</div>
+</div>
+</div>
+<p>Notably, not all packages are on CRAN. For example, many of them are on GitHub, GitLab, or other platforms. To install these packages, you can use the devtools package. For example, to install the <code>ggthemr</code> package from GitHub:</p>
+</section>
+<section id="an-alternative-approach" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="an-alternative-approach"><span class="header-section-number">2.4.2</span> An alternative approach</h3>
+<p>I prefer to use a different strategy. Consider using the <code>pacman</code> package. It automatically detects if the pointed package is installed and installs it if it’s not, and then load it. Here’s how you can use it:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-1" class="code-annotation-target"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("pacman")</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2">2</button><span id="annotated-cell-8-2" class="code-annotation-target"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pacman)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="3">3</button><span id="annotated-cell-8-3" class="code-annotation-target"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">p_load</span>(ggplot2)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-1" class="code-annotation-target"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("pacman")</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2">2</button><span id="annotated-cell-6-2" class="code-annotation-target"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pacman)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="3">3</button><span id="annotated-cell-6-3" class="code-annotation-target"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">p_load</span>(ggplot2)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="1" data-code-annotation="1">Keep in mind that you’ll need to install pacman first, as it’s not part of R’s base packages.</span>
+<span data-code-cell="annotated-cell-6" data-code-lines="1" data-code-annotation="1">Keep in mind that you’ll need to install pacman first, as it’s not part of R’s base packages.</span>
 </dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="2" data-code-annotation="2">Load the pacman package.</span>
+<span data-code-cell="annotated-cell-6" data-code-lines="2" data-code-annotation="2">Load the pacman package.</span>
 </dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="3" data-code-annotation="3">Use <code>p_load()</code> to install and load the ggplot2 package in one go.</span>
+<span data-code-cell="annotated-cell-6" data-code-lines="3" data-code-annotation="3">Use <code>p_load()</code> to install and load the ggplot2 package in one go.</span>
 </dd>
 </dl>
 </div>
 </div>
+<p>This appraoch is also useful when you want someone to use your codes. Insteaf of unsure what the packages are installed or not, you can just ask them to run the code and the packages will be installed automatically.</p>
+<p>Better yet, for best pracviel, I stomgl;y recommend the following command:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-1" class="code-annotation-target"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(ggplot2)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="1" data-code-annotation="1"><code>p_load()</code> function is called from the <code>pacman</code> package</span>
+</dd>
+</dl>
 </div>
 </div>
+<p>This can help avoid conflicts with other packages that might have a similarly named function. We are envoking the <code>p_load()</code> function from the <code>pacman</code> package. This is what <code>::</code> does. It allows you to access a function from a package without loading the entire package. This can be useful when you only need a single function from a package and don’t want to load the entire package (which can cause hidden errors).</p>
+</section>
 </section>
 <section id="meet-the-tidyverse" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="meet-the-tidyverse"><span class="header-section-number">2.5</span> Meet the tidyverse</h2>
@@ -372,18 +403,6 @@ A Quirk Worth Mentioning
 </blockquote>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'tidyr' was built under R version 4.2.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'readr' was built under R version 4.2.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'dplyr' was built under R version 4.2.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'stringr' was built under R version 4.2.3</code></pre>
-</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
@@ -397,6 +416,26 @@ A Quirk Worth Mentioning
 </div>
 </div>
 <p>As you can see, Looking at the message generated by executing the above line, we see that nine packages are now loaded.1 They are called ggplot2, tibble, and so on. We will get to know these in more detail throughout the book. Almost all my codes start with the command.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Want to avoid the annoying messages?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Whille loading teh 8 packages is needed and warrted message, it was a poor design principe with the conflicts.</p>
+<p>If you do not want to see the messages, you can use the <code>suppressPackageStartupMessages()</code> function. For example, you can use the following code to load the <code>tidyverse</code> package without seeing the messages:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(tidyverse))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -868,9 +907,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./03_data_structure.html" class="pagination-link" aria-label="Data Structure">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Structure</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

@@ -1,8 +1,3 @@
-<!-- <style>
-.column { padding-right: 3ex }
-.column + .column { padding-left: 0ex }
-</style> -->
-
 # Basics of R and RStudio
 
 ::: {.callout-note}
@@ -14,8 +9,8 @@
 ## Installing R and RStudio
 To get started, I recommend this comprehensive [installation guide](https://datacarpentry.org/R-ecology-lesson/index.html) that will walk you through the process seamlessly.
 
-## What Exactly Is RStudio?
-Think of R as a high-performance engine, capable of incredible feats but not particularly user-friendly on its own. RStudio is the well-designed vehicle that lets you harness that power efficiently. While you could interact with R through a basic terminal (much like driving a sports car without a dashboard), RStudio provides an intuitive interface that makes your life easier.
+## Why Do We Need RStudio?
+Think of R as a high-performance engine—capable of incredible feats but not particularly user-friendly on its own. RStudio is the sleek vehicle that lets you harness that power efficiently. While you could interact with R through a basic terminal, RStudio provides an intuitive interface that makes your life easier.
 
 ::: {.callout-tip collapse="true"}
 ## Alternative Options Worth Considering
@@ -24,11 +19,11 @@ While RStudio is a remarkable tool, it's not the only option out there. [VSCode]
 Another option on the horizon is [Positron](https://positron.posit.co/), developed by the same innovative team behind RStudio. It's the modern evolution of RStudio, currently in beta but already showing great promise. It will eventually replace RStudio as the go-to IDE for R programming.
 :::
 
-RStudio is an incredible well-designed software that makes your life easier when working with R (and Python). It has a lot of features that make your life easier. We will explore many of the features as we go along. The first feature is to make your R code look better.
+RStudio is an incredible well-designed software that makes your life easier when working with R (and Python). It has a lot of features that make your life easier. We'll explore many of these features as we progress, starting with making your R code look better.
 
 ::: {.callout-tip}
 ## Making R look prettier
-One of the subtle joys of programming is crafting code that's not only functional but also aesthetically pleasing—call it the art of code. To enhance the readability of your R scripts, consider installing the Fira Code font. Instruction can be found [here](https://github.com/tonsky/FiraCode/wiki/RStudio-instructions) and [here](https://firacode.org/using-fira-code-ligatures-in-rstudio/).
+One of the subtle joys of programming is crafting code that's not only functional but also aesthetically pleasing. To enhance the readability of your R scripts, consider installing the Fira Code font. Instruction can be found [here](https://github.com/tonsky/FiraCode/wiki/RStudio-instructions) and [here](https://firacode.org/using-fira-code-ligatures-in-rstudio/).
 :::
 
 ## Getting R to Work for You
@@ -40,10 +35,34 @@ print("Hello, World!") # <1>
 
 You can use it as a calculator
 ```{r}
-2 + 2
+3 + 2
 ```
 
-## Installing Packages: Expanding R's Horizons
+You can also assign it to a variable
+```{r}
+x <- 3 + 2 # <1>
+x       # <2>
+```
+1. Assigns the value of `3 + 2` to the variable `x`.
+2. The `x` displays the value of `x` on the console.
+
+One thing worth noting is that we get the 
+
+::: {.callout-tip collapse="true"}
+## Why does R use `<-`?
+In R, `<-` is for assignment while `=` is for function arguments. You can technically use `=` for assignment in almost all cases, meaning `x <- 3 + 2` is equivalent to `x = 3 + 2`. But then why does R continue to favor `<-`?
+
+One reason is conceptual clarity. In R, the distinction between assignment and function arguments is explicit, providing a cleaner syntax and helping avoid ambiguity in complex code. By differentiating assignment with `<-`, R signals that an action is being performed, where data is transferred from one entity to another. This reinforces the principle that assignment and function arguments are inherently distinct constructs.
+
+A second reason is flexibility. R allows for the reverse assignment arrow, `->`, which lets you assign values in the opposite direction. For instance, `3 -> x` assigns the value `3` to `x`, a feature that can sometimes be handy.
+
+But why don’t most other languages use a similar convention? One factor is typing efficiency: `<-` requires three keystrokes, while `=` only requires one (although you eventantually get used to it). However, there’s also a historical element here: early keyboards designed for statistical computing actually had a dedicated `<-` key, which made the operator as convenient as `=` ([source](https://colinfay.me/r-assignment/)):
+
+![](img/rbasic_keyboard.png)
+:::
+
+## Installing Packages
+### Standard approach
 To unlock R's full potential, you'll often need to install additional packages—think of them as apps that extend your smartphone's capabilities. This is a one-time process for each package on your computer. For example, to install the `ggplot2` package:
 ```{r}
 #| eval: false
@@ -56,11 +75,20 @@ And when you want to use the package, just use `library()`.
 library(ggplot2)
 ```
 
-::: {.callout-tip}
-## A Quirk Worth Mentioning
-Here's one of many design inconsistencies we will run into when using R: when installing a package, you enclose its name in quotes, but when loading it, you don't. 
+::: {.callout-warning collapse="true"}
+## A Quirk to Watch Out For
+This is the first design inconsistencies when using R: when installing a package, you enclose its name in quotes, but when loading it, you don't. It's a small quirk, but one that can trip you up if you're not careful (speaking from experience).
 
-To streamline your workflow, consider using the `pacman` package. It automatically detects if the pointed package is installed and installs it if it's not, and then  load it. Here's how you can use it:
+There will be many others along the way. I will try to point them out as we go along.
+:::
+
+Notably, not all packages are on CRAN. For example, many of them are on GitHub, GitLab, or other platforms. To install these packages, you can use the devtools package. For example, to install the `ggthemr` package from GitHub:
+```{r}
+
+```
+
+### An alternative approach
+I prefer to use a different strategy. Consider using the `pacman` package. It automatically detects if the pointed package is installed and installs it if it's not, and then  load it. Here's how you can use it:
 
 ```{r}
 # install.packages("pacman") # <1>
@@ -71,7 +99,18 @@ p_load(ggplot2) # <3>
 2. Load the pacman package.
 3. Use `p_load()` to install and load the ggplot2 package in one go.
 
-:::
+
+This appraoch is also useful when you want someone to use your codes. Insteaf of unsure what the packages are installed or not, you can just ask them to run the code and the packages will be installed automatically.
+
+Better yet, for best pracviel, I stomgl;y recommend the following command:
+```{r}
+pacman::p_load(ggplot2) # <1>
+```
+1.  `p_load()` function is called from the `pacman` package
+
+This can help avoid conflicts with other packages that might have a similarly named function.
+We are envoking the `p_load()` function from the `pacman` package. This is what `::` does. It allows you to access a function from a package without loading the entire package. This can be useful when you only need a single function from a package and don't want to load the entire package (which can cause hidden errors).
+
 
 ## Meet the tidyverse
 As descirbed in the officical [website](https://www.tidyverse.org/):
@@ -82,3 +121,13 @@ As descirbed in the officical [website](https://www.tidyverse.org/):
 library(tidyverse)
 ```
 As you can see, Looking at the message generated by executing the above line, we see that nine packages are now loaded.1 They are called ggplot2, tibble, and so on. We will get to know these in more detail throughout the book. Almost all my codes start with the command.
+
+::: {.callout-tip collapse="true"}
+## Want to avoid the annoying messages?
+Whille loading teh 8 packages is needed and warrted message, it was a poor design principe with the conflicts.
+
+If you do not want to see the messages, you can use the `suppressPackageStartupMessages()` function. For example, you can use the following code to load the `tidyverse` package without seeing the messages:
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+```
+:::

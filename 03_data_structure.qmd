@@ -8,6 +8,8 @@ In R, there are two main data structures: `vector` and `tibble`. Believe it or n
 
 Data structures are usually the most challenging part of any programming language. If you know how to manipulate data structures, you can easily translate the skill in one language to another.
 
+We will deal with importing datasets later. For now, we will use the `penguins` dataset from the `palmerpenguins` package.
+
 ## Our dataset: `penguins`
 We will use a dataset called `penguins` from the `palmerpenguins` package. We will use this dataset throughout our course. This dataset contains measurements of penguins collected from three species: Adelie, Chinstrap, and Gentoo. 
 
