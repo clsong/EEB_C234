@@ -36,7 +36,10 @@ But it’s not just him—the tidyverse is a community effort, a group of people
 
 With `ggplot2`, you’ll learn the Grammar of Graphics, one of the most powerful plotting systems out there. Beyond just producing high-quality figures, it will teach you a structured approach to data visualization.
 
-While `ggplot2` is powerful, its defaults aren’t always perfect. We’ll cover design principles that enhance both the appeal and informativeness of your figures—a skill that’s invaluable since figures often make the first impression on readers.
+While `ggplot2` is powerful, its defaults aren’t always perfect. We’ll cover design principles that enhance both the appeal and informativeness of your figures—a skill that’s invaluable since figures often make the first impression on readers. By the end of the class, you will be able to make figures like this:
+
+![by Cédric Scherer](img/good_ggplot.png)
+
 
 ### The Art of Data Wrangling
 In real-world research, data is rarely neat. Before you can start analyzing, you’ll likely spend hours organizing it into a usable format. Fortunately, `dplyr` and `tidyr` make this much easier, turning data wrangling into a clear, logical workflow.
@@ -65,13 +68,20 @@ you |>
   eat() 
 ```
 
-In the tidyverse ecosystem, each step of data wrangling becomes clear, easy to follow, and—importantly—easy to debug. You’ll be introduced to a handful of core verbs, fewer than ten in total, which handle around 90% of the everyday tasks you’ll encounter. 
-And just as promised, coding languages are easier than human languages
+In the tidyverse ecosystem, each step of data wrangling becomes clear, easy to follow, and—importantly—easy to debug. You’ll be introduced to a handful of core verbs, fewer than ten in total, which handle around 90% of the everyday tasks you’ll encounter. And just as promised, coding languages are easier than human languages :)
 
 ### Scientific typsetting
-Yes, Microsoft Word is great. But updating figures, managing references, or keeping layouts consistent can quickly turn into a headache. Enter `Quarto`, a document preparation system crafted for researchers. It lets you seamlessly integrate code, references, and figures, generating polished outputs in formats like Word or LaTeX.
+Yes, Microsoft Word is great. But updating figures, managing references, or keeping layouts consistent can quickly turn into a headache. The key issue is that Word is what we call a WYSIWYG editor—*What You See Is What You Get*. This means you’re constantly tweaking the layout to get it just right, which is time-consuming and error-prone. 
 
-We’ll also touch on `Typst`, a modern alternative to `LaTeX` that’s powerful yet more intuitive. It offers a user-friendly way to create beautiful, publication-ready documents without the steep learning curve of `LaTeX`, giving you a smooth and efficient experience in scientific typesetting.
+In general, it is a good idea to separate the content from the layout. There are a couple of tools to do that (including the notarious `Latex`). But we will focus on `Quarto`, a document preparation system crafted for researchers. It lets you seamlessly integrate code, references, and figures, generating polished outputs in formats like Word or LaTeX. In the end of the class, you will be able to produce documents like this with one click in R:
+
+![by LaPreprint](img/lapreprint.png)
+
+::: {.callout-tip collapse="true"}
+## Modern Alternative to LaTeX
+While Quarto is powerful, sometimes for the best layout, we need more special tools. Latex is one, but it is outdated (you need to install ). We will briefly touch `Typst`, a modern alternative to `LaTeX` that’s powerful yet more intuitive. It offers a user-friendly way to create beautiful, publication-ready documents without the steep learning curve of `LaTeX`, giving you a smooth and efficient experience in scientific typesetting.
+:::
+
 
 ### Reproducible Research
 As a data editor in a journal, I’m often surprised by how many papers are difficult to reproduce. This is a big problem in science. In this course, you’ll learn to make your research fully reproducible, which benefits not only the scientific community but also you—it makes it easier to revisit and build upon your work.

@@ -29,3 +29,9 @@ x <- 5  |>
 
 ## Install R packages
 
+## Load data
+
+::: {.callout-tip}
+## Name cleaner
+janitor::clean_names()
+:::

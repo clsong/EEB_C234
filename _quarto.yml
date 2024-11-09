@@ -7,6 +7,7 @@ book:
   subtitle: "Practical Computing for Evolutionary Biologists and Ecologists"
   author: "Chuliang Song"
   date: "Winter 2025"
+  site-url: https://clsong.github.io/EEB_C234/
   chapters:
     - index.qmd
     - 01_intro.qmd
@@ -15,9 +16,11 @@ book:
     # - references.qmd
 
 bibliography: references.bib
+code-annotations: hover
 
 format:
     html:
         theme:
             - cosmo
             - style.scss
+        df-print: paged
