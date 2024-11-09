@@ -79,7 +79,10 @@ While there are several tools for this purpose (including the notorious `LaTeX`)
 
 ![by LaPreprint](img/intro_lapreprint.png)
 
-While Quarto is powerful, sometimes you need specialized tools for optimal layout. LaTeX is one option, but it can feel outdated and cumbersome. We'll briefly explore Typst, a modern alternative that offers the sophistication of LaTeX without the steep learning curve. It provides a user-friendly way to create beautiful, publication-ready documents, which I believe will replace LaTeX in the near future.
+::: {.callout-tip collapse="true"}
+# Professional Typesetting
+While `Quarto` is powerful, sometimes you need specialized tools for optimal layout. `LaTeX` is one option, but it can feel outdated and cumbersome. We'll briefly explore `Typst`, a modern alternative that offers the sophistication of `LaTeX` without the steep learning curve. It is also much faster and provided user-friendly interface for bebuggging. I firmlt believe `Typst` will replace `LaTeX` in the near future.
+:::
 
 
 ### Reproducible Research
@@ -89,37 +92,85 @@ As a data editor for a journal, I'm often struck by how many papers are challeng
 
 We'll get into version control using Git and GitHub, tools that help you track changes, back up your work, and collaborate effectively. Additionally, we'll cover specific techniques in R that support reproducible workflows, ensuring your research stands on a solid foundation.
 
-## Plan (Tentative)
-- Introduction to R and RStudio 
-- Basic data types: `tibble` and `vector`
-- Introduction to `ggplot2`
-- Data wrangling with `dplyr`
-  - `dplyr::filter()`
-  - `dplyr::select()`
-  - `dplyr::mutate()`
-  - `dplyr::arrange()`
-  - `dplyr::group_by()`
-  - `dplyr::summarize()`
-- Principles of data visualization
-  -  Color theory
-  -  Effective caption
-- Practicle tools in ggplot ecosystem
-  - Annotation with `ggrepel` and `gghighlight`
-  - Labeling with `ggtext`
-  - Multi-panel plots with `patchwork`
-  - Interactive plots with `ggiraph`
-  - Animated plots with `gganimate`
-  - Too many points in scatter plot with `ggpointdensity` and `ggdensity`
-  - Handing overlapping points with
-- Introduction to Functional Programming with `purrr` 
-  - Parallel processing with `furrr`
-- Introduction to `Quarto`
-  - Blocks and chunk options
-  - Reference management with `bibtex`
-- Introduction to `Typst`
+## Course Plan (Tentative)
+
+### Introduction to R and RStudio
+
+- Installing R and RStudio
+- Navigating the RStudio interface
+- Basic R syntax and operations
+- Introduction to R packages and the `tidyverse`
+- Basic Data Types: `tibble` and `vector`
+
+### Introduction to `ggplot2`
+
+- The Grammar of Graphics concept
+- Creating basic plots: scatter plots, line graphs, histograms, boxplots
+- Customizing plots with aesthetics, themes, and labels
+- Saving and exporting plots
+
+### Core `dplyr` Verbs for Data Manipulation
+
+- Using the pipe operator (`|>`) for streamlined code
+- `filter()`: subsetting rows based on conditions
+- `select()`: choosing specific columns
+- `mutate()`: creating and transforming variables
+- `group_by()` and `summarize()`: aggregating and summarizing data
+
+### Advanced `ggplot2` Techniques
+
+- Design principles based on [*Fundamentals of Data Visualization*](https://clauswilke.com/dataviz/) by Claus O. Wilke
+- Annotation with `ggrepel` and `gghighlight` for labeling and highlighting key data
+- Enhanced text formatting with `ggtext`
+- Multi-panel plots with `patchwork` 
+- Interactive plots with `ggiraph` 
+- Animated plots with `gganimate` to visualize changes over time
+- Handling overplotting with `ggpointdensity` and `ggdensity` for dense scatter plots
+- Applying beautiful themes 
+- How to adjust figures for presentations
+
+### Importing and Cleaning Data
+
+- Importing data with `readr`
+- Cleaning data with `janitor`
+- Handling missing data: detecting and dealing with `NA` values
+- Handling dates with `lubridate`: parsing and manipulating date-time data
+- Joining data: combining datasets using `left_join()`, `inner_join()`, and other join functions
+
+### Making R Run Faster
+
+<!-- - Simple tricks with vectorization to optimize code performance -->
+- Faster data wrangling with `dtplyr` for speed improvements
+- Functional programming with `purrr`
+- Parallel computing with `furrr` to utilize multiple cores for concurrent execution
+
+### Introduction to Quarto
+
+- Setting up Quarto and integrating it with RStudio
+- Document structure and YAML metadata
+- Blocks and chunk options: controlling code execution and output
+- Reference management with `bibtex`
+- Generating outputs: rendering documents to HTML, PDF, and Word formats
+
+### Best Practices for Reproducible Research
+
+- Version control with `Git` and `GitHub` using `RStudio`
+- Using `Quarto` for reproducible reports: integrating code, analysis, and narrative text
+- creating reproducible environments and managing dependencies with `renv`
+
+### How to Use AI in Coding
+
+- Introduction to `GitHub Copilot`
 
 ## What We Won't Cover
-There is so much to learn with computing. There is a reason why programmers are paid so well. 
+There's a vast universe of computing out there, and we have to draw the line somewhere (before we all get lost in a black hole of code). There's a reason why programmers in the Silicon Valley are paid so well—computing is hard! Here are some exciting realms we'll gracefully sidestep (but I envourgae you to explore in the future):
 
-- **Machine Learning**: This is a vast field that deserves its own course. We'll touch on the basics, but we won't dive deep.
-- **Web Development**: This is a whole different beast. We won't cover it.
+- **Advanced Statistics and Machine Learning**: These areas are extensive and deserve dedicated courses. To dive deeper into the world of algorithms and data models, I'd recommend starting with [Tidymodels](https://www.tidymodels.org/), which shares the same design philosophy as the `tidyverse` and should make for a smooth transition.
+
+- **Writing R Packages**: Creating your own R packages is super useful, but might be overkill for our current adventure. If you're interested in trying this, check out Hadley Wickham's book [*R Packages*](https://r-pkgs.org/) as a starting point.
+
+- **High-Performance Computing and Big Data Analytics**: Working with massive datasets and supercomputers is exciting (who doesn't want to feel like they're in a NASA control room?), but it often requires specialized knowledge and environment-specific setups. Plus, ecological datasets aren't usually large enough to make your laptop break a sweat. We'll stick to tools that run on a standard machine. If you're eager to unleash the Kraken of computing power, UCLA's Hoffman2 Cluster has you covered with detailed [guidelines](https://www.hoffman2.idre.ucla.edu/index.html).
+
+- **Building Personal Websites**: Maintaining a professional personal website is important for academics—it’s like your digital business card. Quarto makes it quite easy to set one up, but we won't cover the details in this course. If you're intrested, I'd recommend exploring the Quarto [documentation](https://quarto.org/docs/websites/) on making websites.
+
+- **Other Programming Languages**: Python, Julia, and friends are like the enticing dessert menu after a big meal—tempting but perhaps best saved for another time. As mentioned earlier, transitioning from R to Julia is relatively straightforward, so you can always explore other languages when you're ready to expand your coding palate.

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.33">
+<meta name="generator" content="quarto-1.6.32">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>1&nbsp; Course goal – EE BIOL C234</title>
 <style>
@@ -66,10 +66,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-86b0efa2460cd378948dc2f68bdd414f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-857f1d5f411f36398542cd62bf9c4f83.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-706d47e59303ecb561a7787d3c9b597f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-74d410878893cc97fd31203e5d114f5e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -157,7 +157,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#reproducible-research" id="toc-reproducible-research" class="nav-link" data-scroll-target="#reproducible-research"><span class="header-section-number">1.2.5</span> Reproducible Research</a></li>
   </ul>
 </li>
-  <li><a href="#plan-tentative" id="toc-plan-tentative" class="nav-link" data-scroll-target="#plan-tentative"><span class="header-section-number">1.3</span> Plan (Tentative)</a></li>
+  <li>
+<a href="#course-plan-tentative" id="toc-course-plan-tentative" class="nav-link" data-scroll-target="#course-plan-tentative"><span class="header-section-number">1.3</span> Course Plan (Tentative)</a>
+  <ul class="collapse">
+<li><a href="#introduction-to-r-and-rstudio" id="toc-introduction-to-r-and-rstudio" class="nav-link" data-scroll-target="#introduction-to-r-and-rstudio"><span class="header-section-number">1.3.1</span> Introduction to R and RStudio</a></li>
+  <li><a href="#introduction-to-ggplot2" id="toc-introduction-to-ggplot2" class="nav-link" data-scroll-target="#introduction-to-ggplot2"><span class="header-section-number">1.3.2</span> Introduction to <code>ggplot2</code></a></li>
+  <li><a href="#core-dplyr-verbs-for-data-manipulation" id="toc-core-dplyr-verbs-for-data-manipulation" class="nav-link" data-scroll-target="#core-dplyr-verbs-for-data-manipulation"><span class="header-section-number">1.3.3</span> Core <code>dplyr</code> Verbs for Data Manipulation</a></li>
+  <li><a href="#advanced-ggplot2-techniques" id="toc-advanced-ggplot2-techniques" class="nav-link" data-scroll-target="#advanced-ggplot2-techniques"><span class="header-section-number">1.3.4</span> Advanced <code>ggplot2</code> Techniques</a></li>
+  <li><a href="#importing-and-cleaning-data" id="toc-importing-and-cleaning-data" class="nav-link" data-scroll-target="#importing-and-cleaning-data"><span class="header-section-number">1.3.5</span> Importing and Cleaning Data</a></li>
+  <li><a href="#making-r-run-faster" id="toc-making-r-run-faster" class="nav-link" data-scroll-target="#making-r-run-faster"><span class="header-section-number">1.3.6</span> Making R Run Faster</a></li>
+  <li><a href="#introduction-to-quarto" id="toc-introduction-to-quarto" class="nav-link" data-scroll-target="#introduction-to-quarto"><span class="header-section-number">1.3.7</span> Introduction to Quarto</a></li>
+  <li><a href="#best-practices-for-reproducible-research" id="toc-best-practices-for-reproducible-research" class="nav-link" data-scroll-target="#best-practices-for-reproducible-research"><span class="header-section-number">1.3.8</span> Best Practices for Reproducible Research</a></li>
+  <li><a href="#how-to-use-ai-in-coding" id="toc-how-to-use-ai-in-coding" class="nav-link" data-scroll-target="#how-to-use-ai-in-coding"><span class="header-section-number">1.3.9</span> How to Use AI in Coding</a></li>
+  </ul>
+</li>
   <li><a href="#what-we-wont-cover" id="toc-what-we-wont-cover" class="nav-link" data-scroll-target="#what-we-wont-cover"><span class="header-section-number">1.4</span> What We Won’t Cover</a></li>
   </ul></nav>
     </div>
@@ -267,7 +280,22 @@ Heroes Behind the Tidyverse?
 <figure class="figure"><p><img src="img/intro_lapreprint.png" class="img-fluid figure-img"></p>
 <figcaption>by LaPreprint</figcaption></figure>
 </div>
-<p>While Quarto is powerful, sometimes you need specialized tools for optimal layout. LaTeX is one option, but it can feel outdated and cumbersome. We’ll briefly explore Typst, a modern alternative that offers the sophistication of LaTeX without the steep learning curve. It provides a user-friendly way to create beautiful, publication-ready documents, which I believe will replace LaTeX in the near future.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Professional Typesetting
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>While <code>Quarto</code> is powerful, sometimes you need specialized tools for optimal layout. <code>LaTeX</code> is one option, but it can feel outdated and cumbersome. We’ll briefly explore <code>Typst</code>, a modern alternative that offers the sophistication of <code>LaTeX</code> without the steep learning curve. It is also much faster and provided user-friendly interface for bebuggging. I firmlt believe <code>Typst</code> will replace <code>LaTeX</code> in the near future.</p>
+</div>
+</div>
+</div>
 </section><section id="reproducible-research" class="level3" data-number="1.2.5"><h3 data-number="1.2.5" class="anchored" data-anchor-id="reproducible-research">
 <span class="header-section-number">1.2.5</span> Reproducible Research</h3>
 <p>As a data editor for a journal, I’m often struck by how many papers are challenging to reproduce—which I see as a huge problem for science. In this course, you’ll learn to make your research fully reproducible, which benefits not only the scientific community but also you—it makes it easier to revisit and build upon your work.</p>
@@ -276,70 +304,102 @@ Heroes Behind the Tidyverse?
 <figcaption>PhD comics by Jorge Cham</figcaption></figure>
 </div>
 <p>We’ll get into version control using Git and GitHub, tools that help you track changes, back up your work, and collaborate effectively. Additionally, we’ll cover specific techniques in R that support reproducible workflows, ensuring your research stands on a solid foundation.</p>
-</section></section><section id="plan-tentative" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="plan-tentative">
-<span class="header-section-number">1.3</span> Plan (Tentative)</h2>
+</section></section><section id="course-plan-tentative" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="course-plan-tentative">
+<span class="header-section-number">1.3</span> Course Plan (Tentative)</h2>
+<section id="introduction-to-r-and-rstudio" class="level3" data-number="1.3.1"><h3 data-number="1.3.1" class="anchored" data-anchor-id="introduction-to-r-and-rstudio">
+<span class="header-section-number">1.3.1</span> Introduction to R and RStudio</h3>
 <ul>
-<li>Introduction to R and RStudio</li>
-<li>Basic data types: <code>tibble</code> and <code>vector</code>
+<li>Installing R and RStudio</li>
+<li>Navigating the RStudio interface</li>
+<li>Basic R syntax and operations</li>
+<li>Introduction to R packages and the <code>tidyverse</code>
 </li>
-<li>Introduction to <code>ggplot2</code>
+<li>Basic Data Types: <code>tibble</code> and <code>vector</code>
 </li>
-<li>Data wrangling with <code>dplyr</code>
+</ul></section><section id="introduction-to-ggplot2" class="level3" data-number="1.3.2"><h3 data-number="1.3.2" class="anchored" data-anchor-id="introduction-to-ggplot2">
+<span class="header-section-number">1.3.2</span> Introduction to <code>ggplot2</code>
+</h3>
 <ul>
-<li><code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code></li>
-<li><code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code></li>
-<li><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code></li>
-<li><code><a href="https://dplyr.tidyverse.org/reference/arrange.html">dplyr::arrange()</a></code></li>
-<li><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code></li>
-<li><code><a href="https://dplyr.tidyverse.org/reference/summarise.html">dplyr::summarize()</a></code></li>
-</ul>
-</li>
-<li>Principles of data visualization
+<li>The Grammar of Graphics concept</li>
+<li>Creating basic plots: scatter plots, line graphs, histograms, boxplots</li>
+<li>Customizing plots with aesthetics, themes, and labels</li>
+<li>Saving and exporting plots</li>
+</ul></section><section id="core-dplyr-verbs-for-data-manipulation" class="level3" data-number="1.3.3"><h3 data-number="1.3.3" class="anchored" data-anchor-id="core-dplyr-verbs-for-data-manipulation">
+<span class="header-section-number">1.3.3</span> Core <code>dplyr</code> Verbs for Data Manipulation</h3>
 <ul>
-<li>Color theory</li>
-<li>Effective caption</li>
-</ul>
-</li>
-<li>Practicle tools in ggplot ecosystem
+<li>Using the pipe operator (<code>|&gt;</code>) for streamlined code</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>: subsetting rows based on conditions</li>
+<li>
+<code>select()</code>: choosing specific columns</li>
+<li>
+<code>mutate()</code>: creating and transforming variables</li>
+<li>
+<code>group_by()</code> and <code>summarize()</code>: aggregating and summarizing data</li>
+</ul></section><section id="advanced-ggplot2-techniques" class="level3" data-number="1.3.4"><h3 data-number="1.3.4" class="anchored" data-anchor-id="advanced-ggplot2-techniques">
+<span class="header-section-number">1.3.4</span> Advanced <code>ggplot2</code> Techniques</h3>
 <ul>
-<li>Annotation with <code>ggrepel</code> and <code>gghighlight</code>
-</li>
-<li>Labeling with <code>ggtext</code>
+<li>Design principles based on <a href="https://clauswilke.com/dataviz/"><em>Fundamentals of Data Visualization</em></a> by Claus O. Wilke</li>
+<li>Annotation with <code>ggrepel</code> and <code>gghighlight</code> for labeling and highlighting key data</li>
+<li>Enhanced text formatting with <code>ggtext</code>
 </li>
 <li>Multi-panel plots with <code>patchwork</code>
 </li>
 <li>Interactive plots with <code>ggiraph</code>
 </li>
-<li>Animated plots with <code>gganimate</code>
-</li>
-<li>Too many points in scatter plot with <code>ggpointdensity</code> and <code>ggdensity</code>
-</li>
-<li>Handing overlapping points with</li>
-</ul>
-</li>
-<li>Introduction to Functional Programming with <code>purrr</code>
+<li>Animated plots with <code>gganimate</code> to visualize changes over time</li>
+<li>Handling overplotting with <code>ggpointdensity</code> and <code>ggdensity</code> for dense scatter plots</li>
+<li>Applying beautiful themes</li>
+<li>How to adjust figures for presentations</li>
+</ul></section><section id="importing-and-cleaning-data" class="level3" data-number="1.3.5"><h3 data-number="1.3.5" class="anchored" data-anchor-id="importing-and-cleaning-data">
+<span class="header-section-number">1.3.5</span> Importing and Cleaning Data</h3>
 <ul>
-<li>Parallel processing with <code>furrr</code>
+<li>Importing data with <code>readr</code>
 </li>
-</ul>
+<li>Cleaning data with <code>janitor</code>
 </li>
-<li>Introduction to <code>Quarto</code>
+<li>Handling missing data: detecting and dealing with <code>NA</code> values</li>
+<li>Handling dates with <code>lubridate</code>: parsing and manipulating date-time data</li>
+<li>Joining data: combining datasets using <code>left_join()</code>, <code>inner_join()</code>, and other join functions</li>
+</ul></section><section id="making-r-run-faster" class="level3" data-number="1.3.6"><h3 data-number="1.3.6" class="anchored" data-anchor-id="making-r-run-faster">
+<span class="header-section-number">1.3.6</span> Making R Run Faster</h3>
+<!-- - Simple tricks with vectorization to optimize code performance -->
 <ul>
-<li>Blocks and chunk options</li>
+<li>Faster data wrangling with <code>dtplyr</code> for speed improvements</li>
+<li>Functional programming with <code>purrr</code>
+</li>
+<li>Parallel computing with <code>furrr</code> to utilize multiple cores for concurrent execution</li>
+</ul></section><section id="introduction-to-quarto" class="level3" data-number="1.3.7"><h3 data-number="1.3.7" class="anchored" data-anchor-id="introduction-to-quarto">
+<span class="header-section-number">1.3.7</span> Introduction to Quarto</h3>
+<ul>
+<li>Setting up Quarto and integrating it with RStudio</li>
+<li>Document structure and YAML metadata</li>
+<li>Blocks and chunk options: controlling code execution and output</li>
 <li>Reference management with <code>bibtex</code>
 </li>
-</ul>
-</li>
-<li>Introduction to <code>Typst</code>
-</li>
-</ul></section><section id="what-we-wont-cover" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="what-we-wont-cover">
-<span class="header-section-number">1.4</span> What We Won’t Cover</h2>
-<p>There is so much to learn with computing. There is a reason why programmers are paid so well.</p>
+<li>Generating outputs: rendering documents to HTML, PDF, and Word formats</li>
+</ul></section><section id="best-practices-for-reproducible-research" class="level3" data-number="1.3.8"><h3 data-number="1.3.8" class="anchored" data-anchor-id="best-practices-for-reproducible-research">
+<span class="header-section-number">1.3.8</span> Best Practices for Reproducible Research</h3>
 <ul>
-<li>
-<strong>Machine Learning</strong>: This is a vast field that deserves its own course. We’ll touch on the basics, but we won’t dive deep.</li>
-<li>
-<strong>Web Development</strong>: This is a whole different beast. We won’t cover it.</li>
+<li>Version control with <code>Git</code> and <code>GitHub</code> using <code>RStudio</code>
+</li>
+<li>Using <code>Quarto</code> for reproducible reports: integrating code, analysis, and narrative text</li>
+<li>creating reproducible environments and managing dependencies with <code>renv</code>
+</li>
+</ul></section><section id="how-to-use-ai-in-coding" class="level3" data-number="1.3.9"><h3 data-number="1.3.9" class="anchored" data-anchor-id="how-to-use-ai-in-coding">
+<span class="header-section-number">1.3.9</span> How to Use AI in Coding</h3>
+<ul>
+<li>Introduction to <code>GitHub Copilot</code>
+</li>
+</ul></section></section><section id="what-we-wont-cover" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="what-we-wont-cover">
+<span class="header-section-number">1.4</span> What We Won’t Cover</h2>
+<p>There’s a vast universe of computing out there, and we have to draw the line somewhere (before we all get lost in a black hole of code). There’s a reason why programmers in the Silicon Valley are paid so well—computing is hard! Here are some exciting realms we’ll gracefully sidestep (but I envourgae you to explore in the future):</p>
+<ul>
+<li><p><strong>Advanced Statistics and Machine Learning</strong>: These areas are extensive and deserve dedicated courses. To dive deeper into the world of algorithms and data models, I’d recommend starting with <a href="https://www.tidymodels.org/">Tidymodels</a>, which shares the same design philosophy as the <code>tidyverse</code> and should make for a smooth transition.</p></li>
+<li><p><strong>Writing R Packages</strong>: Creating your own R packages is super useful, but might be overkill for our current adventure. If you’re interested in trying this, check out Hadley Wickham’s book <a href="https://r-pkgs.org/"><em>R Packages</em></a> as a starting point.</p></li>
+<li><p><strong>High-Performance Computing and Big Data Analytics</strong>: Working with massive datasets and supercomputers is exciting (who doesn’t want to feel like they’re in a NASA control room?), but it often requires specialized knowledge and environment-specific setups. Plus, ecological datasets aren’t usually large enough to make your laptop break a sweat. We’ll stick to tools that run on a standard machine. If you’re eager to unleash the Kraken of computing power, UCLA’s Hoffman2 Cluster has you covered with detailed <a href="https://www.hoffman2.idre.ucla.edu/index.html">guidelines</a>.</p></li>
+<li><p><strong>Building Personal Websites</strong>: Maintaining a professional personal website is important for academics—it’s like your digital business card. Quarto makes it quite easy to set one up, but we won’t cover the details in this course. If you’re intrested, I’d recommend exploring the Quarto <a href="https://quarto.org/docs/websites/">documentation</a> on making websites.</p></li>
+<li><p><strong>Other Programming Languages</strong>: Python, Julia, and friends are like the enticing dessert menu after a big meal—tempting but perhaps best saved for another time. As mentioned earlier, transitioning from R to Julia is relatively straightforward, so you can always explore other languages when you’re ready to expand your coding palate.</p></li>
 </ul>
 
 
