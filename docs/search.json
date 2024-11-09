@@ -88,11 +88,11 @@
   {
     "objectID": "02_R_basics.html",
     "href": "02_R_basics.html",
-    "title": "2  R and RStudio",
+    "title": "2  Basics of R and RStudio",
     "section": "",
-    "text": "2.1 Installing R",
+    "text": "2.1 Installing R and RStudio",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>R and RStudio</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Basics of R and RStudio</span>"
     ]
   },
   {
@@ -108,21 +108,31 @@
   {
     "objectID": "02_R_basics.html#a-simple-calculation",
     "href": "02_R_basics.html#a-simple-calculation",
-    "title": "2  R and RStudio",
-    "section": "2.3 A simple calculation",
-    "text": "2.3 A simple calculation",
+    "title": "2  Basics of R and RStudio",
+    "section": "2.2 A simple calculation",
+    "text": "2.2 A simple calculation",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>R and RStudio</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Basics of R and RStudio</span>"
     ]
   },
   {
     "objectID": "02_R_basics.html#install-r-packages",
     "href": "02_R_basics.html#install-r-packages",
-    "title": "2  R and RStudio",
-    "section": "2.4 Install R packages",
-    "text": "2.4 Install R packages",
+    "title": "2  Basics of R and RStudio",
+    "section": "2.3 Install R packages",
+    "text": "2.3 Install R packages",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>R and RStudio</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Basics of R and RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "02_R_basics.html#installing-r-and-rstudio",
+    "href": "02_R_basics.html#installing-r-and-rstudio",
+    "title": "2  Basics of R and RStudio",
+    "section": "",
+    "text": "Tip\n\n\n\nTo make RStuido look better, you may want to install the fira font. Instruction can be found here and here.\nWithout Fira, you code could look like this: x &lt;- 5 |&gt; sqrt() |&gt; round(2)\nBut with Firacode, it will look much better\n\nx &lt;- 5  |&gt; \n    sqrt() |&gt; \n    round(2)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Basics of R and RStudio</span>"
     ]
   }
 ]

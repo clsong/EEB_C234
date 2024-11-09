@@ -1,4 +1,4 @@
-# R and RStudio
+# Basics of R and RStudio
 
 ::: {.callout-note}
 ## Class Objective
@@ -6,17 +6,22 @@
 - Get R to do basic math
 :::
 
-## Installing R
-
-## Installing RStudio
+## Installing R and RStudio
 
 ::: {.callout-tip}
 To make RStuido look better, you may want to install the fira font. Instruction can be found [here](https://github.com/tonsky/FiraCode/wiki/RStudio-instructions) and [here](https://firacode.org/using-fira-code-ligatures-in-rstudio/).
 
 Without Fira, you code could look like this: 
+x <- 5  |> 
+    sqrt() |> 
+    round(2)
+
+But with Firacode, it will look much better
 ```{r}
 #| eval: false
-x
+x <- 5  |> 
+    sqrt() |> 
+    round(2)
 ```
 :::
 
