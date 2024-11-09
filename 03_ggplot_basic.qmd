@@ -38,22 +38,3 @@ ggplot(
 4. Add a layer of points to the plot.
 
 Of course, this is just the beginning. To give you a sense of how to visualize it better, this would be the goal:
-```{r}
-#| echo: false
-#| warning: false
-library(ggiraph)
-p <- penguins |>
-  ggplot(aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
-  geom_point_interactive(aes(tooltip = species)) +
-  geom_
-  theme_minimal() +
-  labs(
-    title = "Flipper Length vs Body Mass of Penguins",
-    x = "Flipper Length (mm)",
-    y = "Body Mass (g)"
-  )
-
-girafe(
-  ggobj = p
-)
-```

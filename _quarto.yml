@@ -12,7 +12,7 @@ book:
     - index.qmd
     - 01_intro.qmd
     # - 02_R_basics.qmd
-    # - ggplot_basic.qmd
+    # - 03_ggplot_basic.qmd
     # - references.qmd
 
 bibliography: references.bib
