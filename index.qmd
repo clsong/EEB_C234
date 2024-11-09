@@ -23,7 +23,7 @@ x^2 # <2>
 1. Calculate 1+1 and assign it to the variable `x`.
 2. Calculate the square of `x`.
 
-See the little circle on the right? Hover over it for a quick explanation of the code. When you hover over the code block itself, you’ll also spot a “copy” button—perfect for copying and pasting it into your R console to try it out yourself (fun fact: that’s how most coding is done in real life).
+See the little circle on the right? Hover over it for a quick explanation of the code. When you hover over the code block itself, you’ll also spot a “copy” button—perfect for copying and pasting it into your R console to try it out yourself (fun fact: that’s how a large portion of coding is done in real life).
 
 Throughout the course, expect tips, tricks, and even a few fun facts sprinkled in. While not essential, these extras might give you an edge or deeper insight. Some of them are collapsible, so you can click to expand and explore them at your own pace. Look out for these in green boxes, like this:
 
