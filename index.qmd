@@ -41,6 +41,6 @@ Throughout the course, expect tips, tricks, and even a few fun facts sprinkled i
 
 ::: {.callout-tip collapse="true"}
 ## A Tip Box
-![As promised, this is *literally* a tips box.](img/syllabus_tip.png)
+![As advertised, this is *literally* a tips box.](img/syllabus_tip.png)
 :::
 
