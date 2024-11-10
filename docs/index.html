@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.32">
+<meta name="generator" content="quarto-1.6.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,10 +72,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-857f1d5f411f36398542cd62bf9c4f83.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-86b0efa2460cd378948dc2f68bdd414f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-74d410878893cc97fd31203e5d114f5e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-706d47e59303ecb561a7787d3c9b597f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -161,6 +162,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basics of R and RStudio</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_data_structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Structure</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_ggplot_basic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Grammar of Graphics</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -174,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#weclome" id="toc-weclome" class="nav-link active" data-scroll-target="#weclome">Weclome</a>
   <ul class="collapse">
   <li><a href="#course-info" id="toc-course-info" class="nav-link" data-scroll-target="#course-info">Course Info</a></li>
-  <li><a href="#navigating-the-lecture-notes" id="toc-navigating-the-lecture-notes" class="nav-link" data-scroll-target="#navigating-the-lecture-notes">Navigating the Lecture Notes</a></li>
+  <li><a href="#how-to-use-the-lecture-notes" id="toc-how-to-use-the-lecture-notes" class="nav-link" data-scroll-target="#how-to-use-the-lecture-notes">How to Use the Lecture Notes</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -227,12 +240,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>This is the inaugural run of this course for me. So if I’m losing you, boring you, talking too fast, too slow, whatever – <em>speak up</em>! Your feedback is my compass.</p>
 </section>
-<section id="navigating-the-lecture-notes" class="level2">
-<h2 class="anchored" data-anchor-id="navigating-the-lecture-notes">Navigating the Lecture Notes</h2>
+<section id="how-to-use-the-lecture-notes" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-use-the-lecture-notes">How to Use the Lecture Notes</h2>
 <p>Your left sidebar is your map to the course, showing all lectures—just a click away. On the right, you’ll see a table of contents specific to each lecture.</p>
 <p>In this course, code examples will appear in blocks like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">+</span><span class="dv">1</span></span>
+<div class="sourceCode cell-code" id="annotated-cell-1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">+</span><span class="dv">1</span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a>x<span class="sc">^</span><span class="dv">2</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
@@ -248,6 +261,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>See the little circle on the right? Hover over it for a quick explanation of the code. When you hover over the code block itself, you’ll also spot a “copy” button—perfect for copying and pasting it into your R console to try it out yourself (fun fact: that’s how a large portion of coding is done in real life).</p>
+<p>To show stepped progress, we’ll often add to existing code blocks. New additions are highlighted for clarity. For example:</p>
+<div class="cell" data-source-line-numbers="4">
+<div class="sourceCode cell-code" id="annotated-cell-2" data-source-line-numbers="4" data-code-line-numbers="4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">+</span><span class="dv">1</span> </span>
+<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>x<span class="sc">^</span><span class="dv">2</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>x<span class="sc">^</span><span class="dv">3</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="1">Calculate the cube of <code>x</code>.</span>
+</dd>
+</dl>
+</div>
+</div>
 <p>You’ll find key computational tools and R packages highlighted in purple (e.g., <code>GitHub</code> and <code>ggplot2</code>). R functions are indicated in red and always include parentheses, such as <code>sum()</code>.</p>
 <p>Throughout the course, expect tips, tricks, and even a few fun facts sprinkled in. While not essential, these extras might give you an edge or deeper insight. Some of them are collapsible, so you can click to expand and explore them at your own pace. Look out for these in green boxes, like this:</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -750,4 +777,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.js" defer="true"></script>
 </body></html>

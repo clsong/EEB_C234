@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.32">
+<meta name="generator" content="quarto-1.6.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,10 +70,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-857f1d5f411f36398542cd62bf9c4f83.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-86b0efa2460cd378948dc2f68bdd414f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-74d410878893cc97fd31203e5d114f5e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-706d47e59303ecb561a7787d3c9b597f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -181,9 +182,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#why-graphs" id="toc-why-graphs" class="nav-link active" data-scroll-target="#why-graphs"><span class="header-section-number">4.1</span> Why Graphs?</a></li>
-  <li><a href="#our-first-graph-with-ggplot2" id="toc-our-first-graph-with-ggplot2" class="nav-link" data-scroll-target="#our-first-graph-with-ggplot2"><span class="header-section-number">4.2</span> Our first graph with <code>ggplot2</code></a></li>
-  <li><a href="#why-always-plot-your-data" id="toc-why-always-plot-your-data" class="nav-link" data-scroll-target="#why-always-plot-your-data"><span class="header-section-number">4.3</span> Why Always Plot Your Data</a></li>
+  <li><a href="#why-so-much-focus-on-graphs" id="toc-why-so-much-focus-on-graphs" class="nav-link active" data-scroll-target="#why-so-much-focus-on-graphs"><span class="header-section-number">4.1</span> Why so much focus on Graphs?</a></li>
+  <li><a href="#crafting-our-first-graph-with-ggplot2" id="toc-crafting-our-first-graph-with-ggplot2" class="nav-link" data-scroll-target="#crafting-our-first-graph-with-ggplot2"><span class="header-section-number">4.2</span> Crafting Our First Graph with <code>ggplot2</code></a></li>
+  <li><a href="#tuning-our-plot" id="toc-tuning-our-plot" class="nav-link" data-scroll-target="#tuning-our-plot"><span class="header-section-number">4.3</span> Tuning our Plot</a></li>
+  <li><a href="#do-not-use-the-default-theme" id="toc-do-not-use-the-default-theme" class="nav-link" data-scroll-target="#do-not-use-the-default-theme"><span class="header-section-number">4.4</span> Do not use the default theme</a></li>
+  <li><a href="#excersise" id="toc-excersise" class="nav-link" data-scroll-target="#excersise"><span class="header-section-number">4.5</span> Excersise</a>
+  <ul class="collapse">
+  <li><a href="#exercise-1-a-straightforward-plot" id="toc-exercise-1-a-straightforward-plot" class="nav-link" data-scroll-target="#exercise-1-a-straightforward-plot"><span class="header-section-number">4.5.1</span> Exercise 1: A straightforward plot</a></li>
+  <li><a href="#exercise-2-why-you-always-need-to-plot-your-data." id="toc-exercise-2-why-you-always-need-to-plot-your-data." class="nav-link" data-scroll-target="#exercise-2-why-you-always-need-to-plot-your-data."><span class="header-section-number">4.5.2</span> Exercise 2: Why you always need to plot your data.</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -209,58 +216,234 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="why-graphs" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="why-graphs"><span class="header-section-number">4.1</span> Why Graphs?</h2>
-<p>As you can see from the syllabus, we will spend a lot of time on making graphs. Why? Because humans are visual animals. We can understand things better when we see them. There are reasons why New York Times hire the best graphic designers to make their graphs.</p>
-<p>Graphs are no replacement for text. We need both. Text is essnetial to convey complex ideas, caveats, which are always essential in scientific writings. However, graphs are also essential. People are busy, most people will only skim through your papers, so if you want maximum impact, you need to essemtailly make the big pictures and main results as clear as possible in figures.</p>
-<p>The software development has seen a huge burst in making figures. There are many frameworks to do thing, But I will focus on <code>ggplot2</code> because it is the right way about thinking about graphs. Just as we learn grammar when we learn a new human language, we need to learn the grammar of graphics when we learn the language of data visualization.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Class Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Learn the basic ideas behind the “grammar of graphics”</li>
+<li>Make scatter plots using the <code>ggplot2</code> package</li>
+</ul>
+</div>
+</div>
+<section id="why-so-much-focus-on-graphs" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="why-so-much-focus-on-graphs"><span class="header-section-number">4.1</span> Why so much focus on Graphs?</h2>
+<p>As you can see from the syllabus, we will spend a lot of time on making graphs. Why? Because humans are visual beings. There’s a reason why <em>The New York Times</em> invests in top-tier graphic designers to craft their visuals. A well-designed graph can illuminate complex data in a way that words alone often can’t.</p>
+<p>Now, don’t get me wrong. Graphs aren’t a replacement for text. We still need words to convey intricate ideas and the necessary nuances that come with any scientific discourse. But the sad truth is that most people won’t read your entire paper, they will likely skim it. So if you want your work to resonate, you need to make your key findings as clear as possible. In a world overflowing with information, effective visuals are becoming more and more important.</p>
+<p>The realm of data visualization has exploded with new tools and frameworks. Among them, <code>ggplot2</code> stands out. Why focus on <code>ggplot2</code>? Because it encapsulates the right approach to thinking about graphics. Much like learning the grammar of a new language, understanding the “grammar of graphics” will make your visualizations more structured and easier.</p>
 </section>
-<section id="our-first-graph-with-ggplot2" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="our-first-graph-with-ggplot2"><span class="header-section-number">4.2</span> Our first graph with <code>ggplot2</code></h2>
-<p>Then we quickly visualize the data using the <code>ggplot2</code> package. Suppose we want to see how the flipper length of penguins (encoded as <code>flipper_length_mm</code> in the dataset) is related to their body mass (encoded as <code>body_mass_g</code>).</p>
+<section id="crafting-our-first-graph-with-ggplot2" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="crafting-our-first-graph-with-ggplot2"><span class="header-section-number">4.2</span> Crafting Our First Graph with <code>ggplot2</code></h2>
+<p>Then we quickly visualize the data using the <code>ggplot2</code> package. Let us load the <code>penguins</code> dataset from the <code>palmerpenguins</code> package, as we learnt last week.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins) </span>
-<span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="at">package =</span> <span class="st">"palmerpenguins"</span>) </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-3" class="code-annotation-target"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-5" class="code-annotation-target"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> penguins,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-6" class="code-annotation-target"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g)</span>
-<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4">4</button><span id="annotated-cell-1-8" class="code-annotation-target"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(palmerpenguins) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Suppose we’re curious about the relationship between xxx. In the palmerpenguins dataset, these are represented by <code>bill_length_mm</code> and <code>bill_depth_mm</code>, respectively. Here’s how we can visualize this relationship using <code>ggplot2</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> penguins,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-4" class="code-annotation-target"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="4">4</button><span id="annotated-cell-2-5" class="code-annotation-target"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> bill_depth_mm)</span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="5">5</button><span id="annotated-cell-2-7" class="code-annotation-target"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="3" data-code-annotation="1">Load the <code>ggplot2</code> package.</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="1">Load the <code>ggplot2</code> package.</span>
 </dd>
-<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="5" data-code-annotation="2">Specify the dataset used in the plot.</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="2">Specify the dataset used in the plot.</span>
 </dd>
-<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="6" data-code-annotation="3">Define the aesthetics of the plot. Here, we map the flipper length to the x-axis and body mass to the y-axis.</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="4" data-code-annotation="3">Define the x-axis variable as <code>bill_length_mm</code>.</span>
 </dd>
-<dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="8" data-code-annotation="4">Add a layer of points to the plot.</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="5" data-code-annotation="4">Define the y-axis variable as <code>bill_depth_mm</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="7" data-code-annotation="5">Add a layer of points to the plot.</span>
 </dd>
 </dl>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_ggplot_basic_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_ggplot_basic_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When you run this code, you should see a scatter plot of flipper length against body mass. The <code>geom_point()</code> function adds a layer of points to the plot. This is the most basic type of plot you can make with <code>ggplot2</code>.</p>
+<p>Let us brek the code piece by piece:</p>
+<ul>
+<li>The <code>+</code> operator is used to add layers to the plot. This is a common pattern in <code>ggplot2</code>.</li>
+<li><code>aes()</code> is used to define the aesthetics of the plot. Here, we map the flipper length to the x-axis and body mass to the y-axis.</li>
+<li><code>geom_point()</code> belong to a large class of <code>geom_*</code> functions that define what you add upon to the graph.</li>
+</ul>
+<p>Once you understand these concepts, it becomes quite intuitive. When we want to show the scatter okits, we always need to have the data, define what goes on the x-axis and y-axis, and then what to add to the plots (points).</p>
+</section>
+<section id="tuning-our-plot" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="tuning-our-plot"><span class="header-section-number">4.3</span> Tuning our Plot</h2>
+<p>Our plot is not entirely useful. What about differenet species? To do this, we can use different colors to different them. What are other aesthetics that we can define in a plot? Here are some of the most common ones: - color - shape</p>
+<p>Let’s see how we can use these aesthetics in our plot:</p>
+<div class="cell" data-source-line-numbers="7">
+<div class="sourceCode cell-code" id="annotated-cell-3" data-source-line-numbers="7" data-code-line-numbers="7"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> penguins,</span>
+<span id="annotated-cell-3-3"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> bill_length_mm,</span>
+<span id="annotated-cell-3-5"><a href="#annotated-cell-3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> bill_depth_mm,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-6" class="code-annotation-target"><a href="#annotated-cell-3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> species,</span>
+<span id="annotated-cell-3-7"><a href="#annotated-cell-3-7" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="annotated-cell-3-8"><a href="#annotated-cell-3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="6" data-code-annotation="1">We map the <code>species</code> variable to the color aesthetic.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_ggplot_basic_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Another quick comment before we move on, the default theme is not good. We can change it by adding a theme to the plot. Here’s how you can do it:</p>
+<div class="cell" data-source-line-numbers="8">
+<div class="sourceCode cell-code" id="annotated-cell-4" data-source-line-numbers="8" data-code-line-numbers="8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> penguins,</span>
+<span id="annotated-cell-4-3"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="annotated-cell-4-4"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> bill_length_mm,</span>
+<span id="annotated-cell-4-5"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> bill_depth_mm,</span>
+<span id="annotated-cell-4-6"><a href="#annotated-cell-4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> species,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-7" class="code-annotation-target"><a href="#annotated-cell-4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> species</span>
+<span id="annotated-cell-4-8"><a href="#annotated-cell-4-8" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="annotated-cell-4-9"><a href="#annotated-cell-4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="7" data-code-annotation="1">Differentiate the species by the shape of the points.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_ggplot_basic_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="why-always-plot-your-data" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="why-always-plot-your-data"><span class="header-section-number">4.3</span> Why Always Plot Your Data</h2>
+<section id="do-not-use-the-default-theme" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="do-not-use-the-default-theme"><span class="header-section-number">4.4</span> Do not use the default theme</h2>
+<p>The default theme is not good. Apart from beuty, it used a grey backgound, which wastes a lot of ink in printing. We can change it by adding a theme to the plot. Here’s how you can do it:</p>
+<div class="cell" data-source-line-numbers="11">
+<div class="sourceCode cell-code" id="annotated-cell-5" data-source-line-numbers="11" data-code-line-numbers="11"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> penguins,</span>
+<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> bill_length_mm,</span>
+<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> bill_depth_mm,</span>
+<span id="annotated-cell-5-6"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> species,</span>
+<span id="annotated-cell-5-7"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> species</span>
+<span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="annotated-cell-5-9"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-10" class="code-annotation-target"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="10" data-code-annotation="1">Apply the <code>theme_minimal()</code> theme to the plot.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_ggplot_basic_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In general, the <code>theme_minimal()</code> theme is a good starting point for most plots. It removes the background gridlines and uses a white background, which is easier on the eyes and saves ink when printing. There are multiple themes that come with <code>ggplot2</code> (you can find them here). We will explore what <code>theme_*()</code> are in more detail in future classes. For now, just remeber that you can change the theme of your plot by adding a <code>theme_*()</code> function to the plot.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Why is this a default theme?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<p>Of course, this is far from a publication-ready plot. But it’s a good start. We will learn more about how to customize our plots in future classes.</p>
+</section>
+<section id="excersise" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="excersise"><span class="header-section-number">4.5</span> Excersise</h2>
+<section id="exercise-1-a-straightforward-plot" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="exercise-1-a-straightforward-plot"><span class="header-section-number">4.5.1</span> Exercise 1: A straightforward plot</h3>
+<ul>
+<li>Try to plot the relationship between Body mass (<code>body_mass_g</code>) and Bill depth (<code>bill_depth_mm</code>) for the <code>penguins</code> dataset. Use the <code>species</code> variable to color the points.</li>
+<li>Choose your favorite theme.</li>
+</ul>
+</section>
+<section id="exercise-2-why-you-always-need-to-plot-your-data." class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="exercise-2-why-you-always-need-to-plot-your-data."><span class="header-section-number">4.5.2</span> Exercise 2: Why you always need to plot your data.</h3>
+<p>We will explore another dataset</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(datasauRus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre data-code-line-numbers=""><code>
+The downloaded binary packages are in
+    /var/folders/99/f2bl8dr17qlcm389nsdmx7qm0000gn/T//RtmpJnpiUL/downloaded_packages</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre data-code-line-numbers=""><code>
+datasauRus installed</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre data-code-line-numbers=""><code>Warning: package 'datasauRus' was built under R version 4.2.3</code></pre>
+</div>
+</div>
+<p>We see that</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>datasaurus_dozen <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">colour =</span> dataset)) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(dataset)) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">"Dataset"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_ggplot_basic_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <!-- https://tellingstorieswithdata.com/05-graphs_tables_maps.html -->
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -737,4 +920,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.js" defer="true"></script>
 </body></html>

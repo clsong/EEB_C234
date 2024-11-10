@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.32">
+<meta name="generator" content="quarto-1.6.33">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>1&nbsp; Course goal – EE BIOL C234</title>
 <style>
@@ -66,10 +66,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-857f1d5f411f36398542cd62bf9c4f83.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-86b0efa2460cd378948dc2f68bdd414f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-74d410878893cc97fd31203e5d114f5e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-706d47e59303ecb561a7787d3c9b597f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -252,18 +253,18 @@ Heroes Behind the Tidyverse?
 <p>In our daily research, data is rarely neat. Before you can start analyzing, you’ll likely spend hours organizing it into a usable format. Fortunately, <code>dplyr</code> and <code>tidyr</code> simplify this process, turning data wrangling into a clear, logical workflow.</p>
 <p>To get a quick taste, let us imagine describing your morning routine. In base R, it might look like a convoluted nest of functions:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">eat</span><span class="op">(</span><span class="fu">dressed</span><span class="op">(</span><span class="fu">shower</span><span class="op">(</span><span class="fu">brush</span><span class="op">(</span><span class="fu">wakeup</span><span class="op">(</span><span class="va">you</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">eat</span><span class="op">(</span><span class="fu">dressed</span><span class="op">(</span><span class="fu">shower</span><span class="op">(</span><span class="fu">brush</span><span class="op">(</span><span class="fu">wakeup</span><span class="op">(</span><span class="va">you</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Or, a series of perplexing intermediate variables:</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">you_w</span> <span class="op">&lt;-</span> <span class="fu">wakeup</span><span class="op">(</span><span class="va">you</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">you_w</span> <span class="op">&lt;-</span> <span class="fu">wakeup</span><span class="op">(</span><span class="va">you</span><span class="op">)</span></span>
 <span><span class="va">you_bw</span> <span class="op">&lt;-</span> <span class="fu">brush</span><span class="op">(</span><span class="va">you_w</span><span class="op">)</span></span>
 <span><span class="va">you_sbw</span> <span class="op">&lt;-</span> <span class="fu">shower</span><span class="op">(</span><span class="va">you_bw</span><span class="op">)</span></span>
 <span><span class="va">...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>With <code>dplyr</code>, however, it transforms into a straightforward, logical flow:</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">you</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">you</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">wakeup</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">brush</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">shower</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -873,4 +874,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.js" defer="true"></script>
 </body></html>

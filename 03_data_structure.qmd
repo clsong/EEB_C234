@@ -1,12 +1,18 @@
 # Data Structure
 
-Surpring or not, data stycutrie is tuypicaly the first thing you need to know when you start working with data.
-What do we mean by data structure? Data structure is the way we organize our data. Humans are good at organizing things. We organize our clothes in a closet, our books on a shelf, and our data in a data structure.
+A **data structure** is essentially an organized way to store and access data efficiently. In R, there are many data structures. For the majority of data wrangling, ther are two core data structures, `vector` and `tibble`.
 
+Mastering data structures are usually the most challenging part of any programming language, especially if you already have some basics in programming.
 
-In R, there are two main data structures: `vector` and `tibble`. Believe it or not, you can do almost everything with these two data structures.
+## Vector
+A **vector** is a one-dimensional array that can hold numeric, character, or logical data. In R, you can create a vector using the `c()` function. For example, to create a vector of numbers from 1 to 5, you can use the following code:
+```{r}
+numbers <- c(1, 2, 3, 4, 5)
+numbers
+```
 
-Data structures are usually the most challenging part of any programming language. If you know how to manipulate data structures, you can easily translate the skill in one language to another.
+## Tibble
+Tibble is 
 
 We will deal with importing datasets later. For now, we will use the `penguins` dataset from the `palmerpenguins` package.
 

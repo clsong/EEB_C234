@@ -84,8 +84,14 @@ There will be many others along the way. I will try to point them out as we go a
 
 Notably, not all packages are on CRAN. For example, many of them are on GitHub, GitLab, or other platforms. To install these packages, you can use the devtools package. For example, to install the `ggthemr` package from GitHub:
 ```{r}
-
+#| eval: false
+# install.packages("devtools") # <1>
+library(devtools) # <2>
+devtools::install_github("cttobin/ggthemr") # <3>
 ```
+1. Install the devtools package.
+2. Load the devtools package.
+3. Install the ggthemr package from GitHub.
 
 ### An alternative approach
 I prefer to use a different strategy. Consider using the `pacman` package. It automatically detects if the pointed package is installed and installs it if it's not, and then  load it. Here's how you can use it:

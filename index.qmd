@@ -11,7 +11,7 @@ Welcome to **EE BIOL C234: Practical Computing for Evolutionary Biologists and E
 
 This is the inaugural run of this course for me. So if I'm losing you, boring you, talking too fast, too slow, whatever – *speak up*! Your feedback is my compass.
 
-## Navigating the Lecture Notes
+## How to Use the Lecture Notes
 Your left sidebar is your map to the course, showing all lectures—just a click away. On the right, you’ll see a table of contents specific to each lecture.
 
 In this course, code examples will appear in blocks like this:
@@ -24,6 +24,16 @@ x^2 # <2>
 2. Calculate the square of `x`.
 
 See the little circle on the right? Hover over it for a quick explanation of the code. When you hover over the code block itself, you’ll also spot a “copy” button—perfect for copying and pasting it into your R console to try it out yourself (fun fact: that’s how a large portion of coding is done in real life).
+
+To show stepped progress, we'll often add to existing code blocks. New additions are highlighted for clarity. For example:
+```{r}
+#| eval: false
+#| source-line-numbers: "4"
+x <- 1+1 
+x^2 
+x^3 # <1>
+```
+1. Calculate the cube of `x`.
 
 You'll find key computational tools and R packages highlighted in purple (e.g., `GitHub` and `ggplot2`). R functions are indicated in red and always include parentheses, such as `sum()`.
 
