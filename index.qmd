@@ -40,7 +40,7 @@ You'll find key computational tools and R packages highlighted in purple (e.g., 
 Throughout the course, expect tips, tricks, and even a few fun facts sprinkled in. While not essential, these extras might give you an edge or deeper insight. Some of them are collapsible, so you can click to expand and explore them at your own pace. Look out for these in green boxes, like this:
 
 ::: {.callout-tip collapse="true"}
-## A Tip Box
-![As advertised, this is *literally* a tips box.](img/syllabus_tip.png)
+## Tips
+![As advertised, this is a tips box.](img/syllabus_tip.png)
 :::
 
