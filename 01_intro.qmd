@@ -126,6 +126,7 @@ We'll get into version control using Git and GitHub, tools that help you track c
 - Interactive plots with `ggiraph` 
 - Animated plots with `gganimate` to visualize changes over time
 - Handling overplotting with `ggpointdensity` and `ggdensity` for dense scatter plots
+- Uncertainty visualization with `ggdist` and `ggridges`material
 - Applying beautiful themes 
 - How to adjust figures for presentations
 
@@ -133,9 +134,9 @@ We'll get into version control using Git and GitHub, tools that help you track c
 
 - Importing data with `readr`
 - Cleaning data with `janitor`
-- Handling missing data: detecting and dealing with `NA` values
-- Handling dates with `lubridate`: parsing and manipulating date-time data
-- Joining data: combining datasets using `left_join()`, `inner_join()`, and other join functions
+- Handling missing data
+- Handling dates with `lubridate`
+- Joining data with `left_join()`
 
 ### Making R Run Faster
 
