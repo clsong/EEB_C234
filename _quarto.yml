@@ -20,12 +20,12 @@ bibliography: references.bib
 code-annotations: hover
 
 format:
-    html:
-        theme:
-            - cosmo
-            - style.scss
-        code-link: true
-        df-print: paged
+  html:
+    theme:
+      - cosmo
+      - style.scss
+    code-link: true
+    df-print: paged
 
-filters: 
+filters:
   - line-highlight

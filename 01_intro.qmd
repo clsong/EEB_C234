@@ -26,7 +26,7 @@ Not sold on R? You could try [Julia](https://julialang.org/), a newer language t
 R has also evolved dramatically in the past decade with the rise of the `tidyverse` suite. When I started grad school, I absolutely hated using R. But the `tidyverse` transformed that experience. It introduced a coherent way of handling and visualizing data—one that feels logical and intuitive. I firmly believe it's the right approach to data manipulation and plotting.
 
 ::: {.callout-tip collapse="true"}
-## Heroes Behind the Tidyverse?
+## Heroes Behind the Tidyverse
 The tidyverse revolution is largely thanks to [Hadley Wickham](https://hadley.nz/), whose contributions earned him the COPSS Presidents’ Award, the top honor in statistics. 
 
 But it's not a one-person show—the tidyverse thrives because of a vibrant community united by a shared vision ([link](https://joss.theoj.org/papers/10.21105/joss.01686)).
@@ -71,7 +71,7 @@ you |>
 In the tidyverse ecosystem, each step of data manipulation is easy to write and, more importantly, easy to follow when reading other people's code. We'll introduce you to a core set of verbs—fewer than ten—that will handle over 90% of everyday tasks. You see, coding languages are indeed simpler than human languages!
 
 ### Scientific typsetting
-But when it comes to updating figures, managing references, or maintaining consistent layouts, it can quickly turn into a labyrinthine headache. The core issue is that Word is a WYSIWYG editor—*What You See Is What You Get* (a weird acronym, I know).
+Yes, Microsoft Word is great. But when it comes to updating figures, managing references, or maintaining consistent layouts, it can quickly turn into a labyrinthine headache. The core issue is that Word is a WYSIWYG editor—*What You See Is What You Get* (a weird acronym, I know).
 
 The problem with WYSIWYG editors is that they often require manual tweaks—nudging an image here, adjusting a margin there—which not only consumes valuable time but also opens the door to errors. This is why separating content from layout is a strategy worth adopting. Instead of wrestling with formatting, you focus on the substance of your work—the data, the analysis, the insights—and let the tools handle the presentation.
 
