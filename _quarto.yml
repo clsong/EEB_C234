@@ -16,6 +16,9 @@ book:
     # - 04_ggplot_basic.qmd
     # - references.qmd
 
+website:
+  google-analytics: "G-Z5RFCG5ZR1"
+
 bibliography: references.bib
 code-annotations: hover
 
