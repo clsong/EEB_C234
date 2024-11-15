@@ -17,8 +17,7 @@ book:
     # - references.qmd
 
 website:
-  google-analytics:
-    tracking-id: "G-WQWBVET0L7"
+  google-analytics: "G-WQWBVET0L7"
 
 bibliography: references.bib
 code-annotations: hover
