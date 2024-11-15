@@ -1,12 +1,12 @@
-name: Broken Link Check
-
 on:
-  push:  # Run on every push
   schedule:
-    - cron: '0 0 1 * *'  # Run monthly
-  repository_dispatch:  # Run manually
+    - cron: 0 0 1 * * # run monthly
+  repository_dispatch: # run manually
     types: [check-link]
+  # push:
+  # ...
 
+name: Broken Link Check
 jobs:
   check:
     name: Broken Link Check
