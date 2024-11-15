@@ -8,6 +8,8 @@ book:
   author: "Chuliang Song"
   date: today
   site-url: https://clsong.github.io/EEB_C234/
+  google-analytics: 
+    tracking-id: "G-WQWBVET0L7"
   chapters:
     - index.qmd
     - 01_intro.qmd
@@ -16,8 +18,6 @@ book:
     # - 04_ggplot_basic.qmd
     # - references.qmd
 
-website:
-  google-analytics: "G-WQWBVET0L7"
 
 bibliography: references.bib
 code-annotations: hover
