@@ -1,13 +1,18 @@
 on:
-  push: 
+  push:
   schedule:
-    - cron: 0 0 1 * * # run monthly
-  repository_dispatch: # run manually
+    - cron: '0 0 1 * *'
+  repository_dispatch:
     types: [check-link]
-  # push:
-  # ...
 
 name: Broken Link Check
+
+# Add permissions block
+permissions:
+  contents: read
+  issues: write    # Required for creating/updating issues
+  pull-requests: read
+
 jobs:
   check:
     name: Broken Link Check
