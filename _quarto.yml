@@ -23,21 +23,19 @@ code-annotations: hover
 
 format:
   html:
-    theme:
-      - cosmo
-      - style.scss
+    theme: cosmo
+    css: style.scss
     code-link: true
     df-print: paged
     include-in-header:
       - text: |
-          <!-- Cronitor RUM -->
           <script async src="https://rum.cronitor.io/script.js"></script>
           <script>
-              window.cronitor = window.cronitor || function() { (window.cronitor.q = window.cronitor.q || []).push(arguments); };
+              window.cronitor = window.cronitor || function() { 
+                  (window.cronitor.q = window.cronitor.q || []).push(arguments); 
+              };
               cronitor('config', { clientKey: '46cca0fcdd01fadc7a28ede362e3288e' });
           </script>
-
-
 
 filters:
   - line-highlight

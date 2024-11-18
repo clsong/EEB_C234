@@ -1,0 +1,19 @@
+/*-- scss:defaults --*/
+@import url('https://cdn.jsdelivr.net/gh/tonsky/FiraCode@5.2/distr/fira_code.css');
+
+$font-family-monospace: 'Fira Code', monospace;
+
+/*-- scss:rules --*/
+code {
+    font-family: $font-family-monospace !important;
+    font-feature-settings: "liga" 1;
+    text-rendering: optimizeLegibility;
+}
+
+pre {
+    font-family: $font-family-monospace !important;
+}
+
+.sourceCode {
+    font-family: $font-family-monospace !important;
+}
