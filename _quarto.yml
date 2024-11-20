@@ -8,7 +8,8 @@ book:
   author: "Chuliang Song"
   date: today
   site-url: https://clsong.github.io/EEB_C234/
-  google-analytics: "G-WQWBVET0L7"
+  google-analytics: 
+    tracking-id: "G-WQWBVET0L7"
   chapters:
     - index.qmd
     - 01_intro.qmd
@@ -23,19 +24,11 @@ code-annotations: hover
 
 format:
   html:
-    theme: cosmo
-    css: style.scss
+    theme: 
+      - cosmo
+      - style.scss
     code-link: true
     df-print: paged
-    include-in-header:
-      - text: |
-          <script async src="https://rum.cronitor.io/script.js"></script>
-          <script>
-              window.cronitor = window.cronitor || function() { 
-                  (window.cronitor.q = window.cronitor.q || []).push(arguments); 
-              };
-              cronitor('config', { clientKey: '46cca0fcdd01fadc7a28ede362e3288e' });
-          </script>
 
 filters:
   - line-highlight
