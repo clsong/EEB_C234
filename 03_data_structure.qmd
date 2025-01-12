@@ -209,14 +209,12 @@ Think of `skim()` as your quick backstage pass, telling you how many rows, colum
 ::: {.panel-tabset}
 ## Exercise
 ```{webr}
-# install.packages("skimr")
 library(___)
 skim(___)
 ```
 
 ## Solution
 ```webr
-install.packages("skimr")
 library(skimr)
 skim(iris)
 ```
