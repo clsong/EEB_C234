@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Basic Data Structure – EE BIOL C234</title>
+<title>3&nbsp; Data Structure – EE BIOL C234</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -187,9 +187,7 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
   <ul>
   <li><a href="#vector" id="toc-vector" class="nav-link active" data-scroll-target="#vector"><span class="header-section-number">3.1</span> Vector</a></li>
   <li><a href="#tibble" id="toc-tibble" class="nav-link" data-scroll-target="#tibble"><span class="header-section-number">3.2</span> Tibble</a></li>
-  <li><a href="#our-example-dataset-penguins" id="toc-our-example-dataset-penguins" class="nav-link" data-scroll-target="#our-example-dataset-penguins"><span class="header-section-number">3.3</span> Our example dataset: <code>penguins</code></a></li>
-  <li><a href="#take-a-look-at-your-data" id="toc-take-a-look-at-your-data" class="nav-link" data-scroll-target="#take-a-look-at-your-data"><span class="header-section-number">3.4</span> Take a Look at your Data</a></li>
-  <li><a href="#a-more-structured-view" id="toc-a-more-structured-view" class="nav-link" data-scroll-target="#a-more-structured-view"><span class="header-section-number">3.5</span> A more structured view</a></li>
+  <li><a href="#an-example-dataset-penguins" id="toc-an-example-dataset-penguins" class="nav-link" data-scroll-target="#an-example-dataset-penguins"><span class="header-section-number">3.3</span> An example dataset: <code>penguins</code></a></li>
   </ul>
 </nav>
     </div>
@@ -198,7 +196,7 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Basic Data Structure</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Structure</span></h1>
 </div>
 
 
@@ -227,15 +225,15 @@ Class Objectives
 <div class="callout-body-container callout-body">
 <ul>
 <li>Understand <code>vector</code> and <code>tibble</code> in R</li>
-<li>Get comfortable with R’s common data types</li>
+<li>Understand common data types in R</li>
 </ul>
 </div>
 </div>
-<p>A <strong>data structure</strong> is an orderly, efficient way to store and retrieve data. While it may feel a bit abstract if you’re new to coding, think of these structures as the “nouns” in your programming language (with data wrangling serving as the “verbs”).</p>
-<p>R has provided many data structures. Fortunately, nine times out of ten, you’ll only need to worry about two: <code>vector</code> and <code>tibble</code>.</p>
+<p>A <strong>data structure</strong> is essentially an organized way to store and access data efficiently. In R, there are many data structures. There are many data structues in R, but for the majority of your daily works, you only need to know two: <code>vector</code> and <code>tibble</code>.</p>
+<p>Mastering data structures are usually the most challenging part of any programming language, especially if you do not have much experience in programming. As a rough analogy, these are the nouns of the language (data wrangling would be the verbs).</p>
 <section id="vector" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="vector"><span class="header-section-number">3.1</span> Vector</h2>
-<p>A <strong>vector</strong> is a one-dimensional array—like a row of seats in a movie theater that only allows one type of audience member, be they numeric, character, or logical. We create them with the <code>c()</code> function. For example:</p>
+<p>A <strong>vector</strong> is a one-dimensional array that can hold numeric, character, or logical data. In R, you can create a vector using the <code>c()</code> function. For example, to create a vector of numbers from 1 to 5, you can use the following code:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a>numbers</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -267,162 +265,45 @@ What does <code>c()</code> stand for
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><code>c()</code> means “combine.” Yes, it’s a slightly cryptic name for what you’ll soon be typing all the time, but you’ll get used to it.</p>
+<p><code>c()</code> stands for “combine.” It is used to combine elements into a vector. This is unfortunatley another bad design choice in R, that most other languages do not have.</p>
 </div>
 </div>
 </div>
-<p>Vectors form the backbone of R scripts. They’re how you can store the number of penguins wandering around Antarctica, keep track of class attendance, or tally cars on the highway. A key detail: everything in a vector must share the same type. Some common types are:</p>
-<ul>
-<li><code>numeric</code> (like 3.14 or 42)</li>
-<li><code>character</code> (like “Hello” or “World”)</li>
-<li><code>logical</code> (TRUE or FALSE)</li>
-<li><code>factor</code> (categorical data)</li>
-</ul>
-<p>Below, we make a few different vectors to illustrate these types:</p>
+<p>Most observations are stored in vectors in R. For example, the <code>numbers</code> vector above can be used to store the number of penguins in a zoo, the number of students in a class, or the number of cars in a parking lot. There are many types of vectors in R. The most common ones are: - <code>numeric</code> (real numbers) - <code>character</code> (text) - <code>logical</code> (TRUE or FALSE) - <code>factor</code> (categorical data) - <code>date</code> (date)</p>
+<p>Very importanly, within a vector, all elements must be of the same type. For example, you cannot have a vector that contains both numbers and characters.</p>
+</section>
+<section id="tibble" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="tibble"><span class="header-section-number">3.2</span> Tibble</h2>
+<p>Tibble is the data structure in <code>tidyverse</code>. It is simply a combination of vectors.</p>
+<p><img src="img/datastructure_tibble.png" class="img-fluid" style="width:50.0%"></p>
+<p>As a simple xample,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.1</span>, <span class="fl">2.2</span>, <span class="fl">3.3</span>, <span class="fl">4.4</span>, <span class="fl">5.5</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>characters <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>logicals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="4">4</button><span id="annotated-cell-2-4" class="code-annotation-target"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>factors <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="4">4</button><span id="annotated-cell-2-4" class="code-annotation-target"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="5">5</button><span id="annotated-cell-2-5" class="code-annotation-target"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="1">Create a vector of numbers from 1 to 5.</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="1">Load the <code>tidyverse</code> package, as <code>tibble</code> is from it.</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="2" data-code-annotation="2">Create a vector of characters.</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="2" data-code-annotation="2">Create a tibble.</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="3">Create a vector of logicals.</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="3">Create the first column as a vector of numbers from 1 to 3.</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="4" data-code-annotation="4">Create a vector of factors.</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="4" data-code-annotation="4">Create the first column as a vector of characters.</span>
 </dd>
-</dl>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Be aware of data types
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>R automatically assigns the data type for each vector, which can save time but also lead to (unwanted) surprises. For instance, sometimes 1 appears as a character rather than a number—something that can introduce annoying bugs. Avoid headaches by checking data types with <code>class()</code>. For example:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(numbers) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>[1] "numeric"</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercise
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Create a vector of numbers from -1 to -5.</li>
-<li>Create a vector of characters with your name and surname.</li>
-<li>Create a vector of logicals by flipping a coin three times.</li>
-</ol>
-</div>
-</div>
-</section>
-<section id="tibble" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="tibble"><span class="header-section-number">3.2</span> Tibble</h2>
-<p>A <code>tibble</code> (brought to you by the <code>tidyverse</code>) is essentially a set of vectors bound together in columns—like a multi-row, multi-column theater, where each column houses a single data type.</p>
-<p><img src="img/datastructure_tibble.png" class="img-fluid" style="width:50.0%"></p>
-<p>As a simple xample,</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-2" class="code-annotation-target"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="3">3</button><span id="annotated-cell-3-3" class="code-annotation-target"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="4">4</button><span id="annotated-cell-3-4" class="code-annotation-target"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>),</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="5">5</button><span id="annotated-cell-3-5" class="code-annotation-target"><a href="#annotated-cell-3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">z =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="6">6</button><span id="annotated-cell-3-6" class="code-annotation-target"><a href="#annotated-cell-3-6" aria-hidden="true" tabindex="-1"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="1" data-code-annotation="1">Load the <code>tidyverse</code> package, as <code>tibble</code> is from it.</span>
-</dd>
-<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="2" data-code-annotation="2">Create a tibble.</span>
-</dd>
-<dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="3" data-code-annotation="3">Create the first column as a vector of numbers from 1 to 3.</span>
-</dd>
-<dt data-target-cell="annotated-cell-3" data-target-annotation="4">4</dt>
-<dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="4" data-code-annotation="4">Create the second column as a vector of characters.</span>
-</dd>
-<dt data-target-cell="annotated-cell-3" data-target-annotation="5">5</dt>
-<dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="5" data-code-annotation="5">Create the third column as a vector of logicals.</span>
-</dd>
-<dt data-target-cell="annotated-cell-3" data-target-annotation="6">6</dt>
-<dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="6" data-code-annotation="6">Always remember to close the function with a parenthesis.</span>
-</dd>
-</dl>
-</div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["x"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[2],"type":["chr"],"align":["left"]},{"label":["z"],"name":[3],"type":["lgl"],"align":["right"]}],"data":[{"1":"1","2":"a","3":"TRUE"},{"1":"2","2":"b","3":"FALSE"},{"1":"3","2":"c","3":"TRUE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Another way to write <code>tibble</code>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>There is another equivalent way of writing it <em>rowwisely</em>. For example,:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-1" class="code-annotation-target"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tribble</span>(</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="2">2</button><span id="annotated-cell-10-2" class="code-annotation-target"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>x, <span class="sc">~</span>y,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="3">3</button><span id="annotated-cell-10-3" class="code-annotation-target"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="st">"a"</span>,</span>
-<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="st">"b"</span>, </span>
-<span id="annotated-cell-10-5"><a href="#annotated-cell-10-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="st">"c"</span></span>
-<span id="annotated-cell-10-6"><a href="#annotated-cell-10-6" aria-hidden="true" tabindex="-1"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-10" data-code-lines="1" data-code-annotation="1">Create a tibble rowwisely (note the function name is different from <code>tibble</code>).</span>
-</dd>
-<dt data-target-cell="annotated-cell-10" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-10" data-code-lines="2" data-code-annotation="2">Define the column names.</span>
-</dd>
-<dt data-target-cell="annotated-cell-10" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-10" data-code-lines="3" data-code-annotation="3">Define the first row.</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="5" data-code-annotation="5">Always remember to close the function with a parenthesis.</span>
 </dd>
 </dl>
 </div>
@@ -434,23 +315,60 @@ Another way to write <code>tibble</code>
 </div>
 </div>
 </div>
-<p>This is perfect when typing in smaller datasets by hand.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+An euivalent way of writing <code>tibble</code>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>There is another equivalent way of writing it (which can comes handy when you need to encode it by hand)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-1" class="code-annotation-target"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tribble</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2">2</button><span id="annotated-cell-7-2" class="code-annotation-target"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>x, <span class="sc">~</span>y,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="3">3</button><span id="annotated-cell-7-3" class="code-annotation-target"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="st">"a"</span>,</span>
+<span id="annotated-cell-7-4"><a href="#annotated-cell-7-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="st">"b"</span>, </span>
+<span id="annotated-cell-7-5"><a href="#annotated-cell-7-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="st">"c"</span></span>
+<span id="annotated-cell-7-6"><a href="#annotated-cell-7-6" aria-hidden="true" tabindex="-1"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="1" data-code-annotation="1">Create a tibble rowwisely (note the function name is different from <code>tibble</code>).</span>
+</dd>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="2" data-code-annotation="2">Define the column names.</span>
+</dd>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="3" data-code-annotation="3">Define the first row.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["x"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"a"},{"1":"2","2":"b"},{"1":"3","2":"c"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
 </div>
 </div>
-<p>Tibbles come with plenty of benefits over base R’s classic <code>data frame</code>—particularly in how they track and preserve data types. You’ll notice each column explicitly labeled as <code>dbl</code> (double) or <code>chr</code> (character), which can save you from those frustrating mysteries where your numeric data gets disguised as text.</p>
-<p>Tibbles also enforce a neat and consistent data layout, which is a godsend when you’re dealing with other people’s messy spreadsheets. Clean structure is your best friend in data analysis.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/datastructure_tibble2.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption>From https://r4ds.hadley.nz/data-tidy.html</figcaption>
-</figure>
 </div>
-<p>We will learn more about working with <code>tibble</code> more in the next sections, but for now, let’s move on to our example dataset.</p>
+</div>
+</div>
+<p>There are so many advantages of <code>tibble</code> compared to the classic <code>data frame</code> structure in R. For example, it never changes an input’s type and tell you exactly its input. As we can see, the firsr column says <code>dbl</code>, which means double (a numeic); and the second column says <code>chr</code>, which means character. It may sound trivial, but let me assure you, this is a common error ground in R and difficul;t to debug (speaking from hard-earned experience).</p>
+<p>In addition, <code>tibble</code> forces a consistent thinking about data presentation. If you have worked with other people’s data, they can be extremly hard to work with. <code>tibble</code>, instead, forces a way to present data in a consistent way.</p>
 </section>
-<section id="our-example-dataset-penguins" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="our-example-dataset-penguins"><span class="header-section-number">3.3</span> Our example dataset: <code>penguins</code></h2>
-<p>We’ll soon learn how to import data (another comedic ordeal in itself), but for now, let’s borrow the <code>penguins</code> dataset from the <code>palmerpenguins</code> package. It covers three penguin species—Adelie, Chinstrap, and Gentoo—and gives us some useful variables to play with. Who doesn’t love penguins?</p>
+<section id="an-example-dataset-penguins" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="an-example-dataset-penguins"><span class="header-section-number">3.3</span> An example dataset: <code>penguins</code></h2>
+<p>We will deal with importing datasets later (it is another headache in practice). For now, we will use the <code>penguins</code> dataset from the <code>palmerpenguins</code> package.</p>
+<p>We will use a dataset called <code>penguins</code> from the <code>palmerpenguins</code> package. We will use this dataset throughout our course. This dataset contains measurements of penguins collected from three species: Adelie, Chinstrap, and Gentoo.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/penguins.png" class="img-fluid figure-img"></p>
@@ -459,37 +377,34 @@ Another way to write <code>tibble</code>
 </div>
 <p>First things first, let us load the <code>penguins</code> dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("palmerpenguins")</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2">2</button><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="3">3</button><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="at">package =</span> <span class="st">"palmerpenguins"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("palmerpenguins")</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-2" class="code-annotation-target"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="3">3</button><span id="annotated-cell-3-3" class="code-annotation-target"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="at">package =</span> <span class="st">"palmerpenguins"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="1" data-code-annotation="1">If you have not installed the <code>palmerpenguins</code> package, you can install it by uncommenting this line.</span>
+<span data-code-cell="annotated-cell-3" data-code-lines="1" data-code-annotation="1">If you have not installed the <code>palmerpenguins</code> package, you can install it by uncommenting this line.</span>
 </dd>
-<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="2" data-code-annotation="2">Load the <code>palmerpenguins</code> package.</span>
+<span data-code-cell="annotated-cell-3" data-code-lines="2" data-code-annotation="2">Load the <code>palmerpenguins</code> package.</span>
 </dd>
-<dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="3">Load the <code>penguins</code> dataset.</span>
+<span data-code-cell="annotated-cell-3" data-code-lines="3" data-code-annotation="3">Load the <code>penguins</code> dataset.</span>
 </dd>
 </dl>
 </div>
 </div>
-</section>
-<section id="take-a-look-at-your-data" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="take-a-look-at-your-data"><span class="header-section-number">3.4</span> Take a Look at your Data</h2>
-<p>As a first rule, always, always take a look at your data. The simplest way is simply to print it out:</p>
+<p>As a first rule, always, always take a look at your data. One way is just to display the data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-1" class="code-annotation-target"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>penguins</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>penguins</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-lines="1" data-code-annotation="1">Display the <code>penguins</code> dataset.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="1" data-code-annotation="1">Display the <code>penguins</code> dataset.</span>
 </dd>
 </dl>
 </div>
@@ -501,24 +416,19 @@ Another way to write <code>tibble</code>
 </div>
 </div>
 </div>
-<p>This prints about the first couple rows of the dataset (another reason to love <code>tibble</code> over <code>data frame</code> in base R).</p>
-<p>You may notice some <code>NA</code> values in the dataset. These are missing values, which are common in real-world datasets. We’ll learn how to handle them later.</p>
-</section>
-<section id="a-more-structured-view" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="a-more-structured-view"><span class="header-section-number">3.5</span> A more structured view</h2>
 <p>However, if you want to see the data in a more structured way, you can use the <code>skim()</code> function in the package <code>skimr</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-1" class="code-annotation-target"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(skimr)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2">2</button><span id="annotated-cell-6-2" class="code-annotation-target"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(penguins)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-1" class="code-annotation-target"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(skimr)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="2">2</button><span id="annotated-cell-5-2" class="code-annotation-target"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(penguins)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="1" data-code-annotation="1">Load the <code>skimr</code> package.</span>
+<span data-code-cell="annotated-cell-5" data-code-lines="1" data-code-annotation="1">Load the <code>skimr</code> package.</span>
 </dd>
-<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="2" data-code-annotation="2">Display the summary of the <code>penguins</code> dataset.</span>
+<span data-code-cell="annotated-cell-5" data-code-lines="2" data-code-annotation="2">Display the summary of the <code>penguins</code> dataset.</span>
 </dd>
 </dl>
 </div>
@@ -711,7 +621,6 @@ Another way to write <code>tibble</code>
 </table>
 </div>
 </div>
-<p>I cannot emphasize enough how important it is to take a look your data before diving into analysis. So so many errors can be avoided by just taking a few minutes to understand what you’re working with.</p>
 
 
 </section>

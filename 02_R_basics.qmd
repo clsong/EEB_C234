@@ -139,7 +139,8 @@ install.packages("tidyverse")
 ```
 
 Once done, loading it is straightforward and a common part of most R scripts (I usually begin nearly all my scripts with this line):
-```{r}
+```{r} 
+#| warning: false
 library(tidyverse)
 ```
 
