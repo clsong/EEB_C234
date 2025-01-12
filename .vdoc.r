@@ -72,6 +72,12 @@ x       # <2>
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #| eval: false
 install.packages("ggplot2")
 #
@@ -136,6 +142,9 @@ pacman::p_load(ggplot2) # <1>
 #
 #
 #
+#
+#
+#
 #| eval: false
 install.packages("tidyverse")
 #
@@ -151,9 +160,34 @@ library(tidyverse)
 #
 #
 #
+#| eval: false
+library(conflicted)  # <1>
+library(tidyverse)  # <2>
+conflict_prefer("filter", "dplyr") # <3>
+conflict_prefer("lag", "dplyr") # <4>
+```
+#
+#
+#
+#
+#
+#
+#
+#| eval: false
+dplyr::filter()
+dplyr::lag()
+```
+#
+#
+#
+#
+#
+#
 #
 #
 suppressPackageStartupMessages(library(tidyverse))
+#
+#
 #
 #
 #

@@ -32,3 +32,4 @@ format:
 
 filters:
   - line-highlight
+  - webr
