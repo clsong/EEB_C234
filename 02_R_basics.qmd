@@ -63,16 +63,36 @@ But why don’t most other languages use a similar convention? One factor is typ
 
 ### Exercise 
 1. Create a variable `y` and assign it the value of `5 * 3`. Then display the value of `y` on the console.
+
+::: {.panel-tabset}
+## Exercise
 ```{webr} 
 __ <- __ * __
 __
 ```
 
+## Solution
+```webr
+y <- 5 * 3
+y
+```
+:::
+
 2. Create a variable `z` that is half of the value of `y`, and then display the value of `z` on the console.
+
+::: {.panel-tabset}
+## Exercise
 ```{webr}
 __ <- __ / __
 __
 ```
+
+## Solution
+```webr
+z <- y / 2
+z
+```
+:::
 
 ## Installing Packages
 ### Standard approach
@@ -96,6 +116,7 @@ There will be many others along the way. I will try to point them out as we go a
 :::
 
 ::: {.callout-tip}
+## Not All Packages Are on CRAN
 Notably, not all packages are on CRAN. For example, many of them are on GitHub, GitLab, or other platforms. To install these packages, you can use the devtools package. For example, to install the `ggthemr` package from GitHub:
 ```{r}
 #| eval: false
@@ -133,10 +154,20 @@ What is this mysterious `::` here? It simply means that we are loading the `p_lo
 
 ### Exercise: Installing Packages
 Install the package `gt` using either the standard method or the `pacman` method.
+
+::: {.panel-tabset}
+## Exercise
 ```{webr}
 install.packages(__)
 pacman::p_load(___)
 ```
+
+## Solution
+```webr
+install.packages("gt")
+pacman::p_load(gt)
+```
+:::
 
 ## Meet the Tidyverse
 As stated in its official [website](https://www.tidyverse.org/):

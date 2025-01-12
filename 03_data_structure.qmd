@@ -51,11 +51,41 @@ class(numbers)
 ```   
 :::
 
-::: {.callout-caution}
+### Exercise
+1. Create a vector of numbers from -1 to -3.
+
+::: {.panel-tabset}
 ## Exercise
-1. Create a vector of numbers from -1 to -5.
+```{webr}
+__ <- c(__, __, __)
+__
+```
+
+## Solution
+```webr
+numbers <- c(-1, -2, -3)
+numbers
+```
+:::
+
 2. Create a vector of characters with your name and surname.
+  
+::: {.panel-tabset}
+## Exercise
+```{webr}
+my_name <- c("__", "__")
+my_name
+```
+:::
+
 3. Create a vector of logicals by flipping a coin three times.
+
+::: {.panel-tabset}
+## Exercise
+```{webr}
+## Exercise
+c(____, ____, ____)
+```
 :::
 
 ## Tibble
@@ -105,6 +135,37 @@ Tibbles also enforce a neat and consistent data layout, which is a godsend when 
 
 We will learn more about working with `tibble` more in the next sections, but for now, let’s move on to our example dataset.
 
+### Exercise
+Create a tibble with the following columns:
+
+- `name` with your name and surname
+- `age` with your age
+- `is_student` with a logical value
+  
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(tidyverse)
+info <- tibble(
+  name = c("__", "__"),
+  age = c(__, __),
+  is_student = c(__, __)
+)
+info
+```
+
+## Solution
+```webr
+library(tidyverse)
+info <- tibble(
+  name = c("John Doe", "Jane Doe"),
+  age = c(25, 30),
+  is_student = c(TRUE, FALSE)
+)
+info
+```
+:::
+
 ## Our example dataset: `penguins`
 We’ll soon learn how to import data (another comedic ordeal in itself), but for now, let’s borrow the `penguins` dataset from the `palmerpenguins` package. It covers three penguin species—Adelie, Chinstrap, and Gentoo—and gives us some useful variables to play with. Who doesn’t love penguins?
 
@@ -142,3 +203,21 @@ skim(penguins) # <2>
 
 Think of `skim()` as your quick backstage pass, telling you how many rows, columns, missing values, and data types you’re dealing with. Trust me, a few seconds spent peeking at your data can save hours of confusion down the line.
 
+### Exercise
+`iris` is a widely-used dataset of plant traits. It is a default dataset in R. Take a look at the `iris` dataset using the `skim()` function.
+  
+::: {.panel-tabset}
+## Exercise
+```{webr}
+# install.packages("skimr")
+library(___)
+skim(___)
+```
+
+## Solution
+```webr
+install.packages("skimr")
+library(skimr)
+skim(iris)
+```
+:::
