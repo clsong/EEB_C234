@@ -24,6 +24,8 @@ RStudio is an incredible well-designed software that makes your life easier when
 ::: {.callout-tip}
 ## Making Your Code look prettier
 One of the subtle joys of programming is crafting code that's not only functional but also aesthetically pleasing. To enhance the readability of your R scripts, consider installing the Fira Code font. Instruction can be found [here](https://github.com/tonsky/FiraCode/wiki/RStudio-instructions) and [here](https://firacode.org/using-fira-code-ligatures-in-rstudio/).
+
+Another way to make your code more readable is to format the codes according to the [tidyverse style guide](https://style.tidyverse.org/). Of course, no one wants to memorize all. Luckily, you can use the `styler` package to do this as an addin in RStudio ([link](https://styler.r-lib.org/)).
 :::
 
 ## Getting R to Work for You
@@ -140,7 +142,6 @@ install.packages("tidyverse")
 
 Once done, loading it is straightforward and a common part of most R scripts (I usually begin nearly all my scripts with this line):
 ```{r} 
-#| warning: false
 library(tidyverse)
 ```
 

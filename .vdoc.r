@@ -29,6 +29,8 @@
 #
 #
 #
+#
+#
 print("Hello, World!") # <1>
 ```
 #
@@ -140,7 +142,6 @@ install.packages("tidyverse")
 #
 #
 #
-#| warning: false
 library(tidyverse)
 #
 #
