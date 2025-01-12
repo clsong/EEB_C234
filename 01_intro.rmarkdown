@@ -45,11 +45,20 @@ While `ggplot2` is powerful, its defaults aren’t always perfect. We’ll cover
 In our daily research, data is rarely neat. Before you can start analyzing, you’ll likely spend hours organizing it into a usable format. Fortunately, `dplyr` and `tidyr` simplify this process, turning data wrangling into a clear, logical workflow.
 
 To get a quick taste, let us imagine describing your morning routine. In base R, it might look like a convoluted nest of functions:
+
+
+
 ```{r}
 #| eval: false
 eat(dressed(shower(brush(wakeup(you)))))
 ```
+
+
+
 Or, a series of perplexing intermediate variables:
+
+
+
 ```{r}
 #| eval: false
 you_w <- wakeup(you)
@@ -57,7 +66,13 @@ you_bw <- brush(you_w)
 you_sbw <- shower(you_bw)
 ...
 ```
+
+
+
 With `dplyr`, however, it transforms into a straightforward, logical flow:
+
+
+
 ```{r}
 #| eval: false
 you |> 
@@ -67,6 +82,9 @@ you |>
   get_dressed() |> 
   eat() 
 ```
+
+
+
 
 In the tidyverse ecosystem, each step of data manipulation is easy to write and, more importantly, easy to follow when reading other people's code. We'll introduce you to a core set of verbs—fewer than ten—that will handle over 90% of everyday tasks. You see, coding languages are indeed simpler than human languages!
 

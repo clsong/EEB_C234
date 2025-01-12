@@ -13,8 +13,8 @@ book:
   chapters:
     - index.qmd
     - 01_intro.qmd
-    # - 02_R_basics.qmd
-    # - 03_data_structure.qmd
+    - 02_R_basics.qmd
+    - 03_data_structure.qmd
     # - 04_ggplot_basic.qmd
     # - references.qmd
 

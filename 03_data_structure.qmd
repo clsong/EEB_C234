@@ -1,26 +1,114 @@
-# Data Structure
+# Basic Data Structure
 
-A **data structure** is essentially an organized way to store and access data efficiently. In R, there are many data structures. For the majority of data wrangling, ther are two core data structures, `vector` and `tibble`.
+::: {.callout-note}
+## Class Objectives
+- Understand `vector` and `tibble` in R
+- Get comfortable with R’s common data types
+:::
 
-Mastering data structures are usually the most challenging part of any programming language, especially if you already have some basics in programming.
+A **data structure** is an orderly, efficient way to store and retrieve data. While it may feel a bit abstract if you’re new to coding, think of these structures as the “nouns” in your programming language (with data wrangling serving as the “verbs”).
+
+R has provided many data structures. Fortunately, nine times out of ten, you’ll only need to worry about two: `vector` and `tibble`.
 
 ## Vector
-A **vector** is a one-dimensional array that can hold numeric, character, or logical data. In R, you can create a vector using the `c()` function. For example, to create a vector of numbers from 1 to 5, you can use the following code:
+A **vector** is a one-dimensional array—like a row of seats in a movie theater that only allows one type of audience member, be they numeric, character, or logical. We create them with the `c()` function. For example:
 ```{r}
-numbers <- c(1, 2, 3, 4, 5)
-numbers
+numbers <- c(1, 2, 3, 4, 5)  # <1>
+numbers # <2>
 ```
+1. Create a vector of numbers from 1 to 5.
+2. Display the `numbers` vector.
+
+::: {.callout-tip collapse="true"}
+## What does `c()` stand for
+`c()` means "combine." Yes, it’s a slightly cryptic name for what you’ll soon be typing all the time, but you’ll get used to it.
+:::
+
+Vectors form the backbone of R scripts. They’re how you can store the number of penguins wandering around Antarctica, keep track of class attendance, or tally cars on the highway. A key detail: everything in a vector must share the same type. Some common types are:
+
+- `numeric` (like 3.14 or 42)
+- `character` (like "Hello" or "World")
+- `logical` (TRUE or FALSE)
+- `factor` (categorical data)
+
+Below, we make a few different vectors to illustrate these types:
+```{r}
+numbers <- c(1.1, 2.2, 3.3, 4.4, 5.5) # <1>
+characters <- c("a", "b", "c") # <2>
+logicals <- c(TRUE, FALSE, TRUE) # <3>
+factors <- factor(c("a", "b", "c")) # <4>
+```
+1. Create a vector of numbers from 1 to 5.
+2. Create a vector of characters.
+3. Create a vector of logicals.
+4. Create a vector of factors.
+
+::: {.callout-tip}
+## Be aware of data types
+R automatically assigns the data type for each vector, which can save time but also lead to (unwanted) surprises. For instance, sometimes 1 appears as a character rather than a number—something that can introduce annoying bugs. Avoid headaches by checking data types with `class()`. For example:
+```{r}
+class(numbers) 
+```   
+:::
+
+::: {.callout-caution}
+## Exercise
+1. Create a vector of numbers from -1 to -5.
+2. Create a vector of characters with your name and surname.
+3. Create a vector of logicals by flipping a coin three times.
+:::
 
 ## Tibble
-Tibble is 
+A `tibble` (brought to you by the `tidyverse`) is essentially a set of vectors bound together in columns—like a multi-row, multi-column theater, where each column houses a single data type.
 
-We will deal with importing datasets later. For now, we will use the `penguins` dataset from the `palmerpenguins` package.
+![](img/datastructure_tibble.png){width=50%}
 
-## Our dataset: `penguins`
-We will use a dataset called `penguins` from the `palmerpenguins` package. We will use this dataset throughout our course. This dataset contains measurements of penguins collected from three species: Adelie, Chinstrap, and Gentoo. 
+As a simple xample,
+```{r message=FALSE}
+library(tidyverse) # <1>
+tibble( # <2>
+    x = c(1, 2, 3),  # <3>
+    y = c("a", "b", "c"), # <4>
+    z = c(TRUE, FALSE, TRUE) # <5>
+) # <6>
+```
+1. Load the `tidyverse` package, as `tibble` is from it.
+2. Create a tibble.
+3. Create the first column as a vector of numbers from 1 to 3.
+4. Create the second column as a vector of characters.
+5. Create the third column as a vector of logicals.
+6. Always remember to close the function with a parenthesis.
+
+::: {.callout-tip collapse="true"}
+## Another way to write `tibble`
+There is another equivalent way of writing it *rowwisely*. For example,:
+```{r}
+tribble( # <1>
+  ~x, ~y, # <2>
+  1, "a", # <3>
+  2, "b", 
+  3, "c"
+)
+```
+1. Create a tibble rowwisely (note the function name is different from `tibble`).
+2. Define the column names.
+3. Define the first row.
+
+This is perfect when typing in smaller datasets by hand.
+:::
+
+Tibbles come with plenty of benefits over base R’s classic `data frame`—particularly in how they track and preserve data types. You’ll notice each column explicitly labeled as `dbl` (double) or `chr` (character), which can save you from those frustrating mysteries where your numeric data gets disguised as text.
+
+Tibbles also enforce a neat and consistent data layout, which is a godsend when you’re dealing with other people’s messy spreadsheets. Clean structure is your best friend in data analysis.
+
+![From https://r4ds.hadley.nz/data-tidy.html](img/datastructure_tibble2.png){width=100%}
+
+We will learn more about working with `tibble` more in the next sections, but for now, let’s move on to our example dataset.
+
+## Our example dataset: `penguins`
+We’ll soon learn how to import data (another comedic ordeal in itself), but for now, let’s borrow the `penguins` dataset from the `palmerpenguins` package. It covers three penguin species—Adelie, Chinstrap, and Gentoo—and gives us some useful variables to play with. Who doesn’t love penguins?
 
 ![Artwork by allison_horst](img/penguins.png)
-
 
 First things first, let us load the `penguins` dataset.
 ```{r}
@@ -32,18 +120,25 @@ data(package = "palmerpenguins") # <3>
 2. Load the `palmerpenguins` package.
 3. Load the `penguins` dataset.
 
-As a first rule, always, always take a look at your data. One way is just to display the data.
+## Take a Look at your Data
+As a first rule, always, always take a look at your data.  The simplest way is simply to print it out:
 ```{r}
 penguins # <1>
 ``` 
 1. Display the `penguins` dataset.
 
-The data format we are using is called `tibble`. It is a modern version of the `data.frame` in R. It is part of the `tidyverse` package. For most of your daily works, tibble is the only two formats (the other is vector) you need to know.
+This prints about the first couple rows of the dataset (another reason to love `tibble` over `data frame` in base R).
 
-However, if you want to see the data in a more structured way, you can use the `skim()` function in the package `skimr`.
+You may notice some `NA` values in the dataset. These are missing values, which are common in real-world datasets. We’ll learn how to handle them later.
+
+## A more structured view
+If you’d like a better view of your dataset, try the `skim()` function from the `skimr` package:
 ```{r}
 pacman::p_load(skimr) # <1>
 skim(penguins) # <2>
 ```
 1. Load the `skimr` package.
 2. Display the summary of the `penguins` dataset.
+
+Think of `skim()` as your quick backstage pass, telling you how many rows, columns, missing values, and data types you’re dealing with. Trust me, a few seconds spent peeking at your data can save hours of confusion down the line.
+
