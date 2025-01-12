@@ -58,7 +58,7 @@ A second reason is flexibility. R allows for the reverse assignment arrow, `->`,
 
 But why don’t most other languages use a similar convention? One factor is typing efficiency: `<-` requires three keystrokes, while `=` only requires one (although you eventually get used to it). However, there’s also a historical element here: early keyboards designed for statistical computing actually had a dedicated `<-` key, which made the operator as convenient as `=` ([source](https://colinfay.me/r-assignment/)):
 
-![](img/rbasic_keyboard.png)
+![From https://dcl-prog.stanford.edu/data-structure-basics.html](img/rbasic_keyboard.png)
 :::
 
 ### Exercise 

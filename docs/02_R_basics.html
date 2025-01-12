@@ -2177,7 +2177,12 @@ Why does R use <code>&lt;-</code>?
 <p>One reason is conceptual clarity. In R, the distinction between assignment and function arguments is explicit, providing a cleaner syntax and helping avoid ambiguity in complex code. By differentiating assignment with <code>&lt;-</code>, R signals that an action is being performed, where data is transferred from one entity to another. This reinforces the principle that assignment and function arguments are inherently distinct constructs.</p>
 <p>A second reason is flexibility. R allows for the reverse assignment arrow, <code>-&gt;</code>, which lets you assign values in the opposite direction. For instance, <code>3 -&gt; x</code> assigns the value <code>3</code> to <code>x</code>, a feature that can sometimes be handy.</p>
 <p>But why don’t most other languages use a similar convention? One factor is typing efficiency: <code>&lt;-</code> requires three keystrokes, while <code>=</code> only requires one (although you eventually get used to it). However, there’s also a historical element here: early keyboards designed for statistical computing actually had a dedicated <code>&lt;-</code> key, which made the operator as convenient as <code>=</code> (<a href="https://colinfay.me/r-assignment/">source</a>):</p>
-<p><img src="img/rbasic_keyboard.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/rbasic_keyboard.png" class="img-fluid figure-img"></p>
+<figcaption>From https://dcl-prog.stanford.edu/data-structure-basics.html</figcaption>
+</figure>
+</div>
 </div>
 </div>
 </div>
