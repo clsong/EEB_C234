@@ -97,11 +97,16 @@ z
 ## Using AI in RStudio
 There are many basic functions in R that you can use. For example, the `sqrt()` function calculates the square root of a number. I know that it could be annoying to remember all the functions, but luckily we have the powerful AIs to help us. It is pretty easy to use Copilot, a powerful AI tool developed by Github, to get the function you need. It is straightforward to  use it in RStudio ([link](https://docs.posit.co/ide/user/ide/guide/tools/copilot.html)).
 
-However, AIs can be unreliable sometimes. To make sure it works, you can always use the `?` to get help. For example, to get help on the `sqrt()` function, you can use the following code:
+However, AIs can be unreliable sometimes. To make sure it works, you can always use the `?` to double check. For example, to see the documentation R has on the `sqrt()` function, you can use the following code:
 ```{webr}
 ?sqrt
 ```
 
+In addition, you should check some simple cases to make sure the function works as expected. For example, you can use the following code to check the `sqrt()` function:
+```{r}
+sqrt(1) == 1
+sqrt(4) == 2
+```
 
 ## Installing Packages
 ### Standard approach
