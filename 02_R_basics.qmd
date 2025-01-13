@@ -179,6 +179,8 @@ pacman::p_load(___)
 ## Solution
 ```webr
 install.packages("gt")
+
+library(pacman)
 pacman::p_load(gt)
 ```
 :::
