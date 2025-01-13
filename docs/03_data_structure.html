@@ -2317,7 +2317,10 @@ Another way to write <code>tibble</code>
 </div>
 </div>
 <p>Tibbles come with plenty of benefits over base R’s classic <code>data frame</code>—particularly in how they track and preserve data types. You’ll notice each column explicitly labeled as <code>dbl</code> (double) or <code>chr</code> (character), which can save you from those frustrating mysteries where your numeric data gets disguised as text.</p>
-<p>Tibbles also enforce a neat and consistent data layout, which is a godsend when you’re dealing with other people’s messy spreadsheets. Clean structure is your best friend in data analysis.</p>
+<p>Tibbles also enforce a neat and consistent data layout, called <code>Tidy Data</code>, which is a godsend when you’re dealing with other people’s messy spreadsheets. Quoting from Hadley Wickham (<a href="https://www.jstatsoft.org/article/view/v059i10">link</a>):</p>
+<blockquote class="blockquote">
+<p>Tidy datasets are easy to manipulate, model and visualize, and have a specific structure: each variable is a column, each observation is a row, and each type of observational unit is a table.</p>
+</blockquote>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/datastructure_tibble2.png" class="img-fluid figure-img" style="width:100.0%"></p>

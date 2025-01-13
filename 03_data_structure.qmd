@@ -129,7 +129,9 @@ This is perfect when typing in smaller datasets by hand.
 
 Tibbles come with plenty of benefits over base R’s classic `data frame`—particularly in how they track and preserve data types. You’ll notice each column explicitly labeled as `dbl` (double) or `chr` (character), which can save you from those frustrating mysteries where your numeric data gets disguised as text.
 
-Tibbles also enforce a neat and consistent data layout, which is a godsend when you’re dealing with other people’s messy spreadsheets. Clean structure is your best friend in data analysis.
+Tibbles also enforce a neat and consistent data layout, called `Tidy Data`, which is a godsend when you’re dealing with other people’s messy spreadsheets. Quoting from Hadley Wickham ([link](https://www.jstatsoft.org/article/view/v059i10)):
+
+> Tidy datasets are easy to manipulate, model and visualize, and have a specific structure: each variable is a column, each observation is a row, and each type of observational unit is a table.
 
 ![From https://r4ds.hadley.nz/data-tidy.html](img/datastructure_tibble2.png){width=100%}
 
