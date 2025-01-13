@@ -8,14 +8,21 @@ book:
   author: "Chuliang Song"
   date: today
   site-url: https://clsong.github.io/EEB_C234/
+  sidebar:
+    collapse-level: 2
   google-analytics: 
     tracking-id: "G-WQWBVET0L7"
   chapters:
     - index.qmd
     - 01_intro.qmd
-    - 02_R_basics.qmd
-    - 03_data_structure.qmd
-    # - 04_ggplot_basic.qmd
+    - part: "A First Look at R"
+      chapters:
+        - 02_R_basics.qmd
+        - 03_data_structure.qmd
+    - part: "Grammar of Graphics"
+      # chapters:
+        # - 04_ggplot_basic.qmd
+        # - 05_aesmatic_mapping.qmd
     # - references.qmd
 
 

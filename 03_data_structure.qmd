@@ -49,6 +49,8 @@ R automatically assigns the data type for each vector, which can save time but a
 ```{r}
 class(numbers) 
 ```   
+
+A horror story (not in R but in Excel) is that the auto-convert feature messes up gene names like `SEPT4` to `4-Sept` (datatype from character to datetime). So, always be aware of the data types!
 :::
 
 ### Exercise

@@ -48,7 +48,9 @@ factors <- factor(c("a", "b", "c")) # <4>
 #
 #
 class(numbers) 
-```   
+#
+#
+#
 #
 #
 #
