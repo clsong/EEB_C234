@@ -98,6 +98,15 @@ x       # <2>
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #| eval: false
 install.packages("ggplot2")
 #
