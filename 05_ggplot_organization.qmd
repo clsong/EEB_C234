@@ -1,0 +1,473 @@
+# A Detailed Look at Grammar of Graphics
+
+::: {.callout-note}
+## Class Objectives
+- Understand aesthetic mapping in `ggplot2`
+- Understand geometries in `ggplot2`
+- Understand organizational principle in `ggplot2`
+:::
+
+## Aesthetic Mappings
+
+### What is an Aesthetic?
+In ggplot2, aesthetics are the magical connections between your data and how it looks on the plot. The `aes()` function is like the matchmaker that sets up these relationships. It maps **variables in your data** to **visual properties in your plot**. Thus, everything inside the `aes()` function should correspond to a column in your dataset.
+
+To see this, let us again consider plotting the `body_mass_g` against the `bill_depth_mm` of the `penguins` dataset. Suppose we want to color all points blue:
+
+::: {.panel-tabset}
+## Using Aesthetic Mapping for a Fixed Color
+```{r}
+#| warning: false
+#| source-line-numbers: "11"
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm 
+    )
+) +
+    geom_point(aes(color = "blue")) + # <1>
+    theme_minimal()
+```
+1. The `color` **aesthetic** is set to "blue".
+
+## Setting Color Outside aes()
+```{r}
+#| warning: false
+#| source-line-numbers: "11"
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm 
+    ) 
+) +
+    geom_point(color = "blue") + # <1>
+    theme_minimal()
+```
+1. The `color` is not within aes() function.
+:::
+
+As we can see, the second option is correct. Because `"blue"` is not a variable in the `penguins` dataset, it is not a valid aesthetic mapping. Thus, the correct way to do it is to take the color as a non-aesthetic mapping.
+
+### What can you map to?
+You can map many aesthetics in `ggplot2`. We have already seen that:
+
+- `x` and `y` for the x- and y-axis
+- `color` for the color of the points. This is a big and very important topic. We will discuss it in more detail in the next section.
+- `shape` for the shape of the points. There are 25 different shapes you can choose from ([link](https://blog.albertkuo.me/post/point-shape-options-in-ggplot/#gallery-3)). I admit that I google them every time I need to use them.
+
+There are some other common aesthetics you can map to points in `ggplot2`:
+
+- `size` for the size of the points
+- `alpha` for the transparency of the points. It ranges from 0 (completely transparent) to 1 (completely opaque)
+
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(data = penguins, 
+    aes(x = bill_length_mm, y = bill_depth_mm)
+) +
+    geom_point(
+        aes(
+            color = species, # <1>
+            size = body_mass_g # <2>
+        ),
+        alpha = 0.5, # <3>
+        shape = 21, # <4>
+        fill = "white" # <5>
+    ) +
+    theme_minimal()
+```
+1. The `species` variable is mapped to the color aesthetic. Different species will have different colors.
+2. The `body_mass_g` variable is mapped to the size aesthetic. Different body masses will have different sizes.
+3. The `alpha` is the same for all. `0.5` makes the points semi-transparent.
+4. The `shape` is the same for all. This makes the points filled circles.
+5. The `fill` is the same for all. This makes the points white.
+
+If you understand the above code, you would have a solid working knowledge of aesthetic mapping in `ggplot2`:
+
+- We see that two variables are mapped to the `color` and `size` aesthetics. This means that different species will have different colors and different body masses will have different sizes. Thus, you can map **different variables** to **different aesthetics**. This gives us great flexibility in how we can visualize our data. 
+- A mapped aesthetic will have a legend by default. This is *always* needed to interpret the plot. Two different aesthetics will have two different legends.
+- Because `alpha`, `shape`, and `fill` are set outside the `aes()` function, all points will have the same transparency, shape, and fill.
+
+### Exercise {-}
+
+1. **Fix the Aesthetic Mapping**. Run the following code. Identify the error and correct it.
+
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+    geom_point(
+        aes(
+            color = species,
+            alpha = 0.5
+        ),
+        size = body_mass_g,
+        shape = 21, 
+        fill = "white"
+    ) +
+    theme_minimal()
+```
+
+## Solution
+`alpha` is incorrectly placed inside `aes()` because it is fixed, and size should be inside `aes()` as body_mass_g is a variable in the data.
+:::
+
+2. **Customize Aesthetics**. Adjust the transparency (`alpha`) based on `body_mass_g`, change the shape based on `island`, and set all points to purple.
+
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+  data = penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm)
+) +
+  geom_point(
+    aes(________),
+    ____
+  ) +
+  theme_minimal()
+```
+
+## Solution
+```{webr}
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+  data = penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm)
+) +
+  geom_point(
+    aes(alpha = body_mass_g, shape = island),
+    color = "purple"
+  ) +
+  theme_minimal()
+```
+:::
+
+## Geometric objects
+Geometric objects (`geoms`) are the visual representations of your data. Think of them as the artists painting your data onto the canvas. For example, we have already used `geom_point()` to create a scatter plot. `ggplot2` offers a variety of geoms (`geom_*()`) to create different types of plots. As an example, we can use a different geometric object for the same data above:
+
+::: {.panel-tabset}
+
+## geom_point()
+```{r}
+#| warning: false
+#| source-line-numbers: "11"
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm 
+    ) 
+) +
+    geom_point() + # <1>
+    theme_minimal()
+```
+1. The `geom_point()` function is used to create a scatter plot.
+
+## geom_smooth()
+```{r}
+#| warning: false
+#| source-line-numbers: "11"
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm 
+    ) 
+) +
+    geom_smooth() + # <1>
+    theme_minimal()
+```
+1. The `geom_smooth()` function is used to create a smooth line that fits the trend of the data.
+:::
+
+For the two plots above, left and right have the same data, same axis, but different geometric objects. The left plot uses `geom_point()` to create a scatter plot, while the right plot uses `geom_smooth()` to create a smooth line that fits the trend of the data.
+
+You can use more than one geometric object in a plot. For example, you can add a smooth line to the scatter plot:
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm 
+    ) 
+) +
+    geom_point() + # <1>
+    geom_smooth() + # <2>
+    theme_minimal()
+```
+1. The `geom_point()` function is used to create a scatter plot.
+2. The `geom_smooth()` function is used to create a smooth line that fits the trend of the data.
+
+### Exercise {-}
+We want to explore the relationship between `body_mass_g` and `flipper_length_mm`. Please plot the data with both the points and a smooth trend line. What preliminary conclusions can you draw from the plot?
+   
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+  data = penguins,
+  aes(
+    x = ___,
+    y = ___
+  )
+) +
+  ____() +
+  ____() +
+  theme_minimal()
+```
+
+## Solution
+```{webr}
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+  data = penguins,
+  aes(
+    x = body_mass_g,
+    y = flipper_length_mm
+  )
+) +
+  geom_point() +
+  geom_smooth() +
+  theme_minimal()
+```
+:::
+
+
+## Organizational structure
+
+This is not something typiucally taught in length in the typical `ggplot2` tutorial. I kindly learnt it from experience, through many scratching many heads with mysterious codes.
+
+### Global vs Local Aesthetic Mapping
+
+To show this, we introduce another aesthetic mapping: `group`. It is a central aes that is used to group data. For example, in the figure above, it is quite annoying that the smooth line desciebes the average trend across species, but we are often only intrested within species. We can group the data by `species` so that the smooth line is fitted to each species separately.
+
+```{r}
+#| warning: false
+#| source-line-numbers: "12"
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    ) 
+) +
+    geom_point() + 
+    geom_smooth(aes(group = species)) +     # <1>
+    theme_minimal()
+```
+1. The `species` variable is mapped to the `group` aesthetic. This means that the smooth line will be fitted to each species separately.
+
+But the figure itself is still not very informative as it is diffcult to tell which species is which. We can add a `color` aesthetic
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    ) 
+) +
+    geom_point(aes(color = species)) + 
+    geom_smooth(aes(group = species)) + 
+    theme_minimal()
+```
+
+However, it is annoying that the color only applies to the points, but not the smooth line. There are two ways to fix this. 
+
+::: {.panel-tabset}
+## Mapping species to color *separately*
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    ) 
+) +
+    geom_point(aes(color = species)) + # <1>
+    geom_smooth(aes(group = species, color = species)) +  # <2>
+    theme_minimal()
+```
+1. The `species` variable is mapped to the `color` aesthetic for the points.
+2. The `species` variable is mapped to the `color` aesthetic for the smooth line.
+
+## Mapping species to color *together*
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm,
+        group = species, # <1>
+        color = species # <2>
+    ) 
+) +
+    geom_point() + 
+    geom_smooth() +  
+    theme_minimal()
+```
+1. The `species` variable is mapped to the `color` aesthetic in the beginning but not in the `geom_point()` or `geom_smooth()` functions.
+:::
+
+These two approaches produce the same results! In brief, what is included within the `ggplot()` function is applied to all geometric objects, while what is included within the `geom_*()` functions is only applied to that specific geometric object. A best practice is, whenver you are unsure, to include the aesthetic mapping in the `geom_*()` function.
+
+::: {.callout-tip collapse="true"}
+## A cumbersome way (NOT RECOMMENDED)
+To help you better understand, we can write quite cumbersome codes to achieve the same results :
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins
+) +
+    geom_point(
+        aes(
+            x = bill_length_mm,
+            y = bill_depth_mm,
+            group = species,
+            color = species # <1>
+        )
+    ) +
+    geom_smooth(
+        aes(
+            x = bill_length_mm,
+            y = bill_depth_mm,
+            group = species,
+            color = species # <1>
+        )
+    ) +
+    theme_minimal()
+```
+
+As we can see, even for x and y, they do not have to be included in the `ggplot()` function. They can be included in the `geom_*()` functions. 
+:::
+
+
+### Exercise {-}
+This exercise aims to show you a common pitall in using `ggplot2` with global vs local assignment.
+
+1. We want is to plot a smooth lines grouped by `island`, and the points are colored by `species`. Run the following code and see what are the warnings.
+
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+  data = penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    group = species
+  )
+) +
+  geom_point() +
+  geom_smooth(aes(color = island)) +
+  theme_minimal()
+```
+
+## Solution
+
+- Issue: The smooth is working on species level, not on island level. 
+- Cuause: geom_smooth took the color aesthetic from the global aes() function, and this messes up the local group aes, because color is inherentely a grouping aes.
+- Caution: While ggplot2 works this time, this is a common pitfall that can lead to unexpected results with more complex figures.
+:::
+
+2. Solve the issue above. 
+   
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+  data = penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm
+  )
+) +
+  geom_point(aes(____)) +
+  geom_smooth(aes(____)) +
+  theme_minimal()
+```
+
+## Solution
+```{r}
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+  data = penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm
+  )
+) +
+  geom_point(aes(color = species)) +
+  geom_smooth(aes(group = island)) +
+  theme_minimal()
+```
+:::
+
+
+### Global vs Local Data
+This is slightly more advanced, but it is good to know that the `data = *` argument can be set globally or locally. For example, I want to have the points for all species, but only the trend line for the `Gentoo` species.
+
+```{r}
+#| warning: false
+library(tidyverse)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    ) 
+) +
+    geom_point(aes(color = species)) + 
+    geom_smooth(data = filter(penguins, species == "Gentoo")) + 
+    theme_minimal()
+```
+
+We will explain what the `filter()` function does when we go to data wrangling. For now, just know that it is used to get the subset of data on species .

@@ -17,33 +17,37 @@
 #
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-print("Hello, World!") # <1>
+#| warning: false
+#| source-line-numbers: "11"
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm 
+    )
+) +
+    geom_point(aes(color = "blue")) + # <1>
+    theme_minimal()
 ```
 #
 #
 #
 #
-3 + 2
-#
-#
-#
-#
-x <- 3 + 2 # <1>
-x       # <2>
+#| warning: false
+#| source-line-numbers: "11"
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm 
+    ) 
+) +
+    geom_point(color = "blue") + # <1>
+    theme_minimal()
 ```
 #
 #
@@ -59,107 +63,26 @@ x       # <2>
 #
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-sqrt(1) == 1
-sqrt(4) == 2
-#
-#
-#
-#
-#
-#
-#| eval: false
-install.packages("ggplot2")
 #
 #
 #
 #
 #| warning: false
 library(ggplot2)
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#| eval: false
-# install.packages("devtools") # <1>
-library(devtools) # <2>
-devtools::install_github("cttobin/ggthemr") # <3>
-```
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# install.packages("pacman") # <1>
-library(pacman) # <2>
-p_load(ggplot2) # <3>
-```
-#
-#
-#
-#
-#
-#
-#
-#
-pacman::p_load(ggplot2) # <1>
+library(palmerpenguins)
+ggplot(data = penguins, 
+    aes(x = bill_length_mm, y = bill_depth_mm)
+) +
+    geom_point(
+        aes(
+            color = species, # <1>
+            size = body_mass_g # <2>
+        ),
+        alpha = 0.5, # <3>
+        shape = 21, # <4>
+        fill = "white" # <5>
+    ) +
+    theme_minimal()
 ```
 #
 #
@@ -192,52 +115,359 @@ pacman::p_load(ggplot2) # <1>
 #
 #
 #
-#| eval: false
-install.packages("tidyverse")
 #
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#| warning: false
+#| source-line-numbers: "11"
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm 
+    ) 
+) +
+    geom_point() + # <1>
+    theme_minimal()
+```
+#
+#
+#
+#
+#| warning: false
+#| source-line-numbers: "11"
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm 
+    ) 
+) +
+    geom_smooth() + # <1>
+    theme_minimal()
+```
+#
+#
+#
+#
+#
+#
+#
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm 
+    ) 
+) +
+    geom_point() + # <1>
+    geom_smooth() + # <2>
+    theme_minimal()
+```
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#| warning: false
+#| source-line-numbers: "12"
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    ) 
+) +
+    geom_point() + 
+    geom_smooth(aes(group = species)) +     # <1>
+    theme_minimal()
+```
+#
+#
+#
+#
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    ) 
+) +
+    geom_point(aes(color = species)) + 
+    geom_smooth(aes(group = species)) + 
+    theme_minimal()
+#
+#
+#
+#
+#
+#
+#
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    ) 
+) +
+    geom_point(aes(color = species)) + # <1>
+    geom_smooth(aes(group = species, color = species)) +  # <2>
+    theme_minimal()
+```
+#
+#
+#
+#
+#
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm,
+        group = species, # <1>
+        color = species # <2>
+    ) 
+) +
+    geom_point() + 
+    geom_smooth() +  
+    theme_minimal()
+```
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins
+) +
+    geom_point(
+        aes(
+            x = bill_length_mm,
+            y = bill_depth_mm,
+            group = species,
+            color = species # <1>
+        )
+    ) +
+    geom_smooth(
+        aes(
+            x = bill_length_mm,
+            y = bill_depth_mm,
+            group = species,
+            color = species # <1>
+        )
+    ) +
+    theme_minimal()
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+  data = penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm
+  )
+) +
+  geom_point(aes(color = species)) +
+  geom_smooth(aes(group = island)) +
+  theme_minimal()
+```
+#
+#
+#
+#
+#
+#
+#
+#| warning: false
 library(tidyverse)
-#
-#
-#
-#
-#
-#
-#
-#
-#| eval: false
-library(conflicted)  # <1>
-library(tidyverse)  # <2>
-conflict_prefer("filter", "dplyr") # <3>
-conflict_prefer("lag", "dplyr") # <4>
-```
-#
-#
-#
-#
-#
-#
-#
-#| eval: false
-dplyr::filter()
-dplyr::lag()
-```
-#
-#
-#
-#
-#
-#
-#
-#
-suppressPackageStartupMessages(library(tidyverse))
-#
-#
-#
-#
-#
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    ) 
+) +
+    geom_point(aes(color = species)) + 
+    geom_smooth(data = filter(penguins, species == "Gentoo")) + 
+    theme_minimal()
 #
 #
 #

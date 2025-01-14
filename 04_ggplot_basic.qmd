@@ -11,7 +11,7 @@ As you can see from the syllabus, we will spend a lot of time on making graphs. 
 
 Now, don't get me wrong. Graphs aren't a replacement for text. We still need words to convey intricate ideas and the necessary nuances that come with any scientific discourse. But the sad truth is that most people won't read your entire paper, they will likely skim it. So if you want your work to resonate, you need to make your key findings as clear as possible. In a world overflowing with information, effective visuals are becoming more and more important.
 
-The realm of data visualization has exploded with new tools and frameworks. Among them, `ggplot2` stands out. Why focus on `ggplot2`? Because it encapsulates the right approach to thinking about graphics. Much like learning the grammar of a new language, understanding the "grammar of graphics" will make your visualizations more structured and easier.
+The realm of data visualization has exploded with new tools and frameworks. Among them, `ggplot2` stands out. Why focus on `ggplot2`? Because it encapsulates the right approach to thinking about graphics. Much like learning the grammar of a new language, understanding the "grammar of graphics" will make your visualizations more structured and easier. In addition, it has got a large community ([extension libraries](https://exts.ggplot2.tidyverse.org/gallery/)).
 
 ## Crafting Our First Graph with `ggplot2`
 Then we quickly visualize the data using the `ggplot2` package.
@@ -20,55 +20,49 @@ Let us load the `penguins` dataset from the `palmerpenguins` package, as we lear
 pacman::p_load(palmerpenguins) 
 ```
 
-Suppose we're curious about the relationship between xxx. In the palmerpenguins dataset, these are represented by `bill_length_mm` and `bill_depth_mm`, respectively. Here's how we can visualize this relationship using `ggplot2`:
+Suppose we’re curious about the relationship between bill length and bill depth in penguins. In the `palmerpenguins` dataset, these are represented by `bill_length_mm` and `bill_depth_mm`, respectively. Let’s visualize this relationship using `ggplot2`:
 ```{r}
 #| warning: false
 library(ggplot2) # <1>
-ggplot(
-  data = penguins, # <2>
-  aes(x = bill_length_mm, # <3> 
-      y = bill_depth_mm) # <4>
-) + 
-  geom_point() # <5>
+ggplot( # <2>
+  data = penguins, # <3>
+  aes(x = bill_length_mm, # <4> 
+      y = bill_depth_mm) # <5>
+) +  # <6>
+  geom_point() # <7>
 ```
 1. Load the `ggplot2` package.
-2. Specify the dataset used in the plot.
-3. Define the x-axis variable as `bill_length_mm`.
-4. Define the y-axis variable as `bill_depth_mm`.
-5. Add a layer of points to the plot.
+2. Start a new plot with the function `ggplot()`.
+3. Specify the dataset used in the plot.
+4. Define the x-axis variable as `bill_length_mm`.
+5. Define the y-axis variable as `bill_depth_mm`.
+6. Add a layer to the plot.
+7. A layer of points to the plot.
 
-When you run this code, you should see a scatter plot of flipper length against body mass. The `geom_point()` function adds a layer of points to the plot. This is the most basic type of plot you can make with `ggplot2`.
+When you run this code, you should see a scatter plot of flipper length against body mass. Congratulations! You've just made your first `ggplot2` graph.
 
-Let us brek the code piece by piece:
+Let’s dissect this enchanting code piece by piece:
 
-- The `+` operator is used to add layers to the plot in `ggplot2`.
+- The `+` operator is your magical wand, allowing you to add layers to your plot. Each layer is a graphical element that enhances your masterpiece.
 - `aes()` is used to define the aesthetics of the plot. Here, we map the flipper length to the x-axis and body mass to the y-axis.
-- `geom_point()` belong to a large class of `geom_*` functions that define what you add upon to the graph.
+- `geom_point()` is part of a vast family of `geom_*` functions that define what you add on top of your graph—points, lines, bars, you name it.
 
-Once you understand these concepts, it becomes quite intuitive. When we want to show the scatter okits, we always need to have the data, define what goes on the x-axis and y-axis, and then what to add to the plots (points).
+Once you grasp these concepts, `ggplot2` becomes as intuitive as pie (and just as satisfying). When creating scatter plots, you need data, define your axes, and decide what magical elements to add (like points). To abstract it a bit, here’s the fundamental grammar of `ggplot2`:
+```{r}
+#| eval: false
+ggplot(
+  data = <DATA>, # <1>
+  aes(x = <X>, y = <Y>) # <2>
+) + # <3>
+  <GEOM_FUNCTION>(aes(...)) # <4>
+```
+1. Specify the dataset.
+2. Define the x- and y-axis variable.
+3. Add a layer to the plot.
+4. Specify the type of layer to add.
 
 ## Tuning our Plot
-Our plot is not entirely useful. What about differenet species? To do this, we can use different colors to different them.
-What are other aesthetics that we can define in a plot? Here are some of the most common ones:
-- color
-- shape
-  
-Let's see how we can use these aesthetics in our plot:
-```{r}
-#| warning: false
-#| source-line-numbers: "7"
-ggplot(
-  data = penguins,
-  aes(
-    x = bill_length_mm,
-    y = bill_depth_mm,
-    color = species # <1> 
-  )) +
-  geom_point() 
-```
-1. We map the `species` variable to the color aesthetic.
-
-Another quick comment before we move on, the default theme is not good. We can change it by adding a theme to the plot. Here's how you can do it:
+Our plot is functional but not entirely useful. What about different species? To do this, we can use different colors to distinguish them:
 ```{r}
 #| warning: false
 #| source-line-numbers: "8"
@@ -76,19 +70,49 @@ ggplot(
   data = penguins,
   aes(
     x = bill_length_mm,
-    y = bill_depth_mm,
-    color = species,
-    shape = species # <1>
+    y = bill_depth_mm
   )) +
-  geom_point() 
+  geom_point(aes(color = species)) # <1>
 ```
-1. Differentiate the species by the shape of the points.
+1. We map the `species` variable to the color aesthetic.
+
+But why stop at color? Let’s add another layer of distinction by incorporating shapes:
+```{r}
+#| warning: false
+#| source-line-numbers: "8"
+ggplot(
+  data = penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm 
+  )) +
+  geom_point(aes(color = species, shape = species)) # <1>
+```
+1. Differentiate the species by both the color and the shape of the points.
 
 ## Do not use the default theme
-The default theme is not good. Apart from beuty, it used a grey backgound, which wastes a lot of ink in printing. We can change it by adding a theme to the plot. Here's how you can do it:
+The default theme is not good. Besides being aesthetically bland, the grey background guzzles a ton of ink when you print. We can change it by adding a theme to the plot. **Themes** control the **non-data elements** of your plot—think of them as the outfit your graph wears to impress. Here's how you can do it:
 ```{r}
 #| warning: false
-#| source-line-numbers: "11"
+#| source-line-numbers: "9"
+ggplot(
+  data = penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm 
+  )) +
+  geom_point(aes(color = species, shape = species)) +
+  theme_bw() # <1>
+```
+1. Apply the `theme_bw()` theme to the plot.
+
+The `theme_bw()` is a great starting point—it removes the background gridlines and opts for a clean white backdrop, making your plot easier on the eyes and more printer-friendly. ggplot2 comes with a plethora of themes (check them out [here](https://ggplot2.tidyverse.org/reference/ggtheme.html)). We’ll dive deeper into `theme_*()` functions in future classes, but for now, remember that you can transform your plot’s appearance by simply adding a `theme_*()` function.
+
+Personally, I rarely stick to themes provided in the `ggplot2` library. I prefer the flair of themes from other packages. My personal favorite? `theme_nice()` from the `jtools` package:
+
+```{r}
+#| warning: false
+# install.packages("jtools") # <1>
 ggplot(
   data = penguins,
   aes(
@@ -98,36 +122,18 @@ ggplot(
     shape = species
   )) +
   geom_point() +
-  theme_minimal() # <1>
+  jtools::theme_nice() # <2>
 ```
-1. Apply the `theme_minimal()` theme to the plot.
-
-In general, the `theme_minimal()` theme is a good starting point. It removes the background gridlines and uses a white background, which is easier on the eyes and saves ink when printing. There are multiple themes that come with `ggplot2` (you can find them here). We will explore what `theme_*()` are in more detail in future classes. For now, just remeber that you can change the theme of your plot by adding a `theme_*()` function to the plot. More default themes can be found [here](https://ggplot2.tidyverse.org/reference/ggtheme.html).
-
-However, I rarely use the default themes. I prefer to use themes from other packages. My persoal favorite is `theme_nice()` from the package `jtools`:
-
-```{r}
-#| warning: false
-#| source-highlight: "7"
-ggplot(
-  data = penguins,
-  aes(
-    x = bill_length_mm,
-    y = bill_depth_mm,
-    color = species,
-    shape = species
-  )) +
-  geom_point() +
-  jtools::theme_nice() 
-```
+1. Install the `jtools` package if you haven't already.
+2. Apply the `theme_nice()` from the package `jtools` theme to the plot.
 
 <!-- ::: {.callout-tip}
 ## Why is this a default theme?
 ::: -->
 
-Of course, this is far from a publication-ready plot. But it's a good start. We will learn more about how to customize our plots in future classes.
+Of course, this isn’t yet a publication-ready figure, but it’s a fantastic start. We’ll explore more customization options in future classes. 
 
-## Excersise
+## Exercise {-}
 1. Try to plot the relationship between Body mass (`body_mass_g`) and Bill depth (`bill_depth_mm`) for the `penguins` dataset. Use the `species` variable to color the points.
 
 ::: {.panel-tabset}
@@ -137,13 +143,9 @@ library(ggplot2)
 library(palmerpenguins)
 ggplot(
   data = penguins,
-  aes(
-    x = ___,
-    y = ___,
-    color = ___,
-    shape = ___
-  )) +
-  _____() 
+  aes(x = ___,y = ___)
+) +
+  ___(aes(color = ___, shape = ___))
 ```
 
 ## Solution
@@ -152,17 +154,13 @@ library(ggplot2)
 library(palmerpenguins)
 ggplot(
   data = penguins,
-  aes(
-    x = body_mass_g,
-    y = bill_depth_mm,
-    color = species,
-    shape = species
-  )) +
-  geom_point() 
+  aes(x = body_mass_g, y = bill_depth_mm)
+) +
+  geom_point(aes(color = species, shape = species)) 
 ```
 :::
 
-2. Explore themes. Try to change the theme of the plot to `theme_light()` or `theme_classic()`. What do you observe?
+2. Explore themes. Try to change the theme of the plot to `theme_minimal()` or `theme_classic()`. What do you observe?
   
 ::: {.panel-tabset}
 ## Exercise
@@ -171,13 +169,9 @@ library(ggplot2)
 library(palmerpenguins)
 ggplot(
   data = penguins,
-  aes(
-    x = body_mass_g,
-    y = bill_depth_mm,
-    color = species,
-    shape = species
-  )) +
-  geom_point() +
+  aes(x = body_mass_g, y = bill_depth_mm)
+) +
+  geom_point(aes(color = species, shape = species)) +
   theme____()
 ```
 
@@ -187,13 +181,9 @@ library(ggplot2)
 library(palmerpenguins)
 ggplot(
   data = penguins,
-  aes(
-    x = body_mass_g,
-    y = bill_depth_mm,
-    color = species,
-    shape = species
-  )) +
-  geom_point() +
+  aes(x = body_mass_g, y = bill_depth_mm)
+) +
+  geom_point(aes(color = species, shape = species)) +
   theme_light()
 ```
 :::

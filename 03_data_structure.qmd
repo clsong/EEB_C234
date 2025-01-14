@@ -50,23 +50,35 @@ R automatically assigns the data type for each vector, which can save time but a
 class(numbers) 
 ```   
 
-A horror story (not in R but in Excel) is that the auto-convert feature messes up gene names like `SEPT4` to `4-Sept` (datatype from character to datetime). So, always be aware of the data types!
+A horror story (not in R but in Excel) is that the auto-convert feature messes up gene names like `SEPT4` to `4-Sept` (datatype from character to datetime). This has affected a ton of genetic papers. So, always be aware of the data types!
 :::
 
-### Exercise
-1. Create a vector of numbers from -1 to -3.
+We can also extract data from a vector using the square brackets `[]`. For example:
+```{r}
+numbers[1] # <1>
+characters[2] # <2>
+```
+1. Extract the first element from the `numbers` vector.
+2. Extract the second element from the `characters` vector.
+
+Note that the index starts from **1**, not **0**. This is a common source of confusion for those coming from languages like Python or C. I personally prefer the 1-based index, as this is more intuitive.
+
+### Exercise {-}
+1. Create a vector of numbers from -1 to -3, and then extract the second element.
 
 ::: {.panel-tabset}
 ## Exercise
 ```{webr}
 __ <- c(__, __, __)
 __
+__[__]
 ```
 
 ## Solution
 ```webr
 numbers <- c(-1, -2, -3)
 numbers
+numbers[2]
 ```
 :::
 
@@ -85,7 +97,6 @@ my_name
 ::: {.panel-tabset}
 ## Exercise
 ```{webr}
-## Exercise
 c(____, ____, ____)
 ```
 :::
@@ -139,7 +150,7 @@ Tibbles also enforce a neat and consistent data layout, called `Tidy Data`, whic
 
 We will learn more about working with `tibble` more in the next sections, but for now, let’s move on to our example dataset.
 
-### Exercise
+### Exercise {-}
 Create a tibble with the following columns:
 
 - `name` with your name and surname
@@ -207,7 +218,7 @@ skim(penguins) # <2>
 
 Think of `skim()` as your quick backstage pass, telling you how many rows, columns, missing values, and data types you’re dealing with. Trust me, a few seconds spent peeking at your data can save hours of confusion down the line.
 
-### Exercise
+### Exercise {-}
 `iris` is a widely-used dataset of plant traits. It is a default dataset in R. Take a look at the `iris` dataset using the `skim()` function.
   
 ::: {.panel-tabset}

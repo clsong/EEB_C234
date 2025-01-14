@@ -20,9 +20,9 @@ book:
         - 02_R_basics.qmd
         - 03_data_structure.qmd
     - part: "Grammar of Graphics"
-      # chapters:
-        # - 04_ggplot_basic.qmd
-        # - 05_aesmatic_mapping.qmd
+      chapters:
+        - 04_ggplot_basic.qmd
+        - 05_ggplot_organization.qmd
     # - references.qmd
 
 

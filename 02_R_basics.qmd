@@ -61,7 +61,7 @@ But why don’t most other languages use a similar convention? One factor is typ
 ![From https://dcl-prog.stanford.edu/data-structure-basics.html](img/rbasic_keyboard.png)
 :::
 
-### Exercise 
+### Exercise  {-}
 1. Create a variable `y` and assign it the value of `5 * 3`. Then display the value of `y` on the console.
 
 ::: {.panel-tabset}
@@ -166,7 +166,7 @@ pacman::p_load(ggplot2) # <1>
 What is this mysterious `::` here? It simply means that we are loading the `p_load()` function from the `pacman` package. It allows you to access a function from a package without loading the entire package. This can help avoid conflicts with other packages that might have a similarly named function (which is a huge source for hidden errors!).
 
 
-### Exercise: Installing Packages
+### Exercise: Installing Packages  {-}
 Install the package `gt` using either the standard method or the `pacman` method.
 
 ::: {.panel-tabset}
