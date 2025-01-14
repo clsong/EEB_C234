@@ -4,6 +4,7 @@ Welcome to **EE BIOL C234: Practical Computing for Evolutionary Biologists and E
 
 ## Course Info
 - **Where and When**: We'll be meeting Mondays and Wednesdays, 11:00 AM to 11:50 AM, in Botany 108. 
+- **Office Hours**: Wednesdays, 3 PM to 4 PM, in Botany 210H.
 - **The Grind**: Yes, there will be weekly assignments. If you want to build computational muscle, you're going to have to sweat a bit. But rest easy, no terrifying final exam to ruin your holidays!
 - **What to Bring**: Just your laptop and a healthy dose of intellectual curiosity. If you have played with R before, great; if not, don’t worry—you’ll pick it up.
 - **Course Material**: This lecture note will be updated as the course progresses.
@@ -44,3 +45,17 @@ Throughout the course, expect tips, tricks, and even a few fun facts sprinkled i
 ![As advertised, this is a tips box.](img/syllabus_tip.png)
 :::
 
+I have included many exercises throughout the notes. These are your chance to practice what you've learned. Just fill in `____` with the correct answer and then run the code block to check your work. If you ever get stuck, the Solution is just next to it. For example,
+
+::: {.panel-tabset}
+## Exercise: Calculate 2+2
+```{webr}
+__ + __
+```
+
+## Solution
+```{webr}
+2 + 2
+```
+
+:::

@@ -23,6 +23,7 @@ book:
       chapters:
         - 04_ggplot_basic.qmd
         - 05_ggplot_organization.qmd
+        # - 06_good_plots.qmd
     # - references.qmd
 
 

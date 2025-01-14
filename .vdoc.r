@@ -1,17 +1,63 @@
 #
 #
 #
-pacman::p_load(datasauRus)
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#| eval: false
+x <- 1+1 # <1>
+x^2 # <2>
 ```
 #
 #
-datasaurus_dozen |>
-  ggplot(aes(x = x, y = y, colour = dataset)) +
-  geom_point() +
-  theme_minimal() +
-  facet_wrap(vars(dataset)) +
-  labs(color = "Dataset")
+#
+#
+#
+#
+#
+#| eval: false
+#| source-line-numbers: "4"
+x <- 1+1 
+x^2 
+x^3 # <1>
 ```
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #

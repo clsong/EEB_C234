@@ -1,0 +1,70 @@
+# First Publication-Ready Figure
+
+Instead of many ggplot2 tutorials that go direcly to other plot types, I instead decide to show you how to turn the plot you have into a publication-ready figure. We will use a variety of `ggplot2` family packages.
+
+Let us first see what we left off in the previous chapter:
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+p <- ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm,
+        color = species,
+        group = species
+    )
+) +
+    geom_point() +
+    geom_smooth() +
+    theme_minimal()
+p
+```
+
+# General Tips
+
+::: {.panel-tabset}
+## Adding Labels 
+First, the labels are not clear. So it is unclear what the x-axis and y-axis represent. We can add labels to the axes using the `labs()` function. 
+```{r}
+#| warning: false
+p + 
+  labs(
+    x = "Bill Length (mm)",
+    y = "Bill Depth (mm)"
+  )
+```
+
+## Adding a Title
+Second, what is the figure about? We can add a title to the plot also using the `labs()` function:
+```{r}
+#| warning: false
+p + 
+  labs(
+    x = "Bill Length (mm)",
+    y = "Bill Depth (mm)",
+    title = "Bill Length and Depth of Penguins are Positively Correlated"
+  )
+```
+
+
+### Exercise {-}
+
+```{r}
+pacman::p_load(datasauRus)
+```
+
+We see that 
+```{r}
+datasaurus_dozen |>
+  ggplot(aes(x = x, y = y, colour = dataset)) +
+  geom_point() +
+  theme_minimal() +
+  facet_wrap(vars(dataset)) +
+  labs(color = "Dataset")
+```
+<!-- https://tellingstorieswithdata.com/05-graphs_tables_maps.html -->
+
+
+## Specialized TIps for Scatter Plots
