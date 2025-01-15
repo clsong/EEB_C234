@@ -18,7 +18,7 @@ The realm of data visualization has exploded with new tools and frameworks. Amon
 ## History of Grammar of Graphics
 Leland Wilkinson, a statistician, published a book *The Grammar of Graphics* that laid the foundation for the `ggplot2` package. The book introduced a systematic way to think about graphics, breaking them down into components that could be combined in different ways. This approach has since been adopted by many other visualization libraries.
 
-![Grammar of Graphics. From https://www.stat20.org/2-summarizing-data/03-a-grammar-of-graphics/notes](https://ggplot2.tidyverse.org/logo.png)
+![Grammar of Graphics. From https://www.stat20.org/2-summarizing-data/03-a-grammar-of-graphics/notes](img/ggplot2_grammar_book.png)
 :::
 
 
