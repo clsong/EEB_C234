@@ -13,6 +13,15 @@ Now, don't get me wrong. Graphs aren't a replacement for text. We still need wor
 
 The realm of data visualization has exploded with new tools and frameworks. Among them, `ggplot2` stands out. Why focus on `ggplot2`? Because it encapsulates the right approach to thinking about graphics. Much like learning the grammar of a new language, understanding the "grammar of graphics" will make your visualizations more structured and easier. Additionally, it boasts a large community and a wide array of [extension libraries](https://exts.ggplot2.tidyverse.org/gallery/) that enable the creation of virtually any plot imaginable.
 
+
+::: {.callout-tip collapse="true"}
+## History of Grammar of Graphics
+Leland Wilkinson, a statistician, published a book *The Grammar of Graphics* that laid the foundation for the `ggplot2` package. The book introduced a systematic way to think about graphics, breaking them down into components that could be combined in different ways. This approach has since been adopted by many other visualization libraries.
+
+![Grammar of Graphics. From https://www.stat20.org/2-summarizing-data/03-a-grammar-of-graphics/notes](https://ggplot2.tidyverse.org/logo.png)
+:::
+
+
 ## Crafting Our First Graph with `ggplot2`
 Let us load the `penguins` dataset from the `palmerpenguins` package, as we learnt in the previous chapter.
 ```{r}
@@ -59,11 +68,6 @@ ggplot(
 2. Define the x- and y-axis variable.
 3. Add a layer to the plot.
 4. Specify the type of layer to add.
-
-::: {.callout-tip collapse="true"}
-## History of Grammar of Graphics
-
-:::
 
 ## Tuning our Plot
 Our plot is functional but not entirely useful. What about different species? To do this, we can use different colors to distinguish them:

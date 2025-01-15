@@ -16,6 +16,15 @@
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
 pacman::p_load(palmerpenguins) 
 #
 #
@@ -55,11 +64,6 @@ ggplot(
 ) + # <3>
   <GEOM_FUNCTION>(aes(...)) # <4>
 ```
-#
-#
-#
-#
-#
 #
 #
 #
