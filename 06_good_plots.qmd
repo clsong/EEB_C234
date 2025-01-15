@@ -1,8 +1,112 @@
 # First Publication-Ready Figure
 
-Instead of many ggplot2 tutorials that go direcly to other plot types, I instead decide to show you how to turn the plot you have into a publication-ready figure. We will use a variety of `ggplot2` family packages.
+Instead of many ggplot2 tutorials that go direcly to other plot types, I instead decide to show you how to turn the plot you have into a publication-ready figure. Using whatever packages you want, those fancy examples are not gonna be direcly useful to you, because we typically need to customize our own plot. The goal is to more self-contained, more readable, and more informative. Below I show you the most common steps we need to take to make a plot publication-ready.
 
 Let us first see what we left off in the previous chapter:
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+  geom_point(aes(color = species)) +
+  theme_minimal()
+```
+
+## Find a good theme
+As mentioned before, themes control the non-data elements of your plot. In `ggplot2` family, `theme_*()` is a set of customization on the appearance of the plot. Choosing a theme you like can save you a ton of time. Below I list several popular themes that you can use.
+
+::: {.panel-tabset}
+## Using `jtools`
+I liked the `theme_nice()` from the `jtools` package. It is a clean and minimalistic theme that is easy to read.
+
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+  geom_point(aes(color = species)) +
+  jtools::theme_nice() # <1>
+```
+1. We use the `theme_nice()` function from the `jtools` package to apply the `nice` theme to the plot. If you have not installed the `jtools` package, you can install it using the `install.packages("jtools")` command.
+
+## Using `ggthemr`
+`ggthemr` is a package that provides a collection of themes for `ggplot2` that I really like. Unfortunately, it is not on CRAN, so you need to install it from GitHub.
+```{r}
+#| eval: false
+pacman::p_load(devtools)
+install_github('Mikata-Project/ggthemr')
+```
+
+Check its [GitHub page](https://github.com/Mikata-Project/ggthemr) for more options. Below I show you how to use the `fresh` theme (I have used it a lot).
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+  geom_point(aes(color = species)) +
+  ggthemr::ggthemr('fresh', set_theme = FALSE)$theme
+```
+
+## Using `hrbrthemes`
+
+`hrbrthemes` is another package that provides a collection of themes for `ggplot2`. I am not a huge fan of it, but everyone has their own taste. 
+
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+  geom_point(aes(color = species)) +
+  hrbrthemes::theme_ipsum()
+```
+
+Sometimes you may want to use a dark theme. `hrbrthemes` also provides a dark theme.
+```{r, dev='ragg_png'}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+  geom_point(aes(color = species)) +
+  hrbrthemes::theme_modern_rc()
+```
+
+:::
+
+## Customizing the points
+The default points are aesthetically not pleasing. We can customize the points to make them more visually appealing. A common trick I use is to use point shape 21, which is a circle with a border. I fill the circle with the color of the species with some transpacency and make the border white. The reason why is that it is clear when two points overlap.
+
 ```{r}
 #| warning: false
 library(ggplot2)
@@ -11,18 +115,95 @@ p <- ggplot(
     data = penguins,
     aes(
         x = bill_length_mm,
-        y = bill_depth_mm,
-        color = species,
-        group = species
+        y = bill_depth_mm
     )
 ) +
-    geom_point() +
-    geom_smooth() +
-    theme_minimal()
+  geom_point(
+    aes(fill = species), # <1>
+    color = "white", # <2>
+    shape = 21, # <3>
+    alpha = .6, # <4>
+    size = 3 # <5>
+  ) +
+  jtools::theme_nice()
 p
 ```
+1. We fill the points with the color of the species using the `fill = species` argument.
+2. We make the border of the points white using the `color = "white"` argument.
+3. We use point shape 21, which is a circle with a border, using the `shape = 21` argument.
+4. We make the points slightly transparent using the `alpha = .6` argument.
+5. We increase the size of the points using the `size = 3` argument.
 
-# General Tips
+::: {.callout-tip collapse="true"}
+## A Fancier Trick
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+p <- ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+  geom_point(
+    aes(
+      fill = species, 
+      size = body_mass_g
+    ), 
+    shape = 21,
+    color = "transparent",
+    alpha = .3
+  ) +
+  geom_point(
+    aes(
+      size = body_mass_g
+    ), 
+    shape = 21,
+    color = "white",
+    fill = "transparent"
+  ) +
+  jtools::theme_nice()
+p
+```
+:::
+
+## Make the points clearly distinguishable
+
+We now have had the points colored by species. However, when people print it out in black and white, they may not be able to distinguish the points. We can add different shapes to the points to make them distinguishable. To use the same trick about beautiful points, we use other hollow shapes.
+
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+p <- ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+  geom_point(
+    aes(
+      shape = species,
+      fill = species # <1>
+    ), 
+    color = "white",
+    size = 3,
+    alpha = .6
+  ) +
+  scale_shape_manual(values = c(21, 22, 23)) + # <2>
+  jtools::theme_nice()
+
+p
+```
+1. We fill the points with the color of the species using the `fill = species` argument.
+2. We use different shapes for each species using the `scale_shape_manual(values = c(21, 22, 23))` argument. Nobody can remeber these numbers, so just google when you need to.
+
+Now they are distinguishable by both color and shape.
+
+## Make the plot more self-contained
 
 ::: {.panel-tabset}
 ## Adding Labels 
@@ -30,41 +211,190 @@ First, the labels are not clear. So it is unclear what the x-axis and y-axis rep
 ```{r}
 #| warning: false
 p + 
-  labs(
-    x = "Bill Length (mm)",
-    y = "Bill Depth (mm)"
+  labs( 
+    x = "Bill Length (mm)", # <1>
+    y = "Bill Depth (mm)" # <2>
   )
 ```
+1. We add a label to the x-axis using the `x = "label text"` argument.
+2. We add a label to the y-axis using the `y = "label text"` argument.
+
+Now it 
 
 ## Adding a Title
 Second, what is the figure about? We can add a title to the plot also using the `labs()` function:
 ```{r}
 #| warning: false
+#| source-line-numbers: "6"
 p + 
   labs(
     x = "Bill Length (mm)",
     y = "Bill Depth (mm)",
-    title = "Bill Length and Depth of Penguins are Positively Correlated"
+    title = "Bill Length and Depth of Penguins are Positively Correlated" # <1>
   )
 ```
+1. We add a title to the plot using the `title = "title text"` argument.
+
+Now it is clear what the message of the plot is.
+
+## Adding a trend line
+However, the reader needs to carefully look at the plot to see if there is a trend. We can add a trend line to the plot to make it easier to see if there is a trend.
+
+```{r}
+#| warning: false
+#| source-line-numbers: "8"
+p1 <- p + 
+  labs(
+    x = "Bill Length (mm)",
+    y = "Bill Depth (mm)",
+    title = "Bill Length and Depth of Penguins are Positively Correlated"
+  ) +
+  geom_smooth(
+    aes(group = species, color = species), # <1>
+    method = "lm", se = FALSE  # <2>
+  ) 
+
+p1
+```
+1. We add a linear trend line to the plot using the `geom_smooth()` function. The `group = species` argument specifies that we want to fit a separate trend line for each species.
+2. We add a linear trend line to the plot using the `geom_smooth()` function. The `method = "lm"` argument specifies that we want to fit a linear model to the data. The `se = FALSE` argument specifies that we do not want to display the standard error around the trend line.
+
+:::
+
+
+## Use larger annotations
+This is way too often the issue, as ggplot2 has way too small default font sizes. We can increase the font size of the axis labels using the `theme()` function.
+
+```{r}
+#| warning: false
+p2 <- p1 +
+  theme( # <1>
+    axis.text = element_text(size = 12), # <2>
+    axis.title = element_text(size = 14),  # <3>
+    title = element_text(size = 13), # <4>
+  -
+  
+    legend.text = element_text(size = 12) # <5>
+  )
+p2
+```
+1. We increase the font size of the axis labels using the `theme()` function.
+2. We increase the font size of the axis labels using the `axis.text = element_text(size = )` argument.
+3. We increase the font size of the axis labels using the `axis.title = element_text(size = )` argument.
+4. We increase the font size of the title using the `title = element_text(size = )` argument.
+5. We increase the font size of the legend text using the `legend.text = element_text(size = )` argument.
+
+## Dealing with legend 
+Legend is placed on the right by default. However, it is often better to place it on the top or bottom. We can place the legend on the top using the `theme()` function.
+
+::: {.panel-tabset}
+## Placing the legend on the top (or bottom)
+```{r}
+#| warning: false
+#| source-line-numbers: "4"
+p2 +
+  theme(
+    legend.position = "top"  # <1>
+    # legend.position = "bottom" # <2>
+  )
+```
+1. We place the legend on the top using the `legend.position = "top"` argument.
+2. We can place the legend on the bottom using the `legend.position = "bottom"` argument.
+
+
+## Placing the legend inside
+```{r}
+#| warning: false
+#| source-line-numbers: "8"
+p2 +
+  theme(
+    legend.position = c(0.85, 0.13) # <1>
+  )
+```
+1. We place the legend inside the plot using the `legend.position = c(*, *)` argument. 
+
+The first number specifies the x-coordinate of the legend, and the second number specifies the y-coordinate of the legend. The coordinates are in the range of 0 to 1, where (0, 0) is the bottom-left corner of the plot, and (1, 1) is the top-right corner of the plot.
+
+:::
+
+Another common issue is to ignore the legend title.
+
+::: {.panel-tabset}
+
+## Removing the legend title
+
+Sometimes we may want to remove the legend title. For example, the audience of your paper is likely to be experts of penguins, so you may not need to explain what the color represents. We can remove the legend title using the `theme()` function. And again, we also want the text to be larger!
+
+```{r}
+#| warning: false
+p2 +
+  theme(
+    legend.position = c(0.85, 0.13),
+    legend.title = element_blank() # <1>
+  )
+```
+1. We remove the legend title using the `legend.title = element_blank()` argument.
+2. We increase the font size of the legend text using the `legend.text = element_text(size = )` argument.
+   
+## Rewriting the legend title
+Sometimes the audieence want more information for the figure to be self-contained. This is trickier than it sounds. The issue is that even though we are seeing only one legend, `ggplot2` actually merged several lgends into one, including the color legend, shape legend, and the linetypoe legend. Thus, we need to rewrite all of them, so ggplot2 knows everything should go back to one legend.
+
+```{r}
+#| warning: false
+p2 +
+  theme(
+    legend.position = 'top'
+  ) +
+  labs(
+    color = "Penguin species",  # <1>
+    shape = "Penguin species",  # <2>
+    fill = "Penguin species",  # <3>,
+    linetype = "Penguin species"  # <4>
+  )
+```
+1. We rewrite the title of the color legend using the `labs(color = "label text")` argument.
+
+:::
+
+::: {.callout-tip collapse="true"}
+## Using subtitle
+In addition, an altnative way is to use `subtitle` to describe the legend.
+
+```{r}
+#| warning: false
+library(ggtext)
+p2 +
+  theme(
+    legend.position = "none"
+  ) +
+  labs(
+    subtitle = "Species: Adelie, Chinstrap, Gentoo"
+  )
+```
+:::
+
+<!-- ## Label important points
+
+Sometimes we want to highlight some points in the plot. We can add labels to the points using the `ggrepel` package. Below I show you how to add labels to the points.
+
+## Make it interactive -->
+
+## Save the plot
+Finally, we can save the plot as a publication-ready figure using the `ggsave()` function. The `ggsave()` function saves the plot to a file. The `ggsave()` function takes the following arguments:
+
+
 
 
 ### Exercise {-}
-
-```{r}
-pacman::p_load(datasauRus)
-```
-
 We see that 
 ```{r}
-datasaurus_dozen |>
-  ggplot(aes(x = x, y = y, colour = dataset)) +
-  geom_point() +
-  theme_minimal() +
-  facet_wrap(vars(dataset)) +
-  labs(color = "Dataset")
+pacman::p_load(datasauRus)
+
+# datasaurus_dozen |>
+#   ggplot(aes(x = x, y = y, colour = dataset)) +
+#   geom_point() +
+#   theme_minimal() +
+#   facet_wrap(vars(dataset)) +
+#   labs(color = "Dataset")
 ```
 <!-- https://tellingstorieswithdata.com/05-graphs_tables_maps.html -->
-
-
-## Specialized TIps for Scatter Plots

@@ -11,10 +11,9 @@ As you can see from the syllabus, we will spend a lot of time on making graphs. 
 
 Now, don't get me wrong. Graphs aren't a replacement for text. We still need words to convey intricate ideas and the necessary nuances that come with any scientific discourse. But the sad truth is that most people won't read your entire paper, they will likely skim it. So if you want your work to resonate, you need to make your key findings as clear as possible. In a world overflowing with information, effective visuals are becoming more and more important.
 
-The realm of data visualization has exploded with new tools and frameworks. Among them, `ggplot2` stands out. Why focus on `ggplot2`? Because it encapsulates the right approach to thinking about graphics. Much like learning the grammar of a new language, understanding the "grammar of graphics" will make your visualizations more structured and easier. In addition, it has got a large community ([extension libraries](https://exts.ggplot2.tidyverse.org/gallery/)).
+The realm of data visualization has exploded with new tools and frameworks. Among them, `ggplot2` stands out. Why focus on `ggplot2`? Because it encapsulates the right approach to thinking about graphics. Much like learning the grammar of a new language, understanding the "grammar of graphics" will make your visualizations more structured and easier. Additionally, it boasts a large community and a wide array of [extension libraries](https://exts.ggplot2.tidyverse.org/gallery/) that enable the creation of virtually any plot imaginable.
 
 ## Crafting Our First Graph with `ggplot2`
-Then we quickly visualize the data using the `ggplot2` package.
 Let us load the `penguins` dataset from the `palmerpenguins` package, as we learnt in the previous chapter.
 ```{r}
 pacman::p_load(palmerpenguins) 
@@ -60,6 +59,11 @@ ggplot(
 2. Define the x- and y-axis variable.
 3. Add a layer to the plot.
 4. Specify the type of layer to add.
+
+::: {.callout-tip collapse="true"}
+## History of Grammar of Graphics
+
+:::
 
 ## Tuning our Plot
 Our plot is functional but not entirely useful. What about different species? To do this, we can use different colors to distinguish them:
