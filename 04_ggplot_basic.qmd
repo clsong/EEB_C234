@@ -51,7 +51,7 @@ When you run this code, you should see a scatter plot of flipper length against 
 
 Let’s dissect this enchanting code piece by piece:
 
-- The `+` operator is your magical wand, allowing you to add layers to your plot. Each layer is a graphical element that enhances your masterpiece.
+- The `+` operator is your magical wand, allowing you to add layers to your plot. Each layer is a graphical element that enhances your masterpiece. Any professional graphical sofware (e.g., Photoshop, Illustrator) works in a similar way.
 - `aes()` is used to define the aesthetics of the plot. Here, we map the flipper length to the x-axis and body mass to the y-axis.
 - `geom_point()` is part of a vast family of `geom_*` functions that define what you add on top of your graph—points, lines, bars, you name it.
 

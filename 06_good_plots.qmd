@@ -1,8 +1,8 @@
 # First Publication-Ready Figure
 
-Instead of many ggplot2 tutorials that go direcly to other plot types, I instead decide to show you how to turn the plot you have into a publication-ready figure. Using whatever packages you want, those fancy examples are not gonna be direcly useful to you, because we typically need to customize our own plot. The goal is to more self-contained, more readable, and more informative. Below I show you the most common steps we need to take to make a plot publication-ready.
+While many ggplot2 tutorials dive headfirst into creating various plot types (e.g., bar plots, line plots – the usual suspects). We'll get to those, but first, let's talk about what truly sets ggplot2 apart: its powerful customization. Although other plotting libraries might offer seemingly magical one-line solutions, these rarely survive contact with the harsh realities of academic publication and presentation. Effective visualizations require careful customization to address specific research questions. This guide covers key steps to create self-contained, informative, and aesthetically pleasing graphics—graphics that will make your readers (and reviewers) happy.
 
-Let us first see what we left off in the previous chapter:
+First, let’s rewind to where we left off in the previous chapter:
 ```{r}
 #| warning: false
 library(ggplot2)
@@ -18,12 +18,13 @@ ggplot(
   theme_minimal()
 ```
 
-## Find a good theme
-As mentioned before, themes control the non-data elements of your plot. In `ggplot2` family, `theme_*()` is a set of customization on the appearance of the plot. Choosing a theme you like can save you a ton of time. Below I list several popular themes that you can use.
+## Choose a Good Theme
+
+Remember, themes control the non-data elements of your plot. In the ggplot2 universe, the `theme_*()` functions offer opinionated customization options to tweak your plot's appearance. Picking a theme you like can save you a boatload of time. Here are some choices I like:
 
 ::: {.panel-tabset}
 ## Using `jtools`
-I liked the `theme_nice()` from the `jtools` package. It is a clean and minimalistic theme that is easy to read.
+I have a soft spot for `theme_nice()` from the `jtools` package. It’s clean, minimalistic, and easy on the eyes.
 
 ```{r}
 #| warning: false
@@ -39,17 +40,17 @@ ggplot(
   geom_point(aes(color = species)) +
   jtools::theme_nice() # <1>
 ```
-1. We use the `theme_nice()` function from the `jtools` package to apply the `nice` theme to the plot. If you have not installed the `jtools` package, you can install it using the `install.packages("jtools")` command.
+1. We use the `theme_nice()` function from the `jtools` package to apply the `nice` theme to the plot. If you have not installed `jtools` package yet,  just run `install.packages("jtools")`.
 
 ## Using `ggthemr`
-`ggthemr` is a package that provides a collection of themes for `ggplot2` that I really like. Unfortunately, it is not on CRAN, so you need to install it from GitHub.
+`ggthemr` offers a delightful collection of themes for ggplot2. It’s not on CRAN, so you’ll need to install it from GitHub.
 ```{r}
 #| eval: false
 pacman::p_load(devtools)
 install_github('Mikata-Project/ggthemr')
 ```
 
-Check its [GitHub page](https://github.com/Mikata-Project/ggthemr) for more options. Below I show you how to use the `fresh` theme (I have used it a lot).
+Here’s how to use the `fresh` theme in it, one of my favorites.
 ```{r}
 #| warning: false
 library(ggplot2)
@@ -66,9 +67,11 @@ ggplot(
   ggthemr::ggthemr('fresh', set_theme = FALSE)$theme
 ```
 
+For more options, check out its [GitHub page](https://github.com/Mikata-Project/ggthemr)
+
 ## Using `hrbrthemes`
 
-`hrbrthemes` is another package that provides a collection of themes for `ggplot2`. I am not a huge fan of it, but everyone has their own taste. 
+Another contender is `hrbrthemes`, which also offers a suite of ggplot2 themes. I’m not its biggest fan, but it is quite popular. 
 
 ```{r}
 #| warning: false
@@ -86,7 +89,7 @@ ggplot(
   hrbrthemes::theme_ipsum()
 ```
 
-Sometimes you may want to use a dark theme. `hrbrthemes` also provides a dark theme.
+For those who prefer dark background, `hrbrthemes` has you covered:
 ```{r, dev='ragg_png'}
 #| warning: false
 library(ggplot2)
@@ -104,20 +107,83 @@ ggplot(
 
 :::
 
-## Customizing the points
-The default points are aesthetically not pleasing. We can customize the points to make them more visually appealing. A common trick I use is to use point shape 21, which is a circle with a border. I fill the circle with the color of the species with some transpacency and make the border white. The reason why is that it is clear when two points overlap.
+There are many other themes out there, so feel free to explore and find one that suits your style.
+
+## Customizing the Geometry 
+
+::: {.panel-tabset}
+
+## Separate the Points by Species
+A common issue with scatter plots is that the boundary of points are unclear among different groups. We will use a new geometric object to lay the boundary of the points clear. We will use the package `ggforce` to add an ellipse around the points. As usually, if you have not installed the package yet, just run `install.packages("ggforce")`.
 
 ```{r}
 #| warning: false
 library(ggplot2)
 library(palmerpenguins)
-p <- ggplot(
+ggplot(
     data = penguins,
     aes(
         x = bill_length_mm,
         y = bill_depth_mm
     )
 ) +
+  ggforce::geom_mark_ellipse( # <1>
+    aes(fill = species), # <2>
+    alpha = 0.05, # <3>
+    color = 'transparent' # <4>
+  ) +
+  geom_point(aes(color = species)) +
+  jtools::theme_nice()
+```
+1. We use the `geom_mark_ellipse()` function from the `ggforce` package to add an ellipse around the points.
+2. We fill the ellipse differently by species using the `fill = species` argument.
+3. We make the ellipse more transparent as we don't want it to be too distracting.
+4. We make the border of the ellipse transparent using the `color = 'transparent'` argument.
+
+::: {.callout-tip collapse="true"}
+## Using a Density Geometry
+
+`ggforce::geom_mark_ellipse()` is a great way to show the distribution of points. However, it may not be the best choice for large datasets, especially when we want to show the density of points.
+
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+  ggdensity::geom_hdr(aes(fill = species)) + # <1>
+  # geom_point(shape = 21) +  # <2>
+  jtools::theme_nice()
+```
+1. We use the `geom_hdr()` function from the `ggdensity` package to create a density plot. The `fill = species` argument specifies that we want to fill the density plot with the color of the species.
+2. We use the `geom_point()` function to add points to the density plot. The `shape = 21` argument specifies that we want to use point shape 21, which is a circle with a border.
+:::
+
+## Don’t Settle for Default Point Shapes
+The default points are aesthetically not pleasing, at least to me. Customizing them can make your plot visually appealing. A common trick is to use point shape `21`—a circle with a border. Fill the circle with the species color, add some transparency, and give it a white border. This way, overlapping points don’t turn into an unrecognizable blob.
+
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+  ggforce::geom_mark_ellipse(
+    aes(fill = species),
+    alpha = 0.05, 
+    color = 'transparent' 
+  ) +
   geom_point(
     aes(fill = species), # <1>
     color = "white", # <2>
@@ -126,7 +192,6 @@ p <- ggplot(
     size = 3 # <5>
   ) +
   jtools::theme_nice()
-p
 ```
 1. We fill the points with the color of the species using the `fill = species` argument.
 2. We make the border of the points white using the `color = "white"` argument.
@@ -135,12 +200,12 @@ p
 5. We increase the size of the points using the `size = 3` argument.
 
 ::: {.callout-tip collapse="true"}
-## A Fancier Trick
+## A Fancy Trick (Just in Case)
 ```{r}
 #| warning: false
 library(ggplot2)
 library(palmerpenguins)
-p <- ggplot(
+ggplot(
     data = penguins,
     aes(
         x = bill_length_mm,
@@ -165,25 +230,29 @@ p <- ggplot(
     fill = "transparent"
   ) +
   jtools::theme_nice()
-p
 ```
 :::
 
-## Make the points clearly distinguishable
+## Assign Unique Shapes
 
-We now have had the points colored by species. However, when people print it out in black and white, they may not be able to distinguish the points. We can add different shapes to the points to make them distinguishable. To use the same trick about beautiful points, we use other hollow shapes.
+We've got points colored by species. However, when people print it out in black and white, they may not be able to distinguish the points. Let’s assign different shapes to each species for better clarity. To be concistent, we use other hollow shapes for points.
 
 ```{r}
 #| warning: false
 library(ggplot2)
 library(palmerpenguins)
-p <- ggplot(
+ggplot(
     data = penguins,
     aes(
         x = bill_length_mm,
         y = bill_depth_mm
     )
 ) +
+  ggforce::geom_mark_ellipse(
+    aes(fill = species),
+    alpha = 0.05,
+    color = 'transparent' 
+  ) +
   geom_point(
     aes(
       shape = species,
@@ -195,19 +264,106 @@ p <- ggplot(
   ) +
   scale_shape_manual(values = c(21, 22, 23)) + # <2>
   jtools::theme_nice()
+```
+1. We fill the points with the color of the species using the `fill = species` argument.
+2. We use different shapes for each species using the `scale_shape_manual(values = c(21, 22, 23))` argument. Nobody can remeber the meanings of these numbers, so just google when you need to.
+
+Now, points are distinguishable by both color and shape. Voilà!
+
+## Change the Color/Fill Palette
+If you are unhappy with the default color palette, you can change it. Here, we use the `scale_fill_manual()` function to specify the fill color of each species:
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+p <- ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+  ggforce::geom_mark_ellipse(
+    aes(fill = species),
+    alpha = 0.05,
+    color = 'transparent' 
+  ) +
+  geom_point(
+    aes(
+      shape = species,
+      fill = species 
+    ), 
+    color = "white",
+    size = 3,
+    alpha = .6
+  ) +
+  scale_shape_manual(values = c(21, 22, 23)) + 
+  scale_fill_manual( # <1>
+    values = c(
+      "Adelie" = "#00AFBB",  # <2>
+      "Chinstrap" = "#E7B800",  # <3>
+      "Gentoo" = "#FC4E07" # <4>
+    ) 
+  ) +
+  jtools::theme_nice()
 
 p
 ```
-1. We fill the points with the color of the species using the `fill = species` argument.
-2. We use different shapes for each species using the `scale_shape_manual(values = c(21, 22, 23))` argument. Nobody can remeber these numbers, so just google when you need to.
+1. We change the fill of the points using the `scale_fill_manual()` function.
+2. We specify the fill of the Adelie species using the `Adelie = "#00AFBB"` argument.
+3. We specify the fill of the Chinstrap species using the `Chinstrap = "#E7B800"` argument.
+4. We specify the fill of the Gentoo species using the `Gentoo = "#FC4E07"` argument.
+     
+::: {.callout-tip collapse="true"}
+## A Short Cut (Not Recommended)
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+  geom_point(
+    aes(fill = species),
+    color = "white", 
+    shape = 21, 
+    alpha = .6, 
+    size = 3 
+  ) +
+  scale_fill_manual(
+    values = c("#00AFBB", "#E7B800", "#FC4E07") # <1>
+  ) +
+  jtools::theme_nice()
+```
 
-Now they are distinguishable by both color and shape.
+While we have saved a few lines of code, it is not recommended. It is better to use the specific names as keys, so that you can be absolutely sure what color is assigned to which species.
 
-## Make the plot more self-contained
+:::
+
+Choose colors wisely. Everyone has their own preferences, but there are some guidelines for best practice. We will get back to this topic later. But for now, I recommend some fun and artsy palettes:
+
+- [Wes Anderson](https://github.com/karthik/wesanderson)
+- [MoMA](https://github.com/BlakeRMills/MoMAColors)
+- [MetBrewer](https://github.com/BlakeRMills/MetBrewer)
+- [PNWColors](https://github.com/jakelawlor/PNWColors)
+
+And if you are adventurous, almost all palettes are accessible from the `paletteer` package ([link](https://emilhvitfeldt.github.io/paletteer/)).
+
+:::
+
+
+
+## Make the Plot More Self-Contained
+
+The rule of thumb is to make your plot as self-contained as possible. Ideally, the reader should be able to understand the plot without referring to the text. There are many steps to achieve this, but we will focus on the most important ones for now.
 
 ::: {.panel-tabset}
-## Adding Labels 
-First, the labels are not clear. So it is unclear what the x-axis and y-axis represent. We can add labels to the axes using the `labs()` function. 
+## Add Labels 
+Clarity starts with clear labels. Use the `labs()` function to name your axes.
 ```{r}
 #| warning: false
 p + 
@@ -219,10 +375,12 @@ p +
 1. We add a label to the x-axis using the `x = "label text"` argument.
 2. We add a label to the y-axis using the `y = "label text"` argument.
 
-Now it 
+We will get back to labelling later (with the library `ggtext` and `ggrepel`), but for now, let's keep it simple.
 
-## Adding a Title
-Second, what is the figure about? We can add a title to the plot also using the `labs()` function:
+Notice how we add the layer directly to the plot `p` from the previous figure. This is a common (and very powerful) trick in ggplot2.
+
+## Add a Title
+Second, what’s this plot telling us? A title can make that clear, also using `labs()`:
 ```{r}
 #| warning: false
 #| source-line-numbers: "6"
@@ -235,10 +393,10 @@ p +
 ```
 1. We add a title to the plot using the `title = "title text"` argument.
 
-Now it is clear what the message of the plot is.
+Now, your plot clearly communicates its main message.
 
-## Adding a trend line
-However, the reader needs to carefully look at the plot to see if there is a trend. We can add a trend line to the plot to make it easier to see if there is a trend.
+## Add a trend line
+Help your readers spot trends by adding a trend line. Remember, the goal is to make the plot as easy to understand as possible.
 
 ```{r}
 #| warning: false
@@ -247,23 +405,37 @@ p1 <- p +
   labs(
     x = "Bill Length (mm)",
     y = "Bill Depth (mm)",
-    title = "Bill Length and Depth of Penguins are Positively Correlated"
+    title = "Bill Length and Depth are Positively Correlated"
   ) +
   geom_smooth(
     aes(group = species, color = species), # <1>
     method = "lm", se = FALSE  # <2>
-  ) 
+  ) +
+  scale_color_manual( # <3>
+    values = c(
+      "Adelie" = "#00AFBB",  
+      "Chinstrap" = "#E7B800", 
+      "Gentoo" = "#FC4E07" 
+    ) 
+  )
 
 p1
 ```
 1. We add a linear trend line to the plot using the `geom_smooth()` function. The `group = species` argument specifies that we want to fit a separate trend line for each species.
 2. We add a linear trend line to the plot using the `geom_smooth()` function. The `method = "lm"` argument specifies that we want to fit a linear model to the data. The `se = FALSE` argument specifies that we do not want to display the standard error around the trend line.
+3. We need to change the color of the trend line using the `scale_color_manual()` function. 
+
+Note: color and fill are different aesthetics in ggplot2, so you need to set them separately. The grammar for setting them is the same.
 
 :::
 
 
 ## Use larger annotations
-This is way too often the issue, as ggplot2 has way too small default font sizes. We can increase the font size of the axis labels using the `theme()` function.
+Whenever I read papers or listen to talks, I often see that the font size is too small. The following is a quote from the book [*Fundamentals of Data Visualization*](https://clauswilke.com/dataviz/) by [Claus Wilke](https://clauswilke.com/):
+
+> If you take away only one single lesson from this book, make it this one: Pay attention to your axis labels, axis tick labels, and other assorted plot annotations. Chances are they are too small. In my experience, nearly all plot libraries and graphing softwares have poor defaults. If you use the default values, you’re almost certainly making a poor choice.
+
+We can increase the font size of the axis labels using the `theme()` function.
 
 ```{r}
 #| warning: false
@@ -271,9 +443,7 @@ p2 <- p1 +
   theme( # <1>
     axis.text = element_text(size = 12), # <2>
     axis.title = element_text(size = 14),  # <3>
-    title = element_text(size = 13), # <4>
-  -
-  
+    plot.title = element_text(size = 16), # <4>
     legend.text = element_text(size = 12) # <5>
   )
 p2
@@ -284,11 +454,28 @@ p2
 4. We increase the font size of the title using the `title = element_text(size = )` argument.
 5. We increase the font size of the legend text using the `legend.text = element_text(size = )` argument.
 
+Selecting the appropriate font size in ggplot2 is somewhat of an art. A common mistake is using a font size that looks great in the RStudio preview but doesn't scale appropriately when exporting the plot to different sizes. While the plot elements typically adjust to the export dimensions, fixed font sizes do not, leading to readability issues and challenges with reproducibility. To address this, I typically finalize all other aspects of the plot first and then adjust the font sizes to ensure they are readable and harmonize with the overall visualization.
+
 ## Dealing with legend 
-Legend is placed on the right by default. However, it is often better to place it on the top or bottom. We can place the legend on the top using the `theme()` function.
+By default, the legend hangs out on the right. Often, placing it on top (or bottom) or inside the figure makes for a cleaner look. Let’s see how.
 
 ::: {.panel-tabset}
-## Placing the legend on the top (or bottom)
+
+## Inside the Plot
+```{r}
+#| warning: false
+#| source-line-numbers: "4"
+p2 +
+  theme(
+    legend.position = c(0.12, 0.1) # <1>
+  )
+```
+1. We place the legend inside the plot using the `legend.position = c(*, *)` argument. 
+
+The first number is the x-coordinate, and the second is the y-coordinate, both ranging from 0 (left/bottom) to 1 (right/top).
+
+## On Top or Bottom
+
 ```{r}
 #| warning: false
 #| source-line-numbers: "4"
@@ -301,49 +488,37 @@ p2 +
 1. We place the legend on the top using the `legend.position = "top"` argument.
 2. We can place the legend on the bottom using the `legend.position = "bottom"` argument.
 
-
-## Placing the legend inside
-```{r}
-#| warning: false
-#| source-line-numbers: "8"
-p2 +
-  theme(
-    legend.position = c(0.85, 0.13) # <1>
-  )
-```
-1. We place the legend inside the plot using the `legend.position = c(*, *)` argument. 
-
-The first number specifies the x-coordinate of the legend, and the second number specifies the y-coordinate of the legend. The coordinates are in the range of 0 to 1, where (0, 0) is the bottom-left corner of the plot, and (1, 1) is the top-right corner of the plot.
-
 :::
 
-Another common issue is to ignore the legend title.
+Another common blunder: not paying attention to the legend title.
 
 ::: {.panel-tabset}
 
-## Removing the legend title
+## Remove the legend title
 
-Sometimes we may want to remove the legend title. For example, the audience of your paper is likely to be experts of penguins, so you may not need to explain what the color represents. We can remove the legend title using the `theme()` function. And again, we also want the text to be larger!
+Sometimes, for example with expert audiences, the legend title is redundant. Remove it with `theme()`
 
 ```{r}
 #| warning: false
-p2 +
+p3 <- p2 +
   theme(
-    legend.position = c(0.85, 0.13),
+    legend.position = c(0.12, 0.1),
     legend.title = element_blank() # <1>
   )
+
+p3
 ```
 1. We remove the legend title using the `legend.title = element_blank()` argument.
-2. We increase the font size of the legend text using the `legend.text = element_text(size = )` argument.
+
    
-## Rewriting the legend title
-Sometimes the audieence want more information for the figure to be self-contained. This is trickier than it sounds. The issue is that even though we are seeing only one legend, `ggplot2` actually merged several lgends into one, including the color legend, shape legend, and the linetypoe legend. Thus, we need to rewrite all of them, so ggplot2 knows everything should go back to one legend.
+## Rewrite the legend title
+For a more informative, self-contained figure, you might need to rewrite the legend title. Since ggplot2 can merge multiple legends (color, shape, linetype), ensure consistency by renaming all relevant legends.
 
 ```{r}
 #| warning: false
 p2 +
   theme(
-    legend.position = 'top'
+    legend.position = "top"
   ) +
   labs(
     color = "Penguin species",  # <1>
@@ -356,9 +531,37 @@ p2 +
 
 :::
 
-::: {.callout-tip collapse="true"}
-## Using subtitle
-In addition, an altnative way is to use `subtitle` to describe the legend.
+Another approach is to design the figure so that the legend is not necessary. They are usually more complicated and labor-heavy, but definitely worth it. Below we show two approaches:
+
+::: {.panel-tabset}
+
+## Text Annotation
+```{r dev='ragg_png'}
+#| warning: false
+
+p2 +
+    theme(legend.position = "none") +
+    annotate("text", # <1>
+        x = 33, y = 14, # <2>
+        label = "Adelie", # <3>
+        color = "#00AFBB", size = 5 # <4>
+    ) + 
+    annotate("text",
+        x = 55, y = 22,
+        label = "Chinstrap", color = "#E7B800", size = 5
+    ) +
+    annotate("text",
+        x = 58, y = 14,
+        label = "Gentoo", color = "#FC4E07", size = 5
+    )
+```
+1. We add text annotations to the plot using the `annotate()` function.
+2. We specify the x and y coordinates of the text annotations using the `x = , y = ` arguments.
+3. We specify the label of the text annotations using the `label = "label text"` argument. 
+4. We specify the color of the text annotations using the `color = ` argument. We increase the size of the text annotations using the `size = ` argument.
+
+## Subtitle
+We can use subtitle as an effective way to label the groups. We can use the `ggtext` package to add the subtitle. If you have not installed the package yet, just run `install.packages("ggtext")`.
 
 ```{r}
 #| warning: false
@@ -368,7 +571,14 @@ p2 +
     legend.position = "none"
   ) +
   labs(
-    subtitle = "Species: Adelie, Chinstrap, Gentoo"
+    subtitle = "Penguin Species: 
+    <span style = 'color:#00AFBB;'>**Adelie**</span><span style = 'color:#00AFBB;font-size:22pt'>\u25CF</span>,
+    <span style = 'color:#E7B800;'>**Chinstrap**</span><span style = 'color:#E7B800;font-size:20pt'>\u25A0</span>,
+    <span style = 'color:#FC4E07;'>**Gentoo**</span><span style = 'color:#FC4E07;font-size:22pt'>\u2666</span>"
+  ) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    plot.subtitle = element_textbox_simple(halign = 0, size = 12)
   )
 ```
 :::
@@ -379,13 +589,182 @@ Sometimes we want to highlight some points in the plot. We can add labels to the
 
 ## Make it interactive -->
 
-## Save the plot
-Finally, we can save the plot as a publication-ready figure using the `ggsave()` function. The `ggsave()` function saves the plot to a file. The `ggsave()` function takes the following arguments:
+## The full code
+
+Alright, brace yourself. The full code for our pièce de résistance—our final figure—is right below. Run it with a single click and marvel as the figure above magically appears:
+
+```{webr}
+#| warning: false
+
+library(ggplot2)
+library(palmerpenguins)
+library(ggforce)
+library(jtools)
+
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+    ggforce::geom_mark_ellipse(
+        aes(fill = species),
+        alpha = 0.05,
+        color = "transparent"
+    ) +
+    geom_point(
+        aes(
+            shape = species,
+            fill = species
+        ),
+        color = "white",
+        size = 3,
+        alpha = .6
+    ) +
+    geom_smooth(
+        aes(group = species, color = species),
+        method = "lm", se = FALSE
+    ) +
+    scale_shape_manual(values = c(21, 22, 23)) +
+    scale_fill_manual(
+        values = c(
+            "Adelie" = "#00AFBB",
+            "Chinstrap" = "#E7B800",
+            "Gentoo" = "#FC4E07"
+        )
+    ) +
+    scale_color_manual(
+        values = c(
+            "Adelie" = "#00AFBB",
+            "Chinstrap" = "#E7B800",
+            "Gentoo" = "#FC4E07"
+        )
+    ) +
+    labs(
+        x = "Bill Length (mm)",
+        y = "Bill Depth (mm)",
+        title = "Bill Length and Depth are Positively Correlated"
+    ) +
+    jtools::theme_nice() +
+    theme(
+        axis.text = element_text(size = 12),
+        axis.title = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        legend.text = element_text(size = 12),
+        legend.position = c(0.12, 0.1),
+        legend.title = element_blank()
+    )
+```
+
+Yes, the code might look like it’s speaking in tongues, but fear not! **It’s all about the logic**. Let’s break down the wizardry step by step:
+
+1. We always start with `ggplot()` function. This is your canvas. Specify your data and map out the x and y axes.
+2. The first couple of layers are adding the geometries (`geom_*`). What to add are motivated by what we want to show. Since we’re exploring the relationship between bill length and bill depth, we need:
+   -  Points (`geom_point`): Each penguin observation.
+   -  Trend Lines (`geom_smooth`): To highlight that positive relationship.
+   -  Ellipses (`ggforce::geom_mark_ellipse`): To neatly separate different species.
+   -  Pro Tip: The order matters! The first layer (ellipses) sits at the bottom, with points and trend lines layering on top. Carefully think about the order of layers.
+3. We then customize so that the aesmatics match your vision. This is controlled by the `scale_*` function. In this plot, the customized `aes` includes `shape`, `color`, and `fill`.
+4. Labeling with `labs()`: Clear labels make your plot understandable at a glance.
+5. We then customize the theme, the non-data elements of the plot:
+   - We first use a good theme. This saves us a lot of time in custimization.
+   - We then do our own custimization. This is controlled by the `theme()` function. We can change the font size, the position of the legend, etc.
+
+The logic behind every ggplot2 figure follows these structured steps. It may seem intimidating at first, but I promise you will get used to it and even fall in love with it:
+
+- **Encourages Thoughtful Design**: ggplot2 challenges you to think deeply about what you want to visualize. This thoughtful approach not only creates stunning visuals but also helps you **understand your data on a deeper level**. I have benefitted many times from this.
+- **A Playground for Creativity**: The beauty of ggplot2 lies in its flexibility. As I said multiple times, you are in full control of your plot. Add or remove layers effortlessly and experiment with countless extensions to find what best communicates your data. Who says you cannot do experiments on computer!
+
+## Exporting Your Plot with Precision
+
+Finally, we need to export the plot such as `pdf` or `png`, so we can use it elsewhere (like submit to a journal). However, a minimalist approach like `ggsave("plot_name.pdf")` lacks the precision needed for publication-quality figures. Below, we show the best practices for exporting your plot:
+
+::: {.panel-tabset}
+## Save as PDF
+PDFs are the gold standard for vector graphics in academic publications due to their scalability and clarity. To save your plot as a PDF, consider the following comprehensive method:
+```{r}
+#| warning: false
+#| eval: false
+ggsave(
+  filename = "plot.pdf", # <1>
+  plot = p3, # <2>
+  width = 8, # <3>
+  height = 6, # <4>
+  units = "in", # <5>
+  device = cairo_pdf
+)
+```
+1. Filename Specification: Clearly define the output file name and its format using the filename argument. This ensures your plot is saved with the desired name and extension.
+2. Plot Selection: The plot argument allows you to specify which ggplot object you intend to save. This is particularly useful when working with multiple plots.
+3. Dimensional Control: By setting the width and height, you control the physical size of the plot, ensuring it fits seamlessly within your manuscript's layout.
+4. Unit Definition: Specifying units (inches, centimeters, etc.) provides consistency, especially when adhering to journal-specific formatting guidelines.
+5. Device Choice: The cairo_pdf device offers superior rendering quality, handling fonts and graphical elements with precision.
+
+Why do we bother to specify plot dimensions? For one thing, RStudio window sizes can vary from one computer to another, which may cause your figures to appear distorted or improperly sized if dimensions aren't fixed. Additionally, font sizes in plots are fixed and do not automatically scale with plot dimensions, leading to text that may be too large or too small relative to the plot size. I've had nightmares to reproduce well-formatted figures because I forgot to set these dimensions. To avoid such headaches, it's best practice to always specify the width and height when exporting your plots.
+
+## Save as PNG
+While PDFs are ideal for vector graphics, many journals only accept non-vector format like PNGs. To achieve optimal quality and avoid common pitfalls related to fonts and rendering, the `ragg` package is highly recommended. If you haven't installed it yet, simply execute install.packages("ragg").
+```{r}
+#| warning: false
+#| eval: false
+ggsave(
+  filename = "plot.png", # <1>
+  plot = p3, 
+  width = 8, 
+  height = 6, 
+  units = "in", 
+  device = ragg::agg_png # <2>
+)
+```
+1. Filename Specification: Clearly define the output file name and its format using the filename argument.
+2. Device Choice: Utilizing ragg::agg_png ensures that the PNG is rendered with high fidelity, handling intricate details and text smoothly.
+:::
+
+## Refining Your Plot Beyond R
+
+While ggplot2 is powerful, it is not a design software. To add extra touch, you can save it as a vector graphic (e.g., `pdf`) and edit it in a design software like Adobe Illustrator or Inkscape. 
+
+However, learning a new software can be time-consuming. Luckily, you get to do many of these tasks in PowerPoint or Keynote. The trick is to save the plot as `svg` format. This is a vector graphic format that can be easily imported into editable format in PowerPoint or Keynote. For example, you can add annotations, arrows, and other design elements to make your plot more informative and appealing. As an example, below adds the artistic plot of penguins to better illustate the two axis:
+
+![Hooray! Our First Publication-Ready Figure](img/final_penguin.png)
+
+Another great side benefit is that that you can esaily do animations for your figures when you present in conferences or group meetings. We will demonstratre in class how to do this.
 
 
 
+## Make it interactive (Optional) 
+Unfortunbately, acadmeic publishing does not allow interactive plots. However, you can make it interactive for your own use. Below I show you how to make the plot interactive using the `ggiraph` package.
 
-### Exercise {-}
+```{r}
+#| warning: false
+
+library(ggplot2)
+library(palmerpenguins)
+library(ggiraph) # <1>
+
+p_interactive <- ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+  geom_point_interactive(
+    aes(
+      color = species,
+      data_id = sex,
+      tooltip = body_mass_g
+    )
+  ) +
+  jtools::theme_nice() +
+  theme(legend.position = "top")
+
+girafe(ggobj = p_interactive)
+```
+
+
+<!-- ## Exercise {-}
 We see that 
 ```{r}
 pacman::p_load(datasauRus)
@@ -397,4 +776,4 @@ pacman::p_load(datasauRus)
 #   facet_wrap(vars(dataset)) +
 #   labs(color = "Dataset")
 ```
-<!-- https://tellingstorieswithdata.com/05-graphs_tables_maps.html -->
+https://tellingstorieswithdata.com/05-graphs_tables_maps.html -->

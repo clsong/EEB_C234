@@ -7,6 +7,12 @@
 - Understand organizational principle in `ggplot2`
 :::
 
+Most plotting libraries, let’s be honest, are a bit of a black box. One command, bang, you’ve got a chart. It’s convenient, sure—a quick fix for the data visualization problem. But peek under the hood? Forget about it. And try tweaking things to get exactly what you want? Good luck with that. They’re built for simplicity, which all too often means a crippling lack of flexibility. And let’s face it, when you’re trying to create truly effective visualizations, customization isn’t a luxury—it’s a necessity.
+
+`ggplot2` takes a different tack. It’s built on the idea of a “grammar of graphics”—think of it as a set of Lego bricks for data visualization. Simple, modular pieces that, combined thoughtfully, can construct virtually anything you can imagine. This means you’re not trapped by pre-packaged, cookie-cutter solutions. You can actually design your charts, assembling them piece by piece, crafting them to tell precisely the story your data has to tell.
+
+Now, there’s a trade-off, of course. You do have to invest some time to grasp its (admittedly elegant) design principles. But trust me, the payoff is well worth the effort. Below, I’ll walk you through some of the fundamental ideas that make this approach so powerful.
+
 ## Aesthetic Mappings
 
 ### What is an Aesthetic?
@@ -206,7 +212,10 @@ ggplot(
 
 For the two plots above, left and right have the same data, same axis, but different geometric objects. The left plot uses `geom_point()` to create a scatter plot, while the right plot uses `geom_smooth()` to create a smooth line that fits the trend of the data.
 
-You can use more than one geometric object in a plot. For example, you can add a smooth line to the scatter plot:
+You can use more than one geometric object in a plot. For example, you can add a smooth line and points on the plot. Notice that the orders of adding layers matter. The last layer will be on top of the previous layers. To see this, 
+
+::: {.panel-tabset}
+## geom_point() then geom_smooth()
 ```{r}
 #| warning: false
 library(ggplot2)
@@ -224,6 +233,30 @@ ggplot(
 ```
 1. The `geom_point()` function is used to create a scatter plot.
 2. The `geom_smooth()` function is used to create a smooth line that fits the trend of the data.
+
+The smmoth line is on top of the points.
+
+## geom_smooth() then geom_point()
+```{r}
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm 
+    ) 
+) +
+    geom_smooth() + # <1>
+    geom_point() + # <2>
+    theme_minimal()
+```
+1. First we create a smooth line that fits the trend of the data.
+2. Then we add points to the plot.
+
+Now the black points are on top of the smooth line.
+:::
 
 ### Exercise {-}
 We want to explore the relationship between `body_mass_g` and `flipper_length_mm`. Please plot the data with both the points and a smooth trend line. What preliminary conclusions can you draw from the plot?
