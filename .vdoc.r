@@ -127,63 +127,6 @@ ggplot(
         y = bill_depth_mm
     )
 ) +
-  ggforce::geom_mark_ellipse( # <1>
-    aes(fill = species), # <2>
-    alpha = 0.05, # <3>
-    color = 'transparent' # <4>
-  ) +
-  geom_point(aes(color = species)) +
-  jtools::theme_nice()
-```
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#| warning: false
-library(ggplot2)
-library(palmerpenguins)
-
-ggplot(
-    data = penguins,
-    aes(
-        x = bill_length_mm,
-        y = bill_depth_mm
-    )
-) +
-  ggdensity::geom_hdr(aes(fill = species)) + # <1>
-  # geom_point(shape = 21) +  # <2>
-  jtools::theme_nice()
-```
-#
-#
-#
-#
-#
-#
-#
-#
-#| warning: false
-library(ggplot2)
-library(palmerpenguins)
-ggplot(
-    data = penguins,
-    aes(
-        x = bill_length_mm,
-        y = bill_depth_mm
-    )
-) +
-  ggforce::geom_mark_ellipse(
-    aes(fill = species),
-    alpha = 0.05, 
-    color = 'transparent' 
-  ) +
   geom_point(
     aes(fill = species), # <1>
     color = "white", # <2>
@@ -248,11 +191,6 @@ ggplot(
         y = bill_depth_mm
     )
 ) +
-  ggforce::geom_mark_ellipse(
-    aes(fill = species),
-    alpha = 0.05,
-    color = 'transparent' 
-  ) +
   geom_point(
     aes(
       shape = species,
@@ -283,11 +221,6 @@ p <- ggplot(
         y = bill_depth_mm
     )
 ) +
-  ggforce::geom_mark_ellipse(
-    aes(fill = species),
-    alpha = 0.05,
-    color = 'transparent' 
-  ) +
   geom_point(
     aes(
       shape = species,
@@ -352,6 +285,30 @@ ggplot(
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#| warning: false
+library(ggplot2)
+library(palmerpenguins)
+
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+  ggdensity::geom_hdr(aes(fill = species)) + # <1>
+  # geom_point(shape = 21) +  # <2>
+  jtools::theme_nice()
+```
 #
 #
 #
@@ -460,23 +417,6 @@ p2
 #
 #
 #
-#
-#
-#
-#| warning: false
-#| source-line-numbers: "4"
-p2 +
-  theme(
-    legend.position = c(0.12, 0.1) # <1>
-  )
-```
-#
-#
-#
-#
-#
-#
-#
 #| warning: false
 #| source-line-numbers: "4"
 p2 +
@@ -485,6 +425,20 @@ p2 +
     # legend.position = "bottom" # <2>
   )
 ```
+#
+#
+#
+#
+#
+#
+#| warning: false
+#| source-line-numbers: "8"
+p2 +
+  theme(
+    legend.position = c(0.85, 0.13) # <1>
+  )
+```
+#
 #
 #
 #
@@ -502,8 +456,9 @@ p2 +
 #| warning: false
 p3 <- p2 +
   theme(
-    legend.position = c(0.12, 0.1),
-    legend.title = element_blank() # <1>
+    legend.position = c(0.85, 0.13),
+    legend.title = element_blank(), # <1>,
+    plot.title = element_text(size = 18) # <2>
   )
 
 p3
@@ -518,7 +473,7 @@ p3
 #| warning: false
 p2 +
   theme(
-    legend.position = "top"
+    legend.position = 'top'
   ) +
   labs(
     color = "Penguin species",  # <1>
@@ -526,34 +481,6 @@ p2 +
     fill = "Penguin species",  # <3>,
     linetype = "Penguin species"  # <4>
   )
-```
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#| warning: false
-
-p2 +
-    theme(legend.position = "none") +
-    annotate("text", # <1>
-        x = 33, y = 14, # <2>
-        label = "Adelie", # <3>
-        color = "#00AFBB", size = 5 # <4>
-    ) + 
-    annotate("text",
-        x = 55, y = 22,
-        label = "Chinstrap", color = "#E7B800", size = 5
-    ) +
-    annotate("text",
-        x = 58, y = 14,
-        label = "Gentoo", color = "#FC4E07", size = 5
-    )
 ```
 #
 #
@@ -593,91 +520,66 @@ p2 +
 #
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+#| warning: false
+#| eval: false
+
+library(ggplot2)
+library(palmerpenguins)
+
+ggplot(
+    data = penguins,
+    aes(
+        x = bill_length_mm,
+        y = bill_depth_mm
+    )
+) +
+  ggforce::geom_mark_ellipse(
+    aes(fill = species),
+    alpha = 0.05,
+    color = 'transparent') +
+  geom_point(
+    aes(
+      shape = species,
+      fill = species 
+    ), 
+    color = "white",
+    size = 3,
+    alpha = .6
+  ) +
+  geom_smooth(
+    aes(group = species, color = species), 
+    method = "lm", se = FALSE  
+  ) +
+  scale_shape_manual(values = c(21, 22, 23)) + 
+  scale_fill_manual(
+    values = c(
+      "Adelie" = "#00AFBB",  
+      "Chinstrap" = "#E7B800", 
+      "Gentoo" = "#FC4E07" 
+    ) 
+  ) +
+  scale_color_manual( 
+    values = c(
+      "Adelie" = "#00AFBB",  
+      "Chinstrap" = "#E7B800", 
+      "Gentoo" = "#FC4E07" 
+    ) 
+  ) +
+  labs(
+    x = "Bill Length (mm)",
+    y = "Bill Depth (mm)",
+    title = "Bill Length and Depth are Positively Correlated"
+  ) +
+  jtools::theme_nice() +
+  theme( 
+    axis.text = element_text(size = 12), 
+    axis.title = element_text(size = 14), 
+    plot.title = element_text(size = 18),
+    legend.text = element_text(size = 12) ,
+    # legend.position = c(0.85, 0.13),
+    legend.position = "none",
+    legend.title = element_blank()
+  )
 #
 #
 #
@@ -692,32 +594,9 @@ ggsave(
   width = 8, # <3>
   height = 6, # <4>
   units = "in", # <5>
-  device = cairo_pdf
+  dpi = 300 # <6>
 )
 ```
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#| warning: false
-#| eval: false
-ggsave(
-  filename = "plot.png", # <1>
-  plot = p3, 
-  width = 8, 
-  height = 6, 
-  units = "in", 
-  device = ragg::agg_png # <2>
-)
-```
-#
 #
 #
 #
@@ -761,7 +640,7 @@ p_interactive <- ggplot(
   theme(legend.position = "top")
 
 girafe(ggobj = p_interactive)
-#
+```
 #
 #
 #
