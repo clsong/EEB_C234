@@ -109,6 +109,45 @@ ggplot(
 
 There are many other themes out there, so feel free to explore and find one that suits your style.
 
+### Exercise {-}
+
+`iris` is a widely known dataset introduced by Ronald Fisher. It contains three plant species and four features measured for each sample. We will use this dataset to explore the association between `Sepal.Width` and `Petal.Width` as exercise throughout this Chapter. Try three different themes on the `iris` dataset:
+
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(ggplot2)
+
+ggplot(
+    data = iris,
+    aes(
+        x = Sepal.Width,
+        y = Petal.Width
+    )
+) +
+    geom_point(aes(color = Species)) +
+    _____()
+```
+
+## Solution
+As one example, you can use `jtools::theme_nice()` as the theme.
+```{webr}
+library(ggplot2)
+library(jtools)
+
+ggplot(
+    data = iris,
+    aes(
+        x = Sepal.Width,
+        y = Petal.Width
+    )
+) +
+    geom_point(aes(color = Species)) +
+    jtools::theme_nice()
+```
+
+:::
+
 ## Customizing the Geometry 
 
 ::: {.panel-tabset}
@@ -320,6 +359,7 @@ p
 #| warning: false
 library(ggplot2)
 library(palmerpenguins)
+
 ggplot(
     data = penguins,
     aes(
@@ -355,6 +395,72 @@ And if you are adventurous, almost all palettes are accessible from the `palette
 
 :::
 
+### Exercise {-}
+Let us apply what we have learnt so far. Below is a simple scatter plot of the `iris` dataset. Your task is to customize the plot with:
+
+- customized point shape for each species 
+- use a non-default color. 
+- add point cloud boundary for each species (try `ggforce::geom_mark_ellipse()`, `ggforce::geom_mark_hull()` and `ggforce::geom_mark_rect()`) 
+
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(ggplot2)
+
+ggplot(
+  data = iris,
+  aes(
+      x = Sepal.Length,
+      y = Sepal.Width
+  )
+) +
+  ggforce::geom_mark____(
+    aes(fill = _____),
+    ______
+  ) +
+  geom_point(
+    aes(color = _____),
+    _____
+  ) +
+  scale_shape_manual(values = ____) +
+  scale_fill_manual(values = _____) +
+  theme_minimal()
+```
+
+## Solution
+
+```{r}
+library(ggplot2)
+
+ggplot(
+    data = iris,
+    aes(
+        x = Sepal.Width,
+        y = Petal.Width
+    )
+) +
+  ggforce::geom_mark_rect(
+    aes(fill = Species),
+    alpha = 0.05,
+    color = 'transparent' 
+  ) +
+  geom_point(
+      aes(
+          shape = Species,
+          fill = Species
+      ),
+      color = "white",
+      size = 3,
+      alpha = .6
+  ) +
+  scale_shape_manual(values = c(21, 22, 23)) +
+  scale_fill_manual(
+    values = MetBrewer::met.brewer(name="Demuth", n=3, type="discrete") 
+  ) +
+  theme_minimal()
+```
+
+:::
 
 
 ## Make the Plot More Self-Contained
@@ -429,32 +535,97 @@ Note: color and fill are different aesthetics in ggplot2, so you need to set the
 
 :::
 
+### Exercise {-}
+Let us apply what we have learnt so far. Below is a simple scatter plot of the `iris` dataset. Your task is to customize the plot with customized point shape for each species and use a non-default color. 
 
-## Use larger annotations
-Whenever I read papers or listen to talks, I often see that the font size is too small. The following is a quote from the book [*Fundamentals of Data Visualization*](https://clauswilke.com/dataviz/) by [Claus Wilke](https://clauswilke.com/):
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(ggplot2)
+library(MetBrewer)
 
-> If you take away only one single lesson from this book, make it this one: Pay attention to your axis labels, axis tick labels, and other assorted plot annotations. Chances are they are too small. In my experience, nearly all plot libraries and graphing softwares have poor defaults. If you use the default values, you’re almost certainly making a poor choice.
+p_exe <- ggplot(
+    data = iris,
+    aes(
+        x = Sepal.Width,
+        y = Petal.Width
+    )
+) +
+  geom_point(
+      aes(
+          shape = Species,
+          fill = Species
+      ),
+      color = "white",
+      size = 3,
+      alpha = .6
+  ) +
+  scale_shape_manual(values = c(21, 22, 23)) +
+  scale_fill_manual(
+    values = MetBrewer::met.brewer(name="Demuth", n=3, type="discrete") 
+  ) +
+  theme_minimal()
 
-We can increase the font size of the axis labels using the `theme()` function.
+p_exe +
+  labs(
+    x = ______,
+    y = ______,
+    title = ______
+  ) +
+  geom_smooth(
+    aes(group = ____, color = ____),
+    method = "lm", se = FALSE
+  ) +
+  scale_____manual(
+    ________
+  )
+```
+
+## Solution
 
 ```{r}
-#| warning: false
-p2 <- p1 +
-  theme( # <1>
-    axis.text = element_text(size = 12), # <2>
-    axis.title = element_text(size = 14),  # <3>
-    plot.title = element_text(size = 16), # <4>
-    legend.text = element_text(size = 12) # <5>
-  )
-p2
-```
-1. We increase the font size of the axis labels using the `theme()` function.
-2. We increase the font size of the axis labels using the `axis.text = element_text(size = )` argument.
-3. We increase the font size of the axis labels using the `axis.title = element_text(size = )` argument.
-4. We increase the font size of the title using the `title = element_text(size = )` argument.
-5. We increase the font size of the legend text using the `legend.text = element_text(size = )` argument.
+library(ggplot2)
+library(MetBrewer)
 
-Selecting the appropriate font size in ggplot2 is somewhat of an art. A common mistake is using a font size that looks great in the RStudio preview but doesn't scale appropriately when exporting the plot to different sizes. While the plot elements typically adjust to the export dimensions, fixed font sizes do not, leading to readability issues and challenges with reproducibility. To address this, I typically finalize all other aspects of the plot first and then adjust the font sizes to ensure they are readable and harmonize with the overall visualization.
+p_exe <- ggplot(
+    data = iris,
+    aes(
+        x = Sepal.Width,
+        y = Petal.Width
+    )
+) +
+  geom_point(
+      aes(
+          shape = Species,
+          fill = Species
+      ),
+      color = "white",
+      size = 3,
+      alpha = .6
+  ) +
+  scale_shape_manual(values = c(21, 22, 23)) +
+  scale_fill_manual(
+    values = MetBrewer::met.brewer(name="Demuth", n=3, type="discrete") 
+  ) +
+  theme_minimal()
+
+p_exe +
+  labs(
+      x = "Petal width (cm)",
+      y = "Sepal width (cm)",
+      title = "Association between Sepal and Petal Width"
+  ) +
+  geom_smooth(
+      aes(group = Species, color = Species),
+      method = "lm", se = FALSE
+  ) +
+  scale_color_manual(
+    values = MetBrewer::met.brewer(name="Demuth", n=3, type="discrete") 
+  )
+```
+
+:::
+
 
 ## Dealing with legend 
 By default, the legend hangs out on the right. Often, placing it on top (or bottom) or inside the figure makes for a cleaner look. Let’s see how.
@@ -465,7 +636,7 @@ By default, the legend hangs out on the right. Often, placing it on top (or bott
 ```{r}
 #| warning: false
 #| source-line-numbers: "4"
-p2 +
+p1 +
   theme(
     legend.position = c(0.12, 0.1) # <1>
   )
@@ -479,7 +650,7 @@ The first number is the x-coordinate, and the second is the y-coordinate, both r
 ```{r}
 #| warning: false
 #| source-line-numbers: "4"
-p2 +
+p1 +
   theme(
     legend.position = "top"  # <1>
     # legend.position = "bottom" # <2>
@@ -500,13 +671,13 @@ Sometimes, for example with expert audiences, the legend title is redundant. Rem
 
 ```{r}
 #| warning: false
-p3 <- p2 +
+p2 <- p1 +
   theme(
     legend.position = c(0.12, 0.1),
     legend.title = element_blank() # <1>
   )
 
-p3
+p2
 ```
 1. We remove the legend title using the `legend.title = element_blank()` argument.
 
@@ -516,7 +687,7 @@ For a more informative, self-contained figure, you might need to rewrite the leg
 
 ```{r}
 #| warning: false
-p2 +
+p1 +
   theme(
     legend.position = "top"
   ) +
@@ -535,11 +706,22 @@ Another approach is to design the figure so that the legend is not necessary. Th
 
 ::: {.panel-tabset}
 
+## Facet the Plot
+```{r}
+#| warning: false
+
+p1 +
+  facet_wrap(~species) + # <1> 
+  theme(
+    legend.position = "none"
+  )
+```
+
 ## Text Annotation
 ```{r dev='ragg_png'}
 #| warning: false
 
-p2 +
+p1 +
     theme(legend.position = "none") +
     annotate("text", # <1>
         x = 33, y = 14, # <2>
@@ -566,7 +748,7 @@ We can use subtitle as an effective way to label the groups. We can use the `ggt
 ```{r}
 #| warning: false
 library(ggtext)
-p2 +
+p1 +
   theme(
     legend.position = "none"
   ) +
@@ -588,6 +770,41 @@ p2 +
 Sometimes we want to highlight some points in the plot. We can add labels to the points using the `ggrepel` package. Below I show you how to add labels to the points.
 
 ## Make it interactive -->
+
+## Use larger annotations
+Whenever I read papers or listen to talks, I often see that the font size is too small. The following is a quote from the book [*Fundamentals of Data Visualization*](https://clauswilke.com/dataviz/) by [Claus Wilke](https://clauswilke.com/):
+
+> If you take away only one single lesson from this book, make it this one: Pay attention to your axis labels, axis tick labels, and other assorted plot annotations. Chances are they are too small. In my experience, nearly all plot libraries and graphing softwares have poor defaults. If you use the default values, you’re almost certainly making a poor choice.
+
+We can increase the font size of the axis labels using the `theme()` function.
+
+```{r}
+#| warning: false
+p3 <- p2 +
+  theme( # <1>
+    axis.text = element_text(size = 12), # <2>
+    axis.title = element_text(size = 14),  # <3>
+    plot.title = element_text(size = 16), # <4>
+    legend.text = element_text(size = 12) # <5>
+  )
+p3
+```
+1. We increase the font size of the axis labels using the `theme()` function.
+2. We increase the font size of the axis labels using the `axis.text = element_text(size = )` argument.
+3. We increase the font size of the axis labels using the `axis.title = element_text(size = )` argument.
+4. We increase the font size of the title using the `title = element_text(size = )` argument.
+5. We increase the font size of the legend text using the `legend.text = element_text(size = )` argument.
+
+Selecting the appropriate font size in ggplot2 is somewhat of an art. A common mistake is using a font size that looks great in the RStudio preview but doesn't scale appropriately when exporting the plot to different sizes. While the plot elements typically adjust to the export dimensions, fixed font sizes do not, leading to readability issues and challenges with reproducibility. To address this, 
+
+- You can finalize all other aspects of the plot first and then adjust the font sizes to ensure they are readable and harmonize with the overall visualization. 
+- Alternaticely, you can use a fixed canvas size for the plot, which can help you better control the font sizes:
+```{r}
+#| eval: false
+p2 + 
+  patchwork::plot_layout(widths = 50, heights = 50) +
+  theme(...)
+```
 
 ## The full code
 
@@ -723,18 +940,61 @@ ggsave(
 
 ## Refining Your Plot Beyond R
 
-While ggplot2 is powerful, it is not a design software. To add extra touch, you can save it as a vector graphic (e.g., `pdf`) and edit it in a design software like Adobe Illustrator or Inkscape. 
+While ggplot2 is powerful, it is not a design software and it can be paiful to do everything in R. To add extra touch, you can save it as a vector graphic (e.g., `pdf`) and edit it in a design software like Adobe Illustrator or Inkscape. 
 
-However, learning a new software can be time-consuming. Luckily, you get to do many of these tasks in PowerPoint or Keynote. The trick is to save the plot as `svg` format. This is a vector graphic format that can be easily imported into editable format in PowerPoint or Keynote. For example, you can add annotations, arrows, and other design elements to make your plot more informative and appealing. As an example, below adds the artistic plot of penguins to better illustate the two axis:
+However, learning a new software can be time-consuming. Luckily, you get to do many of these tasks in **PowerPoint**. The trick is to save the plot as `svg` format. This is a vector graphic format that can be easily imported into editable format in PowerPoint. Another practicle trick is to remove the white background of the plot. Below is the code to do this:
+
+```{r}
+#| warning: false
+#| eval: false
+
+p_svg <- p3 + 
+  theme(
+    panel.background = element_rect(fill = "transparent", colour = NA_character_), # <1>
+    plot.background = element_rect(fill = "transparent", colour = NA_character_), # <2>
+    legend.background = element_rect(fill = "transparent"), # <3>
+    legend.box.background = element_rect(fill = "transparent"), # <4>
+    legend.key = element_rect(fill = "transparent") # <5>
+  )
+
+ggsave(
+  filename = "plot.svg", 
+  plot = p_svg, 
+  width = 8, 
+  height = 6, 
+  units = "in"
+)
+```
+1. We make the panel background transparent.
+2. We make the plot background transparent.
+3. We make the legend background transparent.
+4. We make the legend box background transparent.
+5. We make the legend key transparent.
+
+With the exported svg in Keynote, you can easily add annotations, arrows, and other design elements to make your plot more informative and appealing. As an example, below adds the artistic plot of penguins to better illustate the two axis:
 
 ![Hooray! Our First Publication-Ready Figure](img/final_penguin.png)
 
-Another great side benefit is that that you can esaily do animations for your figures when you present in conferences or group meetings. We will demonstratre in class how to do this.
+::: {.callout-tip}
+## Where to find artistic illustrations
+A well-drawn illustration can make your plot more engaging. It is not easy, as this is not a standardized process. That said, here are some solid options for finding awesome illustrations:
 
+1. **Hire an artist**. Honestly, this is your best bet for top-notch quality and tons of customization. Plus, you’re supporting creative folks! Here are a few options to check out (not sponsored—just examples):
+   - [Life Science Studios](https://www.lifesciencestudios.com/)
+   - [SayoStudio](https://sayostudio.com/)
+   - [ArtSciStudio](https://www.artscistudios.com/)
+2. **Use online resources**. If hiring someone isn’t in the cards, these online platforms can help:
+   - [BioRender](https://biorender.com/). Super popular with molecular biologists, packed with templates and illustrations. Downsides? It’s super pricey.
+   - [NIH BioArt Source](https://bioart.niaid.nih.gov/). Free and provided by NIH.
+   - [Bio Icons](https://bioicons.com/). Free as well.
+   - [Adobe Stock](stock.adobe.com). High-quality stuff from Adobe, but yeah, like other Adobe products, it’s expensive.
+3. **Use AI**. AI tools are getting pretty good at making custom illustrations. Just tread carefully—AI-generated stuff isn’t always perfect, and you don’t want to end up with something embarrassing (Here’s [a cringe-worthy example](https://venturebeat.com/ai/science-journal-retracts-peer-reviewed-article-containing-ai-generated-nonsensical-images/)).
+:::
 
+Another great side benefit of editing this in Powerpoint is that that you can esaily animate your figures when you present in conferences or group meetings. We will demonstratre in class how to do this.
 
-## Make it interactive (Optional) 
-Unfortunbately, acadmeic publishing does not allow interactive plots. However, you can make it interactive for your own use. Below I show you how to make the plot interactive using the `ggiraph` package.
+<!-- ## Make it interactive (Optional) 
+Unfortunately, acadmeic publishing does not allow interactive plots. However, you can make it interactive for your own use. Below I show you can easily do this using the `ggiraph` package.
 
 ```{r}
 #| warning: false
@@ -750,11 +1010,11 @@ p_interactive <- ggplot(
         y = bill_depth_mm
     )
 ) +
-  geom_point_interactive(
+  geom_point_interactive( # <2>
     aes(
-      color = species,
-      data_id = sex,
-      tooltip = body_mass_g
+      color = species, 
+      data_id = sex, # <3>
+      tooltip = body_mass_g # <4>
     )
   ) +
   jtools::theme_nice() +
@@ -762,7 +1022,10 @@ p_interactive <- ggplot(
 
 girafe(ggobj = p_interactive)
 ```
-
+1. We load the `ggiraph` package.
+2. We use the `geom_point_interactive()` function to create an interactive plot.
+3. Specify what points in the same group to be highlighted
+4. Specify what information to be shown when you hover over the points. -->
 
 <!-- ## Exercise {-}
 We see that 

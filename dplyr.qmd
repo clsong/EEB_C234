@@ -1,5 +1,0 @@
-# Title
-
-
-## Pipe
-There are difficult things in programming: naming and cache.

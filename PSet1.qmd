@@ -1,0 +1,181 @@
+## PSet 1 {-}
+
+Hello there! Welcome to your first PSet. This time, we’re going to use your R plotting skills to make your data visualizations *pop*. 
+
+- **Your Mission**: Produce 2 stylish, publication-ready figures using **ggplot2** and its many add-on packages.
+- **You’ll submit**:
+  - Your R scripts.
+  - The exported images of your plots (PDF AND PNG).
+- **Deadline**: Feb 2nd, 2025
+
+So, get your creativity (and code) fired up. Let’s begin!
+
+### **Part 1: Why Correlation is NOT Causation**
+
+We’ve all heard it a thousand times: *Correlation does not imply causation*. A great example is that nations which consume more chocolate per capita tend to have more Nobel Prize winners per 10 million citizens. I highly doubt if any doctor would advise you that eating more chocolate is your ticket to Stockholm.
+
+The data for chocolate consumption (`Chocolate`) and the number of Nobel laureates (`Nobel`) in various countries is here:
+```{r}
+data_nobel <- read.csv("http://clsong.com/assets/class_data/data_nobel.csv")
+```
+
+We could do a quick scatter plot to see the relationship between the two variables:
+```{r}
+#| warning: false
+library(tidyverse)
+
+ggplot(
+    data = data_nobel,
+    aes(x = Chocolate, y = Nobel)
+) +
+    geom_point() +
+    theme_bw()
+```
+
+This quick plot is, well, meh. It’s not something you’d proudly show in your paper or presentation. For example, in the original paper that published this result, the figure looked much better:
+
+![Messerli, F. H. (2012). Chocolate consumption, cognitive function, and nobel laureates. New England Journal of Medicine](img/Pset1_nobel.jpg)
+
+Let’s transform the quick plot into something more publication-ready. Specifically, your plot **must** include:
+
+- A Title that clearly shows the message of the plot.
+- Country flags instead of points.
+- A correlation coefficient on the plot.
+- Readable text sizes. Make sure axis labels, titles, etc., are big enough to see clearly.
+
+Of course, you can do so much more than that. Explore and be creative!
+
+::: {.callout-note collapse="true"}
+### Helpful tools
+We did not cover everything in the class, but it is easy to learn new ggplot2 tricks. Below are some potentially useful resources:
+
+- How to add country flags? You can use the geom from `ggflags::geom_flag()` to do this. The `Flag` column in the data contains the country codes. So it would be something like `ggflags::geom_flag(aes(country = Flag))`.
+- How to add a correlation coefficient to the plot? You can use the `ggpubr::stat_cor()` package to do this. 
+- How to indicate the data source? To give due credit to the original author of the data, you can use the `caption` argument in the `labs()` function. 
+- (Optional) add the country names to the plot. You can use the `ggrepel::geom_text_repel()` function to do this.
+:::
+
+::: {.callout-note collapse="true"}
+### My example plot
+As one example, below is a figure that I created using the `hrbrthemes` package. This is just some reference to help you navigate. I am looking forward to losing to you.
+```{r dev="ragg_png", fig.width=10, fig.height=8}
+#| warning: false
+#| echo: false
+data_nobel %>%
+    ggplot(aes(x = Chocolate, y = Nobel)) +
+    ggflags::geom_flag(aes(country = Flag)) +
+    ggpubr::stat_cor(
+        method = "pearson",
+        label.x = .5,
+        label.y = 27,
+        p.accuracy = 0.001,
+        r.accuracy = 0.01,
+        size = 6
+    ) +
+    ggrepel::geom_text_repel(
+        aes(label = Country),
+        box.padding = 0.5,
+        point.padding = 0.5
+    ) +
+    labs(
+        title = "More Chocolate Consumption, More Nobel Prizes",
+        subtitle = "Why Correlation is Not Causation",
+        x = "Chocolate consumption\n(kg/year/capita)",
+        y = "Nobel laureates\n(per 10 million people)",
+        caption = "Data: Messerli (2012) , New England Journal of Medicine"
+    ) +
+    hrbrthemes::theme_ipsum(
+        axis_text_size = 16,
+        axis_title_size = 18
+    ) +
+    theme(
+        plot.title = element_text(size = 25),
+        plot.caption = element_text(size = 14),
+        plot.subtitle = element_text(size = 20)
+    )
+```
+:::
+
+
+### Keeping up with the New York Times
+
+The New York Times often publishes elegant data visualizations. In this problem, we’ll mimic one of their COVID-19 vaccination rate vs. GDP charts. Their graph is below:
+
+![From [New York Times](https://www.nytimes.com/2022/01/06/learning/whats-going-on-in-this-graph-jan-12-2022.html)](img/Pset1_NYT.png)
+
+
+We’ll use a smaller dataset that approximates what they used. Even if it’s not the exact same dataset, the design principles remain the same. To load the data into your R environment, run the following code:
+```{r}
+data_nyt <- read.csv("http://clsong.com/assets/class_data/data_nyt.csv")
+```
+
+In this problem, please build an NYT-style plot for this plot. You can add more features to make your plot more informative and visually appealing, but it needs to have at least the following requirement:
+
+- Because GDP spans large orders of magnitude, the x-axis should be in log scale. 
+- Distinguish points by continent (instead of the income group in the original figure). 
+- We want bigger bubbles for more populous countries.
+- Customized color/fill palette. Don’t just rely on default color scales. Find a palette you like.
+- Add the `$` logo on the x-axis. 
+
+
+::: {.callout-note collapse="true"}
+### Helpful tools
+
+- As we mentioned, x axis is also an aes, so it is also controlled by `scale_*()`. Google or ask ChatGPT how to do this.
+- You can use the `scales::label_currency()` function to format the axis labels.
+
+:::
+
+::: {.callout-note collapse="true"}
+### My example plot
+Again, just for refernece purpose. I am looking forward to seeing your more creative and informative plots.
+```{r dev="ragg_png", fig.width=8, fig.height=6}
+#| warning: false
+#| echo: false
+
+library(tidyverse)
+library(ggiraph)
+
+data_nyt %>% 
+  ggplot(aes(GDP, Doses)) +
+  geom_point(
+    aes(size = Population,
+        fill = Continent),
+    alpha = 0.5,
+    shape = 21,
+    color = 'transparent'
+  ) +
+  labs(
+    x = "G.D.P. per capita",
+    y = "doses administered per 100 people",
+    title = "Wealthier countries have administered more COVID-19 vacacines",
+    subtitle = "Circles are sized by country population"
+  ) +
+  scale_x_log10(
+    breaks = c(1000, 10000, 100000),
+    labels = scales::label_currency(),
+    limits = c(1000, 120000)
+  ) +
+  scale_y_continuous(
+    limits = c(0, 250)
+  ) +
+  scale_size(
+    guide = 'none',
+    range = c(1, 12)
+  ) +
+  scale_fill_manual(
+    name = "",
+    values = MoMAColors::moma.colors("Klein", n=6, type="discrete")
+  ) +
+  hrbrthemes::theme_ft_rc(
+    axis_text_size = 12,
+    axis_title_size = 12,
+    plot_title_size = 14
+  ) +
+  theme(
+    legend.text=element_text(size=12),
+    legend.position = c(.15, .8),
+    legend.key.size = unit(0.15, 'in'),
+    panel.grid.minor = element_blank()
+  )
+```
