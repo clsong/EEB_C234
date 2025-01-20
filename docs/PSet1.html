@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.6.33">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>PSet 1 – EE BIOL C234</title>
+<title>7&nbsp; PSet 1 – EE BIOL C234</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -112,7 +112,7 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_ggplot_basic.html">Grammar of Graphics</a></li><li class="breadcrumb-item"><a href="./PSet1.html">PSet 1</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_ggplot_basic.html">Grammar of Graphics</a></li><li class="breadcrumb-item"><a href="./PSet1.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">PSet 1</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -198,7 +198,7 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./PSet1.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">PSet 1</span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">PSet 1</span></span></a>
   </div>
 </li>
       </ul>
@@ -211,13 +211,15 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#part-1-why-correlation-is-not-causation" id="toc-part-1-why-correlation-is-not-causation" class="nav-link active" data-scroll-target="#part-1-why-correlation-is-not-causation"><strong>Part 1: Why Correlation is NOT Causation</strong></a></li>
-  <li><a href="#keeping-up-with-the-new-york-times" id="toc-keeping-up-with-the-new-york-times" class="nav-link" data-scroll-target="#keeping-up-with-the-new-york-times">Keeping up with the New York Times</a></li>
+<li><a href="#part-1-why-correlation-is-not-causation" id="toc-part-1-why-correlation-is-not-causation" class="nav-link active" data-scroll-target="#part-1-why-correlation-is-not-causation"><span class="header-section-number">7.0.1</span> <strong>Part 1: Why Correlation is NOT Causation</strong></a></li>
+  <li><a href="#keeping-up-with-the-new-york-times" id="toc-keeping-up-with-the-new-york-times" class="nav-link" data-scroll-target="#keeping-up-with-the-new-york-times"><span class="header-section-number">7.0.2</span> Keeping up with the New York Times</a></li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_ggplot_basic.html">Grammar of Graphics</a></li><li class="breadcrumb-item"><a href="./PSet1.html">PSet 1</a></li></ol></nav><div class="quarto-title">
-<h1 class="title">PSet 1</h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_ggplot_basic.html">Grammar of Graphics</a></li><li class="breadcrumb-item"><a href="./PSet1.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">PSet 1</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">7</span>&nbsp; <span class="chapter-title">PSet 1</span>
+</h1>
 </div>
 
 
@@ -246,7 +248,9 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
 <strong>Deadline</strong>: Feb 2nd, 2025</li>
 </ul>
 <p>So, get your creativity (and code) fired up. Let’s begin!</p>
-<section id="part-1-why-correlation-is-not-causation" class="level3"><h3 class="anchored" data-anchor-id="part-1-why-correlation-is-not-causation"><strong>Part 1: Why Correlation is NOT Causation</strong></h3>
+<section id="part-1-why-correlation-is-not-causation" class="level3" data-number="7.0.1"><h3 data-number="7.0.1" class="anchored" data-anchor-id="part-1-why-correlation-is-not-causation">
+<span class="header-section-number">7.0.1</span> <strong>Part 1: Why Correlation is NOT Causation</strong>
+</h3>
 <p>We’ve all heard it a thousand times: <em>Correlation does not imply causation</em>. A great example is that nations which consume more chocolate per capita tend to have more Nobel Prize winners per 10 million citizens. I highly doubt if any doctor would advise you that eating more chocolate is your ticket to Stockholm.</p>
 <p>The data for chocolate consumption (<code>Chocolate</code>) and the number of Nobel laureates (<code>Nobel</code>) in various countries is here:</p>
 <div class="cell">
@@ -328,7 +332,8 @@ My example plot
 </div>
 </div>
 </div>
-</section><section id="keeping-up-with-the-new-york-times" class="level3"><h3 class="anchored" data-anchor-id="keeping-up-with-the-new-york-times">Keeping up with the New York Times</h3>
+</section><section id="keeping-up-with-the-new-york-times" class="level3" data-number="7.0.2"><h3 data-number="7.0.2" class="anchored" data-anchor-id="keeping-up-with-the-new-york-times">
+<span class="header-section-number">7.0.2</span> Keeping up with the New York Times</h3>
 <p>The New York Times often publishes elegant data visualizations. In this problem, we’ll mimic one of their COVID-19 vaccination rate vs.&nbsp;GDP charts. Their graph is below:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/Pset1_NYT.png" class="img-fluid figure-img"></p>
