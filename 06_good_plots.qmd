@@ -1,5 +1,12 @@
 # First Publication-Ready Figure
 
+::: {.callout-note}
+## Class Objectives
+- Understand the design principles of a good figure
+- How to customize a ggplot2 figure
+- How to export a figure for publication
+:::
+
 While many ggplot2 tutorials dive headfirst into creating various plot types (e.g., bar plots, line plots – the usual suspects). We'll get to those, but first, let's talk about what truly sets ggplot2 apart: its powerful customization. Although other plotting libraries might offer seemingly magical one-line solutions, these rarely survive contact with the harsh realities of academic publication and presentation. Effective visualizations require careful customization to address specific research questions. This guide covers key steps to create self-contained, informative, and aesthetically pleasing graphics—graphics that will make your readers (and reviewers) happy.
 
 First, let’s rewind to where we left off in the previous chapter:
@@ -763,6 +770,8 @@ p1 +
     plot.subtitle = element_textbox_simple(halign = 0, size = 12)
   )
 ```
+
+There is also another package `marquee` that makes this process easier. But it is still under active development. Check the [documentation](https://marquee.r-lib.org/reference/guide_marquee.html) if you are intrested.
 :::
 
 <!-- ## Label important points

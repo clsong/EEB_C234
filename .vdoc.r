@@ -16,20 +16,72 @@
 #
 #
 #
-data_nobel <- read.csv("http://clsong.com/assets/class_data/data_nobel.csv")
+#
+#
+#
+#
+#
+#
 #
 #
 #
 #
 #| warning: false
 library(tidyverse)
+library(tidylog)
 
-ggplot(
-    data = data_nobel,
-    aes(x = Chocolate, y = Nobel)
-) +
-    geom_point() +
-    theme_bw()
+# if you haven't installed dcldata, you can do so by running:
+# pak::pkg_install("dcl-docs/dcldata")
+library(dcldata)
+#
+#
+#
+#
+#
+#
+#
+example_eagle_nests
+#
+#
+#
+#
+#
+#| warning: false
+
+eagle_nests_longer <- example_eagle_nests |>
+    pivot_longer( #<1>
+        cols = c(`2007`, `2009`), #<2>
+        names_to = "year", #<3>
+        values_to = "nests" #<4>
+    )
+eagle_nests_longer
+```
+#
+#
+#
+#
+#
+#
+#
+#
+#| warning: false
+#| eval: false
+
+example_eagle_nests |>
+    pivot_longer(
+        cols = -c(`region`), 
+        names_to = "year", 
+        values_to = "nests" 
+    )
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -60,38 +112,11 @@ ggplot(
 #
 #
 #| warning: false
-#| echo: false
-data_nobel %>%
-    ggplot(aes(x = Chocolate, y = Nobel)) +
-    ggflags::geom_flag(aes(country = Flag)) +
-    ggpubr::stat_cor(
-        method = "pearson",
-        label.x = .5,
-        label.y = 27,
-        p.accuracy = 0.001,
-        r.accuracy = 0.01,
-        size = 6
-    ) +
-    ggrepel::geom_text_repel(
-        aes(label = Country),
-        box.padding = 0.5,
-        point.padding = 0.5
-    ) +
-    labs(
-        title = "More Chocolate Consumption, More Nobel Prizes",
-        subtitle = "Why Correlation is Not Causation",
-        x = "Chocolate consumption\n(kg/year/capita)",
-        y = "Nobel laureates\n(per 10 million people)",
-        caption = "Data: Messerli (2012) , New England Journal of Medicine"
-    ) +
-    hrbrthemes::theme_ipsum(
-        axis_text_size = 16,
-        axis_title_size = 18
-    ) +
-    theme(
-        plot.title = element_text(size = 25),
-        plot.caption = element_text(size = 14),
-        plot.subtitle = element_text(size = 20)
+
+eagle_nests_longer |>
+    pivot_wider( #<1>
+        names_from = "year", #<2>
+        values_from = "nests" #<3>
     )
 ```
 #
@@ -106,23 +131,29 @@ data_nobel %>%
 #
 #
 #
-data_nyt <- read.csv("http://clsong.com/assets/class_data/data_nyt.csv")
+#| warning: false
+
+library(palmerpenguins)
+
+penguins |>
+   group_by(species, sex) |>
+   summarise(mean_bill_length = mean(bill_length_mm)) 
 #
 #
 #
 #
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+#| warning: false
+
+penguins |>
+   group_by(species, sex) |>
+   summarise(mean_bill_length = mean(bill_length_mm)) |>
+   ungroup() |>
+   pivot_wider(
+      names_from = "sex",
+      values_from = "mean_bill_length"
+   )
 #
 #
 #
@@ -131,53 +162,232 @@ data_nyt <- read.csv("http://clsong.com/assets/class_data/data_nyt.csv")
 #
 #
 #| warning: false
-#| echo: false
 
-library(tidyverse)
-library(ggiraph)
+penguins |>
+   group_by(species, sex) |>
+   summarise(mean_bill_length = mean(bill_length_mm)) |>
+   ungroup() |>
+   pivot_wider(
+      names_from = "sex",
+      values_from = "mean_bill_length"
+   ) |>
+   ggplot(aes(male, female)) +
+   geom_point(size = 4) +
+   ggrepel::geom_text_repel(aes(label = species), box.padding = 1) +
+   geom_abline(intercept = 0, slope = 1) +
+   jtools::theme_nice()
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+example_gymnastics_2
+#
+#
+#
+#
+#
+#| warning: false
 
-data_nyt %>% 
-  ggplot(aes(GDP, Doses)) +
-  geom_point(
-    aes(size = Population,
-        fill = Continent),
-    alpha = 0.5,
-    shape = 21,
-    color = 'transparent'
-  ) +
-  labs(
-    x = "G.D.P. per capita",
-    y = "doses administered per 100 people",
-    title = "Wealthier countries have administered more COVID-19 vacacines",
-    subtitle = "Circles are sized by country population"
-  ) +
-  scale_x_log10(
-    breaks = c(1000, 10000, 100000),
-    labels = scales::label_currency(),
-    limits = c(1000, 120000)
-  ) +
-  scale_y_continuous(
-    limits = c(0, 250)
-  ) +
-  scale_size(
-    guide = 'none',
-    range = c(1, 12)
-  ) +
-  scale_fill_manual(
-    name = "",
-    values = MoMAColors::moma.colors("Klein", n=6, type="discrete")
-  ) +
-  hrbrthemes::theme_ft_rc(
-    axis_text_size = 12,
-    axis_title_size = 12,
-    plot_title_size = 14
-  ) +
-  theme(
-    legend.text=element_text(size=12),
-    legend.position = c(.15, .8),
-    legend.key.size = unit(0.15, 'in'),
-    panel.grid.minor = element_blank()
+example_gymnastics_2 |>
+    pivot_longer(
+        cols = -c(`country`), 
+        names_to = "event_year", 
+        values_to = "score"
+    )
+#
+#
+#
+#
+#
+#| warning: false
+
+example_gymnastics_2 |>
+    pivot_longer(
+        cols = -c(`country`), 
+        names_to = "event_year", 
+        values_to = "score"
+    ) |>
+    separate(
+        col = "event_year", 
+        into = c("event", "year"), 
+        sep = "_"
+    )
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+toy_dates <- tibble(
+  month = c(1, 2, 3),
+  day   = c(15, 20, 25),
+  year  = c(2020, 2020, 2020)
+)
+#
+#
+#
+#
+#
+toy_dates |>
+  unite( # <1>
+    col = "full_date", # <2>
+    month, day, year, # <3>
+    sep = "-" # <4>
   )
+```
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+penguins
+#
+#
+#
+#
+#
+penguins |>
+  drop_na() # <1>
+```
+#
+#
+#
+#
+#
+penguins |>
+  drop_na(bill_length_mm) # <1>
+```
+#
+#
+#
+#
+#
+#
+#
+#
+#
+penguins |>
+  replace_na(
+   list(sex = 'male')
+  )
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+library(palmerpenguins)
+
+penguins |>
+   group_by(species, sex) |>
+   nest()
 #
 #
 #

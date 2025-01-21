@@ -1,0 +1,391 @@
+# Five verbs for tidying data
+
+::: {.callout-note}
+## Class Objectives: Mastering common `tidyr` verbs
+1. Reshape data  
+   - `pivot_longer()`: Transform wide data into a longer, “tall” format.  
+   - `pivot_wider()`: Transform long data into a wider format.
+2. Split cells  
+   - `separate()`: Split one column into multiple columns.  
+3. Dealing with missing values
+   - `drop_na()`: Drop rows with missing values.
+   - `replace_na()`: Replace missing values with a specified value. 
+:::
+
+It’s often said that data cleaning and preparation consume the lion’s share of an analyst’s time—some claim as much as 80%. When real-world data arrives on your desk, chances are it isn’t in a convenient format. Columns may be mislabeled or scattered, variable names might be confusing, and rows may contain missing information. Over the years, analysts have discovered that a consistent “tidy” format for data is invaluable: it lets you focus on extracting insights rather than wrangling columns and rows into submission.
+
+> Tidy datasets are all alike, but every messy dataset is messy in its own way.
+> — Hadley Wickham
+
+In practical terms—and echoing our earlier [discussion](03_data_structure.qmd)—a tidy dataset has these defining traits:
+
+- Every row represents one observation.  
+- Every column represents one variable.  
+- Every cell contains a single value.
+
+The `tidyr` package (part of the `tidyverse`) is designed to help transform messy data into this tidy structure. In this chapter, we’ll explore some of the most commonly used `tidyr` functions, using example datasets that demonstrate where each function shines. We’ll pause our use of the penguins dataset momentarily, because it’s already tidy; instead, we’ll rely on some datasets from `dcldata` to illustrate typical data-wrangling challenges.
+
+```{r}
+#| warning: false
+library(tidyverse)
+library(tidylog)
+
+# if you haven't installed dcldata, you can do so by running:
+# pak::pkg_install("dcl-docs/dcldata")
+library(dcldata)
+```
+
+## `pivot_longer()`
+
+Let’s begin with the `example_eagle_nests` dataset from U.S. Fish and Wildlife Service:
+
+```{r}
+example_eagle_nests
+```
+
+Notice that `2017` and `2019` are stored as column names, but they’re really values (i.e., years). This is a classic “wide” format. We can use `pivot_longer()` to convert it into a tidy format:
+
+```{r}
+#| warning: false
+
+eagle_nests_longer <- example_eagle_nests |>
+    pivot_longer( #<1>
+        cols = c(`2007`, `2009`), #<2>
+        names_to = "year", #<3>
+        values_to = "nests" #<4>
+    )
+eagle_nests_longer
+```
+1. `pivot_longer()` transforms wide data into a longer, “tall” format.
+2. `cols` specifies the columns to pivot.
+3. `names_to` creates a new column holding the former column names.
+4. `values_to` creates a new column holding the values previously spread across multiple columns.
+
+Specifying the columns can sometimes feel like using `select()`. For instance, you can list the columns to include, or exclude the columns you want to keep untouched. The code below achieves the same result by excluding everything but region:
+
+```{r}
+#| warning: false
+#| eval: false
+
+example_eagle_nests |>
+    pivot_longer(
+        cols = -c(`region`), 
+        names_to = "year", 
+        values_to = "nests" 
+    )
+```
+
+
+### Exercise {-}
+Try your hand on the `billboard` dataset (in the `tidyverse`). This dataset has columns labeled by week (`wk1` through `wk76`), but we want a tidy format that moves those week columns into a single “week” variable and the rankings into another “rank” variable. Use `pivot_longer()` to make it happen.
+
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(tidyverse)
+
+billboard |>
+   pivot_longer(
+      cols = -c(______),
+      names_to = _____,
+      values_to = "rank"
+   ) 
+```
+
+## Solution
+```{webr}
+library(tidyverse)
+
+billboard |>
+   pivot_longer(
+      cols = -c(artist, track, date.entered),
+      names_to = "week",
+      values_to = "rank"
+   ) 
+```
+
+:::
+
+## `pivot_wider()`
+
+The `pivot_wider()` function reverses what `pivot_longer()` does, turning long datasets into wide formats. Suppose you want to revert our `eagle_nests_longer` data back to its original shape:
+
+```{r}
+#| warning: false
+
+eagle_nests_longer |>
+    pivot_wider( #<1>
+        names_from = "year", #<2>
+        values_from = "nests" #<3>
+    )
+```
+1. `pivot_wider()` transforms long data into a wider format.
+2. `names_from` identifies which column contains the new column names.
+3. `values_from` identifies the column whose values will fill the new cells.
+
+Let’s see a more practical example with our `penguins` dataset. Perhaps we want to compare bill length between male and female penguins for each species. We can create a summary of the mean bill length by species and sex, then convert that summary into a wide layout:
+
+::: {.panel-tabset}
+
+## Calculate the mean 
+
+We firstly use our hard-earned data transformation skills to calculate the mean bill length by the groups
+```{r}
+#| warning: false
+
+library(palmerpenguins)
+
+penguins |>
+   group_by(species, sex) |>
+   summarise(mean_bill_length = mean(bill_length_mm)) 
+```
+
+## Sex as columns
+Because comparing values side by side can be clearer, let's pivot the data wider:
+
+```{r}
+#| warning: false
+
+penguins |>
+   group_by(species, sex) |>
+   summarise(mean_bill_length = mean(bill_length_mm)) |>
+   ungroup() |>
+   pivot_wider(
+      names_from = "sex",
+      values_from = "mean_bill_length"
+   )
+```
+
+## Visualize differences
+
+We can go one step further and visualize how male and female bill lengths compare:
+
+```{r}
+#| warning: false
+
+penguins |>
+   group_by(species, sex) |>
+   summarise(mean_bill_length = mean(bill_length_mm)) |>
+   ungroup() |>
+   pivot_wider(
+      names_from = "sex",
+      values_from = "mean_bill_length"
+   ) |>
+   ggplot(aes(male, female)) +
+   geom_point(size = 4) +
+   ggrepel::geom_text_repel(aes(label = species), box.padding = 1) +
+   geom_abline(intercept = 0, slope = 1) +
+   jtools::theme_nice()
+```
+
+:::
+
+### Exercise {-}
+The dataset `us_rent_income` (from the `tidyverse`) contains 2017 American Community Survey data, where variable indicates whether it’s yearly income or monthly rent, and estimate gives the numeric value. Use `pivot_wider()` to reshape, then calculate the ratio of annual rent to income, and finally sort the results by that ratio.
+
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(tidyverse)
+
+us_rent_income |>
+   select(-moe) |>
+   pivot_wider(
+      names_from = ____,
+      values_from = ____
+   ) |>
+   mutate(rent_income_ratio = rent * 12 / income) |>
+   arrange(______)
+```
+
+## Solution
+```{webr}
+library(tidyverse)
+
+us_rent_income |>
+   select(-moe) |>
+   pivot_wider(
+      names_from = "variable",
+      values_from = "estimate"
+   ) |>
+   mutate(rent_income_ratio = rent * 12 / income) |>
+   arrange(rent_income_ratio)
+```   
+:::
+
+## `separate()`
+
+The `separate()` function allows you to split one column into multiple columns. Consider the `example_gymnastics_2` dataset from `dcldata`, which tracks women’s Olympic gymnastic scores for 2012 and 2016:
+
+```{r}
+example_gymnastics_2
+```
+
+The column names aren’t tidy. First, let’s pivot everything into a long format:
+
+```{r}
+#| warning: false
+
+example_gymnastics_2 |>
+    pivot_longer(
+        cols = -c(`country`), 
+        names_to = "event_year", 
+        values_to = "score"
+    )
+```
+
+We see that the new `event_year` column contains both an event name and a year (like `vault_2012`). We can split this into two columns—`event` and `year`—using `separate()`:
+
+```{r}
+#| warning: false
+
+example_gymnastics_2 |>
+    pivot_longer(
+        cols = -c(`country`), 
+        names_to = "event_year", 
+        values_to = "score"
+    ) |>
+    separate(
+        col = "event_year", 
+        into = c("event", "year"), 
+        sep = "_"
+    )
+```
+
+::: {.callout-tip collapse="true"}
+## `unite()`
+
+While `separate()` splits columns, `unite()` does the opposite: it combines multiple columns into one. 
+
+For a simple example, imagine that we’ve separated out the month, day, and year of a date into three columns (month, day, year), but now we want a single date column again. Let’s illustrate with a small toy dataset:
+
+```{r}
+toy_dates <- tibble(
+  month = c(1, 2, 3),
+  day   = c(15, 20, 25),
+  year  = c(2020, 2020, 2020)
+)
+```
+
+We can re-combine these columns into one:
+
+```{r}
+toy_dates |>
+  unite( # <1>
+    col = "full_date", # <2>
+    month, day, year, # <3>
+    sep = "-" # <4>
+  )
+```
+1. unite() creates a new column (col = "full_date") from the listed columns (month, day, year).
+2. The new column is named "full_date".
+3. The columns to combine are month, day, and year.
+4. sep = "-" indicates how to join the columns (here, with a dash).
+
+:::
+
+### Exercise {-}
+
+Now let’s tidy the `who2` dataset (from the `tidyverse`). Columns like `sp_m_014` combine multiple pieces of information—diagnosis method (sp), gender (m), and age group (014). Your task:
+
+- Convert the data into a long format using pivot_longer().
+- Split the combined column into three separate columns (diagnosis, gender, age) using `separate()`.
+
+::: {.panel-tabset}
+
+## Exercise
+```{webr}
+library(tidyverse)
+
+who2 |>
+   pivot_longer(
+      cols = -c(______), 
+      names_to = "diagnosis_gender_age", 
+      values_to = "count"
+   ) |>
+   separate(
+      col = "diagnosis_gender_age",
+      into = c(______),
+      sep = ______
+   )
+```
+
+## Solution
+
+```{webr}
+library(tidyverse)
+
+who2 |>
+   pivot_longer(
+      cols = -c(country, year), 
+      names_to = "diagnosis_gender_age", 
+      values_to = "count"
+   ) |>
+   separate(
+      col = "diagnosis_gender_age",
+      into = c("diagnosis", "gender", "age"),
+      sep = "_"
+   )
+```
+
+:::
+
+## `drop_na()` and `replace_na()`
+
+When dealing with real-world data, missing values (often represented by `NA` in R) are unavoidable. It is a very broad topic and usually question-specific. However, we show two functions that help you manage missing data (a really bad story [here](https://www.nature.com/articles/s41586-021-03656-3)). The main point is that you should ALWAYS be explict about how you handle missing data.
+
+### `drop_na()`
+
+The function `drop_na()` removes rows that contain any missing values in the specified columns. This can be handy when a row is so incomplete that it’s unusable for analysis.
+
+For example, let’s look at a look from the `penguins` dataset (pretend we didn’t want to keep partial observations):
+
+```{r}
+penguins
+```
+
+We can drop any row with missing data simply by doing:
+
+```{r}
+penguins |>
+  drop_na() # <1>
+```
+1. `drop_na()` removes rows with missing values.
+
+If you only care about missing values in particular columns (say, `bill_length_mm`), you can specify them as arguments:
+
+```{r}
+penguins |>
+  drop_na(bill_length_mm) # <1>
+```
+1. `drop_na()` removes rows with missing values in the `bill_length_mm` column.
+
+### `replace_na()`
+
+Sometimes you don’t want to drop missing values—you might prefer to fill them with a default value or placeholder. The `replace_na()` function allows you to do exactly that.
+
+For instance, if we believe that the missing sex is most likely to be male, we can replace the missing values with that assumption:
+
+```{r}
+penguins |>
+  replace_na(
+   list(sex = 'male')
+  )
+```
+
+
+
+
+<!-- ## `nest()` and `unnest()`
+
+Hierachical data is extremely common in the real world. For example, when we do the field survey, we have xxxx
+
+It is a very common practice to store hierarchical data in a nested format. For example, the `example_gymnastics_3` dataset contains data on the scores of three countries’ women’s Olympic gymnastic teams in 2012 and 2016. The `scores` column is a list column that contains a tibble for each country.
+
+```{r}
+library(palmerpenguins)
+
+penguins |>
+   group_by(species, sex) |>
+   nest()
+``` -->

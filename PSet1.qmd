@@ -10,7 +10,7 @@ Hello there! Welcome to your first PSet. This time, we’re going to use your R 
 
 So, get your creativity (and code) fired up. Let’s begin!
 
-### **Part 1: Why Correlation is NOT Causation**
+### **Why Correlation is NOT Causation**
 
 We’ve all heard it a thousand times: *Correlation does not imply causation*. A great example is that nations which consume more chocolate per capita tend to have more Nobel Prize winners per 10 million citizens. I highly doubt if any doctor would advise you that eating more chocolate is your ticket to Stockholm.
 

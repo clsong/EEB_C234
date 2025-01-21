@@ -1,0 +1,11 @@
+## PSet 2
+
+Hello there! Welcome to your second PSet. This time, we’re going to import and tidy data for some explorative data analysis.
+
+- **Your Mission**: 
+- **You’ll submit**:
+  - 
+- **Deadline**: 
+
+
+### **LA Housing Market**

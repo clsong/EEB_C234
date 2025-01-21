@@ -1,0 +1,430 @@
+# Six verbs for data transformation
+
+::: {.callout-note}
+## Class Objectives: Mastering six verbs
+1. Rows
+   - `arrange`: Arrange rows based on one or more variables. 
+   - `filter`: Filter rows based on a condition.
+2. Columns
+   - `select`: Select columns from a data frame.
+   - `mutate`: Create new columns or modify existing columns.
+3. Groups
+   - `group_by`: Group rows based on one or more variables.
+   - `summarize`: Summarize data within groups.
+:::
+
+We’ll pause our visualization work for a moment to focus on a crucial phase of data analysis: **data wrangling**. Data wrangling is the process of importing, tidying, and transforming data so that it’s easier to analyze and visualize. By mastering these skills, you’ll be able to spend less time on annoying details but more time on actual research. We will start with **transofmation**.
+
+The `dplyr` package offers an especially elegant way to handle data transformation in R. In this section, we’ll introduce six core functions (often called “verbs”) that cover the basics: they let you arrange rows, filter rows, select columns, create or modify columns, group data, and summarize data. We’ll use the penguins dataset as our guide, along with `tidylog` package to keep track of what happens under the hood.
+
+```{r}
+#| warning: false
+library(tidyverse)
+library(palmerpenguins)
+library(tidylog)
+```
+
+## What is `pipe`?
+In the tidyverse, the pipe operator `|>` is a central tool that allows you to link together multiple functions in a step-by-step sequence. Think of it as a chain: the output of one function becomes the input of the next. This approach makes code more readable and easier to understand. When you use a pipe:
+
+1. You start with a tibble as your first argument.
+2. Every additional function that follows manipulates the tibble in some way.
+3. The result is always a new tibble.
+
+::: {.panel-tabset}
+
+## `|>` pipe
+
+If you’re using R version 4.1 or later, you can write:
+
+```{r}
+#| warning: false
+#| eval: false
+data |> # <1>
+    function1() |> 
+    function2()
+```
+1. The `|>` pipe operator is used to pass the output of one function as the input to the next function.
+
+## `%>%` pipe
+
+If you have an older version of R, you might still use the `magrittr` pipe `%>%` (automatically loaded with `tidyverse`):
+
+```{r}
+#| warning: false
+#| eval: false
+data %>%
+    function1() %>%
+    function2()
+```
+:::
+
+Given how often you’ll use the pipe, it helps to memorize the shortcut: `Ctrl + Shift + M` (Windows) or `Cmd + Shift + M` (Mac) in RStudio automatically inserts a pipe operator. You can also change which pipe operator you use in RStudio by going to `Tools` > `Global Options` > `Code` > `Editing` > `Use native pipe operator`.
+
+## `arrange()`
+
+`arrange()` reorders the rows of your tibble based on the values in one or more columns. For example, to sort the `penguins` dataset by bill length (from smallest to largest):
+
+```{r}
+penguins |>
+    arrange(bill_length_mm) # <1>
+```
+1. Within `arrange` function, put in the variable name (column) that you want to sort by.
+
+To sort in descending order, add a minus sign (`-`) before the column name:
+
+```{r}
+penguins |>
+    arrange(-bill_length_mm) # <1>
+```
+1. The minus sign `-` before the column name will sort the column in descending order.
+
+### Exercise {-}
+Sort the `penguins` dataset by `island` first, then by descending `bill_depth_mm`.
+
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+    arrange(______)
+```
+
+## Solution
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+    arrange(island, -bill_depth_mm)
+```
+
+:::
+
+## `filter()`
+
+`filter()` selectively retains rows based on certain conditions. Suppose you want to keep only the Adelie penguins:
+
+```{r}
+penguins |>
+    filter(species == "Adelie") # <1>
+```
+1. Within `filter` function, put in the condition you want to filter by. Note that it is `==` for equal not `=`.
+
+You can combine multiple conditions with logical operators. For instance, filter for Adelie penguins that are male:
+
+```{r}
+penguins |>
+    filter(species == "Adelie" & sex == "male") # <1>
+```
+1. Use the `&` operator to combine multiple conditions.
+
+To allow for “either/or” conditions, you can use the `|` operator or the `%in%` function. Below, we keep rows where the species is Adelie or Chinstrap:
+
+::: {.panel-tabset}
+
+## `|` operator
+```{r}
+penguins |>
+    filter(species == "Adelie" | species == "Chinstrap") # <1>
+```
+1. Use the `|` operator to combine multiple conditions.
+
+## `%in%` function
+This is particularly useful when you have many values to filter. 
+
+```{r}
+penguins |>
+    filter(species %in% c("Adelie", "Chinstrap")) # <1>
+```
+1. Use the `%in%` function to filter rows based on multiple values.
+
+:::
+
+### Exercise {-}
+Filter the `penguins` dataset for male penguins with bill length less than 40 mm, living on either Torgersen or Biscoe island.
+
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+    filter(______)
+```
+
+## Solution
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+    filter(
+        sex == "male" & 
+        bill_length_mm < 40 & 
+         island %in% c("Torgersen", "Biscoe")
+    )
+```
+
+:::
+
+## `select()`
+
+Where `filter()` chooses rows, `select()` helps you choose columns. For instance, if you’re only interested in species, island, and the two bill measurements:
+
+```{r}
+penguins |>
+    select(species, island, bill_length_mm, bill_depth_mm) # <1>
+```
+1. List the columns you want inside select().
+
+If you want to remove specific columns, put a minus sign in front of each column name:
+
+```{r}
+penguins |>
+    select(-island) # <1>
+```
+1. The minus sign `-` before the column name will exclude the column from the output.
+
+::: {.callout-tip collapse="true"}
+## Change the column orders
+
+You can rearrange columns simply by listing them in the order you want:
+```{r}
+penguins |> 
+    select(bill_depth_mm, bill_length_mm, species)
+```
+
+:::
+
+### Exercise {-}
+Select the `species`, `year`, `body_mass_g` columns from the `penguins` dataset.
+
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+    select(______)
+```
+
+## Solution
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+    select(species, year, body_mass_g)
+```
+:::
+
+
+
+## `mutate()`
+
+`mutate()` allows you to create new columns or change existing ones. This name is often considered the least intutive in tidyverse, but I guess it makes the most sense for our department :)
+
+For example, suppose you want to create a new column called bill_ratio—which is bill length divided by bill depth—and also adjust the year column so that the year 2017 becomes your new “zero” starting point:
+
+```{r}
+penguins |>
+    mutate(bill_ratio = bill_length_mm / bill_depth_mm) |>  # <1>
+    mutate(year = year - 2017) # <2>
+```
+1. Within `mutate` function, put in the new column name and the calculation.
+2. We subtract 2017 from the existing year column so that 2017 becomes year 0. This new column replaces the previous one
+
+A very useful trick is to combine `mutate()` with conditional functions like `if_else()` (two conditions) or `case_when()` (multiple conditions):
+
+::: {.panel-tabset}
+
+## `if_else()`
+
+```{r}
+penguins |>
+    mutate(bill_ratio = bill_length_mm / bill_depth_mm) |> # <1>
+    mutate(bill_category = if_else(bill_ratio > 2, "long", "short"))  |>  # <2>
+    select(species, bill_category) # <3>
+```
+1. Create a new column `bill_ratio` that is the ratio of `bill_length_mm` to `bill_depth_mm`.
+2. Create a new column `bill_category` that is `long` if `bill_ratio` is greater than 2, otherwise `short`.
+3. Select only the `species` and `bill_category` columns.
+
+## `case_when()`
+
+```{r}
+penguins |>
+    mutate(bill_ratio = bill_length_mm / bill_depth_mm) |>
+    mutate(bill_category = case_when( # <1>
+        bill_ratio > 2 ~ "long", # <2>
+        bill_ratio < 1.5 ~ "short", # <3>
+        TRUE ~ "medium" # <4>
+    ))  |> 
+    select(species, bill_category)
+```
+1. Create a new column `bill_category` based on the conditions.
+2. If `bill_ratio` is greater than 2, then `bill_category` is `long`.
+3. If `bill_ratio` is less than 1.5, then `bill_category` is `short`.
+4. If none of the above conditions are met, then `bill_category` is `medium`.
+:::
+
+### Exercise {-}
+
+Create a new column `bill_area` (the product of bill_length_mm and bill_depth_mm). Label those with `bill_area` > 700 as "big" and everything else as "small". Finally, select only three columns: `species`, `bill_area`, and `bill_category`.
+
+
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+    mutate(bill_area = ____) |>
+    mutate(bill_category = if_else(____, _____, ____)) |>
+    select(____)
+```
+
+## Solution
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+    mutate(bill_area = bill_length_mm * bill_depth_mm)  |> 
+    mutate(bill_category = if_else(bill_area > 700, "big", "small")) |>
+    select(species, bill_area, bill_category)
+```
+
+:::
+
+
+## `group_by()`
+
+We’ve dealt with rows and columns individually, but one of the greatest strengths of `dplyr` is its ability to handle groups. With `group_by()`, you tell R to treat subsets of your data as separate groups based on one or more columns. For example:
+
+```{r}
+penguins |>
+    group_by(species) # <1>
+```
+1. Within `group_by` function, specify the column(s) you want to group by.
+
+Once data is grouped, you can apply other operations such as `filter()` or `mutate()` within each group. For example, to keep only penguins whose bill length is above the mean bill length for their own species (use `filter()`):
+
+```{r}
+penguins |>
+    group_by(species) |>
+    filter(bill_length_mm > mean(bill_length_mm, na.rm = TRUE))  |> # <1>
+    ungroup() # <2>
+```
+1. Filter the `penguins` dataset to only penguins with `bill_length_mm` greater than the mean `bill_length_mm` for each species.
+2. Use `ungroup` to remove the grouping.
+
+Note that it is generally a good practice to use `ungroup()` after you are done with the grouping. This hs been the source of many bugs in real-world data analysis.
+
+Similarly, you might standardize bill lengths by species for better comparisons (use `mutate()`):
+
+```{r}
+penguins |>
+    group_by(species) |>
+    mutate(scaled_bill_length = # <1>
+    (bill_length_mm - mean(bill_length_mm, na.rm = TRUE)) / # <1>
+    sd(bill_length_mm, na.rm = TRUE) ) |>  # <1>
+    ungroup()  |> 
+    select(species, bill_length_mm, scaled_bill_length) # <2>
+```
+1. Create a new column `scaled_bill_length` that is the standardized `bill_length_mm` for each species.
+2. Select only the `species`, `bill_length_mm`, and `scaled_bill_length` columns.
+
+### Exercise {-}
+Group by both `species` and `sex`, then filter for penguins whose `bill_length_mm` is greater than the mean plus one standard deviation for their species-and-sex group.
+
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+penguins  |> 
+    group_by(______)  |> 
+    filter(______)  |> 
+    ungroup()
+```
+
+## Solution
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+penguins |> 
+    group_by(species, sex) |> 
+    filter(bill_length_mm > mean(bill_length_mm, na.rm = TRUE) + sd(bill_length_mm, na.rm = TRUE))  |>
+    ungroup()
+```
+:::
+
+
+## `summarize()`
+
+Once you’ve grouped your data, `summarize` helps you collapse each group into summary results per grouping category. For instance, to compute the average `bill_length_mm` by species:
+
+```{r}
+penguins |>
+    group_by(species) |>
+    summarize( # <1>
+        avg_bill_length = mean(bill_length_mm, na.rm = TRUE) # <2>
+    ) 
+```
+1. Within `summarize` function, put in the new column name and the calculation.
+2. Calculate the average `bill_length_mm` for each species. The `na.rm = TRUE` argument is used to remove missing values (NAs).
+
+Notice that it has also removed the ungrouped columns. This is a feature, not a bug.
+
+We can also get more than one summary results. For example, we can get the mean and variance of `bill_length_mm` for each species and each sex:
+
+```{r}
+penguins |>
+    group_by(species, sex)  |> 
+    summarize(mean_bill_length = mean(bill_length_mm, na.rm = TRUE), 
+              var_bill_length = var(bill_length_mm, na.rm = TRUE))
+```
+
+### Exercise {-}
+Group the `penguins` dataset by `island` and `sex`. Then calculate the average `bill_length_mm` and `bill_depth_mm` for each group.
+
+::: {.panel-tabset}
+## Exercise
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+    group_by(______) |>
+    summarize(______) 
+```
+
+## Solution
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+    group_by(island, sex) |>
+    summarize(mean_bill_length = mean(bill_length_mm, na.rm = TRUE), 
+              mean_bill_depth = mean(bill_depth_mm, na.rm = TRUE)) 
+```
+
+::: 
+
+## Combine verbs for complicated tasks
+
+By now, you’ve seen how each of these six verbs works. In practice, you’ll often chain them together to tackle more involved questions. Here’s an example where we examine the difference in bill area between male and female penguins in the year 2009. Specifically, we’ll compute the mean and standard deviation of bill area per species, reorder the columns to place sex before species, and sort by descending mean bill size:
+
+```{r}
+penguins |> 
+    filter(year == 2009) |>
+    mutate(bill_area = bill_length_mm * bill_depth_mm) |>
+    group_by(species, sex)  |>
+    summarize(
+        mean_bill_size = mean(bill_area, na.rm = TRUE),
+        sd_bill_size = sd(bill_area, na.rm = TRUE)
+    )  |> 
+    ungroup() |>
+    select(sex, species, mean_bill_size, sd_bill_size) |>
+    arrange(-mean_bill_size)
+```
+
+By weaving together these verbs, you can accomplish nuanced data transformations in just a few lines of code. 

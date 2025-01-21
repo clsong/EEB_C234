@@ -1,6 +1,0 @@
-## Load data
-
-::: {.callout-tip}
-## Name cleaner
-janitor::clean_names()
-:::

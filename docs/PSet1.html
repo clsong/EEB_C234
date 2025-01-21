@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.33">
+<meta name="generator" content="quarto-1.6.32">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>7&nbsp; PSet 1 – EE BIOL C234</title>
 <style>
@@ -60,16 +60,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./08_dplyr.html" rel="next">
 <link href="./06_good_plots.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-86b0efa2460cd378948dc2f68bdd414f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-857f1d5f411f36398542cd62bf9c4f83.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-706d47e59303ecb561a7787d3c9b597f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-74d410878893cc97fd31203e5d114f5e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -203,6 +204,29 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
 </li>
       </ul>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data Wrangling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_dplyr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Six verbs for data transformation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_tidyr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Five verbs for tidying data</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
     </ul>
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
@@ -211,7 +235,7 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#part-1-why-correlation-is-not-causation" id="toc-part-1-why-correlation-is-not-causation" class="nav-link active" data-scroll-target="#part-1-why-correlation-is-not-causation"><span class="header-section-number">7.0.1</span> <strong>Part 1: Why Correlation is NOT Causation</strong></a></li>
+<li><a href="#why-correlation-is-not-causation" id="toc-why-correlation-is-not-causation" class="nav-link active" data-scroll-target="#why-correlation-is-not-causation"><span class="header-section-number">7.0.1</span> <strong>Why Correlation is NOT Causation</strong></a></li>
   <li><a href="#keeping-up-with-the-new-york-times" id="toc-keeping-up-with-the-new-york-times" class="nav-link" data-scroll-target="#keeping-up-with-the-new-york-times"><span class="header-section-number">7.0.2</span> Keeping up with the New York Times</a></li>
   </ul></nav>
     </div>
@@ -248,8 +272,8 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
 <strong>Deadline</strong>: Feb 2nd, 2025</li>
 </ul>
 <p>So, get your creativity (and code) fired up. Let’s begin!</p>
-<section id="part-1-why-correlation-is-not-causation" class="level3" data-number="7.0.1"><h3 data-number="7.0.1" class="anchored" data-anchor-id="part-1-why-correlation-is-not-causation">
-<span class="header-section-number">7.0.1</span> <strong>Part 1: Why Correlation is NOT Causation</strong>
+<section id="why-correlation-is-not-causation" class="level3" data-number="7.0.1"><h3 data-number="7.0.1" class="anchored" data-anchor-id="why-correlation-is-not-causation">
+<span class="header-section-number">7.0.1</span> <strong>Why Correlation is NOT Causation</strong>
 </h3>
 <p>We’ve all heard it a thousand times: <em>Correlation does not imply causation</em>. A great example is that nations which consume more chocolate per capita tend to have more Nobel Prize winners per 10 million citizens. I highly doubt if any doctor would advise you that eating more chocolate is your ticket to Stockholm.</p>
 <p>The data for chocolate consumption (<code>Chocolate</code>) and the number of Nobel laureates (<code>Nobel</code>) in various countries is here:</p>
@@ -860,6 +884,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./08_dplyr.html" class="pagination-link" aria-label="Six verbs for data transformation">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Six verbs for data transformation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
