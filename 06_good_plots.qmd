@@ -122,7 +122,7 @@ There are many other themes out there, so feel free to explore and find one that
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(ggplot2)
 
 ggplot(
@@ -138,7 +138,7 @@ ggplot(
 
 ## Solution
 As one example, you can use `jtools::theme_nice()` as the theme.
-```{webr}
+```{webr-r}
 library(ggplot2)
 library(jtools)
 
@@ -411,7 +411,7 @@ Let us apply what we have learnt so far. Below is a simple scatter plot of the `
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(ggplot2)
 
 ggplot(
@@ -547,7 +547,7 @@ Let us apply what we have learnt so far. Below is a simple scatter plot of the `
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(ggplot2)
 library(MetBrewer)
 
@@ -819,7 +819,7 @@ p2 +
 
 Alright, brace yourself. The full code for our pièce de résistance—our final figure—is right below. Run it with a single click and marvel as the figure above magically appears:
 
-```{webr}
+```{webr-r}
 #| warning: false
 
 library(ggplot2)

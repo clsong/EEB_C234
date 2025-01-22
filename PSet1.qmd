@@ -1,4 +1,4 @@
-## PSet 1 
+# PSet 1 
 
 Hello there! Welcome to your first PSet. This time, we’re going to use your R plotting skills to make your data visualizations *pop*. 
 
@@ -10,7 +10,7 @@ Hello there! Welcome to your first PSet. This time, we’re going to use your R 
 
 So, get your creativity (and code) fired up. Let’s begin!
 
-### **Why Correlation is NOT Causation**
+## **Why Correlation is NOT Causation**
 
 We’ve all heard it a thousand times: *Correlation does not imply causation*. A great example is that nations which consume more chocolate per capita tend to have more Nobel Prize winners per 10 million citizens. I highly doubt if any doctor would advise you that eating more chocolate is your ticket to Stockholm.
 
@@ -97,7 +97,7 @@ data_nobel %>%
 :::
 
 
-### Keeping up with the New York Times
+## Keeping up with the New York Times
 
 The New York Times often publishes elegant data visualizations. In this problem, we’ll mimic one of their COVID-19 vaccination rate vs. GDP charts. Their graph is below:
 

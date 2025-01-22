@@ -49,12 +49,12 @@ I have included many exercises throughout the notes. These are your chance to pr
 
 ::: {.panel-tabset}
 ## Exercise: Calculate 2+2
-```{webr}
+```{webr-r}
 __ + __
 ```
 
 ## Solution
-```{webr}
+```{webr-r}
 2 + 2
 ```
 

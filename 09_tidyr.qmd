@@ -81,7 +81,7 @@ Try your hand on the `billboard` dataset (in the `tidyverse`). This dataset has 
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(tidyverse)
 
 billboard |>
@@ -93,7 +93,7 @@ billboard |>
 ```
 
 ## Solution
-```{webr}
+```{webr-r}
 library(tidyverse)
 
 billboard |>
@@ -185,7 +185,7 @@ The dataset `us_rent_income` (from the `tidyverse`) contains 2017 American Commu
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(tidyverse)
 
 us_rent_income |>
@@ -199,7 +199,7 @@ us_rent_income |>
 ```
 
 ## Solution
-```{webr}
+```{webr-r}
 library(tidyverse)
 
 us_rent_income |>
@@ -294,7 +294,7 @@ Now let’s tidy the `who2` dataset (from the `tidyverse`). Columns like `sp_m_0
 ::: {.panel-tabset}
 
 ## Exercise
-```{webr}
+```{webr-r}
 library(tidyverse)
 
 who2 |>
@@ -312,7 +312,7 @@ who2 |>
 
 ## Solution
 
-```{webr}
+```{webr-r}
 library(tidyverse)
 
 who2 |>
@@ -374,18 +374,84 @@ penguins |>
 ```
 
 
+## Tidy a real dataset
 
-
-<!-- ## `nest()` and `unnest()`
-
-Hierachical data is extremely common in the real world. For example, when we do the field survey, we have xxxx
-
-It is a very common practice to store hierarchical data in a nested format. For example, the `example_gymnastics_3` dataset contains data on the scores of three countries’ women’s Olympic gymnastic teams in 2012 and 2016. The `scores` column is a list column that contains a tibble for each country.
+Let's explore the famous Datasaurus dataset, which perfectly illustrates why visualizing your data is crucial ([more info](https://en.wikipedia.org/wiki/Datasaurus_dozen)). This dataset contains multiple distributions that have identical summary statistics but look completely different when plotted.
 
 ```{r}
-library(palmerpenguins)
+library(tidyverse)
+# pak::pkg_install("datasauRus")
+library(datasauRus)
 
-penguins |>
-   group_by(species, sex) |>
-   nest()
-``` -->
+datasaurus_dozen_wide # <1>
+```
+1. `datasaurus_dozen_wide` is the wide format of the Datasaurus dataset.
+
+Let's tidy this dataset in three steps:
+
+1. First, we'll transform it from wide to long format:
+```{r}
+datasaurus_dozen_long <- datasaurus_dozen_wide |>
+  janitor::clean_names() |>  # <1> 
+  mutate(row = row_number()) |>  # <2> 
+  pivot_longer(
+    cols = -"row",  # <3> 
+    names_to = "variable",  # <4> 
+    values_to = "value"  # <5> 
+  )
+```
+1. `janitor::clean_names()` cleans the column names to be consistent.
+2. `mutate(row = row_number())` adds a row identifier.
+3. `pivot_longer()` pivots the data from wide to long format.
+4. `names_to` creates a new column holding the former column names.
+5. `values_to` creates a new column holding the values previously spread across multiple columns.
+
+2. Next, we need to separate the `variable` column into dataset name and coordinate type (x/y). This is tricky because some dataset names contain underscores (like 'v_lines'). We'll use a regular expression that splits at the last underscore:
+
+```{r}
+datasaurus <- datasaurus_dozen_long |>
+  separate(
+    variable, 
+    into = c("dataset", "coord"),
+    sep = "_(?=[^_]*$)" # <1> # 
+  ) |>
+  pivot_wider( # <2>
+    names_from = "coord", 
+    values_from = "value"
+  )
+
+datasaurus
+```
+1. Split at last underscore
+2. pivots the data from long to wide format.
+
+3. Now we can demonstrate why this dataset is famous. First, let's check the summary statistics:
+
+```{r}
+# Calculate summary statistics for each dataset
+datasaurus |>
+  group_by(dataset) |>
+  summarise(
+    mean_x = mean(x),
+    mean_y = mean(y),
+    sd_x = sd(x),
+    sd_y = sd(y),
+    cor = cor(x, y)
+  )
+```
+
+Despite having nearly identical summary statistics, when we visualize the data, we see that each dataset forms a completely different shape:
+
+```{r}
+# Create faceted scatter plots
+datasaurus |>
+  ggplot(aes(x, y, color = dataset)) +
+  geom_point() +
+  facet_wrap(vars(dataset)) +
+  jtools::theme_nice() +
+  theme(legend.position = "none") +
+  labs(title = "The Datasaurus Dozen",
+       subtitle = "Same summary statistics, very different distributions")
+```
+
+This example demonstrates why it's essential to both analyze AND visualize your data!

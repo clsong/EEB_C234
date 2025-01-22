@@ -66,7 +66,7 @@ But why don’t most other languages use a similar convention? One factor is typ
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr} 
+```{webr-r} 
 __ <- __ * __
 __
 ```
@@ -82,7 +82,7 @@ y
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 __ <- __ / __
 __
 ```
@@ -98,7 +98,7 @@ z
 There are many basic functions in R that you can use. For example, the `sqrt()` function calculates the square root of a number. I know that it could be annoying to remember all the functions, but luckily we have the powerful AIs to help us. It is pretty easy to use Copilot, a powerful AI tool developed by Github, to get the function you need. It is straightforward to  use it in RStudio ([link](https://docs.posit.co/ide/user/ide/guide/tools/copilot.html)).
 
 However, AIs can be unreliable sometimes. To make sure it works, you can always use the `?` to double check. For example, to see the documentation R has on the `sqrt()` function, you can use the following code:
-```{webr}
+```{webr-r}
 ?sqrt
 ```
 
@@ -167,7 +167,7 @@ Install the package `gt` using the standard method, the `pak` method, and the `p
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 install.packages(__)
 pak::pkg_install(__)
 pacman::p_load(___)

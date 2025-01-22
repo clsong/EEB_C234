@@ -138,7 +138,7 @@ We will use the `band_members` dataset and `band_instruments` dataset to practic
 
 ## Exercise
 
-```{webr}
+```{webr-r}
 library(tidyverse)
 
 _____  |> 

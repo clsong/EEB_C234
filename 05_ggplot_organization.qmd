@@ -108,7 +108,7 @@ If you understand the above code, you would have a solid working knowledge of ae
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(ggplot2)
 library(palmerpenguins)
 ggplot(
@@ -138,7 +138,7 @@ ggplot(
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(ggplot2)
 library(palmerpenguins)
 ggplot(
@@ -153,7 +153,7 @@ ggplot(
 ```
 
 ## Solution
-```{webr}
+```{webr-r}
 library(ggplot2)
 library(palmerpenguins)
 ggplot(
@@ -263,7 +263,7 @@ We want to explore the relationship between `body_mass_g` and `flipper_length_mm
    
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(ggplot2)
 library(palmerpenguins)
 ggplot(
@@ -279,7 +279,7 @@ ggplot(
 ```
 
 ## Solution
-```{webr}
+```{webr-r}
 library(ggplot2)
 library(palmerpenguins)
 ggplot(
@@ -424,7 +424,7 @@ This exercise aims to show you a common pitall in using `ggplot2` with global vs
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(ggplot2)
 library(palmerpenguins)
 ggplot(
@@ -451,7 +451,7 @@ ggplot(
    
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(ggplot2)
 library(palmerpenguins)
 ggplot(

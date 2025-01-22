@@ -15,22 +15,25 @@ book:
   chapters:
     - index.qmd
     - 01_intro.qmd
+
     - part: "A First Look at R"
       chapters:
         - 02_R_basics.qmd
         - 03_data_structure.qmd
+
     - part: "Grammar of Graphics"
       chapters:
         - 04_ggplot_basic.qmd
         - 05_ggplot_organization.qmd
         - 06_good_plots.qmd
         - PSet1.qmd
+        
     - part: "Data Wrangling"
       chapters:
         - 08_dplyr.qmd
         - 09_tidyr.qmd
         - 10_import_data.qmd
-    #     - PSet2.qmd
+        # - PSet2.qmd
     # - part: "Visualization"
     #   chapters:
     #     - 07_plots_distribution.qmd
@@ -55,6 +58,8 @@ format:
       - style.scss
     code-link: true
     df-print: paged
+
+engine: knitr
 
 filters:
   - line-highlight

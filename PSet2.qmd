@@ -1,12 +1,25 @@
-## PSet 2
+# PSet 2
 
 Hello there! Welcome to your second PSet. This time, we’re going to import and tidy data for some explorative data analysis.
 
 - **Your Mission**: 
 - **You’ll submit**:
-  - 
 - **Deadline**: 
 
 
-### **LA Housing Market**
+## **Always Visualize Your Data**
+
+```{r}
+#| warning: false
+#| message: false
+library(tidyverse)
+pacman::p_load(datasauRus)
+
+datasaurus_dozen |>
+    ggplot(aes(x = x, y = y, colour = dataset)) +
+    geom_point() +
+    theme_minimal() +
+    facet_wrap(vars(dataset)) +
+    labs(color = "Dataset")
+```
 

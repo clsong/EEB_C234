@@ -146,7 +146,7 @@ Of course, this isn’t yet a publication-ready figure, but it’s a fantastic s
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(ggplot2)
 library(palmerpenguins)
 ggplot(
@@ -157,7 +157,7 @@ ggplot(
 ```
 
 ## Solution
-```webr
+```{webr-r}
 library(ggplot2)
 library(palmerpenguins)
 ggplot(
@@ -172,7 +172,7 @@ ggplot(
   
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(ggplot2)
 library(palmerpenguins)
 ggplot(
@@ -184,7 +184,7 @@ ggplot(
 ```
 
 ## Solution
-```webr
+```{webr-r}
 library(ggplot2)
 library(palmerpenguins)
 ggplot(

@@ -68,7 +68,7 @@ Note that the index starts from **1**, not **0**. This is a common source of con
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 __ <- c(__, __, __)
 __
 __[__]
@@ -86,7 +86,7 @@ numbers[2]
   
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 my_name <- c("__", "__")
 my_name
 ```
@@ -96,7 +96,7 @@ my_name
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 c(____, ____, ____)
 ```
 :::
@@ -159,7 +159,7 @@ Create a tibble with the following columns:
   
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(tidyverse)
 info <- tibble(
   name = c("__", "__"),
@@ -223,7 +223,7 @@ Think of `skim()` as your quick backstage pass, telling you how many rows, colum
   
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(___)
 skim(___)
 ```

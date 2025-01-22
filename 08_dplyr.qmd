@@ -84,7 +84,7 @@ Sort the `penguins` dataset by `island` first, then by descending `bill_depth_mm
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(tidyverse)
 library(palmerpenguins)
 penguins |>
@@ -92,7 +92,7 @@ penguins |>
 ```
 
 ## Solution
-```{webr}
+```{webr-r}
 library(tidyverse)
 library(palmerpenguins)
 penguins |>
@@ -146,7 +146,7 @@ Filter the `penguins` dataset for male penguins with bill length less than 40 mm
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(tidyverse)
 library(palmerpenguins)
 penguins |>
@@ -154,7 +154,7 @@ penguins |>
 ```
 
 ## Solution
-```{webr}
+```{webr-r}
 library(tidyverse)
 library(palmerpenguins)
 penguins |>
@@ -201,7 +201,7 @@ Select the `species`, `year`, `body_mass_g` columns from the `penguins` dataset.
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(tidyverse)
 library(palmerpenguins)
 penguins |>
@@ -209,7 +209,7 @@ penguins |>
 ```
 
 ## Solution
-```{webr}
+```{webr-r}
 library(tidyverse)
 library(palmerpenguins)
 penguins |>
@@ -274,7 +274,7 @@ Create a new column `bill_area` (the product of bill_length_mm and bill_depth_mm
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(tidyverse)
 library(palmerpenguins)
 penguins |>
@@ -284,7 +284,7 @@ penguins |>
 ```
 
 ## Solution
-```{webr}
+```{webr-r}
 library(tidyverse)
 library(palmerpenguins)
 penguins |>
@@ -338,7 +338,7 @@ Group by both `species` and `sex`, then filter for penguins whose `bill_length_m
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(tidyverse)
 library(palmerpenguins)
 penguins  |> 
@@ -348,7 +348,7 @@ penguins  |>
 ```
 
 ## Solution
-```{webr}
+```{webr-r}
 library(tidyverse)
 library(palmerpenguins)
 penguins |> 
@@ -389,7 +389,7 @@ Group the `penguins` dataset by `island` and `sex`. Then calculate the average `
 
 ::: {.panel-tabset}
 ## Exercise
-```{webr}
+```{webr-r}
 library(tidyverse)
 library(palmerpenguins)
 penguins |>
@@ -398,7 +398,7 @@ penguins |>
 ```
 
 ## Solution
-```{webr}
+```{webr-r}
 library(tidyverse)
 library(palmerpenguins)
 penguins |>
