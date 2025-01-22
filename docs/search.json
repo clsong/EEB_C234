@@ -574,5 +574,49 @@
       "Data Wrangling",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Five verbs for tidying data</span>"
     ]
+  },
+  {
+    "objectID": "10_import_data.html",
+    "href": "10_import_data.html",
+    "title": "10  Import and Join Data",
+    "section": "",
+    "text": "10.1 File structure\nSo far, we’ve only worked with data bundled inside packages. In real-world scenarios, however, data is often stored in external files—like Excel or CSV—and may be spread across multiple files. To get it all into one tidy tibble, we typically import the data first, then merge the datasets using the appropriate joining functions. Let’s begin by loading the packages we’ve been using all along:\nThe layout of your files and directories can be crucial for smooth data work. As someone who routinely run other people’s code, I can’t stress enough how important it is to adopt good file-management practices.",
+    "crumbs": [
+      "Data Wrangling",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Import and Join Data</span>"
+    ]
+  },
+  {
+    "objectID": "10_import_data.html#file-structure",
+    "href": "10_import_data.html#file-structure",
+    "title": "10  Import and Join Data",
+    "section": "",
+    "text": "By Jenny Bryan, source\n\n\n\nProper approach: Using an RStudio ProjectShortcut: Opening R code in RStudio\n\n\nAn excellent practice is to create an RStudio Project. This makes it easier to keep all your scripts, data, and output in one organized place and ensures file paths don’t become nightmares. See official Guideline\n\n\nIf you’re short on time and simply want to test a single script, you can open the R code file directly in RStudio. But remember, it’s best to use a Project in the long run.",
+    "crumbs": [
+      "Data Wrangling",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Import and Join Data</span>"
+    ]
+  },
+  {
+    "objectID": "10_import_data.html#import-data",
+    "href": "10_import_data.html#import-data",
+    "title": "10  Import and Join Data",
+    "section": "10.2 Import data",
+    "text": "10.2 Import data\nThe simplest way to import data in RStudio is to click Import Dataset, navigate to your file, and let RStudio generate the code for you. Here’s an example where we import a CSV containing per-capita CO₂ data, taken from Our World in Data:\n\nread_csv(\"data/per-capita-co-emissions.csv\")\n\n\n  \n\n\n\nFor cleaner column names, the janitor package offers a handy function called clean_names(). It converts column headers into lower-case words separated by underscores (among other things). Let’s see it in action:\n\n# if you don't have the janitor package installed, you can install it with the following command\n# pak::pkg_install(\"janitor\")\n\nread_csv(\"data/per-capita-co-emissions.csv\")  |&gt; \n    janitor::clean_names()\n\n\n  \n\n\n\nThis often saves you time and frustration, especially when working with large or messy real-world datasets. It has been a time-saver for me on many occasions.\nAdditionally, we should rename() the columns to make them more readable.\n\ndata_co2 &lt;- read_csv(\"data/per-capita-co-emissions.csv\")  |&gt; \n1    janitor::clean_names()  |&gt;\n2    rename(\n3        co2 = annual_co2_emissions_per_capita\n    )\n\n\n1\n\nWe use the clean_names() function to make column names more readable.\n\n2\n\nWe use the rename() function to rename the column.\n\n3\n\nWe rename the column annual_co2_emissions_per_capita to co2.\n\n\n\n\nRows: 94 Columns: 3\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (1): Entity\ndbl (2): Year, Annual CO₂ emissions (per capita)\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\nrename: renamed one variable (co2)\n\n\nAs always, let’s do a quick plot to sense-check our data:\n\ndata_co2 |&gt; \n    ggplot(aes(x = year, y = co2)) +\n1    geom_line() +\n    labs(\n        x = \"Year\",\n        y = \"Annual CO2 emissions per capita\"\n    ) +\n    jtools::theme_nice()\n\n\n1\n\nWe use a line plot to show the evolution of CO2 emissions over time.\n\n\n\n\n\n\n\n\n\n\n\nWe see emissions rising across the years, but the real question might be how CO₂ levels relate to global temperature. For that, we’ll need to import temperature data and then join both datasets together.",
+    "crumbs": [
+      "Data Wrangling",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Import and Join Data</span>"
+    ]
+  },
+  {
+    "objectID": "10_import_data.html#join-data",
+    "href": "10_import_data.html#join-data",
+    "title": "10  Import and Join Data",
+    "section": "10.3 Join data",
+    "text": "10.3 Join data\nWe can fetch temperature data—also from Our World in Data—and load it similarly:\n\ndata_temp &lt;- read_csv(\"data/temperature-anomaly.csv\") |&gt; \n    janitor::clean_names()  |&gt; \n    select(year, global_average_temperature_anomaly_relative_to_1961_1990) |&gt;\n    rename(temp_anomaly = global_average_temperature_anomaly_relative_to_1961_1990)\n\ndata_temp\n\n\n  \n\n\n\nNow we have two data frames: data_co2 and data_temp. Both contain a year column, which we can use as the “key” for joining. The left_join() function retains all rows of the left data frame (data_co2 in this case) and matches where possible:\n\ndata_co2  |&gt; \n    left_join(\n        data_temp, \n        by = \"year\"\n    ) \n\n\n  \n\n\n\nNotice that joins are asymmetric. Switching the order to left_join(data_temp, data_co2, by = \"year\") wouldn’t produce the same result. A left join always keeps every row from the left-hand dataset, filling missing matches from the right dataset with NA. I highly recommend to stick to left_join() for consistency (and also forces you to think about which dataset is your primary source of information). However, you can also use right_join(), inner_join(), or full_join() depending on your needs.\nWith our combined data, we can see how temperature anomaly compares to per-capita CO₂ emissions:\n\ndata_co2  |&gt; \n    left_join(\n        data_temp, \n        by = \"year\"\n    )  |&gt; \n    drop_na() |&gt;\n    ggplot(\n        aes(x = co2, \n            y = temp_anomaly)\n        ) +\n    geom_smooth(se = FALSE) +\n    geom_point(aes(color = year)) +\n    scale_color_viridis_c() +\n    labs(\n        x = \"Annual CO2 emissions per capita\",\n        y = \"Average temperature anomaly\"\n    ) +\n    jtools::theme_nice()\n\nleft_join: added one column (temp_anomaly)\n           &gt; rows only in data_co2   10\n           &gt; rows only in data_temp (91)\n           &gt; matched rows            84\n           &gt;                        ====\n           &gt; rows total              94\ndrop_na: removed 10 rows (11%), 84 rows remaining\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\nExercise\nWe will use the band_members dataset and band_instruments dataset to practice joining data. Take a look at the datasets first, and then check how the two ways of joining data give different results.\n\nExerciseSolution\n\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n\n\nlibrary(tidyverse)\n\nband_members  |&gt; \n   left_join(\n        band_instruments, \n        by = \"name\"\n   )\n\nleft_join: added one column (plays)\n           &gt; rows only in band_members      1\n           &gt; rows only in band_instruments (1)\n           &gt; matched rows                   2\n           &gt;                               ===\n           &gt; rows total                     3\n\n\n\n  \n\n\nband_instruments  |&gt;\n    left_join(\n          band_members, \n          by = \"name\"\n    )\n\nleft_join: added one column (band)\n           &gt; rows only in band_instruments  1\n           &gt; rows only in band_members     (1)\n           &gt; matched rows                   2\n           &gt;                               ===\n           &gt; rows total                     3\n\n\n\n  \n\n\n\nNotice that when we flip the order of the data frames in left_join(), the results change, because a left join always “favors” the data frame that comes first.",
+    "crumbs": [
+      "Data Wrangling",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Import and Join Data</span>"
+    ]
   }
 ]

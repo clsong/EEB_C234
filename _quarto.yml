@@ -29,7 +29,7 @@ book:
       chapters:
         - 08_dplyr.qmd
         - 09_tidyr.qmd
-    #     - 10_import.qmd
+        - 10_import_data.qmd
     #     - PSet2.qmd
     # - part: "Visualization"
     #   chapters:
