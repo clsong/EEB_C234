@@ -236,7 +236,7 @@ example_gymnastics_2
 example_gymnastics_2 |>
     pivot_longer(
         cols = -c(`country`), 
-        names_to = "event_year", 
+        names_to = "eventandyear", 
         values_to = "score"
     )
 #
@@ -249,11 +249,11 @@ example_gymnastics_2 |>
 example_gymnastics_2 |>
     pivot_longer(
         cols = -c(`country`), 
-        names_to = "event_year", 
+        names_to = "eventandyear", 
         values_to = "score"
     ) |>
     separate(
-        col = "event_year", 
+        col = "eventandyear", 
         into = c("event", "year"), 
         sep = "_"
     )
@@ -376,8 +376,9 @@ penguins |>
 #
 penguins |>
   replace_na(
-   list(sex = 'male')
+   list(sex = 'male') # <1>
   )
+```
 #
 #
 #
@@ -420,7 +421,7 @@ datasaurus <- datasaurus_dozen_long |>
   separate(
     variable, 
     into = c("dataset", "coord"),
-    sep = "_(?=[^_]*$)" # <1> # 
+    sep = "_(?=[^_]*$)" # <1> 
   ) |>
   pivot_wider( # <2>
     names_from = "coord", 
@@ -457,8 +458,7 @@ datasaurus |>
   facet_wrap(vars(dataset)) +
   jtools::theme_nice() +
   theme(legend.position = "none") +
-  labs(title = "The Datasaurus Dozen",
-       subtitle = "Same summary statistics, very different distributions")
+  labs(title = "Same summary statistics, very different distributions")
 #
 #
 #

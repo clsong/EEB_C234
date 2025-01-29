@@ -236,7 +236,7 @@ The column names aren’t tidy. First, let’s pivot everything into a long form
 example_gymnastics_2 |>
     pivot_longer(
         cols = -c(`country`), 
-        names_to = "event_year", 
+        names_to = "eventandyear", 
         values_to = "score"
     )
 ```
@@ -249,11 +249,11 @@ We see that the new `event_year` column contains both an event name and a year (
 example_gymnastics_2 |>
     pivot_longer(
         cols = -c(`country`), 
-        names_to = "event_year", 
+        names_to = "eventandyear", 
         values_to = "score"
     ) |>
     separate(
-        col = "event_year", 
+        col = "eventandyear", 
         into = c("event", "year"), 
         sep = "_"
     )
@@ -376,9 +376,10 @@ For instance, if we believe that the missing sex is most likely to be male, we c
 ```{r}
 penguins |>
   replace_na(
-   list(sex = 'male')
+   list(sex = 'male') # <1>
   )
 ```
+1. Replaces missing values in the `sex` column as specified.
 
 
 ## Tidy a real dataset
@@ -420,7 +421,7 @@ datasaurus <- datasaurus_dozen_long |>
   separate(
     variable, 
     into = c("dataset", "coord"),
-    sep = "_(?=[^_]*$)" # <1> # 
+    sep = "_(?=[^_]*$)" # <1> 
   ) |>
   pivot_wider( # <2>
     names_from = "coord", 
@@ -432,7 +433,7 @@ datasaurus
 1. Split at last underscore
 2. pivots the data from long to wide format.
 
-3. Now we can demonstrate why this dataset is famous. First, let's check the summary statistics:
+Now we can demonstrate why this dataset is famous. First, let's check the summary statistics:
 
 ```{r}
 # Calculate summary statistics for each dataset
@@ -457,8 +458,7 @@ datasaurus |>
   facet_wrap(vars(dataset)) +
   jtools::theme_nice() +
   theme(legend.position = "none") +
-  labs(title = "The Datasaurus Dozen",
-       subtitle = "Same summary statistics, very different distributions")
+  labs(title = "Same summary statistics, very different distributions")
 ```
 
 This example demonstrates why it's essential to both analyze AND visualize your data!
