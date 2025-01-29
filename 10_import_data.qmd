@@ -4,6 +4,7 @@ So far, we’ve only worked with data bundled inside packages. In real-world sce
 
 ```{r}
 #| message: false
+#| warning: false
 library(tidyverse)
 library(tidylog)
 ```

@@ -34,9 +34,10 @@ book:
         - 09_tidyr.qmd
         - 10_import_data.qmd
         # - PSet2.qmd
-    # - part: "Visualization"
+    # - part: "Advanced Visualization"
     #   chapters:
-    #     - 07_plots_distribution.qmd
+    #     - 12_plot_overview.qmd
+    #     - 13_plot_amount.qmd
     # - part: "Hierarchical Data"
     #   chapters:
     #     - 12_hierarchical.qmd

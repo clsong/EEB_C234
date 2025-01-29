@@ -35,6 +35,11 @@ library(tidylog)
 library(dcldata)
 ```
 
+::: {.callout-tip collapse="true"}
+## Evolution of Tidying Data in R
+Hadley Wickham originally developed the `reshape2` package in the 2000s to handle this task. Later, in the `tidyr` package, he introduced `gather()` and `spread()` as an improved approach. These were eventually replaced by `pivot_longer()` and `pivot_wider()`, which offer greater clarity and consistency. While the older functions still work, it is recommended to use the newer ones.
+:::
+
 ## `pivot_longer()`
 
 Let’s begin with the `example_eagle_nests` dataset from U.S. Fish and Wildlife Service:

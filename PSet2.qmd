@@ -4,22 +4,151 @@ Hello there! Welcome to your second PSet. This time, we’re going to import and
 
 - **Your Mission**: 
 - **You’ll submit**:
+  - R scripts
 - **Deadline**: 
 
 
-## **Always Visualize Your Data**
+## **Pre-processing long-term ecological data**
+
+We will use the data from a classic, long-term study. The data is from a coastal community barnacles, mussels, and algae for more than 20 years. The data also includes temperature data. We will practice the following steps:
+
+Download the data from the publisher [website](https://www.pnas.org/doi/10.1073/pnas.1421968112#supplementary-materials). The file is called `pnas.1421968112.sd01.xlsx`. And then import the data. Use RStudio to make the import as easy as possible.
+
+
+::: {.callout-tip collapse="true"}
+## Example structure
+```{r}
+#| eval: false
+library(tidyverse)
+library(readxl) # <1>
+library(lubridate) # <2>
+
+data_ts <- read_excel("_____", col_types = _______) |>
+    janitor::clean_names() |>
+    mutate(date = ymd(date) - years(1900)) # <3>
+
+
+data_temperature <- read_excel("______",
+    sheet = "______", col_types = c(_______)
+) |>
+    janitor::clean_names()
+```
+1. This package is to read excel files.
+2. This package is to better handle dates.
+3. This is to convert the date to a date object.
+
+:::
+
+We then need to ioin the abundance data with the temperature data into a single data set. We then need to tidy the data (make all species columns into a long format). The result should look like this:
 
 ```{r}
+#| echo: false
 #| warning: false
-#| message: false
 library(tidyverse)
-pacman::p_load(datasauRus)
+library(readxl)
+library(lubridate)
 
-datasaurus_dozen |>
-    ggplot(aes(x = x, y = y, colour = dataset)) +
-    geom_point() +
-    theme_minimal() +
-    facet_wrap(vars(dataset)) +
-    labs(color = "Dataset")
+data_ts <- read_excel("data/pnas.1421968112.sd01.xlsx",
+    col_types = c(
+        "date", "numeric", "skip",
+        "skip", "numeric", "skip", "skip",
+        "skip", "skip", "skip", "numeric",
+        "skip", "skip"
+    )
+) |>
+    janitor::clean_names() |>
+    mutate(date = ymd(date) - years(1900))
+
+
+data_temperature <- read_excel("data/pnas.1421968112.sd01.xlsx",
+    sheet = "Temperature Data Fig.2A", col_types = c(
+        "date", "numeric", "skip", "skip", "skip", "skip"
+    )
+) |>
+    janitor::clean_names()
+
+data <- data_ts |>
+    left_join(data_temperature)
+
+data |>
+    pivot_longer(cols = -c(date, temperature_o_c), names_to = "species", values_to = "abundance") |>
+    mutate(
+        species = str_replace(species, "_percent", "")
+    )
 ```
 
+Lastly, analyze the correlation between temperature and abundance within each species.
+
+
+
+```{r}
+#| eval: false
+#| echo: false
+library(tidyverse)
+library(readxl)
+library(lubridate)
+
+data_ts <- read_excel("data/pnas.1421968112.sd01.xlsx",
+    col_types = c(
+        "date", "numeric", "skip",
+        "skip", "numeric", "skip", "skip",
+        "skip", "skip", "skip", "numeric",
+        "skip", "skip"
+    )
+) |>
+    janitor::clean_names() |>
+    mutate(date = ymd(date) - years(1900))
+
+
+data_temperature <- read_excel("data/pnas.1421968112.sd01.xlsx",
+    sheet = "Temperature Data Fig.2A", col_types = c(
+        "date", "numeric", "skip", "skip", "skip", "skip"
+    )
+) |>
+    janitor::clean_names()
+
+data <- data_ts |>
+    left_join(data_temperature)
+
+data_long <- data |>
+    pivot_longer(cols = -c(date, temperature_o_c), names_to = "species", values_to = "abundance")
+
+data_long  |> 
+    group_by(species) |> 
+    summarise(
+        cor = cor(temperature_o_c, abundance, use = "complete.obs")
+    )
+
+library(gghighlight)
+ggthemr::ggthemr(palette = "fresh")
+
+data_long %>%
+    ggplot(aes(date, abundance)) +
+    geom_line(aes(group = species, color = species)) +
+    gghighlight(use_direct_label = F) +
+    facet_wrap(~species) +
+    jtools::theme_nice() +
+    labs(
+        x = "Time",
+        y = "Abundance"
+    ) +
+    theme(
+        legend.position = "none"
+    )
+
+data_long %>%
+    ggplot(aes(temperature_o_c, abundance)) +
+    geom_point(aes(color = species)) +
+    facet_wrap(~species) +
+    labs(
+        x = "Temperature (°C)",
+        y = "Abundance"
+    ) +
+    jtools::theme_nice() +
+    theme(
+        legend.position = "none"
+    )
+```
+
+
+## **Your turn**
