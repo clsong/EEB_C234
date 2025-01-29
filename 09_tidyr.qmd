@@ -66,6 +66,8 @@ eagle_nests_longer
 3. `names_to` creates a new column holding the former column names.
 4. `values_to` creates a new column holding the values previously spread across multiple columns.
 
+Why are "year" and "nests" in quotes? Because they are new column names that we are creating. As a general rule, when pivoting, we should always use quotes when creating new columns.
+
 Specifying the columns can sometimes feel like using `select()`. For instance, you can list the columns to include, or exclude the columns you want to keep untouched. The code below achieves the same result by excluding everything but region:
 
 ```{r}
@@ -74,7 +76,7 @@ Specifying the columns can sometimes feel like using `select()`. For instance, y
 
 example_eagle_nests |>
     pivot_longer(
-        cols = -c(`region`), 
+        cols = -c(region), 
         names_to = "year", 
         values_to = "nests" 
     )
