@@ -400,21 +400,19 @@ Let's tidy this dataset in three steps:
 1. First, we'll transform it from wide to long format:
 ```{r}
 datasaurus_dozen_long <- datasaurus_dozen_wide |>
-  janitor::clean_names() |>  # <1> 
-  mutate(row = row_number()) |>  # <2> 
+  mutate(row = row_number()) |>  # <1> 
   pivot_longer(
-    cols = -"row",  # <3> 
-    names_to = "variable",  # <4> 
-    values_to = "value"  # <5> 
+    cols = -"row",  # <2> 
+    names_to = "variable",  # <3> 
+    values_to = "value"  # <4> 
   )
 ```
-1. `janitor::clean_names()` cleans the column names to be consistent.
-2. `mutate(row = row_number())` adds a row identifier.
-3. `pivot_longer()` pivots the data from wide to long format.
-4. `names_to` creates a new column holding the former column names.
-5. `values_to` creates a new column holding the values previously spread across multiple columns.
+1. `mutate(row = row_number())` adds a row identifier.
+2. `pivot_longer()` pivots the data from wide to long format.
+3. `names_to` creates a new column holding the former column names.
+4. `values_to` creates a new column holding the values previously spread across multiple columns.
 
-2. Next, we need to separate the `variable` column into dataset name and coordinate type (x/y). This is tricky because some dataset names contain underscores (like 'v_lines'). We'll use a regular expression that splits at the last underscore:
+5. Next, we need to separate the `variable` column into dataset name and coordinate type (x/y). This is tricky because some dataset names contain underscores (like 'v_lines'). We'll use a regular expression that splits at the last underscore:
 
 ```{r}
 datasaurus <- datasaurus_dozen_long |>

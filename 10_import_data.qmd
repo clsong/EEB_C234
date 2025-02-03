@@ -1,5 +1,12 @@
 # Import and Join Data
 
+::: {.callout-note}
+## Class Objectives
+1. How to create and use RStudio Projects
+2. How to import data from files
+3. How to join relational data
+:::
+
 So far, we’ve only worked with data bundled inside packages. In real-world scenarios, however, data is often stored in external files—like Excel or CSV—and may be spread across multiple files. To get it all into one tidy tibble, we typically import the data first, then merge the datasets using the appropriate joining functions. Let’s begin by loading the packages we’ve been using all along:
 
 ```{r}
@@ -79,7 +86,7 @@ data_co2 |>
 
 We see emissions rising across the years, but the real question might be how CO₂ levels relate to global temperature. For that, we’ll need to import temperature data and then join both datasets together.
 
-## Join data
+## Join Relational Data
 
 We can fetch temperature data—also from [Our World in Data](https://ourworldindata.org/co2-and-greenhouse-gas-emissions?insight=human-greenhouse-gas-emissions-have-increased-global-average-temperatures#key-insights)—and load it similarly:
 
@@ -106,7 +113,9 @@ data_co2  |>
     ) 
 ```
 
-Notice that joins are asymmetric. Switching the order to `left_join(data_temp, data_co2, by = "year")` wouldn’t produce the same result. A left join always keeps every row from the left-hand dataset, filling missing matches from the right dataset with `NA`. I highly recommend to stick to `left_join()` for consistency (and also forces you to think about which dataset is your primary source of information). However, you can also use `right_join()`, `inner_join()`, or `full_join()` depending on your needs.
+Notice that joins are asymmetric. Switching the order to `left_join(data_temp, data_co2, by = "year")` wouldn’t produce the same result. A left join always keeps every row from the left-hand dataset, filling missing matches from the right dataset with `NA`. I highly recommend to stick to `left_join()` for consistency (and also forces you to think about which dataset is your primary source of information). However, you can also use `right_join()`, `inner_join()`, or `full_join()` depending on your needs. 
+
+![From https://mikoontz.github.io/data-carpentry-week/lesson_joins.html](img/dplyr-joins.png)
 
 With our combined data, we can see how temperature anomaly compares to per-capita CO₂ emissions:
 

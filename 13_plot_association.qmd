@@ -1,0 +1,56 @@
+# Visualizing Association
+
+The association between variables is one of the most important questions in data analysis. 
+
+
+We have already seen some examples of association in the previous chapters. But given its importance, we will greatly expand on this topic.
+
+```{r}
+#| warning: false
+#| message: false
+library(tidyverse)
+library(tidylog)
+theme_set(hrbrthemes::theme_ipsum())
+```
+
+## Trend
+
+We will use the `economics` dataset from the `tidyverse` package. 
+
+```{r}
+economics |>
+    filter(month(date) == 1) |>
+    ggplot(aes(x = date, y = unemploy)) +
+    geom_point(color = "white", fill = "#0072B2", shape = 21, size = 2)
+```
+
+::: {.panel-tabset}
+
+## Add line
+
+```{r}
+economics |>
+    filter(month(date) == 1) |>
+    ggplot(aes(x = date, y = unemploy)) +
+    geom_line(size = 0.5, color = "#0072B2") +
+    geom_point(color = "white", fill = "#0072B2", shape = 21, size = 2)
+```
+
+
+```
+
+### Show difference between groups
+
+### Stream graph
+
+
+## Embed more information in the plot
+
+Humans are bad at visualizing 3D data. Thus, we need to be careful when visualizing the association between variables.
+
+
+## Dimension reduction
+
+The data we typically work with is high-dimensional. We need to reduce the dimension of the data to visualize it.
+
+

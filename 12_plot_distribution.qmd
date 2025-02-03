@@ -1,0 +1,354 @@
+# Visualizing Distribution
+
+::: {.callout-note}
+## Class Objectives: Visualizing distribution
+1. Distribution of a _single_ variable
+2. Distribution of _multiple_ variables
+3. Distribution of a variable across _multiple groups_
+:::
+
+Data distributions are central to data analysis. We’ll explore several methods for visualizing distributions in R using ggplot2 and related packages. 
+
+Let us begin by loading the necessary packages and setting the theme.
+```{r}
+#| message: false
+library(tidyverse)
+library(tidylog)
+library(palmerpenguins)
+theme_set(theme_minimal()) #<1>
+```
+1. Set all plots to use `theme_minimal()`
+
+## Single Variable
+
+### Histograms
+
+Histograms are a common way to visualize the distribution of a single variable. In this example, we plot the distribution of `flipper_length_mm` from the `penguins` dataset:
+
+```{r}
+#| warning: false
+penguins |>
+    ggplot(aes(x = flipper_length_mm)) +
+    geom_histogram(color = "white")
+```
+
+A frequent mistake is to call `geom_histogram()` without specifying the binwidth. When you don’t set the bin width, ggplot2 uses a default value that may not reveal important details in your data. The example below shows how changing the bin width affects the histogram:
+
+```{r}
+#| echo: false
+#| warning: false
+library(patchwork)
+
+c(1, 5, 20) %>%
+    map(~ penguins |>
+        ggplot(aes(x = flipper_length_mm)) +
+        geom_histogram(binwidth = ., color = "white")
+    ) |>
+    wrap_plots()
+```
+
+
+### Density Plots
+
+Density plots provide a smooth estimate of the distribution. For example, the following code creates a density plot for `flipper_length_mm`:
+
+```{r}
+#| warning: false
+penguins |>
+    ggplot(aes(x = flipper_length_mm)) +
+    geom_density(fill = "lightblue")
+```
+
+A common pitfall is that the density curve may extend beyond the actual data range. To illustrate, if you normalize your data to range from 0 to 1, the density estimate might still spill outside these bounds. Consider the following example where we normalize the flipper lengths and then set explicit x-axis limits:
+
+```{r}
+#| warning: false
+penguins |>
+    drop_na(flipper_length_mm) |>
+    mutate(flipper_length_mm_normalized = (flipper_length_mm - min(flipper_length_mm)) / (max(flipper_length_mm) - min(flipper_length_mm))) |>
+    ggplot(aes(x = flipper_length_mm_normalized)) +
+    geom_density(fill = "lightblue") +
+    xlim(-.2, 1.2) # <1>
+```
+1. We set the x-axis limits to [-0.2, 1.2] to illustrate the issue.
+
+Without careful inspection, you might not notice that the density extends outside the [0, 1] interval. To fix this, you can specify the bounds in `geom_density()`:
+
+```{r}
+#| warning: false
+#| source-line-numbers: "6"
+penguins |>
+    drop_na(flipper_length_mm) |>
+    mutate(flipper_length_mm_normalized = (flipper_length_mm - min(flipper_length_mm)) / (max(flipper_length_mm) - min(flipper_length_mm))) |>
+    ggplot(aes(x = flipper_length_mm_normalized)) +
+    geom_density(fill = "lightblue", 
+                bounds = c(0, 1)) + # <1>
+    xlim(-.2, 1.2)
+```
+1. We specify the bounds in `geom_density()` to ensure the density curve stays within the [0, 1] interval.
+
+::: {.callout-tip collapse=true}
+## Alternative density estimate
+The `ggalt` package’s `geom_bkde()` function can sometimes provide a better density estimate.
+:::
+
+## Comparing More Than One Variable
+
+### Histograms vs Density
+
+As a general rule, DON'T use Histograms _naively_ when dealing with multiple variables. For example, all three examples below are difficult to efficiently compare the distribution of flipper length across different species.
+
+::: {.panel-tabset}
+
+## Overlapping histograms
+Each group is plotted in the same space with transparency:
+
+```{r}
+#| warning: false
+penguins |> 
+    ggplot(aes(x = flipper_length_mm, group = species, fill = species)) +
+    geom_histogram(color = "white", alpha = .5,position = "identity") +
+    theme(legend.position = "top")
+```
+
+## Stacked Histograms
+
+Histograms are stacked on top of each other to compare proportions:
+
+```{r}
+#| warning: false
+penguins |>
+    ggplot(aes(x = flipper_length_mm, group = species, fill = species)) +
+    geom_histogram(color = "white", position = "stack") +
+    theme(legend.position = "top")
+```
+
+## Side by side histograms
+
+Histograms for each group are placed next to one another for easier comparison:
+
+```{r}
+#| warning: false
+penguins |> 
+    ggplot(aes(x = flipper_length_mm, group = species, fill = species)) +
+    geom_histogram(color = "white", position = "dodge") +
+    theme(legend.position = "top")
+```
+
+:::
+
+Density plots are generally easier to compare when multiple groups are involved. The following code overlays density curves for each species:
+
+```{r}
+#| warning: false
+penguins |> 
+    ggplot(aes(
+        x = flipper_length_mm, 
+        group = species, 
+        fill = species, 
+        color = species)) +
+    geom_density(alpha = .5) +
+    theme(legend.position = "top")
+```
+
+As we mentioned before, it is generally a good idea to avoid using legends. The library `geomtextpath` provides a way to add text to the density plot.
+
+```{r}
+#| warning: false
+library(geomtextpath)
+
+penguins |> 
+    ggplot(aes(x = flipper_length_mm, group = species, color = species)) +
+    geom_textdensity(alpha = .5, aes(label = species), size = 5) +
+    theme(legend.position = "none")
+```
+
+### Better Variations for Group Comparisons
+
+There are many variations of density/histogram plots that are more informative and aesthetically pleasing. I particularly like two of them.
+
+::: {.panel-tabset}
+
+## Separated plots
+
+For datasets with more than two groups, faceting and highlighting each group can be very effective. We can easily do this with the `gghighlight` package:
+
+```{r}
+#| warning: false
+library(gghighlight)
+
+penguins |> 
+    ggplot(aes(x = flipper_length_mm, fill = species)) +
+    geom_histogram(color = "white") +
+    gghighlight() +
+    facet_wrap(~species)
+```
+
+## Mirror density
+
+When comparing two groups, a mirror density plot places one density curve above and one below the horizontal axis. This example compares male and female penguins:
+
+```{r}
+#| warning: false
+penguins |> 
+    ggplot(aes(x = flipper_length_mm)) +
+    geom_density(
+        data = filter(penguins, sex == "male"),
+        aes(y = ..density..),
+        alpha = .5, fill = "#69b3a2", color = "black") +
+    geom_label( aes(x=180, y=0.02, label="male"), color="#69b3a2", size = 5) +
+    geom_density(
+        data = filter(penguins, sex == "female"),
+        aes(y = -..density..),
+        alpha = .5, fill = "#404080", color = "black") +
+    geom_label( aes(x=228, y=-0.01, label="female"), color="#404080", size = 5)
+```
+
+
+:::
+
+## Many distributions at once
+
+Sometimes, you need to display distributions for many groups simultaneously. For example, we use the `lincoln_weather` dataset (from the `ggridges` package) to demonstrate different approaches.
+
+We first clean the data by selecting relevant columns and extracting the month from the date:
+
+```{r}
+library(ggridges)
+lincoln_weather_clean <- lincoln_weather |>
+    select(CST, `Mean Temperature [F]`) |>
+    mutate(CST = ymd(CST)) |>
+    mutate(month = month(CST, label = TRUE))
+
+lincoln_weather_clean
+```
+
+### Summarizing with Points and Error Bars
+
+One approach is to show the mean along with an error bar. **Always be explicit about how you compute the error bar!** 
+
+::: {.panel-tabset}
+
+## Confidence limit
+```{r}
+lincoln_weather_clean |>
+    group_by(month) |>
+    summarise(mean = mean(`Mean Temperature [F]`),
+              lower = quantile(`Mean Temperature [F]`, 0.025),
+              upper = quantile(`Mean Temperature [F]`, 0.975)) |>
+    ggplot(aes(x = month, y = mean, ymin = lower, ymax = upper)) +
+    geom_pointrange()
+```
+
+## Standard deviation
+
+```{r}
+lincoln_weather_clean |>
+    group_by(month) |>
+    summarise(mean = mean(`Mean Temperature [F]`),
+              sd = sd(`Mean Temperature [F]`)) |>
+    ggplot(aes(x = month, y = mean)) +
+    geom_pointrange(aes(ymin = mean - sd, ymax = mean + sd))
+```
+
+## Standard error
+
+```{r}
+lincoln_weather_clean |>
+    group_by(month) |>
+    summarise(mean = mean(`Mean Temperature [F]`),
+              se = sd(`Mean Temperature [F]`) / sqrt(n())) |>
+    ggplot(aes(x = month, y = mean)) +
+    geom_pointrange(aes(ymin = mean - se, ymax = mean + se))
+```
+
+:::
+
+### Showing the Full Distribution
+
+Whenever possible, display the full distribution rather than just summary statistics.
+
+::: {.panel-tabset}
+
+## Boxplot
+
+```{r}
+#| warning: false
+lincoln_weather_clean |> 
+    ggplot(aes(x = month, y = `Mean Temperature [F]`)) +
+    geom_boxplot() 
+```
+
+## Violin Plot
+
+```{r}
+#| warning: false
+lincoln_weather_clean |> 
+    ggplot(aes(x = month, y = `Mean Temperature [F]`)) +
+    geom_violin() 
+```
+
+:::
+
+It is generally advised to use violin plots instead of boxplots, especially when the data is not normally distributed (which is often the case). The animated comparison below illustrates why violin plots often convey more information than boxplots.
+
+![From https://www.research.autodesk.com/publications/same-stats-different-graphs/](img/BoxViolinSmaller.gif)
+
+### Plotting the Actual Data Points
+
+It’s a good idea to show the raw data along with any summaries. This is especially true for real data, where we often have to work with limited samples. It is less useful, or sometimes even advised against, for synthetic data.
+
+::: {.panel-tabset}
+
+## DON't just use `geom_point()`
+```{r}
+lincoln_weather_clean |> 
+    ggplot(aes(x = month, y = `Mean Temperature [F]`)) +
+    geom_point(alpha = .5)
+```
+
+## Jittered points
+Jittering helps avoid overlapping points:
+```{r}
+lincoln_weather_clean |> 
+    ggplot(aes(x = month, y = `Mean Temperature [F]`)) +
+    geom_jitter(alpha = .5)
+```
+
+## Beeswarm style
+For more controlled jittering, use the `ggbeeswarm` package:
+
+```{r}
+lincoln_weather_clean |> 
+    ggplot(aes(x = month, y = `Mean Temperature [F]`)) +
+    ggbeeswarm::geom_quasirandom(varwidth = TRUE) 
+```
+:::
+
+Even better, why not show both the data and the distribution?
+
+```{r}
+lincoln_weather_clean |> 
+    ggplot(aes(x = month, y = `Mean Temperature [F]`)) +
+    geom_violin(alpha = .5) +
+    ggforce::geom_sina()
+```
+
+### Ridge plot
+
+Ridge plots (also known as joy plots) are great for comparing the distribution of a variable across many groups in a compact format. It provides a horizontal axis and a vertical density plot for each group.
+
+```{r}
+#| warning: false
+library(ggridges)
+lincoln_weather_clean |> 
+    ggplot(aes(
+        x = `Mean Temperature [F]`, 
+        y = month, 
+        fill = month, 
+        color = month
+    )) +
+    geom_density_ridges(alpha = .5) +
+    theme_ridges() +
+    theme(legend.position = "none") 
+```
