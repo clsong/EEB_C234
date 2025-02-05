@@ -1,0 +1,6 @@
+# Visualizing Uncertainty
+
+As a scientist, you will often have to deal with uncertainty. I was debating whether this deserves its own chapter, but I think it does. 
+
+## DON't use a bar plot with error bars
+

@@ -7,7 +7,7 @@
 3. Distribution of a variable across _multiple groups_
 :::
 
-Data distributions are central to data analysis. We’ll explore several methods for visualizing distributions in R using ggplot2 and related packages. 
+Data distributions are central to data analysis. We'll explore several methods for visualizing distributions in R using ggplot2 and related packages. 
 
 Let us begin by loading the necessary packages and setting the theme.
 ```{r}
@@ -32,7 +32,7 @@ penguins |>
     geom_histogram(color = "white")
 ```
 
-A frequent mistake is to call `geom_histogram()` without specifying the binwidth. When you don’t set the bin width, ggplot2 uses a default value that may not reveal important details in your data. The example below shows how changing the bin width affects the histogram:
+A frequent mistake is to call `geom_histogram()` without specifying the binwidth. When you don't set the bin width, ggplot2 uses a default value that may not reveal important details in your data. The example below shows how changing the bin width affects the histogram:
 
 ```{r}
 #| echo: false
@@ -89,7 +89,7 @@ penguins |>
 
 ::: {.callout-tip collapse=true}
 ## Alternative density estimate
-The `ggalt` package’s `geom_bkde()` function can sometimes provide a better density estimate.
+The `ggalt` package's `geom_bkde()` function can sometimes provide a better density estimate.
 :::
 
 ## Comparing More Than One Variable
@@ -296,7 +296,7 @@ It is generally advised to use violin plots instead of boxplots, especially when
 
 ### Plotting the Actual Data Points
 
-It’s a good idea to show the raw data along with any summaries. This is especially true for real data, where we often have to work with limited samples. It is less useful, or sometimes even advised against, for synthetic data.
+It's a good idea to show the raw data along with any summaries. This is especially true for real data, where we often have to work with limited samples. It is less useful, or sometimes even advised against, for synthetic data.
 
 ::: {.panel-tabset}
 
@@ -325,7 +325,11 @@ lincoln_weather_clean |>
 ```
 :::
 
-Even better, why not show both the data and the distribution?
+Even better, why not show both the data and the distribution? 
+
+::: {.panel-tabset}
+
+## Sina plot
 
 ```{r}
 lincoln_weather_clean |> 
@@ -334,9 +338,21 @@ lincoln_weather_clean |>
     ggforce::geom_sina()
 ```
 
+## Half-half plot
+
+```{r}
+lincoln_weather_clean |> 
+    ggplot(aes(x = month, y = `Mean Temperature [F]`)) +
+    gghalves::geom_half_violin(alpha = .5) +
+    gghalves::geom_half_dotplot(method="histodot", stackdir="up", binwidth = 1)
+```
+
+:::
+
 ### Ridge plot
 
 Ridge plots (also known as joy plots) are great for comparing the distribution of a variable across many groups in a compact format. It provides a horizontal axis and a vertical density plot for each group.
+
 
 ```{r}
 #| warning: false
@@ -352,3 +368,10 @@ lincoln_weather_clean |>
     theme_ridges() +
     theme(legend.position = "none") 
 ```
+
+::: {.callout-tip collapse=true}
+### Horizontal Plots
+
+Horizon plots are an effective way to visualize time series data. It is extremely useful when you need to compare even more variables. You can use the `ggHoriPlot` package to create them. Check out the documentation [here](https://rivasiker.github.io/ggHoriPlot/articles/examples.html) for stunning examples.
+:::
+

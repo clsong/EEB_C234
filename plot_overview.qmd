@@ -1,0 +1,32 @@
+# Overview of Visualization
+
+Plotting is a huge topic. We will not be able to cover all. 
+
+Luckily, ggplot2 is one of the most popular visualization scheme out there. There are tons of extensions for your needs. My bet is that most of the time, you will find what you need. Below are some useful (more specific and niche) extensions that may of intrerest to you.
+
+- Phylogenetic trees: [ggtree](https://bioconductor.org/packages/release/bioc/html/ggtree.html)
+- Network: [ggraph](https://cran.r-project.org/web/packages/ggraph/index.html). You can create pretty cool network visualization with this package ([example](https://www.data-imaginist.com/posts/2024-02-15-ggraph-2-2-0/)).
+- Reveal: [ggreveal](https://www.weverthon.com/ggreveal/)
+- Foundry: [ggfoundry](https://github.com/cgoo4/ggfoundry/)
+- Star: [ggstar](https://github.com/xiangpin/ggstar)
+
+
+Intereactive graphs:
+
+- [plotly](https://plotly.com/r/)
+- [dygraphs](https://rstudio.github.io/dygraphs/)
+- [ggiraph](https://davidgohel.github.io/ggiraph/index.html)
+- [gganimate](https://gganimate.com/)
+
+<!-- ## More Explanaroty in Graphs
+
+It is generally a good idea to label key points.
+
+Add accesoory lines to highlight relationships. We have used `geom_smooth()` before. It is 
+
+```{r}
+penguins |>
+    ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
+    geom_point() +
+    geom_smooth(method = "lm")
+``` -->

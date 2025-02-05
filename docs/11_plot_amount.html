@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.40">
+<meta name="generator" content="quarto-1.6.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-70d37b45c5086134dc26dbb10e888fc0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-86b0efa2460cd378948dc2f68bdd414f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d6406dd0ecd354398ec4c1612f62bac8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-706d47e59303ecb561a7787d3c9b597f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
@@ -272,6 +272,18 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Visualizing Distribution</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_plot_trend.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Visualizing Trends</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_plot_association.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Visualizing Association</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -299,7 +311,11 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
   <li><a href="#circular-bar-plots" id="toc-circular-bar-plots" class="nav-link" data-scroll-target="#circular-bar-plots"><span class="header-section-number">11.2.3</span> Circular bar plots</a></li>
   <li><a href="#waffle-charts" id="toc-waffle-charts" class="nav-link" data-scroll-target="#waffle-charts"><span class="header-section-number">11.2.4</span> Waffle charts</a></li>
   </ul></li>
-  <li><a href="#multiple-categories" id="toc-multiple-categories" class="nav-link" data-scroll-target="#multiple-categories"><span class="header-section-number">11.3</span> Multiple categories</a></li>
+  <li><a href="#multiple-categories" id="toc-multiple-categories" class="nav-link" data-scroll-target="#multiple-categories"><span class="header-section-number">11.3</span> Multiple categories</a>
+  <ul class="collapse">
+  <li><a href="#waffle-charts-1" id="toc-waffle-charts-1" class="nav-link" data-scroll-target="#waffle-charts-1"><span class="header-section-number">11.3.1</span> Waffle charts</a></li>
+  <li><a href="#dumbell-plots" id="toc-dumbell-plots" class="nav-link" data-scroll-target="#dumbell-plots"><span class="header-section-number">11.3.2</span> Dumbell plots</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -395,7 +411,7 @@ ungroup: no grouping variables remain</code></pre>
 </div>
 </div>
 <p>A very common mistake is to forget to add the <code>stat = "identity"</code> argument to the <code>geom_bar()</code> function. If you forget this argument, ggplot will automatically calculate the count of each category and plot it. While this may be useful in some cases, it is generally not recommended because it is not transparent.</p>
-<p>Our job is not done yet. Below are a few techniques to make bar plots more informative and visually appealing.</p>
+<p>You may think bar plot is so simple. Surprisingly, a recent <a href="https://www.biorxiv.org/content/10.1101/2024.09.20.609464v2">study</a> shows that almost one-third of biological papers use bar plots incorrectly. Thus, our job is not done yet. Below are a few techniques to make bar plots more informative and visually appealing.</p>
 <section id="adding-amount-values" class="level3" data-number="11.1.1">
 <h3 data-number="11.1.1" class="anchored" data-anchor-id="adding-amount-values"><span class="header-section-number">11.1.1</span> Adding amount values</h3>
 <p>It is useful to add the amount of each category to the bar plot. We can do this by adding a <code>geom_text()</code> layer to the plot.</p>
@@ -803,6 +819,8 @@ Parliament plots
 </div>
 </div>
 </div>
+<section id="waffle-charts-1" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="waffle-charts-1"><span class="header-section-number">11.3.1</span> Waffle charts</h3>
 <p>You can also use other types (geoms) as well. For example, waffle charts.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>penguins_count_sex <span class="sc">|&gt;</span></span>
@@ -819,6 +837,9 @@ Parliament plots
 </div>
 </div>
 </div>
+</section>
+<section id="dumbell-plots" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="dumbell-plots"><span class="header-section-number">11.3.2</span> Dumbell plots</h3>
 <p>Another useful alternative is to use the <code>dumbell</code> plot. It is quite similar to the lollipop plot. We will use the <code>ggalt</code> package to create the dumbell plot.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
@@ -843,6 +864,7 @@ Parliament plots
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -928,6 +950,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1038,6 +1062,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
