@@ -43,8 +43,9 @@ A very common mistake is to forget to add the `stat = "identity"` argument to th
 
 You may think bar plot is so simple. Surprisingly, a recent [study](https://www.biorxiv.org/content/10.1101/2024.09.20.609464v2) shows that almost one-third of biological papers use bar plots incorrectly. Thus, our job is not done yet. Below are a few techniques to make bar plots more informative and visually appealing.
 
+::: {.panel-tabset}
 
-### Adding amount values
+## Adding amount values
 
 It is useful to add the amount of each category to the bar plot. We can do this by adding a `geom_text()` layer to the plot.
 
@@ -64,7 +65,7 @@ Two important things to note here:
 2. The `coord_cartesian(clip = 'off')` function is used to ensure that the text label is not clipped when it extends beyond the plot area. This is an important trick to remember.
 
 
-### Reordering bars
+## Reordering bars
 
 It is helpful to reorder the bars in a bar plot. We can do this by using the `reorder()` function.
 
@@ -93,7 +94,7 @@ penguins_count |>
 ```
 1. This tells R to reorder the `species` column by the order of "Adelie", "Chinstrap", "Gentoo".
 
-### Highlight some categories
+## Highlight some categories
 
 For example, we can highlight the "Adelie" category by changing its color to red:
 
@@ -109,7 +110,7 @@ penguins_count |>
     coord_cartesian(clip = 'off') 
 ```
 
-### Differentiate bars
+## Differentiate bars
 We sometimes want to differentiate the bars as much as possible. One obvious way is to use different colors for each bar:
 
 ```{r}
@@ -139,7 +140,7 @@ penguins_count |>
     theme(legend.position = "none")
 ```
 
-### Custom Themes
+## Custom Themes
 
 Since the bars are vertical, we do not need the vertical grid lines. We can change the theme of the plot by using the `theme()` function. Always think about what elements are redundant and remove them.
 
@@ -162,6 +163,8 @@ penguins_count |>
         axis.ticks.y = element_line(colour = "grey", linewidth = 0.15)
     )
 ```
+
+:::
 
 ## Bar plots variations
 

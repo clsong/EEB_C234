@@ -19,6 +19,7 @@ Marginal distributions show the distribution of each variable along the axes of 
 A simple way to add marginal information is by using geom_rug(), which adds tick marks along the axes:
 
 ```{r}
+#| warning: false
 penguins |>
     ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
     geom_point() +
@@ -31,6 +32,8 @@ For a clearer separation of marginal distributions by group, the ggside package 
 
 
 ```{r}
+#| warning: false
+#| message: false
 library(ggside)
 
 penguins |>

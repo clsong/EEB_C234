@@ -33,18 +33,19 @@ book:
         - 08_dplyr.qmd
         - 09_tidyr.qmd
         - 10_import_data.qmd
-        # - PSet2.qmd
-    - part: "Advanced Visualization"
+    - part: "Visualization by Type"
       chapters:
         - 11_plot_amount.qmd
         - 12_plot_distribution.qmd
+        - PSet2.qmd
         - 13_plot_trend.qmd
         - 14_plot_association.qmd
-    # - part: "Hierarchical Data"
+    # - part: "Functional Programming"
     #   chapters:
     #     - 12_hierarchical.qmd
     #     - 13_purrr.qmd
     #     - PSet3.qmd
+    #- part: "Advanced Visualization"
     # - part: "Reproducible Research"
     #   chapters:
     #     - quarto.qmd

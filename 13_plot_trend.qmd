@@ -254,7 +254,7 @@ blockbusters |>
     ) 
 ```
 
-## DON‘T go 3D
+## DON'T go 3D
 
 Some people like to use 3D plots to show trends. I admit that it is fancy, but it is generally not informative.
 

@@ -1,14 +1,69 @@
-# PSet 2
+# PSet 2 {-}
 
-Hello there! Welcome to your second PSet. This time, we’re going to import and tidy data for some explorative data analysis.
+Welcome to your second problem set! In this assignment, you will import and tidy ecological data to perform exploratory analyses. We will replicate parts of the analysis from a recent paper linking ecology and evolution. You can read the paper [here](https://www.nature.com/articles/s41467-022-30090-4). 
 
-- **Your Mission**: 
-- **You’ll submit**:
-  - R scripts
-- **Deadline**: 
+## What to Turn In
+
+- Submission Package: A folder (or zip file) that contains:
+  - Your complete RStudio project.
+  - Your code for data wrangling and analysis.
+  - The two final publication-quality figures.
+- Deadline: February 21st, 2025
+
+## Assignment Instructions
+
+1. Project Setup
+
+   - **Create a New Project**: Start a new RStudio project.
+   - **Download Data**:
+     - Download the full data archive from [here](http://clsong.com/assets/class_data/PSet2.zip).
+     - This archive contains two CSV files:
+       - Snail Data: `PSet2_snail.csv`
+       - Vegetation Zone Totals: `PSet2_vegzonetotals.csv`
+   - **Organize Your Files**: Place the downloaded CSV files in a subfolder named `data` within your project directory.
+
+2. Data Import
+   
+    - Load the Data: Import both CSV files into R. You can use `read_csv()`.
+
+3. Data Cleaning: Filter Out Specific Islands
+
+   - In the `data_snail` tibble, remove all rows where the island column is "CH", "ED", or "GA".
+   - Hint: Use the `filter()` verb.
+  
+4. Join Data: 
+
+   - Join `data_snail` with `data_veg` using the common variable `island`.
+   - Hint: Consider whether a `left_join()`, `full_join()`, or another type of join is most appropriate.
+
+5. Data Transformation: Normalize Species Diversit
+   
+   - The variable `spdiv` (species diversity) needs to be normalized based on habitat type:
+
+     - If habitat is "Arid", compute: `normalized_spdiv = spdiv / AridTotal`
+     - If habitat is "Humid", compute: `normalized_spdiv = spdiv / HumidTotal`
+
+   - Hint: Use `mutate()` together with `if_else()` or `case_when()` to create a new normalized species diversity variable.
+
+6. Data Visualization: Replicate Figure 5 from the Paper
+
+   - Create a scatter plot using `ggplot2` that shows the relationship between the normalized species diversity (`normalized_spdiv`) and functional diversity (`funcdiv`).
+   - Instead of using `geom_point()`, use `geom_text()` so that each data point is labeled with the island.
+   - Aim to reproduce or even improve upon the appearance of Figure 5 from the paper.
+
+7. Create One More Publication-Quality Figure:
+
+   - Explpre another interesting relationship or distribution in your data.
+   - Use what you have learned in the class to make the figure more informative and aesthetically pleasing.
 
 
-## **Pre-processing long-term ecological data**
+
+
+
+
+
+
+<!-- ## **Pre-processing long-term ecological data**
 
 We will use the data from a classic, long-term study. The data is from a coastal community barnacles, mussels, and algae for more than 20 years. The data also includes temperature data. We will practice the following steps:
 
@@ -151,4 +206,4 @@ data_long %>%
 ```
 
 
-## **Your turn**
+## **Your turn** -->

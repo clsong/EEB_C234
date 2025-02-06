@@ -214,13 +214,13 @@ Sometimes, you need to display distributions for many groups simultaneously. For
 We first clean the data by selecting relevant columns and extracting the month from the date:
 
 ```{r}
+#| message: false
+#| warning: false
 library(ggridges)
 lincoln_weather_clean <- lincoln_weather |>
     select(CST, `Mean Temperature [F]`) |>
     mutate(CST = ymd(CST)) |>
     mutate(month = month(CST, label = TRUE))
-
-lincoln_weather_clean
 ```
 
 ### Summarizing with Points and Error Bars
