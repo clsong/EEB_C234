@@ -1,4 +1,4 @@
-# PSet 1 
+# PSet 1 {-}
 
 Hello there! Welcome to your first PSet. This time, we’re going to use your R plotting skills to make your data visualizations *pop*. 
 

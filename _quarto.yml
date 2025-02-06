@@ -30,16 +30,16 @@ book:
         
     - part: "Data Wrangling"
       chapters:
-        - 08_dplyr.qmd
-        - 09_tidyr.qmd
-        - 10_import_data.qmd
+        - 07_dplyr.qmd
+        - 08_tidyr.qmd
+        - 09_import_data.qmd
     - part: "Visualization by Type"
       chapters:
-        - 11_plot_amount.qmd
-        - 12_plot_distribution.qmd
+        - 10_plot_amount.qmd
+        - 11_plot_distribution.qmd
         - PSet2.qmd
-        - 13_plot_trend.qmd
-        - 14_plot_association.qmd
+        - 12_plot_trend.qmd
+        - 13_plot_association.qmd
     # - part: "Functional Programming"
     #   chapters:
     #     - 12_hierarchical.qmd

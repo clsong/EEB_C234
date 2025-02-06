@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://clsong.github.io/EEB_C234/PSet2.html</loc>
-    <lastmod>2025-02-06T00:03:19.766Z</lastmod>
+    <loc>https://clsong.github.io/EEB_C234/index.html</loc>
+    <lastmod>2025-01-22T23:17:00.027Z</lastmod>
   </url>
   <url>
     <loc>https://clsong.github.io/EEB_C234/01_intro.html</loc>
@@ -30,34 +30,38 @@
   </url>
   <url>
     <loc>https://clsong.github.io/EEB_C234/PSet1.html</loc>
-    <lastmod>2025-01-22T22:58:44.687Z</lastmod>
+    <lastmod>2025-02-06T00:08:19.747Z</lastmod>
   </url>
   <url>
-    <loc>https://clsong.github.io/EEB_C234/08_dplyr.html</loc>
+    <loc>https://clsong.github.io/EEB_C234/07_dplyr.html</loc>
     <lastmod>2025-01-22T21:55:19.063Z</lastmod>
   </url>
   <url>
-    <loc>https://clsong.github.io/EEB_C234/09_tidyr.html</loc>
+    <loc>https://clsong.github.io/EEB_C234/08_tidyr.html</loc>
     <lastmod>2025-01-29T22:12:35.643Z</lastmod>
   </url>
   <url>
-    <loc>https://clsong.github.io/EEB_C234/10_import_data.html</loc>
+    <loc>https://clsong.github.io/EEB_C234/09_import_data.html</loc>
     <lastmod>2025-02-03T23:06:46.274Z</lastmod>
   </url>
   <url>
-    <loc>https://clsong.github.io/EEB_C234/11_plot_amount.html</loc>
+    <loc>https://clsong.github.io/EEB_C234/10_plot_amount.html</loc>
     <lastmod>2025-02-05T07:57:57.000Z</lastmod>
   </url>
   <url>
-    <loc>https://clsong.github.io/EEB_C234/12_plot_distribution.html</loc>
+    <loc>https://clsong.github.io/EEB_C234/11_plot_distribution.html</loc>
     <lastmod>2025-02-05T07:59:02.000Z</lastmod>
   </url>
   <url>
-    <loc>https://clsong.github.io/EEB_C234/13_plot_trend.html</loc>
+    <loc>https://clsong.github.io/EEB_C234/PSet2.html</loc>
+    <lastmod>2025-02-06T00:03:19.766Z</lastmod>
+  </url>
+  <url>
+    <loc>https://clsong.github.io/EEB_C234/12_plot_trend.html</loc>
     <lastmod>2025-02-05T21:33:11.546Z</lastmod>
   </url>
   <url>
-    <loc>https://clsong.github.io/EEB_C234/14_plot_association.html</loc>
+    <loc>https://clsong.github.io/EEB_C234/13_plot_association.html</loc>
     <lastmod>2025-02-05T08:03:24.000Z</lastmod>
   </url>
 </urlset>
