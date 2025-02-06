@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.6.40">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>PSet 1 – EE BIOL C234</title>
+
+
+<title>14&nbsp; Other Types of Plots – EE BIOL C234</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -17,41 +20,8 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
+
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -60,8 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./07_dplyr.html" rel="next">
-<link href="./06_good_plots.html" rel="prev">
+<link href="./15_color.html" rel="next">
+<link href="./13_plot_association.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -71,7 +41,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d6406dd0ecd354398ec4c1612f62bac8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/quarto-contrib/line-highlight-1.0.0/line-highlight.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -97,32 +68,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-WQWBVET0L7"></script><script type="text/javascript">
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-WQWBVET0L7"></script>
+
+<script type="text/javascript">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
-</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+</script>
+
+
 </head>
+
 <body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_ggplot_basic.html">Grammar of Graphics</a></li><li class="breadcrumb-item"><a href="./PSet1.html">PSet 1</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_plot_amount.html">Visualization by Type</a></li><li class="breadcrumb-item"><a href="./14_plot_others.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Other Types of Plots</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">EE BIOL C234</a> 
     </div>
@@ -134,7 +116,7 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Weclome</span></a>
@@ -154,8 +136,8 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_R_basics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Basics of R and RStudio</span></span></a>
@@ -168,7 +150,7 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
@@ -177,8 +159,8 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_ggplot_basic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Welcome to the World of <code>ggplot2</code></span></span></a>
@@ -198,12 +180,12 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./PSet1.html" class="sidebar-item-text sidebar-link active">
+  <a href="./PSet1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">PSet 1</span></a>
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
@@ -212,8 +194,8 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07_dplyr.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Six verbs for data transformation</span></span></a>
@@ -232,7 +214,7 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
@@ -241,8 +223,8 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_plot_amount.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Visualizing Amount</span></span></a>
@@ -274,7 +256,7 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./14_plot_others.html" class="sidebar-item-text sidebar-link">
+  <a href="./14_plot_others.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Other Types of Plots</span></span></a>
   </div>
 </li>
@@ -285,22 +267,29 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
   </div>
 </li>
       </ul>
-</li>
+  </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#why-correlation-is-not-causation" id="toc-why-correlation-is-not-causation" class="nav-link active" data-scroll-target="#why-correlation-is-not-causation"><strong>Why Correlation is NOT Causation</strong></a></li>
-  <li><a href="#keeping-up-with-the-new-york-times" id="toc-keeping-up-with-the-new-york-times" class="nav-link" data-scroll-target="#keeping-up-with-the-new-york-times">Keeping up with the New York Times</a></li>
-  </ul></nav>
+  <li><a href="#network-plots" id="toc-network-plots" class="nav-link active" data-scroll-target="#network-plots"><span class="header-section-number">14.1</span> Network plots</a></li>
+  <li><a href="#phylogenetic-trees" id="toc-phylogenetic-trees" class="nav-link" data-scroll-target="#phylogenetic-trees"><span class="header-section-number">14.2</span> Phylogenetic trees</a></li>
+  <li><a href="#spatial-data" id="toc-spatial-data" class="nav-link" data-scroll-target="#spatial-data"><span class="header-section-number">14.3</span> Spatial data</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_ggplot_basic.html">Grammar of Graphics</a></li><li class="breadcrumb-item"><a href="./PSet1.html">PSet 1</a></li></ol></nav><div class="quarto-title">
-<h1 class="title">PSet 1</h1>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_plot_amount.html">Visualization by Type</a></li><li class="breadcrumb-item"><a href="./14_plot_others.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Other Types of Plots</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Other Types of Plots</span></h1>
 </div>
 
 
@@ -314,167 +303,27 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
   
 
 
-</header><p>Hello there! Welcome to your first PSet. This time, we’re going to use your R plotting skills to make your data visualizations <em>pop</em>.</p>
-<ul>
-<li>
-<strong>Your Mission</strong>: Produce 2 stylish, publication-ready figures using <strong>ggplot2</strong> and its many add-on packages.</li>
-<li>
-<strong>You’ll submit</strong>:
-<ul>
-<li>Your R scripts.</li>
-<li>The exported images of your plots (PDF AND PNG).</li>
-</ul>
-</li>
-<li>
-<strong>Deadline</strong>: Feb 2nd, 2025</li>
-</ul>
-<p>So, get your creativity (and code) fired up. Let’s begin!</p>
-<section id="why-correlation-is-not-causation" class="level2"><h2 class="anchored" data-anchor-id="why-correlation-is-not-causation"><strong>Why Correlation is NOT Causation</strong></h2>
-<p>We’ve all heard it a thousand times: <em>Correlation does not imply causation</em>. A great example is that nations which consume more chocolate per capita tend to have more Nobel Prize winners per 10 million citizens. I highly doubt if any doctor would advise you that eating more chocolate is your ticket to Stockholm.</p>
-<p>The data for chocolate consumption (<code>Chocolate</code>) and the number of Nobel laureates (<code>Nobel</code>) in various countries is here:</p>
-<div class="cell">
-<div class="sourceCode" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data_nobel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"http://clsong.com/assets/class_data/data_nobel.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>We could do a quick scatter plot to see the relationship between the two variables:</p>
-<div class="cell">
-<div class="sourceCode" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">data_nobel</span>,</span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Chocolate</span>, y <span class="op">=</span> <span class="va">Nobel</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="PSet1_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>This quick plot is, well, meh. It’s not something you’d proudly show in your paper or presentation. For example, in the original paper that published this result, the figure looked much better:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="img/Pset1_nobel.jpg" class="img-fluid figure-img"></p>
-<figcaption>Messerli, F. H. (2012). Chocolate consumption, cognitive function, and nobel laureates. New England Journal of Medicine</figcaption></figure>
-</div>
-<p>Let’s transform the quick plot into something more publication-ready. Specifically, your plot <strong>must</strong> include:</p>
-<ul>
-<li>A Title that clearly shows the message of the plot.</li>
-<li>Country flags instead of points.</li>
-<li>A correlation coefficient on the plot.</li>
-<li>Readable text sizes. Make sure axis labels, titles, etc., are big enough to see clearly.</li>
-</ul>
-<p>Of course, you can do so much more than that. Explore and be creative!</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Helpful tools
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>We did not cover everything in the class, but it is easy to learn new ggplot2 tricks. Below are some potentially useful resources:</p>
-<ul>
-<li>How to add country flags? You can use the geom from <code><a href="https://rdrr.io/pkg/ggflags/man/geom_flag.html">ggflags::geom_flag()</a></code> to do this. The <code>Flag</code> column in the data contains the country codes. So it would be something like <code>ggflags::geom_flag(aes(country = Flag))</code>.</li>
-<li>How to add a correlation coefficient to the plot? You can use the <code><a href="https://rpkgs.datanovia.com/ggpubr/reference/stat_cor.html">ggpubr::stat_cor()</a></code> package to do this.</li>
-<li>How to indicate the data source? To give due credit to the original author of the data, you can use the <code>caption</code> argument in the <code><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs()</a></code> function.</li>
-<li>(Optional) add the country names to the plot. You can use the <code><a href="https://ggrepel.slowkow.com/reference/geom_text_repel.html">ggrepel::geom_text_repel()</a></code> function to do this.</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-My example plot
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>As one example, below is a figure that I created using the <code>hrbrthemes</code> package. This is just some reference to help you navigate. I am looking forward to losing to you.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="PSet1_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section><section id="keeping-up-with-the-new-york-times" class="level2"><h2 class="anchored" data-anchor-id="keeping-up-with-the-new-york-times">Keeping up with the New York Times</h2>
-<p>The New York Times often publishes elegant data visualizations. In this problem, we’ll mimic one of their COVID-19 vaccination rate vs.&nbsp;GDP charts. Their graph is below:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="img/Pset1_NYT.png" class="img-fluid figure-img"></p>
-<figcaption>From <a href="https://www.nytimes.com/2022/01/06/learning/whats-going-on-in-this-graph-jan-12-2022.html">New York Times</a></figcaption></figure>
-</div>
-<p>We’ll use a smaller dataset that approximates what they used. Even if it’s not the exact same dataset, the design principles remain the same. To load the data into your R environment, run the following code:</p>
-<div class="cell">
-<div class="sourceCode" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data_nyt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"http://clsong.com/assets/class_data/data_nyt.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>In this problem, please build an NYT-style plot for this plot. You can add more features to make your plot more informative and visually appealing, but it needs to have at least the following requirement:</p>
-<ul>
-<li>Because GDP spans large orders of magnitude, the x-axis should be in log scale.</li>
-<li>Distinguish points by continent (instead of the income group in the original figure).</li>
-<li>We want bigger bubbles for more populous countries.</li>
-<li>Customized color/fill palette. Don’t just rely on default color scales. Find a palette you like.</li>
-<li>Add the <code>$</code> logo on the x-axis.</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Helpful tools
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<ul>
-<li>As we mentioned, x axis is also an aes, so it is also controlled by <code>scale_*()</code>. Google or ask ChatGPT how to do this.</li>
-<li>You can use the <code><a href="https://scales.r-lib.org/reference/label_currency.html">scales::label_currency()</a></code> function to format the axis labels.</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-My example plot
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Again, just for refernece purpose. I am looking forward to seeing your more creative and informative plots.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="PSet1_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="768"></p>
-</figure>
-</div>
-</div>
-</div>
+</header>
 
 
-</div>
-</div>
-</div>
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+<p>In addition to the most common plots we’ve covered so far, many specialized plot types can be extremely useful depending on your research focus. While these plots may not be applicable to every project, they offer powerful ways to visualize complex data in specific fields.</p>
+<section id="network-plots" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="network-plots"><span class="header-section-number">14.1</span> Network plots</h2>
+<p>Networks are increasingly common. For example, ecological networks. With the power of the <code>tidygraph</code> package to structure your data and <code>ggraph</code> to render it beautifully, you can create visualizations that are both informative and striking. For a look at what’s possible, check out these impressive examples <a href="https://www.data-imaginist.com/posts/2024-02-15-ggraph-2-2-0/">here</a>.</p>
+</section>
+<section id="phylogenetic-trees" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="phylogenetic-trees"><span class="header-section-number">14.2</span> Phylogenetic trees</h2>
+<p>For researchers in evolutionary biology, phylogenetic trees are essential for illustrating evolutionary relationships. The ggtree package simplifies the process of creating detailed and informative trees. To see examples and learn more about its capabilities, visit <a href="https://yulab-smu.top/treedata-book/index.html">here</a>.</p>
+</section>
+<section id="spatial-data" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="spatial-data"><span class="header-section-number">14.3</span> Spatial data</h2>
+<p>Spatial data visualization is both challenging and rewarding. By combining spatial data with <code>ggplot2</code> (often alongside the <code>sf</code> package for handling spatial data), you can create beautiful maps and geospatial plots. Spatial visualizations often provide visually striking representations of data. Check out some outstanding examples <a href="https://r-graph-gallery.com/best-r-chart-examples.html">here</a>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -929,18 +778,21 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./06_good_plots.html" class="pagination-link" aria-label="First Publication-Ready Figure">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">First Publication-Ready Figure</span></span>
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./13_plot_association.html" class="pagination-link" aria-label="Visualizing Association">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Visualizing Association</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./07_dplyr.html" class="pagination-link" aria-label="Six verbs for data transformation">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Six verbs for data transformation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./15_color.html" class="pagination-link" aria-label="Choosing Colors">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Choosing Colors</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

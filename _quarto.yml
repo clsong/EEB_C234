@@ -40,6 +40,8 @@ book:
         - PSet2.qmd
         - 12_plot_trend.qmd
         - 13_plot_association.qmd
+        - 14_plot_others.qmd
+        - 15_color.qmd
     # - part: "Functional Programming"
     #   chapters:
     #     - 12_hierarchical.qmd

@@ -1,0 +1,17 @@
+# Other Types of Plots
+
+In addition to the most common plots we've covered so far, many specialized plot types can be extremely useful depending on your research focus. While these plots may not be applicable to every project, they offer powerful ways to visualize complex data in specific fields.
+
+## Network plots
+
+Networks are increasingly common. For example, ecological networks. With the power of the `tidygraph` package to structure your data and `ggraph` to render it beautifully, you can create visualizations that are both informative and striking. For a look at what’s possible, check out these impressive examples [here](https://www.data-imaginist.com/posts/2024-02-15-ggraph-2-2-0/).
+
+## Phylogenetic trees
+
+For researchers in evolutionary biology, phylogenetic trees are essential for illustrating evolutionary relationships. The ggtree package simplifies the process of creating detailed and informative trees. To see examples and learn more about its capabilities, visit [here](https://yulab-smu.top/treedata-book/index.html).
+
+## Spatial data
+
+Spatial data visualization is both challenging and rewarding. By combining spatial data with `ggplot2` (often alongside the `sf` package for handling spatial data), you can create beautiful maps and geospatial plots. Spatial visualizations often provide visually striking representations of data. Check out some outstanding examples [here](https://r-graph-gallery.com/best-r-chart-examples.html).
+
+

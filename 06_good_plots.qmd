@@ -316,7 +316,7 @@ ggplot(
 
 Now, points are distinguishable by both color and shape. Voilà!
 
-## Change the Color/Fill Palette
+## Change the Color/Fill Palette {#sec-color-choice}
 If you are unhappy with the default color palette, you can change it. Here, we use the `scale_fill_manual()` function to specify the fill color of each species:
 ```{r}
 #| warning: false

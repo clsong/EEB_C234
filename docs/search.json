@@ -860,5 +860,82 @@
       "Visualization by Type",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Visualizing Association</span>"
     ]
+  },
+  {
+    "objectID": "14_plot_others.html",
+    "href": "14_plot_others.html",
+    "title": "14  Other Types of Plots",
+    "section": "",
+    "text": "14.1 Network plots\nIn addition to the most common plots we’ve covered so far, many specialized plot types can be extremely useful depending on your research focus. While these plots may not be applicable to every project, they offer powerful ways to visualize complex data in specific fields.\nNetworks are increasingly common. For example, ecological networks. With the power of the tidygraph package to structure your data and ggraph to render it beautifully, you can create visualizations that are both informative and striking. For a look at what’s possible, check out these impressive examples here.",
+    "crumbs": [
+      "Visualization by Type",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Other Types of Plots</span>"
+    ]
+  },
+  {
+    "objectID": "14_plot_others.html#phylogenetic-trees",
+    "href": "14_plot_others.html#phylogenetic-trees",
+    "title": "14  Other Types of Plots",
+    "section": "14.2 Phylogenetic trees",
+    "text": "14.2 Phylogenetic trees\nFor researchers in evolutionary biology, phylogenetic trees are essential for illustrating evolutionary relationships. The ggtree package simplifies the process of creating detailed and informative trees. To see examples and learn more about its capabilities, visit here.",
+    "crumbs": [
+      "Visualization by Type",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Other Types of Plots</span>"
+    ]
+  },
+  {
+    "objectID": "14_plot_others.html#spatial-data",
+    "href": "14_plot_others.html#spatial-data",
+    "title": "14  Other Types of Plots",
+    "section": "14.3 Spatial data",
+    "text": "14.3 Spatial data\nSpatial data visualization is both challenging and rewarding. By combining spatial data with ggplot2 (often alongside the sf package for handling spatial data), you can create beautiful maps and geospatial plots. Spatial visualizations often provide visually striking representations of data. Check out some outstanding examples here.",
+    "crumbs": [
+      "Visualization by Type",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Other Types of Plots</span>"
+    ]
+  },
+  {
+    "objectID": "15_color.html",
+    "href": "15_color.html",
+    "title": "\n15  Choosing Colors\n",
+    "section": "",
+    "text": "15.1 What to consider?\nEffective use of color in data visualization is crucial for communicating your message clearly. However, color is inherently subjective—it varies by person, culture, and even across generations. While no single “perfect” color scheme exists, following some general guidelines can help you create more readable, appealing, and accessible graphics.\nAs mentioned in Chapter 6, you can have a lot of fun with choosing color palettes (e.g., MetBrewer). However, there are caveats you need to be aware of.\nFirst thing, before selecting a color palette, determine the nature of the variable you want to display. In general, you can classify variables into three categories:\nAdditionally, whenever possible, always verify that your plot is color-blind friendly. Many modern palettes are designed to be distinguishable for viewers with common forms of color vision deficiency. It is a more nuanced topic, so I will not go into detail here. But if you are interested, you can read more here.",
+    "crumbs": [
+      "Visualization by Type",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Choosing Colors</span>"
+    ]
+  },
+  {
+    "objectID": "15_color.html#what-to-consider",
+    "href": "15_color.html#what-to-consider",
+    "title": "\n15  Choosing Colors\n",
+    "section": "",
+    "text": "Qualitative (discrete) variables: Use distinct colors for each category.\n\nContinuous sequential variables: For variables with an inherent order, choose a palette that represents a gradual change.\n\n\nSingle Hue: Same color but variations in lightness and saturation.\n\nMulti Hue: Transitioning between hues to indicate progression.\n\n\n\nContinuous divergent variables: Use two contrasting hues that meet in a neutral middle value. This is ideal when your data diverges around a critical midpoint (e.g., zero).",
+    "crumbs": [
+      "Visualization by Type",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Choosing Colors</span>"
+    ]
+  },
+  {
+    "objectID": "15_color.html#my-go-to-solution-the-colorspace-package",
+    "href": "15_color.html#my-go-to-solution-the-colorspace-package",
+    "title": "\n15  Choosing Colors\n",
+    "section": "\n15.2 My Go-To Solution: The colorspace Package",
+    "text": "15.2 My Go-To Solution: The colorspace Package\nBased on these considerations, my preferred tool is the colorspace package. It provides a unified and flexible interface to generate color palettes tailored to the type of data you are visualizing.\nFor example, consider the following code that uses colorspace to create a scatterplot of penguins data:\n\nlibrary(tidyverse)\nlibrary(colorspace)\nlibrary(palmerpenguins)\n\npenguins |&gt;\n    ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +\n    geom_point() +\n    scale_fill_discrete_qualitative() +\n    jtools::theme_nice()\n\n\n\n\n\n\n\nThe color scale function–scale_color_discrete_qualitative()–is part of the colorspace package. Its naming convention follows the structure:\n\nscale_&lt;aesthetic&gt;_&lt;datatype&gt;_&lt;colorscale&gt;()\n\n\n\n&lt;aesthetic&gt;: The visual attribute (e.g., color or fill).\n\n&lt;datatype&gt;: The type of data (e.g., discrete for qualitative data).\n\n&lt;colorscale&gt;: The palette type (e.g., qualitative, sequential, diverging).\n\n\n\n\n\n\n\nDON’T use the rainbow color palette.\n\n\n\n\n\nAlthough visually striking, rainbow palettes can distort data interpretation because the perception of colors is non-linear and may mislead the viewer.\n\n\n\n\n\n\n\n\n\nUse viridis package for continuous sequential variables.\n\n\n\n\n\nAnother popular package is viridis package, which offers excellent color palettes. As an example,\n\n\nFrom https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html\n\nHowever, it is mainly optimized for continuous sequential variables and might not be as flexible as colorspace for all types of data.",
+    "crumbs": [
+      "Visualization by Type",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Choosing Colors</span>"
+    ]
+  },
+  {
+    "objectID": "15_color.html#additional-useful-resources",
+    "href": "15_color.html#additional-useful-resources",
+    "title": "\n15  Choosing Colors\n",
+    "section": "\n15.3 Additional Useful Resources",
+    "text": "15.3 Additional Useful Resources\n\n\ncolor-palette-finder: An interactive tool to help you choose the right color palette for your visualization.\n\n配色事典: A visually rich resource with a wide range of palettes. I like having a physical copy when choosing colors.\n\nTraditional colors: A collection of traditional colors used in China and Japan.",
+    "crumbs": [
+      "Visualization by Type",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Choosing Colors</span>"
+    ]
   }
 ]
