@@ -6,13 +6,115 @@ Effective use of color in data visualization is crucial for communicating your m
 
 As mentioned in Chapter 6, you can have a lot of fun with choosing color palettes (e.g., [MetBrewer](https://github.com/BlakeRMills/MetBrewer)). However, there are caveats you need to be aware of.
 
-First thing, before selecting a color palette, determine the nature of the variable you want to display. In general, you can classify variables into three categories:
+First thing, before selecting a color palette, determine the nature of the variable you want to display. In general, there are four categories:
 
-1. **Qualitative (discrete) variables**: Use distinct colors for each category.
-2. **Continuous sequential variables**: For variables with an inherent order, choose a palette that represents a gradual change.
-   - **Single Hue**: Same color but variations in lightness and saturation.
-   - **Multi Hue**: Transitioning between hues to indicate progression.
-3. **Continuous divergent variables**: Use two contrasting hues that meet in a neutral middle value. This is ideal when your data diverges around a critical midpoint (e.g., zero).
+::: {.panel-tabset}
+## Qualitative (discrete) variables
+
+Use distinct colors for each category. For example, we just want to use the color to distinguish the species of penguins.
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
+#| code-summary: "Show the code"
+library(tidyverse)
+library(palmerpenguins)
+library(colorspace)
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, fill = species)) +
+    geom_point(shape = 21, color = "white", alpha = 0.5, size = 3) +
+    scale_fill_discrete_qualitative() +
+    labs(x = "Bill Length (mm)", y = "Bill Depth (mm)") +
+    jtools::theme_nice() +
+    theme(legend.position = "top")
+```
+
+## Continuous sequential variables (Single Hue)
+
+For variables with an inherent order, choose a palette that represents a gradual change. For example, we want to use the color to indicate the body mass of penguins.
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
+#| code-summary: "Show the code"
+library(tidyverse)
+library(palmerpenguins)
+library(colorspace)
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, fill = body_mass_g)) +
+    geom_point(shape = 21, color = "white", alpha = 0.7, size = 3) +
+    scale_fill_continuous_sequential() +
+    labs(x = "Bill Length (mm)", y = "Bill Depth (mm)") +
+    jtools::theme_nice() +
+    theme(legend.position = "top")
+```
+
+## Continuous sequential variables (Multi Hue)
+
+Transitioning between hues to indicate progression. For example, we want to use the color class to show the species, and then the color varariton within the same class to show the body mass.
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
+#| code-summary: "Show the code"
+library(tidyverse)
+library(palmerpenguins)
+library(colorspace)
+library(ggnewscale)
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
+    geom_point(
+        data = filter(penguins, species == "Chinstrap"), 
+        aes(fill = body_mass_g),
+        shape = 21, color = "white", alpha = 0.8, size = 3
+    ) +
+    scale_fill_continuous_sequential(palette = "Purples 3", name = "Chinstrap") +
+    ggnewscale::new_scale_fill() +
+    geom_point(
+        data = filter(penguins, species == "Adelie"), 
+        aes(fill = body_mass_g),
+        shape = 21, color = "white", alpha = 0.8, size = 3
+    ) +
+    scale_fill_continuous_sequential(palette = "Blues 3", name = "Adelie") +
+    ggnewscale::new_scale_fill() +
+    geom_point(
+        data = filter(penguins, species == "Gentoo"), 
+        aes(fill = body_mass_g),
+        shape = 21, color = "white", alpha = 0.8, size = 3
+    ) +
+    scale_fill_continuous_sequential(palette = "Greens 3", name = "Gentoo") +
+    labs(x = "Bill Length (mm)", y = "Bill Depth (mm)") +
+    jtools::theme_nice() +
+    theme(legend.position = "top")
+```
+
+## Continuous divergent variables
+
+Use two contrasting hues that meet in a neutral middle value. This is ideal when your data diverges around a critical midpoint (e.g., zero). 
+
+For example, we want to show if the penguins are above or below the average body mass.
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
+#| code-summary: "Show the code"
+
+library(tidyverse)
+library(palmerpenguins)
+library(colorspace)
+
+penguins |>
+    mutate(body_mass_g = (body_mass_g - mean(body_mass_g, na.rm = TRUE))/sd(body_mass_g, na.rm = TRUE)) |>
+    ggplot(aes(x = bill_length_mm, y = bill_depth_mm, fill = body_mass_g)) +
+    geom_point(alpha = 0.8, size = 3, shape = 21, color = "white") +
+    scale_fill_continuous_diverging(name = "Standardized Body Mass") +
+    labs(x = "Bill Length (mm)", y = "Bill Depth (mm)") +
+    jtools::theme_nice() +
+    theme(legend.position = "top")
+```
+
+:::
 
 Additionally, whenever possible, always verify that your plot is color-blind friendly. Many modern palettes are designed to be distinguishable for viewers with common forms of color vision deficiency. It is a more nuanced topic, so I will not go into detail here. But if you are interested, you can read more [here](https://markusmeister.com/2021/07/26/figure-design-for-colorblind-readers-is-outdated/). 
 
@@ -69,4 +171,5 @@ However, it is mainly optimized for continuous sequential variables and might no
 - [color-palette-finder](https://r-graph-gallery.com/color-palette-finder): An interactive tool to help you choose the right color palette for your visualization.
 - [配色事典](https://moom.cat/tw/item/a-dictionary-of-color-combinations-2-volume-set): A visually rich resource with a wide range of palettes. I like having a physical copy when choosing colors.
 - [Traditional colors](https://color-term.com/): A collection of traditional colors used in China and Japan.
+- [ColorPick Eye Dropper](https://chromewebstore.google.com/detail/colorpick-eyedropper/ohcpnigalekghcmgcdcenkpelffpdolg?hl=en): A tool in Chrome that allows you to pick colors from any image and convert them to HEX code.
 

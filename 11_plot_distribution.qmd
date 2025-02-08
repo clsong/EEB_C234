@@ -1,7 +1,7 @@
 # Visualizing Distribution
 
 ::: {.callout-note}
-## Class Objectives: Visualizing distribution
+## Class Objectives: 
 1. Distribution of a _single_ variable
 2. Distribution of _multiple_ variables
 3. Distribution of a variable across _multiple groups_

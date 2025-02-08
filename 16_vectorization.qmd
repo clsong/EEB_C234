@@ -1,0 +1,284 @@
+# Vectorization
+
+You might have noticed we haven't talked about loops so far.  This is quite atypical for a programming course. In most courses, loops are introduced early and used throughout the course. 
+
+This choice is intentional. In data science (and especially in R with the tidyverse), we lean heavily on **vectorization**. Rather than painstakingly iterating over each element with loops, vectorized functions let you operate on whole groups of data at once. The result? Code that’s cleaner, faster, and less prone to bugs.
+
+Before diving into examples, as usual, let’s load our libraries first:
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(tidylog)
+```
+
+## A Simple Example: Adding Vectors
+
+Vectorization might sound like a fancy buzzword, but you’ve been using it all along! Let’s start with a classic: adding two vectors element-by-element.
+
+::: {.panel-tabset}
+
+## Vectorized Approach
+When you add two vectors in R using the `+` operator, R automatically performs the addition element-by-element.
+
+```{r}
+x <- c(1, 2, 3) # <1>
+y <- c(4, 5, 6) # <2>
+x + y
+```
+1. create a vector `x` with elements 1, 2, 3.
+2. create a vector `y` with elements 4, 5, 6.
+
+What happens under the hood? R takes the first element of `x` and adds it to the first element of `y`, the second with the second, and so on. Voilà!
+
+## Loop Approach (Not Recommended)
+Now, if you were to do the same thing using a loop, it might look like this:
+
+```{r}
+z <- c() # <1>
+for (i in 1:3) { # <2>
+    z[i] <- x[i] + y[i] # <3>
+}
+z
+```
+1. create an empty vector `z` to store the result.
+2. loop through each element.
+3. in each iteration, add the corresponding elements of `x` and `y` and store the result in `z[i]`.
+
+While this loop does the job, it’s more code and more room for errors—especially as your tasks grow more complex.
+
+:::
+
+### Exercise {-}
+
+Multiply two vectors element-by-element. Let `c <- c(2, 4, 6)` and `d <- c(3, 5, 7)`.
+
+::: {.panel-tabset}
+
+## Exercise
+
+```{webr}
+c <- c(2, 4, 6)
+d <- c(3, 5, 7)
+
+# Vectorized approach
+_ * _
+
+# Loop approach
+z <- c()
+for (i in 1:3) {
+    __________
+}
+z
+```
+
+## Solution
+
+```{webr}
+c <- c(2, 4, 6)
+d <- c(3, 5, 7)
+
+# Vectorized approach
+c * d
+
+# Loop approach
+z <- c()
+for (i in 1:3) {
+    z[i] <- c[i] * d[i]
+}
+z
+```
+
+:::
+
+## What Is Vectorization, Really?
+
+At its heart, vectorization means that a function automatically applies to each element of a vector:
+
+::: {.callout-important}
+
+## What is vectorized?
+
+Say we have a function `f()` and we pass a vector `x` to it. If `f()` is vectorized, it will apply `f()` to each element of `x` and return a vector of results: `f(x[1]), f(x[2]), ...`.
+
+:::
+
+Some common examples of vectorized functions in R include arithmetic operators like `+`, `-`, `*`, `/` and many functions like `sum()` and `mean()`.
+
+Vectorization isn’t just for simple vectors. To see it, we need to introduce the concept of **list**. A list in R is like a flexible vector that can hold different types of objects (numbers, characters, and even tibbles). For example,
+
+```{r}
+#| eval: false
+list(c(1), c(1,2), c(1,2,3)) # <1>
+list( # <2>
+    tibble(x = 1, y = 2), # <2>
+    tibble(x = 1, y = 3), # <2>
+    tibble(x = 1, y = 4) # <2>
+)  # <2>
+```
+1. A list of vectors.
+2. A list of tibbles.
+
+The vectorization applies to list as well: it will apply the function to each element of the list and return a list of results. This is to me the most important feature of programming in R. 
+
+## Beware the Pitfalls
+
+Sometimes, vectorization can lead to confusing or unexpected behavior—especially when functions behave differently depending on context.
+
+### Example: Automatic Vectorization {-}
+```{r}
+x <- c(1, 2, 3)
+x + 2
+```
+
+What’s happening here? R “recycles” the scalar 2 across the vector `x` and adds it to each element. Despite it seems convenient, this is actually a design flaw in R as it can lead to the worst type of bugs: code runs successfully, but gives you a wrong answer.
+
+::: {.callout-tip collapse="true"}
+## How modern languages handle this situation
+
+In more modern languages like Julia, the above code will throw an error, and you need to do 
+
+```{.julia execute=false}
+# Julia language 
+x = [1, 2, 3] # <1>
+x .+ 2 # <2>
+```
+1. create a vector `x` with elements 1, 2, 3.
+2. add 2 to each element of `x`.
+
+where `.` is a placeholder to indicate that `+` is a vectorized operation.
+:::
+
+### Example: Not Vectorized Function{-}
+However, sometimes the function is not vectorized. That is, the function `f(x)` is not applied to each element of the vector `x` but to the entire vector. This is too common a source of bugs in R. Why is this a problem? Doesn't the former gives a list of results while the latter gives a single result?
+
+To see why, consider a tibble with a column containing a list, where you want to compute the length of each list element:
+
+```{r}
+tibble(
+    x = list(c(1), c(1,2), c(1,2,3))
+) |> 
+    mutate(vec_length = length(x))
+```
+
+Uh-oh! Instead of calculating the length of each individual element, `length(x)` computes the length of the entire list-column. R then recycles that single result across all rows. Thus, the code runs successfully but gives you a wrong answer. 
+
+## Fixing Issues with `rowwise()`
+
+The solution? `rowwise()`. This function treats each row as its own group, ensuring that operations inside `mutate()` are applied individually. In other words, it will _always_apply the operation to each row of the tibble.
+
+```{r}
+tibble(
+    x = list(c(1), c(1,2), c(1,2,3))
+)  |> 
+    rowwise()  |> 
+    mutate(vec_length = length(x))  |> 
+    ungroup()
+```
+
+As you can see, `vec_length` is now correctly computed the length of each vector. 
+
+Note: Don't forget to `ungroup()` after `rowwise()`. As a rule of thumb, you should always `ungroup()` after grouping operations (`rowwise()` is a type of grouping operation!).
+
+### Exercise {-}
+
+For a tibble with a list-column containing numeric vectors, add a column that contains the sum of each inner vector.
+
+::: {.panel-tabset}
+
+## Exercise
+
+```{webr}
+tibble(
+    values = list(c(1, 2), c(3, 4, 5), c(6))
+) |> 
+    __________ |> 
+    __________
+```
+
+## Solution
+
+```{webr}
+tibble(
+    values = list(c(1, 2), c(3, 4, 5), c(6))
+)  |> 
+    rowwise()  |> 
+    mutate(sum_values = sum(values))  |> 
+    ungroup()
+```
+:::
+
+## Nested Data and `rowwise()`
+
+### Example: Mean Bill Length for Each Species
+
+To see the full power of `rowwise()`, let's consider a more complicated example. Suppose we want to compute the mean of bill length for each species in the `penguins` dataset. We will take two steps:
+
+1. Nest the Data by Species
+
+```{r}
+#| message: false
+library(palmerpenguins)
+
+penguins_nested <- penguins  |> 
+    group_by(species)  |> 
+    nest()
+
+penguins_nested
+```
+
+Now each row represents a species, and the data column holds a tibble with the details for that species.
+
+2. Compute the Mean Bill Length
+
+```{r}
+penguins_nested  |> 
+    rowwise()  |> 
+    mutate(mean_bill_length = mean(data$bill_length_mm, na.rm = TRUE))
+```
+You might wonder, “Why not just use `group_by()` and `summarize()`?” And you’re right—this simple summary could be done that way:
+
+```{r}
+penguins  |> 
+    group_by(species)  |> 
+    summarize(mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
+```
+
+### Example: Linear Regression for Each Species
+
+But when things get more complex—say you want to run a linear regression for each species—`rowwise()` combined with nesting gives you the extra flexibility you need:
+
+```{r}
+library(palmerpenguins)
+
+penguins  |> 
+    group_by(species)  |> 
+    nest()  |> 
+    rowwise()  |> 
+    mutate(
+        regression = list(lm(bill_length_mm ~ bill_depth_mm, data = data))
+    )  |> # <1>
+    mutate(
+        r_squared = summary(regression)$r.squared
+    )  # <2>
+```
+1. create a list of regression models.
+2. create a column with the R-squared value.
+
+Note that we use `list()` to store the model. This is because `lm()` returns a model, which is not a vector.
+
+In sum, `group_by()` + `summarize()` is great for simple operations, while `nest()` + `rowwise()` is more flexible and can handle more complicated operations.
+
+## So, Why Avoid Loops?
+
+Vectorization is a game changer in R. To summarize, vectorized code is better than loops because:
+
+- Readability: You focus on what you want to compute rather than how to iterate.
+- Performance: R optimizes vectorized operations, making your code run faster.
+- Fewer Bugs: No manual index tracking means fewer chances for off-by-one errors or other loop-related bugs.
+
+When you write a loop, you’re busy managing an index—something that, in a vectorized approach, is completely abstracted away. The real computation is what matters, and vectorization lets you concentrate on that.
+
+> “Complicated control flows confuse programmers. Messy code often hides bugs.”
+>— Bjarne Stroustrup

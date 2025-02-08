@@ -42,10 +42,11 @@ book:
         - 13_plot_association.qmd
         - 14_plot_others.qmd
         - 15_color.qmd
-    # - part: "Functional Programming"
-    #   chapters:
-    #     - 12_hierarchical.qmd
-    #     - 13_purrr.qmd
+    - part: "Functional Programming"
+      chapters:
+        - 16_vectorization.qmd
+        # - 17_functional_programming.qmd
+        # - 18_purrr.qmd
     #     - PSet3.qmd
     #- part: "Advanced Visualization"
     # - part: "Reproducible Research"

@@ -1,5 +1,12 @@
 # Visualizing Amount
 
+::: {.callout-note}
+## Class Objectives:
+1. Effective use of bar plots
+2. Variations of bar plots
+3. Multiple categories
+:::
+
 Visualizing amounts is a foundational task in data analysis. This tutorial covers best practices, common tools, and key considerations for effective visualizations.
 
 Below we start, as always, let us load the packages we need:

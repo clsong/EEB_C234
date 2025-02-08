@@ -899,7 +899,7 @@
     "href": "15_color.html",
     "title": "\n15  Choosing Colors\n",
     "section": "",
-    "text": "15.1 What to consider?\nEffective use of color in data visualization is crucial for communicating your message clearly. However, color is inherently subjective—it varies by person, culture, and even across generations. While no single “perfect” color scheme exists, following some general guidelines can help you create more readable, appealing, and accessible graphics.\nAs mentioned in Chapter 6, you can have a lot of fun with choosing color palettes (e.g., MetBrewer). However, there are caveats you need to be aware of.\nFirst thing, before selecting a color palette, determine the nature of the variable you want to display. In general, you can classify variables into three categories:\nAdditionally, whenever possible, always verify that your plot is color-blind friendly. Many modern palettes are designed to be distinguishable for viewers with common forms of color vision deficiency. It is a more nuanced topic, so I will not go into detail here. But if you are interested, you can read more here.",
+    "text": "15.1 What to consider?\nEffective use of color in data visualization is crucial for communicating your message clearly. However, color is inherently subjective—it varies by person, culture, and even across generations. While no single “perfect” color scheme exists, following some general guidelines can help you create more readable, appealing, and accessible graphics.\nAs mentioned in Chapter 6, you can have a lot of fun with choosing color palettes (e.g., MetBrewer). However, there are caveats you need to be aware of.\nFirst thing, before selecting a color palette, determine the nature of the variable you want to display. In general, there are four categories:\nAdditionally, whenever possible, always verify that your plot is color-blind friendly. Many modern palettes are designed to be distinguishable for viewers with common forms of color vision deficiency. It is a more nuanced topic, so I will not go into detail here. But if you are interested, you can read more here.",
     "crumbs": [
       "Visualization by Type",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Choosing Colors</span>"
@@ -910,7 +910,7 @@
     "href": "15_color.html#what-to-consider",
     "title": "\n15  Choosing Colors\n",
     "section": "",
-    "text": "Qualitative (discrete) variables: Use distinct colors for each category.\n\nContinuous sequential variables: For variables with an inherent order, choose a palette that represents a gradual change.\n\n\nSingle Hue: Same color but variations in lightness and saturation.\n\nMulti Hue: Transitioning between hues to indicate progression.\n\n\n\nContinuous divergent variables: Use two contrasting hues that meet in a neutral middle value. This is ideal when your data diverges around a critical midpoint (e.g., zero).",
+    "text": "Qualitative (discrete) variables\nContinuous sequential variables (Single Hue)\nContinuous sequential variables (Multi Hue)\nContinuous divergent variables\n\n\n\nUse distinct colors for each category. For example, we just want to use the color to distinguish the species of penguins.\n\nShow the codelibrary(tidyverse)\nlibrary(palmerpenguins)\nlibrary(colorspace)\nggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, fill = species)) +\n    geom_point(shape = 21, color = \"white\", alpha = 0.5, size = 3) +\n    scale_fill_discrete_qualitative() +\n    labs(x = \"Bill Length (mm)\", y = \"Bill Depth (mm)\") +\n    jtools::theme_nice() +\n    theme(legend.position = \"top\")\n\n\n\n\n\n\n\n\n\nFor variables with an inherent order, choose a palette that represents a gradual change. For example, we want to use the color to indicate the body mass of penguins.\n\nShow the codelibrary(tidyverse)\nlibrary(palmerpenguins)\nlibrary(colorspace)\nggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, fill = body_mass_g)) +\n    geom_point(shape = 21, color = \"white\", alpha = 0.7, size = 3) +\n    scale_fill_continuous_sequential() +\n    labs(x = \"Bill Length (mm)\", y = \"Bill Depth (mm)\") +\n    jtools::theme_nice() +\n    theme(legend.position = \"top\")\n\n\n\n\n\n\n\n\n\nTransitioning between hues to indicate progression. For example, we want to use the color class to show the species, and then the color varariton within the same class to show the body mass.\n\nShow the codelibrary(tidyverse)\nlibrary(palmerpenguins)\nlibrary(colorspace)\nlibrary(ggnewscale)\nggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +\n    geom_point(\n        data = filter(penguins, species == \"Chinstrap\"), \n        aes(fill = body_mass_g),\n        shape = 21, color = \"white\", alpha = 0.8, size = 3\n    ) +\n    scale_fill_continuous_sequential(palette = \"Purples 3\", name = \"Chinstrap\") +\n    ggnewscale::new_scale_fill() +\n    geom_point(\n        data = filter(penguins, species == \"Adelie\"), \n        aes(fill = body_mass_g),\n        shape = 21, color = \"white\", alpha = 0.8, size = 3\n    ) +\n    scale_fill_continuous_sequential(palette = \"Blues 3\", name = \"Adelie\") +\n    ggnewscale::new_scale_fill() +\n    geom_point(\n        data = filter(penguins, species == \"Gentoo\"), \n        aes(fill = body_mass_g),\n        shape = 21, color = \"white\", alpha = 0.8, size = 3\n    ) +\n    scale_fill_continuous_sequential(palette = \"Greens 3\", name = \"Gentoo\") +\n    labs(x = \"Bill Length (mm)\", y = \"Bill Depth (mm)\") +\n    jtools::theme_nice() +\n    theme(legend.position = \"top\")\n\n\n\n\n\n\n\n\n\nUse two contrasting hues that meet in a neutral middle value. This is ideal when your data diverges around a critical midpoint (e.g., zero).\nFor example, we want to show if the penguins are above or below the average body mass.\n\nShow the codelibrary(tidyverse)\nlibrary(palmerpenguins)\nlibrary(colorspace)\n\npenguins |&gt;\n    mutate(body_mass_g = (body_mass_g - mean(body_mass_g, na.rm = TRUE))/sd(body_mass_g, na.rm = TRUE)) |&gt;\n    ggplot(aes(x = bill_length_mm, y = bill_depth_mm, fill = body_mass_g)) +\n    geom_point(alpha = 0.8, size = 3, shape = 21, color = \"white\") +\n    scale_fill_continuous_diverging(name = \"Standardized Body Mass\") +\n    labs(x = \"Bill Length (mm)\", y = \"Bill Depth (mm)\") +\n    jtools::theme_nice() +\n    theme(legend.position = \"top\")",
     "crumbs": [
       "Visualization by Type",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Choosing Colors</span>"
@@ -932,10 +932,87 @@
     "href": "15_color.html#additional-useful-resources",
     "title": "\n15  Choosing Colors\n",
     "section": "\n15.3 Additional Useful Resources",
-    "text": "15.3 Additional Useful Resources\n\n\ncolor-palette-finder: An interactive tool to help you choose the right color palette for your visualization.\n\n配色事典: A visually rich resource with a wide range of palettes. I like having a physical copy when choosing colors.\n\nTraditional colors: A collection of traditional colors used in China and Japan.",
+    "text": "15.3 Additional Useful Resources\n\n\ncolor-palette-finder: An interactive tool to help you choose the right color palette for your visualization.\n\n配色事典: A visually rich resource with a wide range of palettes. I like having a physical copy when choosing colors.\n\nTraditional colors: A collection of traditional colors used in China and Japan.\n\nColorPick Eye Dropper: A tool in Chrome that allows you to pick colors from any image and convert them to HEX code.",
     "crumbs": [
       "Visualization by Type",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Choosing Colors</span>"
+    ]
+  },
+  {
+    "objectID": "16_vectorization.html",
+    "href": "16_vectorization.html",
+    "title": "16  Vectorization",
+    "section": "",
+    "text": "16.1 A Simple Example: Adding Vectors\nYou might have noticed we haven’t talked about loops so far. This is quite atypical for a programming course. In most courses, loops are introduced early and used throughout the course.\nThis choice is intentional. In data science (and especially in R with the tidyverse), we lean heavily on vectorization. Rather than painstakingly iterating over each element with loops, vectorized functions let you operate on whole groups of data at once. The result? Code that’s cleaner, faster, and less prone to bugs.\nBefore diving into examples, as usual, let’s load our libraries first:\nVectorization might sound like a fancy buzzword, but you’ve been using it all along! Let’s start with a classic: adding two vectors element-by-element.",
+    "crumbs": [
+      "Functional Programming",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Vectorization</span>"
+    ]
+  },
+  {
+    "objectID": "16_vectorization.html#a-simple-example-adding-vectors",
+    "href": "16_vectorization.html#a-simple-example-adding-vectors",
+    "title": "16  Vectorization",
+    "section": "",
+    "text": "Vectorized ApproachLoop Approach (Not Recommended)\n\n\nWhen you add two vectors in R using the + operator, R automatically performs the addition element-by-element.\n\n1x &lt;- c(1, 2, 3)\n2y &lt;- c(4, 5, 6)\nx + y\n\n\n1\n\ncreate a vector x with elements 1, 2, 3.\n\n2\n\ncreate a vector y with elements 4, 5, 6.\n\n\n\n\n[1] 5 7 9\n\n\nWhat happens under the hood? R takes the first element of x and adds it to the first element of y, the second with the second, and so on. Voilà!\n\n\nNow, if you were to do the same thing using a loop, it might look like this:\n\n1z &lt;- c()\n2for (i in 1:3) {\n3    z[i] &lt;- x[i] + y[i]\n}\nz\n\n\n1\n\ncreate an empty vector z to store the result.\n\n2\n\nloop through each element.\n\n3\n\nin each iteration, add the corresponding elements of x and y and store the result in z[i].\n\n\n\n\n[1] 5 7 9\n\n\nWhile this loop does the job, it’s more code and more room for errors—especially as your tasks grow more complex.\n\n\n\n\nExercise\nMultiply two vectors element-by-element. Let c &lt;- c(2, 4, 6) and d &lt;- c(3, 5, 7).\n\nExerciseSolution\n\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "Functional Programming",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Vectorization</span>"
+    ]
+  },
+  {
+    "objectID": "16_vectorization.html#what-is-vectorization-really",
+    "href": "16_vectorization.html#what-is-vectorization-really",
+    "title": "16  Vectorization",
+    "section": "16.2 What Is Vectorization, Really?",
+    "text": "16.2 What Is Vectorization, Really?\nAt its heart, vectorization means that a function automatically applies to each element of a vector:\n\n\n\n\n\n\nWhat is vectorized?\n\n\n\nSay we have a function f() and we pass a vector x to it. If f() is vectorized, it will apply f() to each element of x and return a vector of results: f(x[1]), f(x[2]), ....\n\n\nSome common examples of vectorized functions in R include arithmetic operators like +, -, *, / and many functions like sum() and mean().\nVectorization isn’t just for simple vectors. To see it, we need to introduce the concept of list. A list in R is like a flexible vector that can hold different types of objects (numbers, characters, and even tibbles). For example,\n\n1list(c(1), c(1,2), c(1,2,3))\n2list(\n    tibble(x = 1, y = 2),\n    tibble(x = 1, y = 3),\n    tibble(x = 1, y = 4)\n)\n\n\n1\n\nA list of vectors.\n\n2\n\nA list of tibbles.\n\n\n\n\nThe vectorization applies to list as well: it will apply the function to each element of the list and return a list of results. This is to me the most important feature of programming in R.",
+    "crumbs": [
+      "Functional Programming",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Vectorization</span>"
+    ]
+  },
+  {
+    "objectID": "16_vectorization.html#beware-the-pitfalls",
+    "href": "16_vectorization.html#beware-the-pitfalls",
+    "title": "16  Vectorization",
+    "section": "16.3 Beware the Pitfalls",
+    "text": "16.3 Beware the Pitfalls\nSometimes, vectorization can lead to confusing or unexpected behavior—especially when functions behave differently depending on context.\n\nExample: Automatic Vectorization\n\nx &lt;- c(1, 2, 3)\nx + 2\n\n[1] 3 4 5\n\n\nWhat’s happening here? R “recycles” the scalar 2 across the vector x and adds it to each element. Despite it seems convenient, this is actually a design flaw in R as it can lead to the worst type of bugs: code runs successfully, but gives you a wrong answer.\n\n\n\n\n\n\nHow modern languages handle this situation\n\n\n\n\n\nIn more modern languages like Julia, the above code will throw an error, and you need to do\n# Julia language \n1x = [1, 2, 3]\n2x .+ 2\n\n1\n\ncreate a vector x with elements 1, 2, 3.\n\n2\n\nadd 2 to each element of x.\n\n\nwhere . is a placeholder to indicate that + is a vectorized operation.\n\n\n\n\n\nExample: Not Vectorized Function\nHowever, sometimes the function is not vectorized. That is, the function f(x) is not applied to each element of the vector x but to the entire vector. This is too common a source of bugs in R. Why is this a problem? Doesn’t the former gives a list of results while the latter gives a single result?\nTo see why, consider a tibble with a column containing a list, where you want to compute the length of each list element:\n\ntibble(\n    x = list(c(1), c(1,2), c(1,2,3))\n) |&gt; \n    mutate(vec_length = length(x))\n\nmutate: new variable 'vec_length' (integer) with one unique value and 0% NA\n\n\n\n  \n\n\n\nUh-oh! Instead of calculating the length of each individual element, length(x) computes the length of the entire list-column. R then recycles that single result across all rows. Thus, the code runs successfully but gives you a wrong answer.",
+    "crumbs": [
+      "Functional Programming",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Vectorization</span>"
+    ]
+  },
+  {
+    "objectID": "16_vectorization.html#fixing-issues-with-rowwise",
+    "href": "16_vectorization.html#fixing-issues-with-rowwise",
+    "title": "16  Vectorization",
+    "section": "16.4 Fixing Issues with rowwise()",
+    "text": "16.4 Fixing Issues with rowwise()\nThe solution? rowwise(). This function treats each row as its own group, ensuring that operations inside mutate() are applied individually. In other words, it will _always_apply the operation to each row of the tibble.\n\ntibble(\n    x = list(c(1), c(1,2), c(1,2,3))\n)  |&gt; \n    rowwise()  |&gt; \n    mutate(vec_length = length(x))  |&gt; \n    ungroup()\n\nmutate: new variable 'vec_length' (integer) with 3 unique values and 0% NA\nungroup: no grouping variables remain\n\n\n\n  \n\n\n\nAs you can see, vec_length is now correctly computed the length of each vector.\nNote: Don’t forget to ungroup() after rowwise(). As a rule of thumb, you should always ungroup() after grouping operations (rowwise() is a type of grouping operation!).\n\nExercise\nFor a tibble with a list-column containing numeric vectors, add a column that contains the sum of each inner vector.\n\nExerciseSolution\n\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "Functional Programming",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Vectorization</span>"
+    ]
+  },
+  {
+    "objectID": "16_vectorization.html#nested-data-and-rowwise",
+    "href": "16_vectorization.html#nested-data-and-rowwise",
+    "title": "16  Vectorization",
+    "section": "16.5 Nested Data and rowwise()",
+    "text": "16.5 Nested Data and rowwise()\n\n16.5.1 Example: Mean Bill Length for Each Species\nTo see the full power of rowwise(), let’s consider a more complicated example. Suppose we want to compute the mean of bill length for each species in the penguins dataset. We will take two steps:\n\nNest the Data by Species\n\n\nlibrary(palmerpenguins)\n\npenguins_nested &lt;- penguins  |&gt; \n    group_by(species)  |&gt; \n    nest()\n\npenguins_nested\n\n\n  \n\n\n\nNow each row represents a species, and the data column holds a tibble with the details for that species.\n\nCompute the Mean Bill Length\n\n\npenguins_nested  |&gt; \n    rowwise()  |&gt; \n    mutate(mean_bill_length = mean(data$bill_length_mm, na.rm = TRUE))\n\nmutate: new variable 'mean_bill_length' (double) with 3 unique values and 0% NA\n\n\n\n  \n\n\n\nYou might wonder, “Why not just use group_by() and summarize()?” And you’re right—this simple summary could be done that way:\n\npenguins  |&gt; \n    group_by(species)  |&gt; \n    summarize(mean_bill_length = mean(bill_length_mm, na.rm = TRUE))\n\ngroup_by: one grouping variable (species)\nsummarize: now 3 rows and 2 columns, ungrouped\n\n\n\n  \n\n\n\n\n\n16.5.2 Example: Linear Regression for Each Species\nBut when things get more complex—say you want to run a linear regression for each species—rowwise() combined with nesting gives you the extra flexibility you need:\n\nlibrary(palmerpenguins)\n\npenguins  |&gt; \n    group_by(species)  |&gt; \n    nest()  |&gt; \n    rowwise()  |&gt; \n    mutate(\n        regression = list(lm(bill_length_mm ~ bill_depth_mm, data = data))\n1    )  |&gt;\n    mutate(\n        r_squared = summary(regression)$r.squared\n2    )\n\n\n1\n\ncreate a list of regression models.\n\n2\n\ncreate a column with the R-squared value.\n\n\n\n\ngroup_by: one grouping variable (species)\nmutate: new variable 'regression' (list) with 3 unique values and 0% NA\nmutate: new variable 'r_squared' (double) with 3 unique values and 0% NA\n\n\n\n  \n\n\n\nNote that we use list() to store the model. This is because lm() returns a model, which is not a vector.\nIn sum, group_by() + summarize() is great for simple operations, while nest() + rowwise() is more flexible and can handle more complicated operations.",
+    "crumbs": [
+      "Functional Programming",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Vectorization</span>"
+    ]
+  },
+  {
+    "objectID": "16_vectorization.html#so-why-avoid-loops",
+    "href": "16_vectorization.html#so-why-avoid-loops",
+    "title": "16  Vectorization",
+    "section": "16.6 So, Why Avoid Loops?",
+    "text": "16.6 So, Why Avoid Loops?\nVectorization is a game changer in R. To summarize, vectorized code is better than loops because:\n\nReadability: You focus on what you want to compute rather than how to iterate.\nPerformance: R optimizes vectorized operations, making your code run faster.\nFewer Bugs: No manual index tracking means fewer chances for off-by-one errors or other loop-related bugs.\n\nWhen you write a loop, you’re busy managing an index—something that, in a vectorized approach, is completely abstracted away. The real computation is what matters, and vectorization lets you concentrate on that.\n\n“Complicated control flows confuse programmers. Messy code often hides bugs.” — Bjarne Stroustrup",
+    "crumbs": [
+      "Functional Programming",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Vectorization</span>"
     ]
   }
 ]
