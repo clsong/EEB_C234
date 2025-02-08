@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>16&nbsp; Vectorization – EE BIOL C234</title>
+<title>16&nbsp; Basics ofVectorization – EE BIOL C234</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -413,7 +413,7 @@ globalThis.qwebrCustomizedWebROptions = {
 };
 
 // Store cell data
-globalThis.qwebrCellDetails = [{"code":"c <- c(2, 4, 6)\nd <- c(3, 5, 7)\n\n# Vectorized approach\n_ * _\n\n# Loop approach\nz <- c()\nfor (i in 1:3) {\n    __________\n}\nz","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-1","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"c <- c(2, 4, 6)\nd <- c(3, 5, 7)\n\n# Vectorized approach\nc * d\n\n# Loop approach\nz <- c()\nfor (i in 1:3) {\n    z[i] <- c[i] * d[i]\n}\nz","id":2,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-2","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"tibble(\n    values = list(c(1, 2), c(3, 4, 5), c(6))\n) |> \n    __________ |> \n    __________","id":3,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-3","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"tibble(\n    values = list(c(1, 2), c(3, 4, 5), c(6))\n)  |> \n    rowwise()  |> \n    mutate(sum_values = sum(values))  |> \n    ungroup()","id":4,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-4","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
+globalThis.qwebrCellDetails = [{"code":"c <- c(2, 4, 6)\nd <- c(3, 5, 7)\n\n# Vectorized approach\n_ * _\n\n# Loop approach\nz <- c()\nfor (i in 1:3) {\n    __________\n}\nz","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-1","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"c <- c(2, 4, 6)\nd <- c(3, 5, 7)\n\n# Vectorized approach\nc * d\n\n# Loop approach\nz <- c()\nfor (i in 1:3) {\n    z[i] <- c[i] * d[i]\n}\nz","id":2,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-2","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"library(tidyverse)\ntibble(\n    x = c(1, 2, 3),\n    y = c(4, 5, 6)  \n) |> \n    __________ |> \n    __________  |> \n    ungroup()","id":3,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-3","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"library(tidyverse)\ntibble(\n    x = c(1, 2, 3),\n    y = c(4, 5, 6)\n) |> \n    rowwise() |> \n    mutate(sum_values = sum(c(x, y))) |> \n    ungroup()","id":4,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-4","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
 
 </script>
 <script type="module">
@@ -1679,7 +1679,7 @@ globalThis.qwebrExecuteCode = async function (
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./16_vectorization.html">Functional Programming</a></li><li class="breadcrumb-item"><a href="./16_vectorization.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Vectorization</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./16_vectorization.html">Functional Programming</a></li><li class="breadcrumb-item"><a href="./16_vectorization.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Basics ofVectorization</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -1868,7 +1868,7 @@ globalThis.qwebrExecuteCode = async function (
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./16_vectorization.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Vectorization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Basics ofVectorization</span></span></a>
   </div>
 </li>
       </ul>
@@ -1897,12 +1897,7 @@ globalThis.qwebrExecuteCode = async function (
   <ul class="collapse">
   <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2">Exercise</a></li>
   </ul></li>
-  <li><a href="#nested-data-and-rowwise" id="toc-nested-data-and-rowwise" class="nav-link" data-scroll-target="#nested-data-and-rowwise"><span class="header-section-number">16.5</span> Nested Data and <code>rowwise()</code></a>
-  <ul class="collapse">
-  <li><a href="#example-mean-bill-length-for-each-species" id="toc-example-mean-bill-length-for-each-species" class="nav-link" data-scroll-target="#example-mean-bill-length-for-each-species"><span class="header-section-number">16.5.1</span> Example: Mean Bill Length for Each Species</a></li>
-  <li><a href="#example-linear-regression-for-each-species" id="toc-example-linear-regression-for-each-species" class="nav-link" data-scroll-target="#example-linear-regression-for-each-species"><span class="header-section-number">16.5.2</span> Example: Linear Regression for Each Species</a></li>
-  </ul></li>
-  <li><a href="#so-why-avoid-loops" id="toc-so-why-avoid-loops" class="nav-link" data-scroll-target="#so-why-avoid-loops"><span class="header-section-number">16.6</span> So, Why Avoid Loops?</a></li>
+  <li><a href="#so-why-avoid-loops" id="toc-so-why-avoid-loops" class="nav-link" data-scroll-target="#so-why-avoid-loops"><span class="header-section-number">16.5</span> So, Why Avoid Loops?</a></li>
   </ul>
 </nav>
     </div>
@@ -2193,9 +2188,9 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 }
 </script>
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./16_vectorization.html">Functional Programming</a></li><li class="breadcrumb-item"><a href="./16_vectorization.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Vectorization</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./16_vectorization.html">Functional Programming</a></li><li class="breadcrumb-item"><a href="./16_vectorization.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Basics ofVectorization</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Vectorization</span></h1>
+<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Basics ofVectorization</span></h1>
 </div>
 
 
@@ -2228,18 +2223,18 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <p>When you add two vectors in R using the <code>+</code> operator, R automatically performs the addition element-by-element.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-1" class="code-annotation-target"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="2">2</button><span id="annotated-cell-10-2" class="code-annotation-target"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span>
-<span id="annotated-cell-10-3"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a>x <span class="sc">+</span> y</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-1" class="code-annotation-target"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="2">2</button><span id="annotated-cell-5-2" class="code-annotation-target"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span>
+<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>x <span class="sc">+</span> y</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-10" data-code-lines="1" data-code-annotation="1">create a vector <code>x</code> with elements 1, 2, 3.</span>
+<span data-code-cell="annotated-cell-5" data-code-lines="1" data-code-annotation="1">create a vector <code>x</code> with elements 1, 2, 3.</span>
 </dd>
-<dt data-target-cell="annotated-cell-10" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-10" data-code-lines="2" data-code-annotation="2">create a vector <code>y</code> with elements 4, 5, 6.</span>
+<span data-code-cell="annotated-cell-5" data-code-lines="2" data-code-annotation="2">create a vector <code>y</code> with elements 4, 5, 6.</span>
 </dd>
 </dl>
 </div>
@@ -2252,24 +2247,24 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p>Now, if you were to do the same thing using a loop, it might look like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-1" class="code-annotation-target"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="2">2</button><span id="annotated-cell-12-2" class="code-annotation-target"><a href="#annotated-cell-12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="3">3</button><span id="annotated-cell-12-3" class="code-annotation-target"><a href="#annotated-cell-12-3" aria-hidden="true" tabindex="-1"></a>    z[i] <span class="ot">&lt;-</span> x[i] <span class="sc">+</span> y[i]</span>
-<span id="annotated-cell-12-4"><a href="#annotated-cell-12-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="annotated-cell-12-5"><a href="#annotated-cell-12-5" aria-hidden="true" tabindex="-1"></a>z</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-1" class="code-annotation-target"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2">2</button><span id="annotated-cell-7-2" class="code-annotation-target"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="3">3</button><span id="annotated-cell-7-3" class="code-annotation-target"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a>    z[i] <span class="ot">&lt;-</span> x[i] <span class="sc">+</span> y[i]</span>
+<span id="annotated-cell-7-4"><a href="#annotated-cell-7-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="annotated-cell-7-5"><a href="#annotated-cell-7-5" aria-hidden="true" tabindex="-1"></a>z</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-12" data-code-lines="1" data-code-annotation="1">create an empty vector <code>z</code> to store the result.</span>
+<span data-code-cell="annotated-cell-7" data-code-lines="1" data-code-annotation="1">create an empty vector <code>z</code> to store the result.</span>
 </dd>
-<dt data-target-cell="annotated-cell-12" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-12" data-code-lines="2" data-code-annotation="2">loop through each element.</span>
+<span data-code-cell="annotated-cell-7" data-code-lines="2" data-code-annotation="2">loop through each element.</span>
 </dd>
-<dt data-target-cell="annotated-cell-12" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-12" data-code-lines="3" data-code-annotation="3">in each iteration, add the corresponding elements of <code>x</code> and <code>y</code> and store the result in <code>z[i]</code>.</span>
+<span data-code-cell="annotated-cell-7" data-code-lines="3" data-code-annotation="3">in each iteration, add the corresponding elements of <code>x</code> and <code>y</code> and store the result in <code>z[i]</code>.</span>
 </dd>
 </dl>
 </div>
@@ -2319,29 +2314,7 @@ What is vectorized?
 <p>Say we have a function <code>f()</code> and we pass a vector <code>x</code> to it. If <code>f()</code> is vectorized, it will apply <code>f()</code> to each element of <code>x</code> and return a vector of results: <code>f(x[1]), f(x[2]), ...</code>.</p>
 </div>
 </div>
-<p>Some common examples of vectorized functions in R include arithmetic operators like <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> and many functions like <code>sum()</code> and <code>mean()</code>.</p>
-<p>Vectorization isn’t just for simple vectors. To see it, we need to introduce the concept of <strong>list</strong>. A list in R is like a flexible vector that can hold different types of objects (numbers, characters, and even tibbles). For example,</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
-<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">2</span>),</span>
-<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">3</span>),</span>
-<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">4</span>)</span>
-<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="1">A list of vectors.</span>
-</dd>
-<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="2,3,4,5,6" data-code-annotation="2">A list of tibbles.</span>
-</dd>
-</dl>
-</div>
-</div>
-<p>The vectorization applies to list as well: it will apply the function to each element of the list and return a list of results. This is to me the most important feature of programming in R.</p>
+<p>Some common examples of vectorized functions in R include arithmetic operators like <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> and many functions like <code>sum()</code> and <code>mean()</code>. More importantly, most verbs we have learned in the <code>tidyverse</code> are vectorized!</p>
 </section>
 <section id="beware-the-pitfalls" class="level2" data-number="16.3">
 <h2 data-number="16.3" class="anchored" data-anchor-id="beware-the-pitfalls"><span class="header-section-number">16.3</span> Beware the Pitfalls</h2>
@@ -2369,17 +2342,17 @@ How modern languages handle this situation
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In more modern languages like Julia, the above code will throw an error, and you need to do</p>
-<div class="sourceCode" id="annotated-cell-15" data-execute="false" data-code-line-numbers=""><pre class="sourceCode julia code-annotation-code code-with-copy code-annotated"><code class="sourceCode julia"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Julia language </span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1">1</button><span id="annotated-cell-15-2" class="code-annotation-target"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>]</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="2">2</button><span id="annotated-cell-15-3" class="code-annotation-target"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">.+</span> <span class="fl">2</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="annotated-cell-10" data-execute="false" data-code-line-numbers=""><pre class="sourceCode julia code-annotation-code code-with-copy code-annotated"><code class="sourceCode julia"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Julia language </span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-2" class="code-annotation-target"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>]</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="2">2</button><span id="annotated-cell-10-3" class="code-annotation-target"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">.+</span> <span class="fl">2</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-lines="2" data-code-annotation="1">create a vector <code>x</code> with elements 1, 2, 3.</span>
+<span data-code-cell="annotated-cell-10" data-code-lines="2" data-code-annotation="1">create a vector <code>x</code> with elements 1, 2, 3.</span>
 </dd>
-<dt data-target-cell="annotated-cell-15" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-lines="3" data-code-annotation="2">add 2 to each element of <code>x</code>.</span>
+<span data-code-cell="annotated-cell-10" data-code-lines="3" data-code-annotation="2">add 2 to each element of <code>x</code>.</span>
 </dd>
 </dl>
 <p>where <code>.</code> is a placeholder to indicate that <code>+</code> is a vectorized operation.</p>
@@ -2389,50 +2362,52 @@ How modern languages handle this situation
 </section>
 <section id="example-not-vectorized-function" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="example-not-vectorized-function">Example: Not Vectorized Function</h3>
-<p>However, sometimes the function is not vectorized. That is, the function <code>f(x)</code> is not applied to each element of the vector <code>x</code> but to the entire vector. This is too common a source of bugs in R. Why is this a problem? Doesn’t the former gives a list of results while the latter gives a single result?</p>
-<p>To see why, consider a tibble with a column containing a list, where you want to compute the length of each list element:</p>
+<p>However, sometimes the function is not vectorized. That is, the function <code>f(x)</code> is not applied to each element of the vector <code>x</code> but to the entire vector. This is too common a source of bugs in R. Why is this a problem? Doesn’t the former gives a vector of results while the latter gives a single result?</p>
+<p>To see why, consider a tibble with two columns containing numeric vectors, and we want to compute the mean of each row.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">vec_length =</span> <span class="fu">length</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mean =</span> <span class="fu">mean</span>(<span class="fu">c</span>(x, y)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre data-code-line-numbers=""><code>mutate: new variable 'vec_length' (integer) with one unique value and 0% NA</code></pre>
+<pre data-code-line-numbers=""><code>mutate: new variable 'mean' (double) with one unique value and 0% NA</code></pre>
 </div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["x"],"name":[1],"type":["list"],"align":["right"]},{"label":["vec_length"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"<dbl [1]>","2":"3"},{"1":"<dbl [2]>","2":"3"},{"1":"<dbl [3]>","2":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["x"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["mean"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"4","3":"3.5"},{"1":"2","2":"5","3":"3.5"},{"1":"3","2":"6","3":"3.5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
-<p>Uh-oh! Instead of calculating the length of each individual element, <code>length(x)</code> computes the length of the entire list-column. R then recycles that single result across all rows. Thus, the code runs successfully but gives you a wrong answer.</p>
+<p>Uh-oh! Instead of calculating the mean of each individual element, <code>mean(c(x, y))</code> computes the mean of the entire vector. R then recycles that single result across all rows. Thus, the code runs successfully but gives you a wrong answer.</p>
 </section>
 </section>
 <section id="fixing-issues-with-rowwise" class="level2" data-number="16.4">
 <h2 data-number="16.4" class="anchored" data-anchor-id="fixing-issues-with-rowwise"><span class="header-section-number">16.4</span> Fixing Issues with <code>rowwise()</code></h2>
-<p>The solution? <code>rowwise()</code>. This function treats each row as its own group, ensuring that operations inside <code>mutate()</code> are applied individually. In other words, it will _always_apply the operation to each row of the tibble.</p>
+<p>The solution? <code>rowwise()</code>. This function treats each row as its own group, ensuring that operations inside <code>mutate()</code> (or other verbs) are applied individually. In other words, it will <em>always</em> apply the operation to each row of the tibble.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>)  <span class="sc">|&gt;</span> </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowwise</span>()  <span class="sc">|&gt;</span> </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">vec_length =</span> <span class="fu">length</span>(x))  <span class="sc">|&gt;</span> </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mean =</span> <span class="fu">mean</span>(<span class="fu">c</span>(x, y))) <span class="sc">|&gt;</span> </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre data-code-line-numbers=""><code>mutate: new variable 'vec_length' (integer) with 3 unique values and 0% NA
+<pre data-code-line-numbers=""><code>mutate: new variable 'mean' (double) with 3 unique values and 0% NA
 ungroup: no grouping variables remain</code></pre>
 </div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["x"],"name":[1],"type":["list"],"align":["right"]},{"label":["vec_length"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"<dbl [1]>","2":"1"},{"1":"<dbl [2]>","2":"2"},{"1":"<dbl [3]>","2":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["x"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["mean"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"4","3":"2.5"},{"1":"2","2":"5","3":"3.5"},{"1":"3","2":"6","3":"4.5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
-<p>As you can see, <code>vec_length</code> is now correctly computed the length of each vector.</p>
+<p>As you can see, <code>mean</code> is now correctly computed as the mean of each row.</p>
 <p>Note: Don’t forget to <code>ungroup()</code> after <code>rowwise()</code>. As a rule of thumb, you should always <code>ungroup()</code> after grouping operations (<code>rowwise()</code> is a type of grouping operation!).</p>
 <section id="exercise-2" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exercise-2">Exercise</h3>
@@ -2456,114 +2431,8 @@ ungroup: no grouping variables remain</code></pre>
 </div>
 </section>
 </section>
-<section id="nested-data-and-rowwise" class="level2" data-number="16.5">
-<h2 data-number="16.5" class="anchored" data-anchor-id="nested-data-and-rowwise"><span class="header-section-number">16.5</span> Nested Data and <code>rowwise()</code></h2>
-<section id="example-mean-bill-length-for-each-species" class="level3" data-number="16.5.1">
-<h3 data-number="16.5.1" class="anchored" data-anchor-id="example-mean-bill-length-for-each-species"><span class="header-section-number">16.5.1</span> Example: Mean Bill Length for Each Species</h3>
-<p>To see the full power of <code>rowwise()</code>, let’s consider a more complicated example. Suppose we want to compute the mean of bill length for each species in the <code>penguins</code> dataset. We will take two steps:</p>
-<ol type="1">
-<li>Nest the Data by Species</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>penguins_nested <span class="ot">&lt;-</span> penguins  <span class="sc">|&gt;</span> </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(species)  <span class="sc">|&gt;</span> </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nest</span>()</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>penguins_nested</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["data"],"name":[2],"type":["list"],"align":["right"]}],"data":[{"1":"Adelie","2":"<tibble[,7]>"},{"1":"Gentoo","2":"<tibble[,7]>"},{"1":"Chinstrap","2":"<tibble[,7]>"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<p>Now each row represents a species, and the data column holds a tibble with the details for that species.</p>
-<ol start="2" type="1">
-<li>Compute the Mean Bill Length</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>penguins_nested  <span class="sc">|&gt;</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowwise</span>()  <span class="sc">|&gt;</span> </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mean_bill_length =</span> <span class="fu">mean</span>(data<span class="sc">$</span>bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre data-code-line-numbers=""><code>mutate: new variable 'mean_bill_length' (double) with 3 unique values and 0% NA</code></pre>
-</div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["data"],"name":[2],"type":["list"],"align":["right"]},{"label":["mean_bill_length"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Adelie","2":"<tibble[,7]>","3":"38.79139"},{"1":"Gentoo","2":"<tibble[,7]>","3":"47.50488"},{"1":"Chinstrap","2":"<tibble[,7]>","3":"48.83382"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<p>You might wonder, “Why not just use <code>group_by()</code> and <code>summarize()</code>?” And you’re right—this simple summary could be done that way:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>penguins  <span class="sc">|&gt;</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(species)  <span class="sc">|&gt;</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean_bill_length =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre data-code-line-numbers=""><code>group_by: one grouping variable (species)
-summarize: now 3 rows and 2 columns, ungrouped</code></pre>
-</div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["mean_bill_length"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Adelie","2":"38.79139"},{"1":"Chinstrap","2":"48.83382"},{"1":"Gentoo","2":"47.50488"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-</section>
-<section id="example-linear-regression-for-each-species" class="level3" data-number="16.5.2">
-<h3 data-number="16.5.2" class="anchored" data-anchor-id="example-linear-regression-for-each-species"><span class="header-section-number">16.5.2</span> Example: Linear Regression for Each Species</h3>
-<p>But when things get more complex—say you want to run a linear regression for each species—<code>rowwise()</code> combined with nesting gives you the extra flexibility you need:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="annotated-cell-9-2"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-9-3"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>penguins  <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-9-4"><a href="#annotated-cell-9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(species)  <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-9-5"><a href="#annotated-cell-9-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nest</span>()  <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-9-6"><a href="#annotated-cell-9-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowwise</span>()  <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-9-7"><a href="#annotated-cell-9-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="annotated-cell-9-8"><a href="#annotated-cell-9-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">regression =</span> <span class="fu">list</span>(<span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> bill_depth_mm, <span class="at">data =</span> data))</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-9" class="code-annotation-target"><a href="#annotated-cell-9-9" aria-hidden="true" tabindex="-1"></a>    )  <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-9-10"><a href="#annotated-cell-9-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="annotated-cell-9-11"><a href="#annotated-cell-9-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">r_squared =</span> <span class="fu">summary</span>(regression)<span class="sc">$</span>r.squared</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="2">2</button><span id="annotated-cell-9-12" class="code-annotation-target"><a href="#annotated-cell-9-12" aria-hidden="true" tabindex="-1"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="9" data-code-annotation="1">create a list of regression models.</span>
-</dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="12" data-code-annotation="2">create a column with the R-squared value.</span>
-</dd>
-</dl>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre data-code-line-numbers=""><code>group_by: one grouping variable (species)
-mutate: new variable 'regression' (list) with 3 unique values and 0% NA
-mutate: new variable 'r_squared' (double) with 3 unique values and 0% NA</code></pre>
-</div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["data"],"name":[2],"type":["list"],"align":["right"]},{"label":["regression"],"name":[3],"type":["list"],"align":["right"]},{"label":["r_squared"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"Adelie","2":"<tibble[,7]>","3":"<S3: lm>","4":"0.1532657"},{"1":"Gentoo","2":"<tibble[,7]>","3":"<S3: lm>","4":"0.4139429"},{"1":"Chinstrap","2":"<tibble[,7]>","3":"<S3: lm>","4":"0.4271096"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<p>Note that we use <code>list()</code> to store the model. This is because <code>lm()</code> returns a model, which is not a vector.</p>
-<p>In sum, <code>group_by()</code> + <code>summarize()</code> is great for simple operations, while <code>nest()</code> + <code>rowwise()</code> is more flexible and can handle more complicated operations.</p>
-</section>
-</section>
-<section id="so-why-avoid-loops" class="level2" data-number="16.6">
-<h2 data-number="16.6" class="anchored" data-anchor-id="so-why-avoid-loops"><span class="header-section-number">16.6</span> So, Why Avoid Loops?</h2>
+<section id="so-why-avoid-loops" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="so-why-avoid-loops"><span class="header-section-number">16.5</span> So, Why Avoid Loops?</h2>
 <p>Vectorization is a game changer in R. To summarize, vectorized code is better than loops because:</p>
 <ul>
 <li>Readability: You focus on what you want to compute rather than how to iterate.</li>

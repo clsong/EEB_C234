@@ -1,4 +1,4 @@
-# Vectorization
+# Basics ofVectorization
 
 You might have noticed we haven't talked about loops so far.  This is quite atypical for a programming course. In most courses, loops are introduced early and used throughout the course. 
 
@@ -104,23 +104,7 @@ Say we have a function `f()` and we pass a vector `x` to it. If `f()` is vectori
 
 :::
 
-Some common examples of vectorized functions in R include arithmetic operators like `+`, `-`, `*`, `/` and many functions like `sum()` and `mean()`.
-
-Vectorization isn’t just for simple vectors. To see it, we need to introduce the concept of **list**. A list in R is like a flexible vector that can hold different types of objects (numbers, characters, and even tibbles). For example,
-
-```{r}
-#| eval: false
-list(c(1), c(1,2), c(1,2,3)) # <1>
-list( # <2>
-    tibble(x = 1, y = 2), # <2>
-    tibble(x = 1, y = 3), # <2>
-    tibble(x = 1, y = 4) # <2>
-)  # <2>
-```
-1. A list of vectors.
-2. A list of tibbles.
-
-The vectorization applies to list as well: it will apply the function to each element of the list and return a list of results. This is to me the most important feature of programming in R. 
+Some common examples of vectorized functions in R include arithmetic operators like `+`, `-`, `*`, `/` and many functions like `sum()` and `mean()`. More importantly, most verbs we have learned in the `tidyverse` are vectorized! 
 
 ## Beware the Pitfalls
 
@@ -151,33 +135,35 @@ where `.` is a placeholder to indicate that `+` is a vectorized operation.
 :::
 
 ### Example: Not Vectorized Function{-}
-However, sometimes the function is not vectorized. That is, the function `f(x)` is not applied to each element of the vector `x` but to the entire vector. This is too common a source of bugs in R. Why is this a problem? Doesn't the former gives a list of results while the latter gives a single result?
+However, sometimes the function is not vectorized. That is, the function `f(x)` is not applied to each element of the vector `x` but to the entire vector. This is too common a source of bugs in R. Why is this a problem? Doesn't the former gives a vector of results while the latter gives a single result?
 
-To see why, consider a tibble with a column containing a list, where you want to compute the length of each list element:
+To see why, consider a tibble with two columns containing numeric vectors, and we want to compute the mean of each row.
 
 ```{r}
 tibble(
-    x = list(c(1), c(1,2), c(1,2,3))
+    x = c(1, 2, 3),
+    y = c(4, 5, 6)
 ) |> 
-    mutate(vec_length = length(x))
+    mutate(mean = mean(c(x, y)))
 ```
 
-Uh-oh! Instead of calculating the length of each individual element, `length(x)` computes the length of the entire list-column. R then recycles that single result across all rows. Thus, the code runs successfully but gives you a wrong answer. 
+Uh-oh! Instead of calculating the mean of each individual element, `mean(c(x, y))` computes the mean of the entire vector. R then recycles that single result across all rows. Thus, the code runs successfully but gives you a wrong answer. 
 
 ## Fixing Issues with `rowwise()`
 
-The solution? `rowwise()`. This function treats each row as its own group, ensuring that operations inside `mutate()` are applied individually. In other words, it will _always_apply the operation to each row of the tibble.
+The solution? `rowwise()`. This function treats each row as its own group, ensuring that operations inside `mutate()` (or other verbs) are applied individually. In other words, it will _always_ apply the operation to each row of the tibble.
 
 ```{r}
 tibble(
-    x = list(c(1), c(1,2), c(1,2,3))
-)  |> 
-    rowwise()  |> 
-    mutate(vec_length = length(x))  |> 
+    x = c(1, 2, 3),
+    y = c(4, 5, 6)
+) |> 
+    rowwise() |> 
+    mutate(mean = mean(c(x, y))) |> 
     ungroup()
 ```
 
-As you can see, `vec_length` is now correctly computed the length of each vector. 
+As you can see, `mean` is now correctly computed as the mean of each row. 
 
 Note: Don't forget to `ungroup()` after `rowwise()`. As a rule of thumb, you should always `ungroup()` after grouping operations (`rowwise()` is a type of grouping operation!).
 
@@ -190,85 +176,30 @@ For a tibble with a list-column containing numeric vectors, add a column that co
 ## Exercise
 
 ```{webr}
+library(tidyverse)
 tibble(
-    values = list(c(1, 2), c(3, 4, 5), c(6))
+    x = c(1, 2, 3),
+    y = c(4, 5, 6)  
 ) |> 
     __________ |> 
-    __________
+    __________  |> 
+    ungroup()
 ```
 
 ## Solution
 
 ```{webr}
+library(tidyverse)
 tibble(
-    values = list(c(1, 2), c(3, 4, 5), c(6))
-)  |> 
-    rowwise()  |> 
-    mutate(sum_values = sum(values))  |> 
+    x = c(1, 2, 3),
+    y = c(4, 5, 6)
+) |> 
+    rowwise() |> 
+    mutate(sum_values = sum(c(x, y))) |> 
     ungroup()
 ```
 :::
 
-## Nested Data and `rowwise()`
-
-### Example: Mean Bill Length for Each Species
-
-To see the full power of `rowwise()`, let's consider a more complicated example. Suppose we want to compute the mean of bill length for each species in the `penguins` dataset. We will take two steps:
-
-1. Nest the Data by Species
-
-```{r}
-#| message: false
-library(palmerpenguins)
-
-penguins_nested <- penguins  |> 
-    group_by(species)  |> 
-    nest()
-
-penguins_nested
-```
-
-Now each row represents a species, and the data column holds a tibble with the details for that species.
-
-2. Compute the Mean Bill Length
-
-```{r}
-penguins_nested  |> 
-    rowwise()  |> 
-    mutate(mean_bill_length = mean(data$bill_length_mm, na.rm = TRUE))
-```
-You might wonder, “Why not just use `group_by()` and `summarize()`?” And you’re right—this simple summary could be done that way:
-
-```{r}
-penguins  |> 
-    group_by(species)  |> 
-    summarize(mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
-```
-
-### Example: Linear Regression for Each Species
-
-But when things get more complex—say you want to run a linear regression for each species—`rowwise()` combined with nesting gives you the extra flexibility you need:
-
-```{r}
-library(palmerpenguins)
-
-penguins  |> 
-    group_by(species)  |> 
-    nest()  |> 
-    rowwise()  |> 
-    mutate(
-        regression = list(lm(bill_length_mm ~ bill_depth_mm, data = data))
-    )  |> # <1>
-    mutate(
-        r_squared = summary(regression)$r.squared
-    )  # <2>
-```
-1. create a list of regression models.
-2. create a column with the R-squared value.
-
-Note that we use `list()` to store the model. This is because `lm()` returns a model, which is not a vector.
-
-In sum, `group_by()` + `summarize()` is great for simple operations, while `nest()` + `rowwise()` is more flexible and can handle more complicated operations.
 
 ## So, Why Avoid Loops?
 

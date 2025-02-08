@@ -1,0 +1,131 @@
+## Nested Data and Vectorization
+
+Vectorization isn’t just for simple vectors. To see it, we need to introduce the concept of **list**. A list in R is like a flexible vector that can hold different types of objects (numbers, characters, and even tibbles). For example,
+
+```{r}
+#| eval: false
+list(c(1), c(1,2), c(1,2,3)) # <1>
+list( # <2>
+    tibble(x = 1, y = 2), # <2>
+    tibble(x = 1, y = 3), # <2>
+    tibble(x = 1, y = 4) # <2>
+)  # <2>
+```
+1. A list of vectors.
+2. A list of tibbles.
+
+The vectorization applies to list as well: it will apply the function to each element of the list and return a list of results. This is to me the most important feature of programming in R. 
+
+## Nested Data and `rowwise()`
+
+### Example: Mean Bill Length for Each Species
+
+To see the full power of `rowwise()`, let's consider a more complicated example. Suppose we want to compute the mean of bill length for each species in the `penguins` dataset. We will take two steps:
+
+**1. Nest the Data by Species**
+
+`nest()` is a function that nestes the grouped data into a list-column. 
+
+```{r}
+#| message: false
+library(palmerpenguins)
+
+penguins_nested <- penguins  |> 
+    group_by(species)  |> 
+    nest()
+
+penguins_nested
+```
+
+Now each row represents a species, and the data column holds a tibble with the details for that species.
+
+**2. Compute the Mean Bill Length**
+
+```{r}
+penguins_nested  |> 
+    rowwise()  |> 
+    mutate(mean_bill_length = mean(data$bill_length_mm, na.rm = TRUE))
+```
+You might wonder, “Why not just use `group_by()` and `summarize()`?” And you’re right—this simple summary could be done that way:
+
+```{r}
+penguins  |> 
+    group_by(species)  |> 
+    summarize(mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
+```
+
+### Example: Linear Regression for Each Species
+
+But when things get more complex—say you want to run a linear regression for each species—`rowwise()` combined with nesting gives you the extra flexibility you need:
+
+```{r}
+library(palmerpenguins)
+
+penguins  |> 
+    group_by(species)  |> 
+    nest()  |> 
+    rowwise()  |> 
+    mutate(
+        regression = list(lm(bill_length_mm ~ bill_depth_mm, data = data)) # <1>
+    )  |> 
+    mutate(
+        r_squared = summary(regression)$r.squared # <2> 
+    )  |> 
+    ungroup()
+```
+1. create a list of regression models.
+2. create a column with the R-squared value.
+
+Note that we use `list()` to store the model. This is because `lm()` returns a model, which is not a vector.
+
+In sum:
+
+- `group_by()` + `summarize()` is great for simple operations
+- `nest()` + `rowwise()` is more flexible and can handle complicated operations.
+
+### Exercise {-}
+
+Use `nest()` and `rowwise()` to compute the mean bill area (bill length * bill depth) for each species.
+
+::: {.panel-tabset}
+
+## Exercise
+
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+penguins  |> 
+    group_by(species)  |> 
+    ______  |> 
+    rowwise()  |> 
+    mutate(mean_bill_area = __________)  |> 
+    ungroup()
+```
+
+## Solution
+
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+penguins  |> 
+    group_by(species)  |> 
+    nest()  |> 
+    rowwise()  |> 
+    mutate(mean_bill_area = mean(data$bill_length_mm * data$bill_depth_mm, na.rm = TRUE))  |> 
+    ungroup()
+```
+
+:::
+
+
+## Debugging in vectorized code
+
+```{r}
+tibble(
+  value = list(1, 2, "a", 4)
+)  |> 
+  rowwise()  |> 
+  mutate(sum_value = sum(value))
+```
+
+You see that the error message is very informative. It telles tyou that the error happens ath the third row. This.
