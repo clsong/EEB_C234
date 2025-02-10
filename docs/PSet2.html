@@ -273,7 +273,7 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Functional Programming</span></a>
+ <span class="menu-text">R Programming</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -282,7 +282,13 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./16_vectorization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Basics ofVectorization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Basics of Vectorization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17_nested.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Nested Data and Vectorization</span></span></a>
   </div>
 </li>
       </ul>
@@ -324,15 +330,15 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
 </header>
 
 
-<p>Welcome to your second problem set! In this assignment, you will import and tidy ecological data to perform exploratory analyses. We will replicate parts of the analysis from a recent paper linking ecology and evolution. You can read the paper <a href="https://www.nature.com/articles/s41467-022-30090-4">here</a>.</p>
+<p>Welcome to your second problem set! In this assignment, you will import and tidy real data to perform exploratory analyses. We will replicate parts of the analysis from a recent paper at the interface between ecology and evolution. You can read the paper <a href="https://www.nature.com/articles/s41467-022-30090-4">here</a>.</p>
 <section id="what-to-turn-in" class="level2">
 <h2 class="anchored" data-anchor-id="what-to-turn-in">What to Turn In</h2>
 <ul>
 <li>Submission Package: A folder (or zip file) that contains:
 <ul>
-<li>Your complete RStudio project.</li>
+<li>RStudio project.</li>
 <li>Your code for data wrangling and analysis.</li>
-<li>The two final publication-quality figures.</li>
+<li>The two final publication-ready figures.</li>
 </ul></li>
 <li>Deadline: February 21st, 2025</li>
 </ul>
@@ -356,12 +362,13 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
 </ul></li>
 <li><p>Data Import</p>
 <ul>
-<li>Load the Data: Import both CSV files into R. You can use <code>read_csv()</code>.</li>
+<li>Load the Data: Import both CSV files into R.</li>
+<li>Hint: Use RSudio import shortcut and then copy-paste the associated <code>read_csv()</code> code chunk into your script.</li>
 </ul></li>
 <li><p>Data Cleaning: Filter Out Specific Islands</p>
 <ul>
 <li>In the <code>data_snail</code> tibble, remove all rows where the island column is “CH”, “ED”, or “GA”.</li>
-<li>Hint: Use the <code>filter()</code> verb.</li>
+<li>Hint: Think whether we should use the <code>filter()</code> or <code>select()</code> verb?</li>
 </ul></li>
 <li><p>Join Data:</p>
 <ul>
@@ -385,8 +392,8 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
 </ul></li>
 <li><p>Create One More Publication-Quality Figure:</p>
 <ul>
-<li>Explpre another interesting relationship or distribution in your data.</li>
-<li>Use what you have learned in the class to make the figure more informative and aesthetically pleasing.</li>
+<li>Explpre another interesting relationship in the dataset (such as amount or distribution).</li>
+<li>Use what you have learned in the class to make the figure informative and aesthetically pleasing.</li>
 </ul></li>
 </ol>
 <!-- ## **Pre-processing long-term ecological data**

@@ -1,0 +1,247 @@
+# Using map() and Friends
+
+::: {.callout-note}
+## Class Objectives
+1. Understand the concept of mapping functions
+2. Learn the basic `map()` functions and their variants
+3. Master working with lists using `map()`
+4. Learn when to use `map()` vs. `rowwise()`
+:::
+
+## What is Mapping?
+
+Remember how we used `rowwise()` to apply functions to nested data? Well, `map()` is like its cool cousin - it's another way to apply functions to multiple pieces of data. Think of it as saying "take this function and apply it to each element in this list".
+
+### The Basic Idea
+
+Let's start with a simple example. Suppose you want to calculate the length of several words:
+
+```{r}
+#| message: false
+library(tidyverse)
+
+# The old way (one by one)
+nchar("apple")
+nchar("banana")
+nchar("cherry")
+
+# The map way
+words <- c("apple", "banana", "cherry")
+map(words, nchar)
+```
+
+See what happened? `map()` took our `nchar` function and applied it to each word in our list. Magic! 🪄
+
+### Different Types of map()
+
+The `map()` family has several variants, depending on what type of output you want:
+
+```{r}
+# map() returns a list
+map(words, nchar)
+
+# map_dbl() returns a numeric vector
+map_dbl(words, nchar)
+
+# map_chr() returns a character vector
+map_chr(words, toupper)
+
+# map_lgl() returns a logical vector
+map_lgl(words, function(x) nchar(x) > 5)
+```
+
+Think of these variants as different containers for your results:
+- `map()`: A flexible shopping bag (can hold anything)
+- `map_dbl()`: A number-only box
+- `map_chr()`: A text-only box
+- `map_lgl()`: A true/false box
+
+## Working with Lists
+
+Let's get a bit more practical. Remember our penguin friends?
+
+```{r}
+library(palmerpenguins)
+
+# Create a list of data for each species
+species_data <- penguins |>
+    group_by(species) |>
+    nest() |>
+    pull(data) # <1>
+```
+1. `pull(data)` extracts just the data column, giving us a list of tibbles
+
+Now we can use `map()` to analyze each species:
+
+```{r}
+# Calculate mean bill length for each species
+map_dbl(species_data, function(df) mean(df$bill_length_mm, na.rm = TRUE))
+```
+
+### Using the Formula Shorthand
+
+Writing anonymous functions can be tedious. Luckily, `map()` has a neat shortcut:
+
+```{r}
+# The long way
+map_dbl(species_data, function(df) mean(df$bill_length_mm, na.rm = TRUE))
+
+# The short way
+map_dbl(species_data, \(df) mean(df$bill_length_mm, na.rm = TRUE))
+
+# The even shorter way (using formula notation)
+map_dbl(species_data, ~ mean(.x$bill_length_mm, na.rm = TRUE))
+```
+
+All three do exactly the same thing! The formula notation (with `~` and `.x`) is a purrr special sauce that makes your code more concise.
+
+### Exercise: Species Statistics {-}
+
+Calculate the standard deviation of bill depth for each species.
+
+::: {.panel-tabset}
+
+## Exercise
+
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+
+species_data <- penguins |>
+    group_by(species) |>
+    nest() |>
+    pull(data)
+
+# Calculate sd of bill depth
+map_dbl(species_data, ~ ________)
+```
+
+## Solution
+
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+
+species_data <- penguins |>
+    group_by(species) |>
+    nest() |>
+    pull(data)
+
+map_dbl(species_data, ~ sd(.x$bill_depth_mm, na.rm = TRUE))
+```
+:::
+
+## Complex Operations with map()
+
+Let's fit a linear model for each species, just like we did with `rowwise()`:
+
+```{r}
+# Fit models
+models <- map(species_data, ~ lm(bill_length_mm ~ bill_depth_mm, data = .x))
+
+# Extract R-squared values
+map_dbl(models, ~ summary(.x)$r.squared)
+```
+
+Notice how we:
+1. Used `map()` to create a list of models
+2. Used `map_dbl()` to extract numeric R-squared values
+3. Didn't need to worry about list columns or `rowwise()`
+
+### Multiple Inputs with map2()
+
+Sometimes you need to work with two lists at once. That's where `map2()` comes in:
+
+```{r}
+x <- list(1, 2, 3)
+y <- list(10, 20, 30)
+
+map2(x, y, ~ .x + .y)  # .x is from first list, .y from second
+```
+
+### Exercise: Custom Models {-}
+
+Fit a linear model for each species using different formulas.
+
+::: {.panel-tabset}
+
+## Exercise
+
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+
+# Data
+species_data <- penguins |>
+    group_by(species) |>
+    nest() |>
+    pull(data)
+
+# Formulas for each species
+formulas <- list(
+    bill_length_mm ~ bill_depth_mm,
+    bill_length_mm ~ flipper_length_mm,
+    bill_length_mm ~ body_mass_g
+)
+
+# Fit different models for each species
+map2(species_data, formulas, ~ ________)
+```
+
+## Solution
+
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+
+# Data
+species_data <- penguins |>
+    group_by(species) |>
+    nest() |>
+    pull(data)
+
+# Formulas for each species
+formulas <- list(
+    bill_length_mm ~ bill_depth_mm,
+    bill_length_mm ~ flipper_length_mm,
+    bill_length_mm ~ body_mass_g
+)
+
+# Fit different models for each species
+map2(species_data, formulas, ~ lm(.y, data = .x))
+```
+:::
+
+## map() vs. rowwise(): When to Use Which?
+
+Both `map()` and `rowwise()` can handle similar tasks, but they have their sweet spots:
+
+Use `map()` when:
+1. You're working with plain lists
+2. You want to chain operations with the pipe
+3. You need different output types (numeric, character, etc.)
+4. You want to use the formula shorthand
+
+Use `rowwise()` when:
+1. Your data is already in a tibble
+2. You need to maintain the tibble structure
+3. You're working with multiple columns
+4. You want to keep the results alongside the original data
+
+## Summary
+
+The `map()` family of functions gives you a powerful way to work with lists and apply functions to multiple elements. Remember:
+
+1. Use the right map variant for your output type:
+   - `map()` for lists
+   - `map_dbl()` for numbers
+   - `map_chr()` for text
+   - `map_lgl()` for true/false
+
+2. Take advantage of the formula shorthand (`~` and `.x`) for cleaner code
+
+3. Use `map2()` when you need to work with two lists at once
+
+4. Choose between `map()` and `rowwise()` based on your data structure and needs
+
+In the next chapter, we'll explore even more powerful functions from the purrr package! 🚀

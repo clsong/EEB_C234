@@ -1,4 +1,4 @@
-# Basics ofVectorization
+# Basics of Vectorization
 
 You might have noticed we haven't talked about loops so far.  This is quite atypical for a programming course. In most courses, loops are introduced early and used throughout the course. 
 
@@ -104,7 +104,9 @@ Say we have a function `f()` and we pass a vector `x` to it. If `f()` is vectori
 
 :::
 
-Some common examples of vectorized functions in R include arithmetic operators like `+`, `-`, `*`, `/` and many functions like `sum()` and `mean()`. More importantly, most verbs we have learned in the `tidyverse` are vectorized! 
+Some common examples of vectorized functions in R include arithmetic operators like `+`, `-`, `*`, `/` and many functions like `sum()` and `mean()`. 
+
+More importantly, most verbs we have learned--like `mutate()` and `summarize()`--in the `tidyverse` are vectorized! 
 
 ## Beware the Pitfalls
 
@@ -134,10 +136,12 @@ x .+ 2 # <2>
 where `.` is a placeholder to indicate that `+` is a vectorized operation.
 :::
 
-### Example: Not Vectorized Function{-}
-However, sometimes the function is not vectorized. That is, the function `f(x)` is not applied to each element of the vector `x` but to the entire vector. This is too common a source of bugs in R. Why is this a problem? Doesn't the former gives a vector of results while the latter gives a single result?
+### Example: Non-Vectorized Function{-}
+Some functions are not vectorized. That is, the function `f(x)` is not applied to each element of the vector `x` but to the entire vector. It is not always obvious whether a function is vectorized or not.
 
-To see why, consider a tibble with two columns containing numeric vectors, and we want to compute the mean of each row.
+This has been a common source of bugs in R. You may wonder how come this is a problem? Doesn't the non-vectorized function give a vector of results while the vectorized function gives a single result?
+
+Well, let's consider a tibble with two columns containing numeric vectors, and we want to compute the mean of each row.
 
 ```{r}
 tibble(

@@ -1,91 +1,162 @@
-## Nested Data and Vectorization
+# Nested Data and Vectorization
 
-Vectorization isn’t just for simple vectors. To see it, we need to introduce the concept of **list**. A list in R is like a flexible vector that can hold different types of objects (numbers, characters, and even tibbles). For example,
+::: {.callout-note}
+## Class Objectives
+1. Understand the concept of lists and nested data 
+2. Learn how to work with list columns using `nest()`
+3. Master vectorization with nested data using `rowwise()`
+4. Learn debugging strategies for nested data operations
+:::
+
+## What is Nested Data?
+
+Picture this: you're organizing your closet. You could throw everything into one big pile (that's your flat data structure), OR you could use those neat organizing boxes where smaller boxes fit inside bigger ones (that's nested data!). In R, nested data is exactly that - it's like having organized boxes for your data, where each box can contain its own little dataset.
+
+### Understanding Lists First
+
+Before we dive into nested data, we need to understand lists. A list in R is like a flexible container that can hold different types of data:
 
 ```{r}
 #| eval: false
-list(c(1), c(1,2), c(1,2,3)) # <1>
+list(c(1), c(1, 2), c(1, 2, 3)) # <1>
+
 list( # <2>
     tibble(x = 1, y = 2), # <2>
     tibble(x = 1, y = 3), # <2>
     tibble(x = 1, y = 4) # <2>
-)  # <2>
+) # <2>
+
+list(1, "a", tibble(x = 1, y = 2)) # <3>
 ```
-1. A list of vectors.
-2. A list of tibbles.
+1. Each element is a vector of increasing length
+2. Each element is a tibble with the same structure
+3. Elements can be of different types (number, text, tibble)
 
-The vectorization applies to list as well: it will apply the function to each element of the list and return a list of results. This is to me the most important feature of programming in R. 
+### From Lists to Nested Data
 
-## Nested Data and `rowwise()`
+Nested data is a special case of lists where:
 
-### Example: Mean Bill Length for Each Species
+1. Each element is a tibble
+2. All tibbles have the same structure
+3. The list itself is stored in a column of another tibble
 
-To see the full power of `rowwise()`, let's consider a more complicated example. Suppose we want to compute the mean of bill length for each species in the `penguins` dataset. We will take two steps:
-
-**1. Nest the Data by Species**
-
-`nest()` is a function that nestes the grouped data into a list-column. 
+Example 2 above is almost a nested data structure, but it's just a list. To create proper nested data, we use the `nest()` function:
 
 ```{r}
 #| message: false
+library(tidyverse)
 library(palmerpenguins)
 
-penguins_nested <- penguins  |> 
-    group_by(species)  |> 
-    nest()
+# Create nested data from the penguins dataset
+penguins |> 
+    group_by(species) |> # <1>  
+    nest() # <2> 
+```
+1. Group by species
+2. Nest the remaining columns into a list column
 
-penguins_nested
+Now we have a tibble where:
+- Each row represents a penguin species
+- The `data` column contains a tibble for each species with all their measurements
+
+### Exercise: Creating Nested Data {-}
+
+Let's practice creating nested data with the `mtcars` dataset. We'll group cars by both cylinder count (`cyl`) and gear count (`gear`).
+
+::: {.panel-tabset}
+
+## Exercise
+
+```{webr}
+library(tidyverse)
+mtcars |> 
+    group_by(_____) |> # Group by cylinder and gear
+    _____ # Nest the remaining columns
 ```
 
-Now each row represents a species, and the data column holds a tibble with the details for that species.
+## Solution
 
-**2. Compute the Mean Bill Length**
+```{webr}
+library(tidyverse)
+mtcars |> 
+    group_by(cyl, gear) |> 
+    nest()
+```
+:::
+
+## Working with Nested Data
+
+### Simple Example: Mean Bill Length
+
+Let's start with a simple example to understand how to work with nested data:
 
 ```{r}
-penguins_nested  |> 
-    rowwise()  |> 
+#| message: false
+library(tidyverse)
+library(palmerpenguins)
+
+# Step 1: Nest those penguins!
+penguins_nested <- penguins |> # <1>
+    group_by(species) |> # <1>
+    nest() # <1>
+
+penguins_nested # <2>
+```
+1. Nest the penguins data by species
+2. Look at the structure
+
+As we learned in the previous chapter, we can use `rowwise()` to apply a function to each row. This applies to nested data (a list of tibbles) as well.
+
+```{r}
+penguins_nested |>
+    rowwise() |>
     mutate(mean_bill_length = mean(data$bill_length_mm, na.rm = TRUE))
 ```
-You might wonder, “Why not just use `group_by()` and `summarize()`?” And you’re right—this simple summary could be done that way:
+
+You may wonder why we would want to do this. Why not just use `group_by()` and `summarize()`?
 
 ```{r}
-penguins  |> 
-    group_by(species)  |> 
+penguins |>
+    group_by(species) |>
     summarize(mean_bill_length = mean(bill_length_mm, na.rm = TRUE))
 ```
 
-### Example: Linear Regression for Each Species
+For simple calculations like means, `group_by()` and `summarize()` is clearer. So when should we use nested data?
 
-But when things get more complex—say you want to run a linear regression for each species—`rowwise()` combined with nesting gives you the extra flexibility you need:
+### Complex Example: Linear Regression
+
+Nested data shines when we need to do complex operations that can't be done with simple summary functions:
 
 ```{r}
-library(palmerpenguins)
-
-penguins  |> 
-    group_by(species)  |> 
-    nest()  |> 
-    rowwise()  |> 
+penguins |>
+    group_by(species) |>
+    nest() |>
+    rowwise() |>
     mutate(
-        regression = list(lm(bill_length_mm ~ bill_depth_mm, data = data)) # <1>
-    )  |> 
-    mutate(
-        r_squared = summary(regression)$r.squared # <2> 
-    )  |> 
+        # Fit a linear model for each species
+        model = list(lm(bill_length_mm ~ bill_depth_mm, data = data)), # <1>
+        # Extract the R-squared value
+        r_squared = summary(model)$r.squared # <2>
+    ) |>
     ungroup()
 ```
-1. create a list of regression models.
-2. create a column with the R-squared value.
+1. For each species, fit a model predicting bill length from bill depth
+2. Calculate how well the model fits (R-squared value)
 
-Note that we use `list()` to store the model. This is because `lm()` returns a model, which is not a vector.
+This is not a stats class, so we won't go into the details of the 
+model. But briefly, what's happening here:
 
-In sum:
+1. `lm()` fits a linear regressionmodel using the formula `bill_length_mm ~ bill_depth_mm`
+2. The model is stored in the `model` column
+3. We extract the R-squared value using `summary(model)$r.squared`
 
-- `group_by()` + `summarize()` is great for simple operations
-- `nest()` + `rowwise()` is more flexible and can handle complicated operations.
+The beauty is that we only need to write the analysis code once, and R applies it to each species automatically! Thus, vectorization and nested data help you focus on the creative part of your work, and strip away the tedious parts (like keeping track of the looping index).
 
-### Exercise {-}
+Essentially, you just need to know how to perform the operation (like complicated stats) on one of the nested tibbles, and you can use `rowwise()` to apply it to each other cases. It is a general formula to save all your energy on the important stuff (like doing the stats) instead of getting lost in keeping track of the data index `i`.
 
-Use `nest()` and `rowwise()` to compute the mean bill area (bill length * bill depth) for each species.
+### Exercise: Bill Area Calculation {-}
+
+Calculate the mean bill area (length × depth) for each species using nested data.
 
 ::: {.panel-tabset}
 
@@ -94,11 +165,13 @@ Use `nest()` and `rowwise()` to compute the mean bill area (bill length * bill d
 ```{webr}
 library(tidyverse)
 library(palmerpenguins)
-penguins  |> 
-    group_by(species)  |> 
-    ______  |> 
-    rowwise()  |> 
-    mutate(mean_bill_area = __________)  |> 
+penguins |> 
+    group_by(species) |> 
+    nest() |> 
+    rowwise() |> 
+    mutate(
+        mean_bill_area = __________ # Calculate mean of length * depth
+    ) |> 
     ungroup()
 ```
 
@@ -107,25 +180,62 @@ penguins  |>
 ```{webr}
 library(tidyverse)
 library(palmerpenguins)
-penguins  |> 
-    group_by(species)  |> 
-    nest()  |> 
-    rowwise()  |> 
-    mutate(mean_bill_area = mean(data$bill_length_mm * data$bill_depth_mm, na.rm = TRUE))  |> 
+penguins |> 
+    group_by(species) |> 
+    nest() |> 
+    rowwise() |> 
+    mutate(
+        mean_bill_area = mean(data$bill_length_mm * data$bill_depth_mm, na.rm = TRUE)
+    ) |> 
     ungroup()
 ```
 
 :::
 
+## Debugging Made Easier
 
-## Debugging in vectorized code
+Vectorization and nested data make debugging easier. Let's look at an example:
 
 ```{r}
-tibble(
-  value = list(1, 2, "a", 4)
-)  |> 
-  rowwise()  |> 
-  mutate(sum_value = sum(value))
+#| error: true
+# Create a problematic tibble
+df <- tibble(
+    value = list(1, 2, "a", 4)  # Note the "a" in position 3
+)
+
+# Try to sum each value
+df |>
+    rowwise() |>
+    mutate(sum_value = sum(value))
 ```
 
-You see that the error message is very informative. It telles tyou that the error happens ath the third row. This.
+The error message clearly tells us there's a problem in row 3, and the issue is that we can't sum a character value.
+
+<!-- The error message clearly tells us there's a problem in row 3. To debug:
+
+1. First, isolate the problematic row:
+```{r}
+#| error: true
+# Look at the third element
+df$value[[3]]
+
+# Try the operation on just that element
+sum(df$value[[3]])
+```
+
+Now we can see exactly what's wrong: we can't sum a character value! -->
+
+This is a simple example, but it can be a pain to debug without vectorization and nested data (again, speaking from tears!). 
+
+## Summary
+
+Use nested data when:
+
+1. You need to perform complex operations (like fitting models)
+2. The operation can't be done with simple `group_by()` and `summarize()`
+3. You want to keep all related data together
+4. You need to maintain relationships between different levels of data
+
+Remember: for simple calculations (like means, sums, counts), stick with `group_by()` and `mutate()/summarize()`! Don't make things more complicated than they need to be. 😉 
+
+Also remember, these two approaches are not mutually exclusive. You can use nested data first to perform complex operations, and then use `group_by()` and `mutate()/summarize()` to summarize the results.

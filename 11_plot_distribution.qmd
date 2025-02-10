@@ -369,9 +369,13 @@ lincoln_weather_clean |>
     theme(legend.position = "none") 
 ```
 
-::: {.callout-tip collapse=true}
+::: {.callout-tip}
 ### Horizontal Plots
 
-Horizon plots are an effective way to visualize time series data. It is extremely useful when you need to compare even more variables. You can use the `ggHoriPlot` package to create them. Check out the documentation [here](https://rivasiker.github.io/ggHoriPlot/articles/examples.html) for stunning examples.
+An issue with ridge plots is that, when the number of groups is large, distributions can be too crowded to be useful. Horizon plots are a great alternative. It uses a very smart trick to avoid overplotting:
+
+![From https://bernatgel.github.io/karyoploter_tutorial/Tutorial/PlotHorizon/PlotHorizon.html](img/horizon.animation.optimized.gif)
+
+You can use the `ggHoriPlot` package to create them easily. Check out the documentation [here](https://rivasiker.github.io/ggHoriPlot/articles/examples.html) for stunning examples.
 :::
 

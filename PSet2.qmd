@@ -1,13 +1,13 @@
 # PSet 2 {-}
 
-Welcome to your second problem set! In this assignment, you will import and tidy ecological data to perform exploratory analyses. We will replicate parts of the analysis from a recent paper linking ecology and evolution. You can read the paper [here](https://www.nature.com/articles/s41467-022-30090-4). 
+Welcome to your second problem set! In this assignment, you will import and tidy real data to perform exploratory analyses. We will replicate parts of the analysis from a recent paper at the interface between ecology and evolution. You can read the paper [here](https://www.nature.com/articles/s41467-022-30090-4). 
 
 ## What to Turn In
 
 - Submission Package: A folder (or zip file) that contains:
-  - Your complete RStudio project.
+  - RStudio project.
   - Your code for data wrangling and analysis.
-  - The two final publication-quality figures.
+  - The two final publication-ready figures.
 - Deadline: February 21st, 2025
 
 ## Assignment Instructions
@@ -24,12 +24,13 @@ Welcome to your second problem set! In this assignment, you will import and tidy
 
 2. Data Import
    
-    - Load the Data: Import both CSV files into R. You can use `read_csv()`.
+    - Load the Data: Import both CSV files into R. 
+    - Hint: Use RSudio import shortcut and then copy-paste the associated `read_csv()` code chunk into your script.
 
 3. Data Cleaning: Filter Out Specific Islands
 
    - In the `data_snail` tibble, remove all rows where the island column is "CH", "ED", or "GA".
-   - Hint: Use the `filter()` verb.
+   - Hint: Think whether we should use the `filter()` or `select()` verb?
   
 4. Join Data: 
 
@@ -53,13 +54,8 @@ Welcome to your second problem set! In this assignment, you will import and tidy
 
 7. Create One More Publication-Quality Figure:
 
-   - Explpre another interesting relationship or distribution in your data.
-   - Use what you have learned in the class to make the figure more informative and aesthetically pleasing.
-
-
-
-
-
+   - Explpre another interesting relationship in the dataset (such as amount or distribution).
+   - Use what you have learned in the class to make the figure informative and aesthetically pleasing.
 
 
 

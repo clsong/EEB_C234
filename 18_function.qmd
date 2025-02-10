@@ -1,0 +1,283 @@
+# Writing Functions
+
+::: {.callout-note}
+## Class Objectives
+1. Understand when and why to write functions
+2. Learn the basic structure of R functions
+3. Master writing vectorized functions
+4. Learn best practices for function documentation
+:::
+
+## Why Write Functions?
+
+Remember our discussion about vectorization and nested data? We've been using functions all along - `mean()` and `sum()`. But sometimes, you need a function that doesn't exist yet. That's when you write your own!
+
+Here are three signs you need a function:
+
+1. You've copied and pasted code more than twice
+2. You find yourself changing the same numbers in multiple places
+3. You want to make your code more readable and maintainable
+
+Writing functions also helps you avoid mistakes. For example, if you need to change a number in multiple places, you may forget to change one of them (speaking from experience :-(
+
+## Basic Function Structure
+
+Let's start with a simple function:
+
+```{r}
+calculate_bmi <- function(weight, height) {
+    bmi <- weight / (height^2)
+    return(bmi)
+}
+
+calculate_bmi(weight = 70, height = 1.75)
+```
+
+Let's break down the components:
+
+1. `calculate_bmi`: The function name (make it descriptive!)
+2. `function(weight, height)`: The arguments your function needs
+3. The code block between `{` and `}`: What your function does
+4. `return(bmi)`: What your function gives back
+
+### Exercise: Your First Function {-}
+
+Write a function to convert Fahrenheit to Celsius.
+
+::: {.panel-tabset}
+
+## Exercise
+
+```{webr}
+fahrenheit_to_celsius <- function(fahrenheit) {
+    # Formula: (°F - 32) × 5/9 = °C
+    ________
+}
+
+# Test your function
+fahrenheit_to_celsius(32)  # Should return 0
+fahrenheit_to_celsius(212) # Should return 100
+```
+
+## Solution
+
+```{webr}
+fahrenheit_to_celsius <- function(fahrenheit) {
+    celsius <- (fahrenheit - 32) * 5/9
+    return(celsius)
+}
+
+fahrenheit_to_celsius(32)
+fahrenheit_to_celsius(212)
+```
+:::
+
+## Writing Vectorized Functions
+
+Remember how we talked about the importance of vectorization? When writing your own functions, you want them to be vectorized too! The good news is that R makes this easy - if you use vectorized operations inside your function, your function will be vectorized automatically. For example, our function `calculate_bmi()` is vectorized automatically:
+ 
+```{r}
+weights <- c(70, 80, 90)
+heights <- c(1.75, 1.80, 1.85)
+calculate_bmi(weights, heights)
+```
+
+Sometimes it might be not obvious that a function is vectorized. The most simple solution is to test your function to a vector or a tibble. If it works, it's (most likely) vectorized!
+
+### Exercise: Vectorized Function {-}
+
+Write a function to calculate bill area (length × depth) that works with the penguins dataset.
+
+::: {.panel-tabset}
+
+## Exercise
+
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+
+calculate_bill_area <- function(length, depth) {
+    ________
+}
+
+# Test with the penguins dataset
+penguins |>
+    mutate(bill_area = calculate_bill_area(
+        bill_length_mm, 
+        bill_depth_mm
+    ))
+```
+
+## Solution
+
+```{webr}
+library(tidyverse)
+library(palmerpenguins)
+
+calculate_bill_area <- function(length, depth) {
+    return(length * depth)
+}
+
+penguins |>
+    mutate(bill_area = calculate_bill_area(
+        bill_length_mm, 
+        bill_depth_mm
+    ))
+```
+:::
+
+::: {.callout-tip collapse="true"}
+
+## Function Documentation
+
+Good functions need good documentation. In R, we use **roxygen2** style comments to document our functions:
+
+```{r}
+#' Calculate Body Mass Index (BMI)
+#'
+#' @param weight Weight in kilograms
+#' @param height Height in meters
+#' @return BMI value (kg/m^2)
+#' @examples
+#' calculate_bmi(70, 1.75)
+calculate_bmi <- function(weight, height) {
+    bmi <- weight / (height^2)
+    return(bmi)
+}
+```
+
+The documentation includes:
+1. A brief description
+2. Parameter descriptions (`@param`)
+3. What the function returns (`@return`)
+4. Example usage (`@examples`)
+
+:::
+
+## Best Practices
+
+When writing functions, follow these guidelines:
+
+1. **Names Matter**
+   - Use verbs for function names: `calculate_bmi()`, not `bmi()`
+   - Be consistent with your naming style
+   - Make names descriptive but not too long
+
+2. **Arguments Matter**
+   - Put the most important arguments first
+   - Use clear argument names
+   - Provide default values when it makes sense
+
+```{r}
+# Good function design
+calculate_bmi <- function(weight, height, units = "metric") {
+    if (units == "imperial") {
+        # Convert pounds to kg and inches to meters
+        weight <- weight * 0.453592
+        height <- height * 0.0254
+    }
+    return(weight / (height^2))
+}
+
+# Now works with both metric and imperial units
+calculate_bmi(70, 1.75) # metric (default)
+calculate_bmi(154, 69, units = "imperial") # imperial
+```
+
+3. **Error Checking**
+   - Check input validity
+   - Provide helpful error messages
+
+```{r}
+calculate_bmi <- function(weight, height, units = "metric") {
+    # Input validation
+    if (weight <= 0 || height <= 0) {
+        stop("Weight and height must be positive numbers")
+    }
+
+    if (units == "imperial") {
+        weight <- weight * 0.453592
+        height <- height * 0.0254
+    } else if (units != "metric") {
+        stop('Units must be either "metric" or "imperial"')
+    }
+
+    return(weight / (height^2))
+}
+```
+
+### Exercise: Complete Function {-}
+
+Write a complete function to calculate penguin body condition (mass divided by flipper length) with proper documentation and error checking.
+
+::: {.panel-tabset}
+
+## Exercise
+
+```{webr}
+#' Calculate penguin body condition
+#' 
+#' @param mass Body mass in grams
+#' @param flipper_length Flipper length in mm
+#' @return Body condition index
+#' @examples
+#' calculate_condition(3000, 200)
+calculate_condition <- function(mass, flipper_length) {
+    # Add input validation
+    
+    # Calculate condition
+    
+    # Return result
+}
+
+# Test with the penguins dataset
+penguins |>
+    mutate(condition = calculate_condition(
+        body_mass_g,
+        flipper_length_mm
+    ))
+```
+
+## Solution
+
+```{webr}
+#' Calculate penguin body condition
+#' 
+#' @param mass Body mass in grams
+#' @param flipper_length Flipper length in mm
+#' @return Body condition index
+#' @examples
+#' calculate_condition(3000, 200)
+calculate_condition <- function(mass, flipper_length) {
+    # Input validation
+    if (any(mass <= 0, na.rm = TRUE)) {
+        stop("Mass must be positive")
+    }
+    if (any(flipper_length <= 0, na.rm = TRUE)) {
+        stop("Flipper length must be positive")
+    }
+    
+    # Calculate and return condition
+    return(mass / flipper_length)
+}
+
+# Test with the penguins dataset
+penguins |>
+    mutate(condition = calculate_condition(
+        body_mass_g,
+        flipper_length_mm
+    ))
+```
+:::
+
+## Summary
+
+Writing functions is a crucial skill that builds on our understanding of vectorization and nested data:
+
+1. Write functions when you find yourself repeating code
+2. Make your functions vectorized when possible
+3. Use clear names and good documentation
+4. Include input validation and helpful error messages
+5. Test your functions with simple cases first
+
+Remember: A well-written function is like a good tool - it should do one thing, do it well, and be easy to use! 🛠️
