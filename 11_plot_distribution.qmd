@@ -52,12 +52,51 @@ c(1, 5, 20) %>%
 
 Density plots provide a smooth estimate of the distribution. For example, the following code creates a density plot for `flipper_length_mm`:
 
+::: {.panel-tabset}
+
+## Basic density plot
+
+It is very easy to draw a density plot.
+
 ```{r}
 #| warning: false
 penguins |>
     ggplot(aes(x = flipper_length_mm)) +
-    geom_density(fill = "lightblue")
+    geom_density()
 ```
+
+## Filled density plot
+
+In general, line drawing itself is not a good idea. It is better to fill the area under the curve (`geom_density()` with `fill = "what color you like"`).
+
+```{r}
+#| warning: false
+penguins |>
+    ggplot(aes(x = flipper_length_mm)) +
+    geom_density(fill = "lightblue", alpha = .9)
+```
+
+## Show the actual data points
+
+It is also a good idea to show the actual data points. You can use `geom_rug()` to do this.
+```{r}
+#| warning: false
+penguins |>
+    ggplot(aes(x = flipper_length_mm)) +
+    geom_density(fill = "lightblue") +
+    geom_rug()
+```
+
+However, when you have a lot of data points, it is better to use `geom_hdr_rug()` from the `ggdensity` package.
+```{r}
+#| warning: false
+penguins |>
+    ggplot(aes(x = flipper_length_mm)) +
+    geom_density(fill = "lightblue") +
+    ggdensity::geom_hdr_rug()
+```
+
+:::
 
 A common pitfall is that the density curve may extend beyond the actual data range. To illustrate, if you normalize your data to range from 0 to 1, the density estimate might still spill outside these bounds. Consider the following example where we normalize the flipper lengths and then set explicit x-axis limits:
 
@@ -370,12 +409,14 @@ lincoln_weather_clean |>
 ```
 
 ::: {.callout-tip}
-### Horizontal Plots
+### Alternative: Horizontal Plots
 
 An issue with ridge plots is that, when the number of groups is large, distributions can be too crowded to be useful. Horizon plots are a great alternative. It uses a very smart trick to avoid overplotting:
 
 ![From https://bernatgel.github.io/karyoploter_tutorial/Tutorial/PlotHorizon/PlotHorizon.html](img/horizon.animation.optimized.gif)
 
 You can use the `ggHoriPlot` package to create them easily. Check out the documentation [here](https://rivasiker.github.io/ggHoriPlot/articles/examples.html) for stunning examples.
+
+However, the risk is that the horizontal plot is not a standard plot type that most people are familiar with. Be cautious that other people might have trouble interpreting it.
 :::
 
