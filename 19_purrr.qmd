@@ -1,247 +1,231 @@
-# Using map() and Friends
+# Using `map()`
 
 ::: {.callout-note}
 ## Class Objectives
 1. Understand the concept of mapping functions
 2. Learn the basic `map()` functions and their variants
-3. Master working with lists using `map()`
-4. Learn when to use `map()` vs. `rowwise()`
+3. Learn how to use anonymous functions
 :::
 
-## What is Mapping?
+When you work with data in R, you often need to apply a function repeatedly—whether to every row in a tibble or every element in a vector. You might recall using `rowwise()` in past tutorials to apply functions to each row of nested data. In this session, we introduce `map()`, a function from the `purrr` package (part of the `tidyverse`) that makes these operations more concise and, in many cases, more powerful.
 
-Remember how we used `rowwise()` to apply functions to nested data? Well, `map()` is like its cool cousin - it's another way to apply functions to multiple pieces of data. Think of it as saying "take this function and apply it to each element in this list".
+Think of `map()` as saying, “Take this function and apply it to each element in this list or vector.” While the idea might seem a little abstract at first, with some practice you’ll appreciate its flexibility and efficiency.
 
-### The Basic Idea
-
-Let's start with a simple example. Suppose you want to calculate the length of several words:
+Let's dive in by loading our "best buddy" packages:
 
 ```{r}
 #| message: false
+#| warning: false
 library(tidyverse)
-
-# The old way (one by one)
-nchar("apple")
-nchar("banana")
-nchar("cherry")
-
-# The map way
-words <- c("apple", "banana", "cherry")
-map(words, nchar)
-```
-
-See what happened? `map()` took our `nchar` function and applied it to each word in our list. Magic! 🪄
-
-### Different Types of map()
-
-The `map()` family has several variants, depending on what type of output you want:
-
-```{r}
-# map() returns a list
-map(words, nchar)
-
-# map_dbl() returns a numeric vector
-map_dbl(words, nchar)
-
-# map_chr() returns a character vector
-map_chr(words, toupper)
-
-# map_lgl() returns a logical vector
-map_lgl(words, function(x) nchar(x) > 5)
-```
-
-Think of these variants as different containers for your results:
-- `map()`: A flexible shopping bag (can hold anything)
-- `map_dbl()`: A number-only box
-- `map_chr()`: A text-only box
-- `map_lgl()`: A true/false box
-
-## Working with Lists
-
-Let's get a bit more practical. Remember our penguin friends?
-
-```{r}
+library(tidylog)
 library(palmerpenguins)
+``` 
 
-# Create a list of data for each species
-species_data <- penguins |>
-    group_by(species) |>
-    nest() |>
-    pull(data) # <1>
-```
-1. `pull(data)` extracts just the data column, giving us a list of tibbles
+## Basics of Mapping
 
-Now we can use `map()` to analyze each species:
+### Example: Calculate the number of characters in several words
+
+Imagine you have a few words and you want to count the number of characters in each word. Previously, you might have used `rowwise()` as follows:
 
 ```{r}
-# Calculate mean bill length for each species
-map_dbl(species_data, function(df) mean(df$bill_length_mm, na.rm = TRUE))
+#| message: false
+#| warning: false
+
+tibble(words = c("mango", "lychee", "blueberry")) |>
+    rowwise() |>
+    mutate(length = nchar(words)) |>
+    ungroup()
 ```
 
-### Using the Formula Shorthand
+Here, we had to explicitly mark the tibble as rowwise and then ungroup the results. This works fine, but it can be a bit verbose.
 
-Writing anonymous functions can be tedious. Luckily, `map()` has a neat shortcut:
+We can use `map()` instead:
 
 ```{r}
-# The long way
-map_dbl(species_data, function(df) mean(df$bill_length_mm, na.rm = TRUE))
+#| message: false
+#| warning: false
 
-# The short way
-map_dbl(species_data, \(df) mean(df$bill_length_mm, na.rm = TRUE))
-
-# The even shorter way (using formula notation)
-map_dbl(species_data, ~ mean(.x$bill_length_mm, na.rm = TRUE))
+tibble(words = c("mango", "lychee", "blueberry")) |>
+    mutate(length = map(words, nchar))
 ```
 
-All three do exactly the same thing! The formula notation (with `~` and `.x`) is a purrr special sauce that makes your code more concise.
+**What’s happening here?**
 
-### Exercise: Species Statistics {-}
+- `map(words, nchar)` tells R: “For every element in the `words` vector, calculate the number of characters using `nchar()`.”
+- The result is a list column because, by default, `map()` returns a list.
 
-Calculate the standard deviation of bill depth for each species.
+### How `map()` Works
+
+The basic syntax is very simple:
+
+```{r}
+#| eval: false
+map(.x, .f)
+```
+
+- `.x`: The list or vector you want to iterate over.
+- `.f`: The function to apply to each element.
+
+`map()` takes each element from `.x` and sends it through the function `.f`, collecting the results in a new list. It is not that scary, right?
+
+### Getting a Vector Instead of a List
+
+Since `map()` always returns a list, you might sometimes want to convert the results into a vector format. There are two common ways to do this:
 
 ::: {.panel-tabset}
 
-## Exercise
-
-```{webr}
-library(tidyverse)
-library(palmerpenguins)
-
-species_data <- penguins |>
-    group_by(species) |>
-    nest() |>
-    pull(data)
-
-# Calculate sd of bill depth
-map_dbl(species_data, ~ ________)
-```
-
-## Solution
-
-```{webr}
-library(tidyverse)
-library(palmerpenguins)
-
-species_data <- penguins |>
-    group_by(species) |>
-    nest() |>
-    pull(data)
-
-map_dbl(species_data, ~ sd(.x$bill_depth_mm, na.rm = TRUE))
-```
-:::
-
-## Complex Operations with map()
-
-Let's fit a linear model for each species, just like we did with `rowwise()`:
+#### Unnest the Result
+After applying `map()`, you can “unnest” the list column to turn it into a regular vector:
 
 ```{r}
-# Fit models
-models <- map(species_data, ~ lm(bill_length_mm ~ bill_depth_mm, data = .x))
-
-# Extract R-squared values
-map_dbl(models, ~ summary(.x)$r.squared)
+tibble(words = c("mango", "lychee", "blueberry")) |>
+    mutate(length = map(words, nchar)) |>
+    unnest(length)
 ```
 
-Notice how we:
-1. Used `map()` to create a list of models
-2. Used `map_dbl()` to extract numeric R-squared values
-3. Didn't need to worry about list columns or `rowwise()`
+#### Use `map_vec()`
 
-### Multiple Inputs with map2()
-
-Sometimes you need to work with two lists at once. That's where `map2()` comes in:
+The function `map_vec()` directly returns a vector, so you don’t have to unnest later:
 
 ```{r}
-x <- list(1, 2, 3)
-y <- list(10, 20, 30)
+#| message: false
+#| warning: false
 
-map2(x, y, ~ .x + .y)  # .x is from first list, .y from second
+tibble(words = c("mango", "lychee", "blueberry")) |>
+    mutate(length = map_vec(words, nchar))
 ```
 
-### Exercise: Custom Models {-}
+::: {.callout-tip collapse="true"}
+## other `map_*()`
 
-Fit a linear model for each species using different formulas.
-
-::: {.panel-tabset}
-
-## Exercise
-
-```{webr}
-library(tidyverse)
-library(palmerpenguins)
-
-# Data
-species_data <- penguins |>
-    group_by(species) |>
-    nest() |>
-    pull(data)
-
-# Formulas for each species
-formulas <- list(
-    bill_length_mm ~ bill_depth_mm,
-    bill_length_mm ~ flipper_length_mm,
-    bill_length_mm ~ body_mass_g
-)
-
-# Fit different models for each species
-map2(species_data, formulas, ~ ________)
-```
-
-## Solution
-
-```{webr}
-library(tidyverse)
-library(palmerpenguins)
-
-# Data
-species_data <- penguins |>
-    group_by(species) |>
-    nest() |>
-    pull(data)
-
-# Formulas for each species
-formulas <- list(
-    bill_length_mm ~ bill_depth_mm,
-    bill_length_mm ~ flipper_length_mm,
-    bill_length_mm ~ body_mass_g
-)
-
-# Fit different models for each species
-map2(species_data, formulas, ~ lm(.y, data = .x))
-```
+Surprisingly, `map_vec()` is a recent introduction to `tidyverse` (specifically, the end of 2022, see [here](https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/#new-map_vec)). Before that, you could use `map_dbl()` or `map_lgl()` to get a vector, but you need to specify the type of vector you want to return, which is annoying! Luckily, this is not something you need to worry about anymore.
 :::
 
-## map() vs. rowwise(): When to Use Which?
+:::
 
-Both `map()` and `rowwise()` can handle similar tasks, but they have their sweet spots:
+## Anonymous Functions with `map()`
 
-Use `map()` when:
-1. You're working with plain lists
-2. You want to chain operations with the pipe
-3. You need different output types (numeric, character, etc.)
-4. You want to use the formula shorthand
+So far, it might not be clear why `map()` is better than `rowwise()` except that it is shorter to write. Below I will show you one of the huge advantages of `map()` - you can use anonymous functions (a.k.a. [lambda function](https://en.wikipedia.org/wiki/Anonymous_function#:~:text=Anonymous%20functions%20originate%20in%20the,programming%20languages%20support%20anonymous%20functions)): These are functions you define “on the fly” without formally naming them, which can make your code more concise when you only need a function once.
 
-Use `rowwise()` when:
-1. Your data is already in a tibble
-2. You need to maintain the tibble structure
-3. You're working with multiple columns
-4. You want to keep the results alongside the original data
+### Using `rowwise()`
 
-## Summary
+Let’s say you want to generate a series of random samples from a uniform distribution. Using `rowwise()`, you’d first have to define a separate function:
 
-The `map()` family of functions gives you a powerful way to work with lists and apply functions to multiple elements. Remember:
+```{r}
+#| eval: false
+# Define a function to generate samples
+sample_distribution <- function(n) {
+  runif(n, min = -1, max = 1) # <1>
+}
 
-1. Use the right map variant for your output type:
-   - `map()` for lists
-   - `map_dbl()` for numbers
-   - `map_chr()` for text
-   - `map_lgl()` for true/false
+# Apply the function rowwise
+tibble(n = c(10, 20, 30)) |>
+  rowwise() |>
+  mutate(sample = list(sample_distribution(n))) |>
+  ungroup()
 
-2. Take advantage of the formula shorthand (`~` and `.x`) for cleaner code
+## Equivalent `map()` approach
+tibble(n = c(10, 20, 30)) |>
+  mutate(sample = map(n, sample_distribution))
+```
+1. Generate `n` random samples from a uniform distribution from `-1` to `1`.
 
-3. Use `map2()` when you need to work with two lists at once
+### Using Anonymous Functions
+If the function is only needed once, you can define it right in the call to map():
 
-4. Choose between `map()` and `rowwise()` based on your data structure and needs
+```{r}
+tibble(
+    num_samples = c(10, 20, 30)
+) |>
+    mutate(
+        sample = map(num_samples, \(x) runif(x, min = -1, max = 1))
+    )
+```
 
-In the next chapter, we'll explore even more powerful functions from the purrr package! 🚀
+**Explanation**:
+
+- `\(x)` defines an anonymous function with x as its argument.
+- The body of the function (runif(x, min = -1, max = 1)) uses x directly.
+- This means “for each value in `num_samples`, generate x random numbers using `runif()`.”
+
+
+::: {.callout-tip collapse="true"}
+## Alternative Syntax for Anonymous Functions
+
+Older code might use a formula-style notation for anonymous functions. Although less common now, it’s still seen in many codebases, so it’s good to know about it. The syntax is as follows:
+
+```{r}
+#| eval: false
+tibble(
+    num_samples = c(10, 20, 30)
+) |>
+    mutate(
+        sample = map(num_samples, ~ runif(., min = -1, max = 1))
+    )
+```
+
+In this version, `~` denotes an anonymous function and `.` is a placeholder for the argument.
+
+:::
+
+:::
+
+
+## Mapping with Multiple Inputs
+
+Sometimes, you need to work with more than one column simultaneously. Purrr provides two handy functions: `map2()` and `pmap()`.
+
+### `map2()`: Working with Two Inputs
+
+`map2()` applies a function to two vectors element-wise. For example:
+
+```{r}
+tibble(
+    num_samples = c(10, 20, 30),
+    sample_min = c(-1, -2, -3)
+) |>
+    mutate(
+        sample = map2(
+            num_samples, sample_min,
+            \(n, min) runif(n, min = min, max = 1)
+        )
+    )
+```
+
+**How It Works**:
+
+- `map2()` takes the first element from `num_samples` and the first element from `sample_min`
+- We pass them as `n` and `min` to the anonymous function `\(n, min) runif(n, min = min, max = 1)`.
+- This is repeated for all corresponding pairs.
+
+## `pmap()`: Working with Multiple Inputs
+
+If you have more than two vectors, use `pmap()`:
+
+```{r}
+tibble(
+    num_samples = c(10, 20, 30),
+    sample_min = c(-1, -2, -3),
+    sample_max = c(2, 3, 4)
+) |>
+    mutate(
+        sample = pmap(
+            list(num_samples, sample_min, sample_max), # <1>
+            \(n, min, max) runif(n, min = min, max = max) # <2>
+        )
+    )
+```
+1. The `pmap()` function takes a list of columns. So you need to wrap your columns in a list.
+2. The anonymous function takes three arguments as what you input in `pmap()`.
+
+## When to use `map()` vs `rowwise()`
+
+Both `map()` and `rowwise()` help you loop over your data, but they have different vibes:
+
+- `map()` is your go-to for functional programming. It’s built to apply a function to every element in a vector or list and is extra handy when you’re juggling multiple inputs with helpers like `map2()` or `pmap()`. If you dig writing concise code with anonymous functions, `map()` is where it's at.
+
+- `rowwise()` is more about thinking in rows. It’s great if you want to work row by row in a tibble, and it feels pretty intuitive—like taking it one row at a time. Just keep in mind that once you're done, you'll usually want to call `ungroup()` to tidy up your tibble.
+
+Usually, `map()` leads to cleaner and more streamlined code, especially if you're comfortable with a functional programming approach. That said, if you’re just dipping your toes into these concepts, `rowwise()` can be a nice stepping stone—a sort of “gateway drug” into the world of functional programming.
+
+In most turorials, `rowwise()` is simply not taught. While I agree that `map()` is more powerful and you do not need to use it if you do not want to, I personally find that `rowwise()` is much easier to write and read. It is a natural building step (gateway drug) to functional programming!.

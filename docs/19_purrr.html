@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>13&nbsp; Visualizing Association – EE BIOL C234</title>
+<title>19&nbsp; Using map() – EE BIOL C234</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./14_plot_others.html" rel="next">
-<link href="./12_plot_trend.html" rel="prev">
+<link href="./18_function.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -127,7 +126,7 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_plot_amount.html">Visualization by Type</a></li><li class="breadcrumb-item"><a href="./13_plot_association.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Visualizing Association</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./16_vectorization.html">R Programming</a></li><li class="breadcrumb-item"><a href="./19_purrr.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Using <code>map()</code></span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -286,7 +285,7 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./13_plot_association.html" class="sidebar-item-text sidebar-link active">
+  <a href="./13_plot_association.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Visualizing Association</span></span></a>
   </div>
 </li>
@@ -333,7 +332,7 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./19_purrr.html" class="sidebar-item-text sidebar-link">
+  <a href="./19_purrr.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Using <code>map()</code></span></span></a>
   </div>
 </li>
@@ -349,23 +348,32 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#marginal-distributions" id="toc-marginal-distributions" class="nav-link active" data-scroll-target="#marginal-distributions"><span class="header-section-number">13.1</span> Marginal distributions</a></li>
-  <li><a href="#addressing-overplotting" id="toc-addressing-overplotting" class="nav-link" data-scroll-target="#addressing-overplotting"><span class="header-section-number">13.2</span> Addressing Overplotting</a></li>
-  <li><a href="#axis-transformation" id="toc-axis-transformation" class="nav-link" data-scroll-target="#axis-transformation"><span class="header-section-number">13.3</span> Axis Transformation</a></li>
-  <li><a href="#high-dimensional-data" id="toc-high-dimensional-data" class="nav-link" data-scroll-target="#high-dimensional-data"><span class="header-section-number">13.4</span> High-Dimensional Data</a>
+  <li><a href="#basics-of-mapping" id="toc-basics-of-mapping" class="nav-link active" data-scroll-target="#basics-of-mapping"><span class="header-section-number">19.1</span> Basics of Mapping</a>
   <ul class="collapse">
-  <li><a href="#pairwise-plots" id="toc-pairwise-plots" class="nav-link" data-scroll-target="#pairwise-plots"><span class="header-section-number">13.4.1</span> Pairwise plots</a></li>
-  <li><a href="#dimension-reduction" id="toc-dimension-reduction" class="nav-link" data-scroll-target="#dimension-reduction"><span class="header-section-number">13.4.2</span> Dimension reduction</a></li>
+  <li><a href="#example-calculate-the-number-of-characters-in-several-words" id="toc-example-calculate-the-number-of-characters-in-several-words" class="nav-link" data-scroll-target="#example-calculate-the-number-of-characters-in-several-words"><span class="header-section-number">19.1.1</span> Example: Calculate the number of characters in several words</a></li>
+  <li><a href="#how-map-works" id="toc-how-map-works" class="nav-link" data-scroll-target="#how-map-works"><span class="header-section-number">19.1.2</span> How <code>map()</code> Works</a></li>
+  <li><a href="#getting-a-vector-instead-of-a-list" id="toc-getting-a-vector-instead-of-a-list" class="nav-link" data-scroll-target="#getting-a-vector-instead-of-a-list"><span class="header-section-number">19.1.3</span> Getting a Vector Instead of a List</a></li>
   </ul></li>
+  <li><a href="#anonymous-functions-with-map" id="toc-anonymous-functions-with-map" class="nav-link" data-scroll-target="#anonymous-functions-with-map"><span class="header-section-number">19.2</span> Anonymous Functions with <code>map()</code></a>
+  <ul class="collapse">
+  <li><a href="#using-rowwise" id="toc-using-rowwise" class="nav-link" data-scroll-target="#using-rowwise"><span class="header-section-number">19.2.1</span> Using <code>rowwise()</code></a></li>
+  <li><a href="#using-anonymous-functions" id="toc-using-anonymous-functions" class="nav-link" data-scroll-target="#using-anonymous-functions"><span class="header-section-number">19.2.2</span> Using Anonymous Functions</a></li>
+  </ul></li>
+  <li><a href="#mapping-with-multiple-inputs" id="toc-mapping-with-multiple-inputs" class="nav-link" data-scroll-target="#mapping-with-multiple-inputs"><span class="header-section-number">19.3</span> Mapping with Multiple Inputs</a>
+  <ul class="collapse">
+  <li><a href="#map2-working-with-two-inputs" id="toc-map2-working-with-two-inputs" class="nav-link" data-scroll-target="#map2-working-with-two-inputs"><span class="header-section-number">19.3.1</span> <code>map2()</code>: Working with Two Inputs</a></li>
+  </ul></li>
+  <li><a href="#pmap-working-with-multiple-inputs" id="toc-pmap-working-with-multiple-inputs" class="nav-link" data-scroll-target="#pmap-working-with-multiple-inputs"><span class="header-section-number">19.4</span> <code>pmap()</code>: Working with Multiple Inputs</a></li>
+  <li><a href="#when-to-use-map-vs-rowwise" id="toc-when-to-use-map-vs-rowwise" class="nav-link" data-scroll-target="#when-to-use-map-vs-rowwise"><span class="header-section-number">19.5</span> When to use <code>map()</code> vs <code>rowwise()</code></a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_plot_amount.html">Visualization by Type</a></li><li class="breadcrumb-item"><a href="./13_plot_association.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Visualizing Association</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./16_vectorization.html">R Programming</a></li><li class="breadcrumb-item"><a href="./19_purrr.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Using <code>map()</code></span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Visualizing Association</span></h1>
+<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Using <code>map()</code></span></h1>
 </div>
 
 
@@ -382,310 +390,310 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
 </header>
 
 
-<p>Understanding how variables are associated is one of the most important aspects of data analysis. We have already seen some examples of association in the previous chapters. But given its importance, we will greatly expand on this topic. In this chapter, we will explore a variety of techniques to visualize these associations.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidylog)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(cowplot<span class="sc">::</span><span class="fu">theme_cowplot</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="marginal-distributions" class="level2" data-number="13.1">
-<h2 data-number="13.1" class="anchored" data-anchor-id="marginal-distributions"><span class="header-section-number">13.1</span> Marginal distributions</h2>
-<p>Marginal distributions show the distribution of each variable along the axes of a scatter plot. They provide additional context to understand the spread and density of the data.</p>
-<p>A simple way to add marginal information is by using geom_rug(), which adds tick marks along the axes:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_rug</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="13_plot_association_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Despite its usefulness, when we have multiple groups, it would be difficult to differentiate the marginal distributions among groups.</p>
-<p>For a clearer separation of marginal distributions by group, the ggside package provides density plots along each axis:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggside)</span>
-<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-3-3"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">color =</span> species)) <span class="sc">+</span></span>
-<span id="annotated-cell-3-5"><a href="#annotated-cell-3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-6" class="code-annotation-target"><a href="#annotated-cell-3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_xsidedensity</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-7" class="code-annotation-target"><a href="#annotated-cell-3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_ysidedensity</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
-<span id="annotated-cell-3-8"><a href="#annotated-cell-3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="3">3</button><span id="annotated-cell-3-9" class="code-annotation-target"><a href="#annotated-cell-3-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">ggside.axis.text =</span> <span class="fu">element_blank</span>()</span>
-<span id="annotated-cell-3-10"><a href="#annotated-cell-3-10" aria-hidden="true" tabindex="-1"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="6" data-code-annotation="1">Add density plot along the x-axis</span>
-</dd>
-<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="7" data-code-annotation="2">Add density plot along the y-axis</span>
-</dd>
-<dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-3" data-code-lines="9" data-code-annotation="3">Remove side axis text</span>
-</dd>
-</dl>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="13_plot_association_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="addressing-overplotting" class="level2" data-number="13.2">
-<h2 data-number="13.2" class="anchored" data-anchor-id="addressing-overplotting"><span class="header-section-number">13.2</span> Addressing Overplotting</h2>
-<p>When there are too many points in a scatter plot, overplotting can obscure patterns and lead to misinterpretation (a related real science story <a href="https://liorpachter.wordpress.com/2017/09/02/a-rebuttal/">here</a>).</p>
-<p>We will use the <code>lending_club</code> dataset from the <code>modeldata</code> package to illustrate several strategies for managing overplotting. We fist load and transform the data so that variables spanning several orders of magnitude are easier to visualize (using a <code>log10()</code> transformation):</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(lending_club, <span class="at">package =</span> <span class="st">"modeldata"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>lending_club_log10 <span class="ot">&lt;-</span> lending_club <span class="sc">|&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">annual_inc =</span> <span class="fu">log10</span>(annual_inc)) <span class="sc">|&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">total_il_high_credit_limit =</span> <span class="fu">log10</span>(total_il_high_credit_limit)) <span class="sc">|&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">is.finite</span>(annual_inc), <span class="fu">is.finite</span>(total_il_high_credit_limit))</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>lending_club_log10 <span class="sc">|&gt;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> annual_inc, <span class="at">y =</span> total_il_high_credit_limit)) <span class="sc">+</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="13_plot_association_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Lowering Point Transparency</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">2D Counter Plots with Density Estimation</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Color-Coding Points by Density</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>By reducing the transparency (alpha) of points, overlapping points become less dominant:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a>lending_club_log10 <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-9-2"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> annual_inc, <span class="at">y =</span> total_il_high_credit_limit)) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-3" class="code-annotation-target"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.05</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="3" data-code-annotation="1">Tune the transparency</span>
-</dd>
-</dl>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="13_plot_association_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>For example, alpha = 0.05 means that 20 overlapping points are equivalent to 1 opaque point.</p>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>Instead of plotting every individual point, you can visualize the density of points using counter plots. We will use the <code>ggdensity</code> package to help with this.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a>lending_club_log10 <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-10-2"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> annual_inc, <span class="at">y =</span> total_il_high_credit_limit)) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-3" class="code-annotation-target"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a>    ggdensity<span class="sc">::</span><span class="fu">geom_hdr</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-10" data-code-lines="3" data-code-annotation="1">Add a 2D counter plot</span>
-</dd>
-</dl>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="13_plot_association_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Alternatively, you can overlay density contours on top of a scatter plot:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a>lending_club_log10 <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-11-2"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> annual_inc, <span class="at">y =</span> total_il_high_credit_limit)) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1">1</button><span id="annotated-cell-11-3" class="code-annotation-target"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a>    ggdensity<span class="sc">::</span><span class="fu">geom_hdr_lines</span>() <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="2">2</button><span id="annotated-cell-11-4" class="code-annotation-target"><a href="#annotated-cell-11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">pch=</span><span class="st">'.'</span>, <span class="at">color =</span> <span class="st">'black'</span>, <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-11" data-code-lines="3" data-code-annotation="1">Add density contours only</span>
-</dd>
-<dt data-target-cell="annotated-cell-11" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-11" data-code-lines="4" data-code-annotation="2">Add points with low transparency</span>
-</dd>
-</dl>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="13_plot_association_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Note that we used <code>pch='.'</code>. This makes data points as non-aliased single pixels. It greatly speed up rendering (which could take forever if you have a lot of points).</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Want it even faster?
+Class Objectives
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The package <code>scattermore</code> (<a href="https://github.com/exaexa/scattermore">link</a>) provides an insanely fast way to render scatter plots. For most use cases, it won’t matter that much, but it is always good to know you have options.</p>
+<ol type="1">
+<li>Understand the concept of mapping functions</li>
+<li>Learn the basic <code>map()</code> functions and their variants</li>
+<li>Learn how to use anonymous functions</li>
+</ol>
 </div>
 </div>
-</div>
-<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<p>The <code>ggpointdensity</code> package colors points based on the local point density, highlighting areas of high concentration. It is a combination of two best worlds.</p>
+<p>When you work with data in R, you often need to apply a function repeatedly—whether to every row in a tibble or every element in a vector. You might recall using <code>rowwise()</code> in past tutorials to apply functions to each row of nested data. In this session, we introduce <code>map()</code>, a function from the <code>purrr</code> package (part of the <code>tidyverse</code>) that makes these operations more concise and, in many cases, more powerful.</p>
+<p>Think of <code>map()</code> as saying, “Take this function and apply it to each element in this list or vector.” While the idea might seem a little abstract at first, with some practice you’ll appreciate its flexibility and efficiency.</p>
+<p>Let’s dive in by loading our “best buddy” packages:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-12" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a>lending_club_log10 <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-12-2"><a href="#annotated-cell-12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> annual_inc, <span class="at">y =</span> total_il_high_credit_limit)) <span class="sc">+</span></span>
-<span id="annotated-cell-12-3"><a href="#annotated-cell-12-3" aria-hidden="true" tabindex="-1"></a>    ggpointdensity<span class="sc">::</span><span class="fu">geom_pointdensity</span>() <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-4" class="code-annotation-target"><a href="#annotated-cell-12-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_viridis_c</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidylog)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="basics-of-mapping" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="basics-of-mapping"><span class="header-section-number">19.1</span> Basics of Mapping</h2>
+<section id="example-calculate-the-number-of-characters-in-several-words" class="level3" data-number="19.1.1">
+<h3 data-number="19.1.1" class="anchored" data-anchor-id="example-calculate-the-number-of-characters-in-several-words"><span class="header-section-number">19.1.1</span> Example: Calculate the number of characters in several words</h3>
+<p>Imagine you have a few words and you want to count the number of characters in each word. Previously, you might have used <code>rowwise()</code> as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">words =</span> <span class="fu">c</span>(<span class="st">"mango"</span>, <span class="st">"lychee"</span>, <span class="st">"blueberry"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">length =</span> <span class="fu">nchar</span>(words)) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["words"],"name":[1],"type":["chr"],"align":["left"]},{"label":["length"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"mango","2":"5"},{"1":"lychee","2":"6"},{"1":"blueberry","2":"9"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Here, we had to explicitly mark the tibble as rowwise and then ungroup the results. This works fine, but it can be a bit verbose.</p>
+<p>We can use <code>map()</code> instead:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">words =</span> <span class="fu">c</span>(<span class="st">"mango"</span>, <span class="st">"lychee"</span>, <span class="st">"blueberry"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">length =</span> <span class="fu">map</span>(words, nchar))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["words"],"name":[1],"type":["chr"],"align":["left"]},{"label":["length"],"name":[2],"type":["list"],"align":["right"]}],"data":[{"1":"mango","2":"<int [1]>"},{"1":"lychee","2":"<int [1]>"},{"1":"blueberry","2":"<int [1]>"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p><strong>What’s happening here?</strong></p>
+<ul>
+<li><code>map(words, nchar)</code> tells R: “For every element in the <code>words</code> vector, calculate the number of characters using <code>nchar()</code>.”</li>
+<li>The result is a list column because, by default, <code>map()</code> returns a list.</li>
+</ul>
+</section>
+<section id="how-map-works" class="level3" data-number="19.1.2">
+<h3 data-number="19.1.2" class="anchored" data-anchor-id="how-map-works"><span class="header-section-number">19.1.2</span> How <code>map()</code> Works</h3>
+<p>The basic syntax is very simple:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(.x, .f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><code>.x</code>: The list or vector you want to iterate over.</li>
+<li><code>.f</code>: The function to apply to each element.</li>
+</ul>
+<p><code>map()</code> takes each element from <code>.x</code> and sends it through the function <code>.f</code>, collecting the results in a new list. It is not that scary, right?</p>
+</section>
+<section id="getting-a-vector-instead-of-a-list" class="level3" data-number="19.1.3">
+<h3 data-number="19.1.3" class="anchored" data-anchor-id="getting-a-vector-instead-of-a-list"><span class="header-section-number">19.1.3</span> Getting a Vector Instead of a List</h3>
+<p>Since <code>map()</code> always returns a list, you might sometimes want to convert the results into a vector format. There are two common ways to do this:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Unnest the Result</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Use <code>map_vec()</code></a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>After applying <code>map()</code>, you can “unnest” the list column to turn it into a regular vector:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">words =</span> <span class="fu">c</span>(<span class="st">"mango"</span>, <span class="st">"lychee"</span>, <span class="st">"blueberry"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">length =</span> <span class="fu">map</span>(words, nchar)) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre data-code-line-numbers=""><code>mutate: new variable 'length' (list) with 3 unique values and 0% NA</code></pre>
+</div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["words"],"name":[1],"type":["chr"],"align":["left"]},{"label":["length"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"mango","2":"5"},{"1":"lychee","2":"6"},{"1":"blueberry","2":"9"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>The function <code>map_vec()</code> directly returns a vector, so you don’t have to unnest later:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">words =</span> <span class="fu">c</span>(<span class="st">"mango"</span>, <span class="st">"lychee"</span>, <span class="st">"blueberry"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">length =</span> <span class="fu">map_vec</span>(words, nchar))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["words"],"name":[1],"type":["chr"],"align":["left"]},{"label":["length"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"mango","2":"5"},{"1":"lychee","2":"6"},{"1":"blueberry","2":"9"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+other <code>map_*()</code>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Surprisingly, <code>map_vec()</code> is a recent introduction to <code>tidyverse</code> (specifically, the end of 2022, see <a href="https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/#new-map_vec">here</a>). Before that, you could use <code>map_dbl()</code> or <code>map_lgl()</code> to get a vector, but you need to specify the type of vector you want to return, which is annoying! Luckily, this is not something you need to worry about anymore.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="anonymous-functions-with-map" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="anonymous-functions-with-map"><span class="header-section-number">19.2</span> Anonymous Functions with <code>map()</code></h2>
+<p>So far, it might not be clear why <code>map()</code> is better than <code>rowwise()</code> except that it is shorter to write. Below I will show you one of the huge advantages of <code>map()</code> - you can use anonymous functions (a.k.a. <a href="https://en.wikipedia.org/wiki/Anonymous_function#:~:text=Anonymous%20functions%20originate%20in%20the,programming%20languages%20support%20anonymous%20functions">lambda function</a>): These are functions you define “on the fly” without formally naming them, which can make your code more concise when you only need a function once.</p>
+<section id="using-rowwise" class="level3" data-number="19.2.1">
+<h3 data-number="19.2.1" class="anchored" data-anchor-id="using-rowwise"><span class="header-section-number">19.2.1</span> Using <code>rowwise()</code></h3>
+<p>Let’s say you want to generate a series of random samples from a uniform distribution. Using <code>rowwise()</code>, you’d first have to define a separate function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a function to generate samples</span></span>
+<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>sample_distribution <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-3" class="code-annotation-target"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">runif</span>(n, <span class="at">min =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">max =</span> <span class="dv">1</span>)</span>
+<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-5-6"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the function rowwise</span></span>
+<span id="annotated-cell-5-7"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">n =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-5-9"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">list</span>(<span class="fu">sample_distribution</span>(n))) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-5-10"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="annotated-cell-5-11"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-5-12"><a href="#annotated-cell-5-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Equivalent `map()` approach</span></span>
+<span id="annotated-cell-5-13"><a href="#annotated-cell-5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">n =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-5-14"><a href="#annotated-cell-5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">map</span>(n, sample_distribution))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-12" data-code-lines="4" data-code-annotation="1">Use viridis color palette (generally preferred over the default)</span>
+<span data-code-cell="annotated-cell-5" data-code-lines="3" data-code-annotation="1">Generate <code>n</code> random samples from a uniform distribution from <code>-1</code> to <code>1</code>.</span>
 </dd>
 </dl>
 </div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="13_plot_association_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
 </div>
 </section>
-<section id="axis-transformation" class="level2" data-number="13.3">
-<h2 data-number="13.3" class="anchored" data-anchor-id="axis-transformation"><span class="header-section-number">13.3</span> Axis Transformation</h2>
-<p>Because data can span several orders of magnitude, we often use log transformed axes. It is straightforward to do so in <code>ggplot2</code>. We will test the famous Kleiber’s law on how metabolic rate scales with body mass. We use the <code>ex0826</code> dataset from the <code>Sleuth3</code> package.</p>
+<section id="using-anonymous-functions" class="level3" data-number="19.2.2">
+<h3 data-number="19.2.2" class="anchored" data-anchor-id="using-anonymous-functions"><span class="header-section-number">19.2.2</span> Using Anonymous Functions</h3>
+<p>If the function is only needed once, you can define it right in the call to map():</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(ex0826, <span class="at">package =</span> <span class="st">"Sleuth3"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ex0826 <span class="sc">|&gt;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Mass, <span class="at">y =</span> Metab)) <span class="sc">+</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_log10</span>( </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">trans_breaks</span>(<span class="st">"log10"</span>, <span class="cf">function</span>(x) <span class="dv">10</span><span class="sc">^</span>x),</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">trans_format</span>(<span class="st">"log10"</span>, scales<span class="sc">::</span><span class="fu">math_format</span>(<span class="dv">10</span><span class="sc">^</span>.x))</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_log10</span>(</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">trans_breaks</span>(<span class="st">"log10"</span>, <span class="cf">function</span>(x) <span class="dv">10</span><span class="sc">^</span>x),</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">trans_format</span>(<span class="st">"log10"</span>, scales<span class="sc">::</span><span class="fu">math_format</span>(<span class="dv">10</span><span class="sc">^</span>.x))</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotation_logticks</span>() <span class="sc">+</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    ggpmisc<span class="sc">::</span><span class="fu">stat_quant_eq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="13_plot_association_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Log plots are super useful. However, it warrants caution as it may not be as intuitive as it seems (see a recent <a href="https://www.nature.com/articles/s41559-018-0610-7">study</a>).</p>
-<p>Additionally, visual associations cannot replace rigorous statistical tests. As scientists, we should always put ourselves to a high standard to avoid artefacts (see two related scientific debates <a href="https://www.nature.com/articles/s41467-019-08746-5">here</a> and <a href="https://www.science.org/doi/full/10.1126/science.1114488">here</a>).</p>
-</section>
-<section id="high-dimensional-data" class="level2" data-number="13.4">
-<h2 data-number="13.4" class="anchored" data-anchor-id="high-dimensional-data"><span class="header-section-number">13.4</span> High-Dimensional Data</h2>
-<p>When dealing with multiple variables, it is often insightful to explore relationships beyond simple 2D plots. We illustrate two common approaches with the <code>penguins</code> dataset.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>penguins_small <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(species, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g) <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_samples =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">sample =</span> <span class="fu">map</span>(num_samples, \(x) <span class="fu">runif</span>(x, <span class="at">min =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">max =</span> <span class="dv">1</span>))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre data-code-line-numbers=""><code>select: dropped 3 variables (island, sex, year)
-drop_na: removed 2 rows (1%), 342 rows remaining</code></pre>
+<pre data-code-line-numbers=""><code>mutate: new variable 'sample' (list) with 3 unique values and 0% NA</code></pre>
 </div>
-</div>
-<section id="pairwise-plots" class="level3" data-number="13.4.1">
-<h3 data-number="13.4.1" class="anchored" data-anchor-id="pairwise-plots"><span class="header-section-number">13.4.1</span> Pairwise plots</h3>
-<p>Pairwise plots (or scatterplot matrices) allow you to visualize the relationships between all pairs of variables in a dataset. They are especially useful for exploratory data analysis. We will use the <code>GGally</code> package to create these plots.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>penguins_small <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    GGally<span class="sc">::</span><span class="fu">ggpairs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="13_plot_association_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["num_samples"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["sample"],"name":[2],"type":["list"],"align":["right"]}],"data":[{"1":"10","2":"<dbl [10]>"},{"1":"20","2":"<dbl [20]>"},{"1":"30","2":"<dbl [30]>"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
 </div>
 </div>
-</section>
-<section id="dimension-reduction" class="level3" data-number="13.4.2">
-<h3 data-number="13.4.2" class="anchored" data-anchor-id="dimension-reduction"><span class="header-section-number">13.4.2</span> Dimension reduction</h3>
-<p>Dimension reduction techniques help summarize high-dimensional data into two or three dimensions, making it easier to visualize complex relationships. Although many packages exist, we will use the <code>ggpca</code> package as it offers several options (e.g., PCA, t-SNE, UMAP) through a consistent interface.</p>
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li><code>\(x)</code> defines an anonymous function with x as its argument.</li>
+<li>The body of the function (runif(x, min = -1, max = 1)) uses x directly.</li>
+<li>This means “for each value in <code>num_samples</code>, generate x random numbers using <code>runif()</code>.”</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Alternative Syntax for Anonymous Functions
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Older code might use a formula-style notation for anonymous functions. Although less common now, it’s still seen in many codebases, so it’s good to know about it. The syntax is as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpca)</span>
-<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>penguins_small <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-8-3"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggpca</span>(</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-4" class="code-annotation-target"><a href="#annotated-cell-8-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">metadata_cols =</span> <span class="st">"species"</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2">2</button><span id="annotated-cell-8-5" class="code-annotation-target"><a href="#annotated-cell-8-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">mode =</span> <span class="st">"pca"</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="3">3</button><span id="annotated-cell-8-6" class="code-annotation-target"><a href="#annotated-cell-8-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">color_var =</span> <span class="st">"species"</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="4">4</button><span id="annotated-cell-8-7" class="code-annotation-target"><a href="#annotated-cell-8-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">ellipse =</span> <span class="cn">TRUE</span></span>
-<span id="annotated-cell-8-8"><a href="#annotated-cell-8-8" aria-hidden="true" tabindex="-1"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_samples =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">sample =</span> <span class="fu">map</span>(num_samples, <span class="sc">~</span> <span class="fu">runif</span>(., <span class="at">min =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">max =</span> <span class="dv">1</span>))</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In this version, <code>~</code> denotes an anonymous function and <code>.</code> is a placeholder for the argument.</p>
+</div>
+</div>
+</div>
+<p>:::</p>
+</section>
+</section>
+<section id="mapping-with-multiple-inputs" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="mapping-with-multiple-inputs"><span class="header-section-number">19.3</span> Mapping with Multiple Inputs</h2>
+<p>Sometimes, you need to work with more than one column simultaneously. Purrr provides two handy functions: <code>map2()</code> and <code>pmap()</code>.</p>
+<section id="map2-working-with-two-inputs" class="level3" data-number="19.3.1">
+<h3 data-number="19.3.1" class="anchored" data-anchor-id="map2-working-with-two-inputs"><span class="header-section-number">19.3.1</span> <code>map2()</code>: Working with Two Inputs</h3>
+<p><code>map2()</code> applies a function to two vectors element-wise. For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_samples =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">sample_min =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">3</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">sample =</span> <span class="fu">map2</span>(</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>            num_samples, sample_min,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>            \(n, min) <span class="fu">runif</span>(n, <span class="at">min =</span> min, <span class="at">max =</span> <span class="dv">1</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre data-code-line-numbers=""><code>mutate: new variable 'sample' (list) with 3 unique values and 0% NA</code></pre>
+</div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["num_samples"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["sample_min"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sample"],"name":[3],"type":["list"],"align":["right"]}],"data":[{"1":"10","2":"-1","3":"<dbl [10]>"},{"1":"20","2":"-2","3":"<dbl [20]>"},{"1":"30","2":"-3","3":"<dbl [30]>"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p><strong>How It Works</strong>:</p>
+<ul>
+<li><code>map2()</code> takes the first element from <code>num_samples</code> and the first element from <code>sample_min</code></li>
+<li>We pass them as <code>n</code> and <code>min</code> to the anonymous function <code>\(n, min) runif(n, min = min, max = 1)</code>.</li>
+<li>This is repeated for all corresponding pairs.</li>
+</ul>
+</section>
+</section>
+<section id="pmap-working-with-multiple-inputs" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="pmap-working-with-multiple-inputs"><span class="header-section-number">19.4</span> <code>pmap()</code>: Working with Multiple Inputs</h2>
+<p>If you have more than two vectors, use <code>pmap()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-8" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_samples =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>),</span>
+<span id="annotated-cell-8-3"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">sample_min =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">3</span>),</span>
+<span id="annotated-cell-8-4"><a href="#annotated-cell-8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sample_max =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="annotated-cell-8-5"><a href="#annotated-cell-8-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-8-6"><a href="#annotated-cell-8-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="annotated-cell-8-7"><a href="#annotated-cell-8-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">sample =</span> <span class="fu">pmap</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-8" class="code-annotation-target"><a href="#annotated-cell-8-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">list</span>(num_samples, sample_min, sample_max),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2">2</button><span id="annotated-cell-8-9" class="code-annotation-target"><a href="#annotated-cell-8-9" aria-hidden="true" tabindex="-1"></a>            \(n, min, max) <span class="fu">runif</span>(n, <span class="at">min =</span> min, <span class="at">max =</span> max)</span>
+<span id="annotated-cell-8-10"><a href="#annotated-cell-8-10" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="annotated-cell-8-11"><a href="#annotated-cell-8-11" aria-hidden="true" tabindex="-1"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="4" data-code-annotation="1">Column to use for grouping/metadata</span>
+<span data-code-cell="annotated-cell-8" data-code-lines="8" data-code-annotation="1">The <code>pmap()</code> function takes a list of columns. So you need to wrap your columns in a list.</span>
 </dd>
 <dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="5" data-code-annotation="2">Choose PCA; change to “tsne” or “umap” as desired</span>
-</dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="6" data-code-annotation="3">Color points by species</span>
-</dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="4">4</dt>
-<dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="7" data-code-annotation="4">Add ellipses for group boundaries</span>
+<span data-code-cell="annotated-cell-8" data-code-lines="9" data-code-annotation="2">The anonymous function takes three arguments as what you input in <code>pmap()</code>.</span>
 </dd>
 </dl>
 </div>
+<div class="cell-output cell-output-stderr">
+<pre data-code-line-numbers=""><code>mutate: new variable 'sample' (list) with 3 unique values and 0% NA</code></pre>
+</div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="13_plot_association_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["num_samples"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["sample_min"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sample_max"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["sample"],"name":[4],"type":["list"],"align":["right"]}],"data":[{"1":"10","2":"-1","3":"2","4":"<dbl [10]>"},{"1":"20","2":"-2","3":"3","4":"<dbl [20]>"},{"1":"30","2":"-3","3":"4","4":"<dbl [30]>"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
 </div>
 </div>
-<p>While dimension reduction techniques are powerful, they can sometimes be misleading. They simplify complex relationships and might hide important nuances of the data. For more insights on potential pitfalls, see <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1011288">this article</a>.</p>
-
-
 </section>
+<section id="when-to-use-map-vs-rowwise" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="when-to-use-map-vs-rowwise"><span class="header-section-number">19.5</span> When to use <code>map()</code> vs <code>rowwise()</code></h2>
+<p>Both <code>map()</code> and <code>rowwise()</code> help you loop over your data, but they have different vibes:</p>
+<ul>
+<li><p><code>map()</code> is your go-to for functional programming. It’s built to apply a function to every element in a vector or list and is extra handy when you’re juggling multiple inputs with helpers like <code>map2()</code> or <code>pmap()</code>. If you dig writing concise code with anonymous functions, <code>map()</code> is where it’s at.</p></li>
+<li><p><code>rowwise()</code> is more about thinking in rows. It’s great if you want to work row by row in a tibble, and it feels pretty intuitive—like taking it one row at a time. Just keep in mind that once you’re done, you’ll usually want to call <code>ungroup()</code> to tidy up your tibble.</p></li>
+</ul>
+<p>Usually, <code>map()</code> leads to cleaner and more streamlined code, especially if you’re comfortable with a functional programming approach. That said, if you’re just dipping your toes into these concepts, <code>rowwise()</code> can be a nice stepping stone—a sort of “gateway drug” into the world of functional programming.</p>
+<p>In most turorials, <code>rowwise()</code> is simply not taught. While I agree that <code>map()</code> is more powerful and you do not need to use it if you do not want to, I personally find that <code>rowwise()</code> is much easier to write and read. It is a natural building step (gateway drug) to functional programming!.</p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1147,14 +1155,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./12_plot_trend.html" class="pagination-link" aria-label="Visualizing Trends">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Visualizing Trends</span></span>
+      <a href="./18_function.html" class="pagination-link" aria-label="Writing Functions">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Writing Functions</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./14_plot_others.html" class="pagination-link" aria-label="Other Types of Plots">
-        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Other Types of Plots</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

@@ -46,8 +46,8 @@ book:
       chapters:
         - 16_vectorization.qmd
         - 17_nested.qmd
-        # - 18_function.qmd
-        # - 19_purrr.qmd
+        - 18_function.qmd
+        - 19_purrr.qmd
         # - 20_fast_code.qmd
     #     - PSet3.qmd
     #- part: "Advanced Visualization"

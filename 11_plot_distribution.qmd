@@ -210,18 +210,35 @@ There are many variations of density/histogram plots that are more informative a
 
 ## Separated plots
 
-For datasets with more than two groups, faceting and highlighting each group can be very effective. We can easily do this with the `gghighlight` package:
+The most simple way is to just plot each group in a separate plot.
+
+```{r}
+#| warning: false
+penguins |> 
+    ggplot(aes(x = flipper_length_mm, 
+               fill = species)) +
+    geom_histogram(color = "white") +
+    facet_wrap(~species) # <1>
+```
+1. create a separate plot for each species.
+
+However, this is not very informative as it lacks the information about how one group compares to the others. To solve this, faceting and highlighting each group can be very effective. We can easily do this with the `gghighlight` package:
 
 ```{r}
 #| warning: false
 library(gghighlight)
 
 penguins |> 
-    ggplot(aes(x = flipper_length_mm, fill = species)) +
-    geom_histogram(color = "white") +
-    gghighlight() +
-    facet_wrap(~species)
+    ggplot(aes(x = flipper_length_mm, 
+               fill = species)) +
+    geom_histogram(color = "white") + 
+    gghighlight() + # <1>
+    facet_wrap(~species) # <2>
 ```
+1. `gghighlight()` is used to highlight the data points for each species.
+2. `facet_wrap(~species)` is used to create a separate plot for each species.
+
+It is more complicated to do this with density plots. The issue is that density plots are scaled so the total area under the curve is 1. 
 
 ## Mirror density
 

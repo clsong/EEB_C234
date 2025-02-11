@@ -40,6 +40,16 @@ Let's break down the components:
 3. The code block between `{` and `}`: What your function does
 4. `return(bmi)`: What your function gives back
 
+Importantly, the last line of your function is the value that is returned. So you can also write:
+
+```{r}
+calculate_bmi <- function(weight, height) {
+    weight / (height^2)
+}
+```
+
+It is [recommened](https://style.tidyverse.org/functions.html#return) to not use `return()` in your function.
+
 ### Exercise: Your First Function {-}
 
 Write a function to convert Fahrenheit to Celsius.
@@ -77,12 +87,17 @@ fahrenheit_to_celsius(212)
 Remember how we talked about the importance of vectorization? When writing your own functions, you want them to be vectorized too! The good news is that R makes this easy - if you use vectorized operations inside your function, your function will be vectorized automatically. For example, our function `calculate_bmi()` is vectorized automatically:
  
 ```{r}
-weights <- c(70, 80, 90)
-heights <- c(1.75, 1.80, 1.85)
-calculate_bmi(weights, heights)
+#| warning: false
+#| message: false
+library(tidyverse)
+tibble(
+    weight = c(70, 80, 90),
+    height = c(1.75, 1.80, 1.85)
+) |>
+    mutate(bmi = calculate_bmi(weight, height))
 ```
 
-Sometimes it might be not obvious that a function is vectorized. The most simple solution is to test your function to a vector or a tibble. If it works, it's (most likely) vectorized!
+Sometimes it might be not obvious that a function is vectorized. The most simple solution is to test your function to a vector or a tibble. If it works, it's (almost certainly) vectorized!
 
 ### Exercise: Vectorized Function {-}
 
@@ -126,47 +141,46 @@ penguins |>
 ```
 :::
 
-::: {.callout-tip collapse="true"}
+## Working with non-vectorized functions
 
-## Function Documentation
-
-Good functions need good documentation. In R, we use **roxygen2** style comments to document our functions:
+Some functions work with entire datasets rather than element by element. For these cases, we need to use `rowwise()` when working with nested data:
 
 ```{r}
-#' Calculate Body Mass Index (BMI)
-#'
-#' @param weight Weight in kilograms
-#' @param height Height in meters
-#' @return BMI value (kg/m^2)
-#' @examples
-#' calculate_bmi(70, 1.75)
-calculate_bmi <- function(weight, height) {
-    bmi <- weight / (height^2)
-    return(bmi)
+# Function that works with a dataset
+calculate_r2 <- function(data) {
+    model <- lm(bill_length_mm ~ bill_depth_mm, data = data)
+    return(summary(model)$r.squared)
 }
+
+library(palmerpenguins)
+# Need rowwise() because calculate_r2 works on entire datasets
+penguins |> 
+    group_by(species) |> 
+    nest() |> 
+    rowwise() |>  # Important! Because calculate_r2 is not vectorized
+    mutate(
+        r2 = calculate_r2(data)
+    ) |>
+    ungroup()
 ```
-
-The documentation includes:
-1. A brief description
-2. Parameter descriptions (`@param`)
-3. What the function returns (`@return`)
-4. Example usage (`@examples`)
-
-:::
 
 ## Best Practices
 
 When writing functions, follow these guidelines:
 
-1. **Names Matter**
-   - Use verbs for function names: `calculate_bmi()`, not `bmi()`
-   - Be consistent with your naming style
-   - Make names descriptive but not too long
+::: {.panel-tabset}
 
-2. **Arguments Matter**
-   - Put the most important arguments first
-   - Use clear argument names
-   - Provide default values when it makes sense
+## Names Matter
+
+- Use verbs for function names: `calculate_bmi()`, not `bmi()`
+- Be consistent with your naming style
+- Make names descriptive but not too long
+
+## Arguments Matter
+
+- Put the most important arguments first
+- Use clear argument names
+- Provide default values when it makes sense
 
 ```{r}
 # Good function design
@@ -184,9 +198,11 @@ calculate_bmi(70, 1.75) # metric (default)
 calculate_bmi(154, 69, units = "imperial") # imperial
 ```
 
-3. **Error Checking**
-   - Check input validity
-   - Provide helpful error messages
+## Error Checking
+
+It is a good idea to check the input validity of your function. This can be done by using `stop()` to stop the function and return an error message.
+
+```{r}
 
 ```{r}
 calculate_bmi <- function(weight, height, units = "metric") {
@@ -206,68 +222,33 @@ calculate_bmi <- function(weight, height, units = "metric") {
 }
 ```
 
-### Exercise: Complete Function {-}
+## Function Documentation
 
-Write a complete function to calculate penguin body condition (mass divided by flipper length) with proper documentation and error checking.
+Good functions need good documentation, especially if you want others (or even you in the future) what the function does.
 
-::: {.panel-tabset}
+In R, we use **roxygen2** style comments to document our functions:
 
-## Exercise
-
-```{webr}
-#' Calculate penguin body condition
-#' 
-#' @param mass Body mass in grams
-#' @param flipper_length Flipper length in mm
-#' @return Body condition index
+```{r}
+#' Calculate Body Mass Index (BMI)
+#'
+#' @param weight Weight in kilograms
+#' @param height Height in meters
+#' @return BMI value (kg/m^2)
 #' @examples
-#' calculate_condition(3000, 200)
-calculate_condition <- function(mass, flipper_length) {
-    # Add input validation
-    
-    # Calculate condition
-    
-    # Return result
+#' calculate_bmi(70, 1.75)
+calculate_bmi <- function(weight, height) {
+    bmi <- weight / (height^2)
+    return(bmi)
 }
-
-# Test with the penguins dataset
-penguins |>
-    mutate(condition = calculate_condition(
-        body_mass_g,
-        flipper_length_mm
-    ))
 ```
 
-## Solution
+The documentation includes:
 
-```{webr}
-#' Calculate penguin body condition
-#' 
-#' @param mass Body mass in grams
-#' @param flipper_length Flipper length in mm
-#' @return Body condition index
-#' @examples
-#' calculate_condition(3000, 200)
-calculate_condition <- function(mass, flipper_length) {
-    # Input validation
-    if (any(mass <= 0, na.rm = TRUE)) {
-        stop("Mass must be positive")
-    }
-    if (any(flipper_length <= 0, na.rm = TRUE)) {
-        stop("Flipper length must be positive")
-    }
-    
-    # Calculate and return condition
-    return(mass / flipper_length)
-}
+1. A brief description
+2. Parameter descriptions (`@param`)
+3. What the function returns (`@return`)
+4. Example usage (`@examples`)
 
-# Test with the penguins dataset
-penguins |>
-    mutate(condition = calculate_condition(
-        body_mass_g,
-        flipper_length_mm
-    ))
-```
 :::
 
 ## Summary

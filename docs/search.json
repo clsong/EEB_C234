@@ -723,7 +723,7 @@
     "href": "11_plot_distribution.html#comparing-more-than-one-variable",
     "title": "11  Visualizing Distribution",
     "section": "11.2 Comparing More Than One Variable",
-    "text": "11.2 Comparing More Than One Variable\n\n11.2.1 Histograms vs Density\nAs a general rule, DON’T use Histograms naively when dealing with multiple variables. For example, all three examples below are difficult to efficiently compare the distribution of flipper length across different species.\n\nOverlapping histogramsStacked HistogramsSide by side histograms\n\n\nEach group is plotted in the same space with transparency:\n\npenguins |&gt; \n    ggplot(aes(x = flipper_length_mm, group = species, fill = species)) +\n    geom_histogram(color = \"white\", alpha = .5,position = \"identity\") +\n    theme(legend.position = \"top\")\n\n\n\n\n\n\n\n\n\n\nHistograms are stacked on top of each other to compare proportions:\n\npenguins |&gt;\n    ggplot(aes(x = flipper_length_mm, group = species, fill = species)) +\n    geom_histogram(color = \"white\", position = \"stack\") +\n    theme(legend.position = \"top\")\n\n\n\n\n\n\n\n\n\n\nHistograms for each group are placed next to one another for easier comparison:\n\npenguins |&gt; \n    ggplot(aes(x = flipper_length_mm, group = species, fill = species)) +\n    geom_histogram(color = \"white\", position = \"dodge\") +\n    theme(legend.position = \"top\")\n\n\n\n\n\n\n\n\n\n\n\nDensity plots are generally easier to compare when multiple groups are involved. The following code overlays density curves for each species:\n\npenguins |&gt; \n    ggplot(aes(\n        x = flipper_length_mm, \n        group = species, \n        fill = species, \n        color = species)) +\n    geom_density(alpha = .5) +\n    theme(legend.position = \"top\")\n\n\n\n\n\n\n\n\nAs we mentioned before, it is generally a good idea to avoid using legends. The library geomtextpath provides a way to add text to the density plot.\n\nlibrary(geomtextpath)\n\npenguins |&gt; \n    ggplot(aes(x = flipper_length_mm, group = species, color = species)) +\n    geom_textdensity(alpha = .5, aes(label = species), size = 5) +\n    theme(legend.position = \"none\")\n\n\n\n\n\n\n\n\n\n\n11.2.2 Better Variations for Group Comparisons\nThere are many variations of density/histogram plots that are more informative and aesthetically pleasing. I particularly like two of them.\n\nSeparated plotsMirror density\n\n\nFor datasets with more than two groups, faceting and highlighting each group can be very effective. We can easily do this with the gghighlight package:\n\nlibrary(gghighlight)\n\npenguins |&gt; \n    ggplot(aes(x = flipper_length_mm, fill = species)) +\n    geom_histogram(color = \"white\") +\n    gghighlight() +\n    facet_wrap(~species)\n\n\n\n\n\n\n\n\n\n\nWhen comparing two groups, a mirror density plot places one density curve above and one below the horizontal axis. This example compares male and female penguins:\n\npenguins |&gt; \n    ggplot(aes(x = flipper_length_mm)) +\n    geom_density(\n        data = filter(penguins, sex == \"male\"),\n        aes(y = ..density..),\n        alpha = .5, fill = \"#69b3a2\", color = \"black\") +\n    geom_label( aes(x=180, y=0.02, label=\"male\"), color=\"#69b3a2\", size = 5) +\n    geom_density(\n        data = filter(penguins, sex == \"female\"),\n        aes(y = -..density..),\n        alpha = .5, fill = \"#404080\", color = \"black\") +\n    geom_label( aes(x=228, y=-0.01, label=\"female\"), color=\"#404080\", size = 5)",
+    "text": "11.2 Comparing More Than One Variable\n\n11.2.1 Histograms vs Density\nAs a general rule, DON’T use Histograms naively when dealing with multiple variables. For example, all three examples below are difficult to efficiently compare the distribution of flipper length across different species.\n\nOverlapping histogramsStacked HistogramsSide by side histograms\n\n\nEach group is plotted in the same space with transparency:\n\npenguins |&gt; \n    ggplot(aes(x = flipper_length_mm, group = species, fill = species)) +\n    geom_histogram(color = \"white\", alpha = .5,position = \"identity\") +\n    theme(legend.position = \"top\")\n\n\n\n\n\n\n\n\n\n\nHistograms are stacked on top of each other to compare proportions:\n\npenguins |&gt;\n    ggplot(aes(x = flipper_length_mm, group = species, fill = species)) +\n    geom_histogram(color = \"white\", position = \"stack\") +\n    theme(legend.position = \"top\")\n\n\n\n\n\n\n\n\n\n\nHistograms for each group are placed next to one another for easier comparison:\n\npenguins |&gt; \n    ggplot(aes(x = flipper_length_mm, group = species, fill = species)) +\n    geom_histogram(color = \"white\", position = \"dodge\") +\n    theme(legend.position = \"top\")\n\n\n\n\n\n\n\n\n\n\n\nDensity plots are generally easier to compare when multiple groups are involved. The following code overlays density curves for each species:\n\npenguins |&gt; \n    ggplot(aes(\n        x = flipper_length_mm, \n        group = species, \n        fill = species, \n        color = species)) +\n    geom_density(alpha = .5) +\n    theme(legend.position = \"top\")\n\n\n\n\n\n\n\n\nAs we mentioned before, it is generally a good idea to avoid using legends. The library geomtextpath provides a way to add text to the density plot.\n\nlibrary(geomtextpath)\n\npenguins |&gt; \n    ggplot(aes(x = flipper_length_mm, group = species, color = species)) +\n    geom_textdensity(alpha = .5, aes(label = species), size = 5) +\n    theme(legend.position = \"none\")\n\n\n\n\n\n\n\n\n\n\n11.2.2 Better Variations for Group Comparisons\nThere are many variations of density/histogram plots that are more informative and aesthetically pleasing. I particularly like two of them.\n\nSeparated plotsMirror density\n\n\nThe most simple way is to just plot each group in a separate plot.\n\npenguins |&gt; \n    ggplot(aes(x = flipper_length_mm, \n               fill = species)) +\n    geom_histogram(color = \"white\") +\n1    facet_wrap(~species)\n\n\n1\n\ncreate a separate plot for each species.\n\n\n\n\n\n\n\n\n\n\n\nHowever, this is not very informative as it lacks the information about how one group compares to the others. To solve this, faceting and highlighting each group can be very effective. We can easily do this with the gghighlight package:\n\nlibrary(gghighlight)\n\npenguins |&gt; \n    ggplot(aes(x = flipper_length_mm, \n               fill = species)) +\n    geom_histogram(color = \"white\") + \n1    gghighlight() +\n2    facet_wrap(~species)\n\n\n1\n\ngghighlight() is used to highlight the data points for each species.\n\n2\n\nfacet_wrap(~species) is used to create a separate plot for each species.\n\n\n\n\n\n\n\n\n\n\n\nIt is more complicated to do this with density plots. The issue is that density plots are scaled so the total area under the curve is 1.\n\n\nWhen comparing two groups, a mirror density plot places one density curve above and one below the horizontal axis. This example compares male and female penguins:\n\npenguins |&gt; \n    ggplot(aes(x = flipper_length_mm)) +\n    geom_density(\n        data = filter(penguins, sex == \"male\"),\n        aes(y = ..density..),\n        alpha = .5, fill = \"#69b3a2\", color = \"black\") +\n    geom_label( aes(x=180, y=0.02, label=\"male\"), color=\"#69b3a2\", size = 5) +\n    geom_density(\n        data = filter(penguins, sex == \"female\"),\n        aes(y = -..density..),\n        alpha = .5, fill = \"#404080\", color = \"black\") +\n    geom_label( aes(x=228, y=-0.01, label=\"female\"), color=\"#404080\", size = 5)",
     "crumbs": [
       "Visualization by Type",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Visualizing Distribution</span>"
@@ -1057,6 +1057,149 @@
     "crumbs": [
       "R Programming",
       "<span class='chapter-number'>17</span>  <span class='chapter-title'>Nested Data and Vectorization</span>"
+    ]
+  },
+  {
+    "objectID": "18_function.html",
+    "href": "18_function.html",
+    "title": "\n18  Writing Functions\n",
+    "section": "",
+    "text": "18.1 Why Write Functions?\nRemember our discussion about vectorization and nested data? We’ve been using functions all along - mean() and sum(). But sometimes, you need a function that doesn’t exist yet. That’s when you write your own!\nHere are three signs you need a function:\nWriting functions also helps you avoid mistakes. For example, if you need to change a number in multiple places, you may forget to change one of them (speaking from experience :-(",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Writing Functions</span>"
+    ]
+  },
+  {
+    "objectID": "18_function.html#why-write-functions",
+    "href": "18_function.html#why-write-functions",
+    "title": "\n18  Writing Functions\n",
+    "section": "",
+    "text": "You’ve copied and pasted code more than twice\nYou find yourself changing the same numbers in multiple places\nYou want to make your code more readable and maintainable",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Writing Functions</span>"
+    ]
+  },
+  {
+    "objectID": "18_function.html#basic-function-structure",
+    "href": "18_function.html#basic-function-structure",
+    "title": "\n18  Writing Functions\n",
+    "section": "\n18.2 Basic Function Structure",
+    "text": "18.2 Basic Function Structure\nLet’s start with a simple function:\n\ncalculate_bmi &lt;- function(weight, height) {\n    bmi &lt;- weight / (height^2)\n    return(bmi)\n}\n\ncalculate_bmi(weight = 70, height = 1.75)\n\n[1] 22.85714\n\n\nLet’s break down the components:\n\n\ncalculate_bmi: The function name (make it descriptive!)\n\nfunction(weight, height): The arguments your function needs\nThe code block between { and }: What your function does\n\nreturn(bmi): What your function gives back\n\nImportantly, the last line of your function is the value that is returned. So you can also write:\n\ncalculate_bmi &lt;- function(weight, height) {\n    weight / (height^2)\n}\n\nIt is recommened to not use return() in your function.\nExercise: Your First Function\nWrite a function to convert Fahrenheit to Celsius.\n\n\nExercise\nSolution\n\n\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Writing Functions</span>"
+    ]
+  },
+  {
+    "objectID": "18_function.html#writing-vectorized-functions",
+    "href": "18_function.html#writing-vectorized-functions",
+    "title": "\n18  Writing Functions\n",
+    "section": "\n18.3 Writing Vectorized Functions",
+    "text": "18.3 Writing Vectorized Functions\nRemember how we talked about the importance of vectorization? When writing your own functions, you want them to be vectorized too! The good news is that R makes this easy - if you use vectorized operations inside your function, your function will be vectorized automatically. For example, our function calculate_bmi() is vectorized automatically:\n\nlibrary(tidyverse)\ntibble(\n    weight = c(70, 80, 90),\n    height = c(1.75, 1.80, 1.85)\n) |&gt;\n    mutate(bmi = calculate_bmi(weight, height))\n\n\n  \n\n\n\nSometimes it might be not obvious that a function is vectorized. The most simple solution is to test your function to a vector or a tibble. If it works, it’s (almost certainly) vectorized!\nExercise: Vectorized Function\nWrite a function to calculate bill area (length × depth) that works with the penguins dataset.\n\n\nExercise\nSolution\n\n\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Writing Functions</span>"
+    ]
+  },
+  {
+    "objectID": "18_function.html#working-with-non-vectorized-functions",
+    "href": "18_function.html#working-with-non-vectorized-functions",
+    "title": "\n18  Writing Functions\n",
+    "section": "\n18.4 Working with non-vectorized functions",
+    "text": "18.4 Working with non-vectorized functions\nSome functions work with entire datasets rather than element by element. For these cases, we need to use rowwise() when working with nested data:\n\n# Function that works with a dataset\ncalculate_r2 &lt;- function(data) {\n    model &lt;- lm(bill_length_mm ~ bill_depth_mm, data = data)\n    return(summary(model)$r.squared)\n}\n\nlibrary(palmerpenguins)\n# Need rowwise() because calculate_r2 works on entire datasets\npenguins |&gt; \n    group_by(species) |&gt; \n    nest() |&gt; \n    rowwise() |&gt;  # Important! Because calculate_r2 is not vectorized\n    mutate(\n        r2 = calculate_r2(data)\n    ) |&gt;\n    ungroup()",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Writing Functions</span>"
+    ]
+  },
+  {
+    "objectID": "18_function.html#best-practices",
+    "href": "18_function.html#best-practices",
+    "title": "\n18  Writing Functions\n",
+    "section": "\n18.5 Best Practices",
+    "text": "18.5 Best Practices\nWhen writing functions, follow these guidelines:\n\n\nNames Matter\nArguments Matter\nError Checking\nFunction Documentation\n\n\n\n\nUse verbs for function names: calculate_bmi(), not bmi()\n\nBe consistent with your naming style\nMake names descriptive but not too long\n\n\n\n\nPut the most important arguments first\nUse clear argument names\nProvide default values when it makes sense\n\n\n# Good function design\ncalculate_bmi &lt;- function(weight, height, units = \"metric\") {\n    if (units == \"imperial\") {\n        # Convert pounds to kg and inches to meters\n        weight &lt;- weight * 0.453592\n        height &lt;- height * 0.0254\n    }\n    return(weight / (height^2))\n}\n\n# Now works with both metric and imperial units\ncalculate_bmi(70, 1.75) # metric (default)\n\n[1] 22.85714\n\ncalculate_bmi(154, 69, units = \"imperial\") # imperial\n\n[1] 22.74157\n\n\n\n\nIt is a good idea to check the input validity of your function. This can be done by using stop() to stop the function and return an error message.\n\ncalculate_bmi &lt;- function(weight, height, units = \"metric\") {\n    # Input validation\n    if (weight &lt;= 0 || height &lt;= 0) {\n        stop(\"Weight and height must be positive numbers\")\n    }\n\n    if (units == \"imperial\") {\n        weight &lt;- weight * 0.453592\n        height &lt;- height * 0.0254\n    } else if (units != \"metric\") {\n        stop('Units must be either \"metric\" or \"imperial\"')\n    }\n\n    return(weight / (height^2))\n}\n\n\n\nGood functions need good documentation, especially if you want others (or even you in the future) what the function does.\nIn R, we use roxygen2 style comments to document our functions:\n\n#' Calculate Body Mass Index (BMI)\n#'\n#' @param weight Weight in kilograms\n#' @param height Height in meters\n#' @return BMI value (kg/m^2)\n#' @examples\n#' calculate_bmi(70, 1.75)\ncalculate_bmi &lt;- function(weight, height) {\n    bmi &lt;- weight / (height^2)\n    return(bmi)\n}\n\nThe documentation includes:\n\nA brief description\nParameter descriptions (@param)\nWhat the function returns (@return)\nExample usage (@examples)",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Writing Functions</span>"
+    ]
+  },
+  {
+    "objectID": "18_function.html#summary",
+    "href": "18_function.html#summary",
+    "title": "\n18  Writing Functions\n",
+    "section": "\n18.6 Summary",
+    "text": "18.6 Summary\nWriting functions is a crucial skill that builds on our understanding of vectorization and nested data:\n\nWrite functions when you find yourself repeating code\nMake your functions vectorized when possible\nUse clear names and good documentation\nInclude input validation and helpful error messages\nTest your functions with simple cases first\n\nRemember: A well-written function is like a good tool - it should do one thing, do it well, and be easy to use! 🛠️",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Writing Functions</span>"
+    ]
+  },
+  {
+    "objectID": "19_purrr.html",
+    "href": "19_purrr.html",
+    "title": "19  Using map()",
+    "section": "",
+    "text": "19.1 Basics of Mapping\nWhen you work with data in R, you often need to apply a function repeatedly—whether to every row in a tibble or every element in a vector. You might recall using rowwise() in past tutorials to apply functions to each row of nested data. In this session, we introduce map(), a function from the purrr package (part of the tidyverse) that makes these operations more concise and, in many cases, more powerful.\nThink of map() as saying, “Take this function and apply it to each element in this list or vector.” While the idea might seem a little abstract at first, with some practice you’ll appreciate its flexibility and efficiency.\nLet’s dive in by loading our “best buddy” packages:",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Using `map()`</span>"
+    ]
+  },
+  {
+    "objectID": "19_purrr.html#basics-of-mapping",
+    "href": "19_purrr.html#basics-of-mapping",
+    "title": "19  Using map()",
+    "section": "",
+    "text": "19.1.1 Example: Calculate the number of characters in several words\nImagine you have a few words and you want to count the number of characters in each word. Previously, you might have used rowwise() as follows:\n\ntibble(words = c(\"mango\", \"lychee\", \"blueberry\")) |&gt;\n    rowwise() |&gt;\n    mutate(length = nchar(words)) |&gt;\n    ungroup()\n\n\n  \n\n\n\nHere, we had to explicitly mark the tibble as rowwise and then ungroup the results. This works fine, but it can be a bit verbose.\nWe can use map() instead:\n\ntibble(words = c(\"mango\", \"lychee\", \"blueberry\")) |&gt;\n    mutate(length = map(words, nchar))\n\n\n  \n\n\n\nWhat’s happening here?\n\nmap(words, nchar) tells R: “For every element in the words vector, calculate the number of characters using nchar().”\nThe result is a list column because, by default, map() returns a list.\n\n\n\n19.1.2 How map() Works\nThe basic syntax is very simple:\n\nmap(.x, .f)\n\n\n.x: The list or vector you want to iterate over.\n.f: The function to apply to each element.\n\nmap() takes each element from .x and sends it through the function .f, collecting the results in a new list. It is not that scary, right?\n\n\n19.1.3 Getting a Vector Instead of a List\nSince map() always returns a list, you might sometimes want to convert the results into a vector format. There are two common ways to do this:\n\nUnnest the ResultUse map_vec()\n\n\nAfter applying map(), you can “unnest” the list column to turn it into a regular vector:\n\ntibble(words = c(\"mango\", \"lychee\", \"blueberry\")) |&gt;\n    mutate(length = map(words, nchar)) |&gt;\n    unnest(length)\n\nmutate: new variable 'length' (list) with 3 unique values and 0% NA\n\n\n\n  \n\n\n\n\n\nThe function map_vec() directly returns a vector, so you don’t have to unnest later:\n\ntibble(words = c(\"mango\", \"lychee\", \"blueberry\")) |&gt;\n    mutate(length = map_vec(words, nchar))\n\n\n  \n\n\n\n\n\n\n\n\n\nother map_*()\n\n\n\n\n\nSurprisingly, map_vec() is a recent introduction to tidyverse (specifically, the end of 2022, see here). Before that, you could use map_dbl() or map_lgl() to get a vector, but you need to specify the type of vector you want to return, which is annoying! Luckily, this is not something you need to worry about anymore.",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Using `map()`</span>"
+    ]
+  },
+  {
+    "objectID": "19_purrr.html#anonymous-functions-with-map",
+    "href": "19_purrr.html#anonymous-functions-with-map",
+    "title": "19  Using map()",
+    "section": "19.2 Anonymous Functions with map()",
+    "text": "19.2 Anonymous Functions with map()\nSo far, it might not be clear why map() is better than rowwise() except that it is shorter to write. Below I will show you one of the huge advantages of map() - you can use anonymous functions (a.k.a. lambda function): These are functions you define “on the fly” without formally naming them, which can make your code more concise when you only need a function once.\n\n19.2.1 Using rowwise()\nLet’s say you want to generate a series of random samples from a uniform distribution. Using rowwise(), you’d first have to define a separate function:\n\n# Define a function to generate samples\nsample_distribution &lt;- function(n) {\n1  runif(n, min = -1, max = 1)\n}\n\n# Apply the function rowwise\ntibble(n = c(10, 20, 30)) |&gt;\n  rowwise() |&gt;\n  mutate(sample = list(sample_distribution(n))) |&gt;\n  ungroup()\n\n## Equivalent `map()` approach\ntibble(n = c(10, 20, 30)) |&gt;\n  mutate(sample = map(n, sample_distribution))\n\n\n1\n\nGenerate n random samples from a uniform distribution from -1 to 1.\n\n\n\n\n\n\n19.2.2 Using Anonymous Functions\nIf the function is only needed once, you can define it right in the call to map():\n\ntibble(\n    num_samples = c(10, 20, 30)\n) |&gt;\n    mutate(\n        sample = map(num_samples, \\(x) runif(x, min = -1, max = 1))\n    )\n\nmutate: new variable 'sample' (list) with 3 unique values and 0% NA\n\n\n\n  \n\n\n\nExplanation:\n\n\\(x) defines an anonymous function with x as its argument.\nThe body of the function (runif(x, min = -1, max = 1)) uses x directly.\nThis means “for each value in num_samples, generate x random numbers using runif().”\n\n\n\n\n\n\n\nAlternative Syntax for Anonymous Functions\n\n\n\n\n\nOlder code might use a formula-style notation for anonymous functions. Although less common now, it’s still seen in many codebases, so it’s good to know about it. The syntax is as follows:\n\ntibble(\n    num_samples = c(10, 20, 30)\n) |&gt;\n    mutate(\n        sample = map(num_samples, ~ runif(., min = -1, max = 1))\n    )\n\nIn this version, ~ denotes an anonymous function and . is a placeholder for the argument.\n\n\n\n:::",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Using `map()`</span>"
+    ]
+  },
+  {
+    "objectID": "19_purrr.html#mapping-with-multiple-inputs",
+    "href": "19_purrr.html#mapping-with-multiple-inputs",
+    "title": "19  Using map()",
+    "section": "19.3 Mapping with Multiple Inputs",
+    "text": "19.3 Mapping with Multiple Inputs\nSometimes, you need to work with more than one column simultaneously. Purrr provides two handy functions: map2() and pmap().\n\n19.3.1 map2(): Working with Two Inputs\nmap2() applies a function to two vectors element-wise. For example:\n\ntibble(\n    num_samples = c(10, 20, 30),\n    sample_min = c(-1, -2, -3)\n) |&gt;\n    mutate(\n        sample = map2(\n            num_samples, sample_min,\n            \\(n, min) runif(n, min = min, max = 1)\n        )\n    )\n\nmutate: new variable 'sample' (list) with 3 unique values and 0% NA\n\n\n\n  \n\n\n\nHow It Works:\n\nmap2() takes the first element from num_samples and the first element from sample_min\nWe pass them as n and min to the anonymous function \\(n, min) runif(n, min = min, max = 1).\nThis is repeated for all corresponding pairs.",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Using `map()`</span>"
+    ]
+  },
+  {
+    "objectID": "19_purrr.html#pmap-working-with-multiple-inputs",
+    "href": "19_purrr.html#pmap-working-with-multiple-inputs",
+    "title": "19  Using map()",
+    "section": "19.4 pmap(): Working with Multiple Inputs",
+    "text": "19.4 pmap(): Working with Multiple Inputs\nIf you have more than two vectors, use pmap():\n\ntibble(\n    num_samples = c(10, 20, 30),\n    sample_min = c(-1, -2, -3),\n    sample_max = c(2, 3, 4)\n) |&gt;\n    mutate(\n        sample = pmap(\n1            list(num_samples, sample_min, sample_max),\n2            \\(n, min, max) runif(n, min = min, max = max)\n        )\n    )\n\n\n1\n\nThe pmap() function takes a list of columns. So you need to wrap your columns in a list.\n\n2\n\nThe anonymous function takes three arguments as what you input in pmap().\n\n\n\n\nmutate: new variable 'sample' (list) with 3 unique values and 0% NA",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Using `map()`</span>"
+    ]
+  },
+  {
+    "objectID": "19_purrr.html#when-to-use-map-vs-rowwise",
+    "href": "19_purrr.html#when-to-use-map-vs-rowwise",
+    "title": "19  Using map()",
+    "section": "19.5 When to use map() vs rowwise()",
+    "text": "19.5 When to use map() vs rowwise()\nBoth map() and rowwise() help you loop over your data, but they have different vibes:\n\nmap() is your go-to for functional programming. It’s built to apply a function to every element in a vector or list and is extra handy when you’re juggling multiple inputs with helpers like map2() or pmap(). If you dig writing concise code with anonymous functions, map() is where it’s at.\nrowwise() is more about thinking in rows. It’s great if you want to work row by row in a tibble, and it feels pretty intuitive—like taking it one row at a time. Just keep in mind that once you’re done, you’ll usually want to call ungroup() to tidy up your tibble.\n\nUsually, map() leads to cleaner and more streamlined code, especially if you’re comfortable with a functional programming approach. That said, if you’re just dipping your toes into these concepts, rowwise() can be a nice stepping stone—a sort of “gateway drug” into the world of functional programming.\nIn most turorials, rowwise() is simply not taught. While I agree that map() is more powerful and you do not need to use it if you do not want to, I personally find that rowwise() is much easier to write and read. It is a natural building step (gateway drug) to functional programming!.",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Using `map()`</span>"
     ]
   }
 ]
