@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://clsong.github.io/EEB_C234/19_purrr.html</loc>
-    <lastmod>2025-02-12T00:06:48.677Z</lastmod>
+    <loc>https://clsong.github.io/EEB_C234/index.html</loc>
+    <lastmod>2025-01-22T23:17:00.000Z</lastmod>
   </url>
   <url>
     <loc>https://clsong.github.io/EEB_C234/01_intro.html</loc>
@@ -85,7 +85,11 @@
     <lastmod>2025-02-11T01:04:50.000Z</lastmod>
   </url>
   <url>
+    <loc>https://clsong.github.io/EEB_C234/19_purrr.html</loc>
+    <lastmod>2025-02-12T00:06:48.677Z</lastmod>
+  </url>
+  <url>
     <loc>https://clsong.github.io/EEB_C234/20_fast_code.html</loc>
-    <lastmod>2025-02-12T02:19:58.388Z</lastmod>
+    <lastmod>2025-02-12T06:17:08.229Z</lastmod>
   </url>
 </urlset>

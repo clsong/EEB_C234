@@ -10,14 +10,14 @@
 
 R sometimes gets a bad rap for being slower than languages like C++ or Julia. That's partly true: if you are really serious about performance, you might want to learn another language. However, **you can make R much faster without rewriting your code or learning a new language.** 
 
-Let's start by loading the old packages:
+Let's start by loading tidyverse and a dataset from the `nycflights13` package which has more than 330,000 rows.
 
 ```{r}
 #| message: false
 #| warning: false
 
 library(tidyverse)
-library(palmerpenguins)
+data(flights, package = "nycflights13")
 ```
 
 Note that we are not using the `tidylog` package this time. `tidylog` marks up the verbs with comments so that you know what happens in each step. This is great for understanding what the code is doing, but it slows down the execution. 
@@ -36,11 +36,10 @@ library(tictoc)
 
 tic() # <1>
 
-model_r2 <- penguins |> # <2>
-  group_by(species) |> # <2>
-  nest() |> 
-  mutate(r2 = map_vec(data, \(x) summary(lm(bill_length_mm ~ bill_depth_mm, data = x))$r.squared)) |>
-  ungroup() # <2>
+model_r2 <- flights |> # <2>
+  group_by(carrier, origin, year) |> # <2>
+  nest() |>   # <2>
+  mutate(r2 = map_vec(data, \(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared)) # <2>
 
 toc() # <3>
 ```
@@ -54,20 +53,20 @@ Want to test multiple approaches? `microbenchmark` runs code repeatedly and comp
 
 ```{r}
 #| warning: false
-
 library(microbenchmark)
 
 benchmark <- microbenchmark(
-  method_rowwise = penguins |>  # <1>
-    group_by(species) |> 
+  method_rowwise = flights |>  # <1>
+    group_by(carrier, origin, year) |> 
     nest() |> 
     rowwise() |>
-    mutate(r2 = summary(lm(bill_length_mm ~ bill_depth_mm, data = data))$r.squared) |>
+    mutate(r2 = summary(lm(arr_delay ~ dep_delay, data = data))$r.squared) |>
     ungroup(),
-  method_map = penguins |>  # <2>
-    group_by(species) |> 
-    nest() |> 
-    mutate(r2 = map_vec(data, \(x) summary(lm(bill_length_mm ~ bill_depth_mm, data = x))$r.squared)),
+  method_map = flights |>  # <2>
+    group_by(carrier, origin, year) |> 
+    nest() |>   
+    mutate(r2 = map_vec(data, \(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared))
+  ,
   times = 10 # <3>
 ) 
 
@@ -86,13 +85,11 @@ It might be helpful to visualize the results. You can use the `autoplot` functio
 autoplot(benchmark)
 ```
 
-It is clear that the `nest + map` method is faster than the `nest + rowwise` method.
-
-## Parallel Computing – Let Your CPU Do the Heavy Lifting 💪
+## Parallel Computing
 
 R usually uses one CPU core. But most computers have 4-8 cores! By sending the same task to multiple cores, you get automatic speedups for free!
 
-::: {.callout-tip}
+::: {.panel-tabset}
 
 ## `furrr`
 
@@ -103,12 +100,12 @@ We can use the `furrr` package to parallelize the map functions.
 #| warning: false
 
 library(furrr)
-plan(multisession, workers = 3)  # Set up parallel processing with 4 cores
+plan(multisession, workers = 4)  # Set up parallel processing with 4 cores
 tic()
-model_r2 <- penguins |> 
-  group_by(species) |> 
+model_r2 <- flights |> 
+  group_by(carrier, origin, year) |> 
   nest() |> 
-  mutate(r2 = future_map_dbl(data, \(x) summary(lm(bill_length_mm ~ bill_depth_mm, data = x))$r.squared))
+  mutate(r2 = future_map_dbl(data, \(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared))
 toc()
 ```
 
@@ -116,7 +113,7 @@ The syntax is almost identical to `purrr`, just replace `map` with `future_map`,
 
 Note: Parallelizing adds some overhead (think of the leader needs time to coordinate the workers). Thus, use it for big datasets or slow tasks—not for quick calculations!
 
-## Parallelizing with `mirai`
+## The magic of `mirai`
 
 This is a feature in development version of `purrr` ([version 1.0.4.0](https://purrr.tidyverse.org/dev/reference/parallelization.html)). However, I have little doubt that it will be merged into the main version anytime soon: it is so much easier to use with and is up to 1000 times faster compared to `furrr`.
 
@@ -134,16 +131,21 @@ Then we simply need to add `.parallel = TRUE` to the `map` function. How easy is
 #| message: false
 #| warning: false
 
+library(purrr)
+library(mirai)
+mirai::daemons(4) # <1>
+
 tic()
-model_r2 <- penguins |> 
-  group_by(species) |> 
+model_r2 <- flights |> 
+  group_by(carrier, origin, year) |> 
   nest() |> 
   mutate(r2 = map_vec(data, 
-  \(x) summary(lm(bill_length_mm ~ bill_depth_mm, data = x))$r.squared),
-  .parallel = TRUE)
+  \(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared),
+  .parallel = TRUE) # <2>
 toc()
 ```
-
+1. Set the number of cores you want to use
+2. Add `.parallel = TRUE` to the `map` function
 :::
 
 ## Swap Tidyverse for Speed Demons
@@ -157,50 +159,58 @@ toc()
 ```{r}
 #| message: false
 #| warning: false
-
+#| eval: false
 library(dtplyr)
 
-# Convert to lazy data.table
-penguins_dt <- lazy_dt(penguins) # <1>
-
-penguins_dt |> 
-  group_by(species) |> # <2>
-  summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE)) |> # <2>
+flights |> 
+  lazy_dt() |>  # <1>
+  group_by(carrier, origin, year) |> # <2>
+  summarise(mean_arr_delay = mean(arr_delay, na.rm = TRUE)) |> # <2>
   as_tibble() # <3>
 ```
 1. Convert the tibble to a data table
 2. Use all the `dplyr` functions you know
 3. Convert the data table back to a tibble
 
-## `duckplyr`
+## `duckplyr` (Tidy Grammar + DuckDB Speed)
 
 DuckDB is a fast database engine, which works super well if you have a lot of data (like millions of rows). `duckplyr` is a package that translates `dplyr` code to `duckdb` code behind the scenes. So again, you can write as usual and do not need to worry about the underlying heavy machinery.
 
+The messages when you load the package clealy tell you that the `dplyr` functions are overridden.
 ```{r}
-#| message: false
-#| warning: false
-
-library(duckplyr)
-
-penguins |> 
-  group_by(species) |> 
-  summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE)) |> 
-  as_tibble()
+library(conflicted) # <1>
+library(duckplyr) # <2>
 ```
+1. Resolve conflicts
+2. Load the package and override the `dplyr` functions
+
+Then we just do what we always do.
+```{r}
+#| eval: false
+flights |>
+  group_by(carrier, origin, year) |> 
+  summarize(mean_arr_delay = mean(arr_delay, na.rm = TRUE)) 
+```
+
 
 :::
 
 ## Additional Resources
 
-Making code faster is a very broad topic. Here are some additional resources that you might find useful:
+Making code faster is a very broad topic. Here are some additional resources that you need even more speed:
 
-- [`collapse`](https://sebkrantz.github.io/collapse/)
-- [`tidypolars`](https://www.tidypolars.etiennebacher.com/)
-- [`arrow`](https://arrow.apache.org/docs/r/index.html)
+- [collapse](https://sebkrantz.github.io/collapse/)
+- [tidypolars](https://www.tidypolars.etiennebacher.com/)
+- [arrow](https://arrow.apache.org/docs/r/index.html)
 
-All of these packages are under active development, and it is hard to say which one is the fastest (they all have their own strengths). The good news is that they all follow the `dplyr` grammar, so once you understand `dplyr` (data manipulation in tidyverse), you can easily switch to these packages.
+All of these packages are under active development, and it is hard to say which one is the best (they all have their own strengths). The good news is that they all follow the tidyverse grammar (so very mild learning curve).
 
-And, as always, remember: Premature optimization is the root of all evil! Only optimize when you need to. 🚀
+## Remember: Speed Isn’t Everything! 🛑
+
+> Premature optimization is the root of all evil.
+> – Donald Knuth
+
+Only optimize code that’s slow enough to annoy you. Focus on correctness and readability first!
 
 
 
