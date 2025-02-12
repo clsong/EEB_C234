@@ -1,0 +1,207 @@
+# Making R Faster 🚀
+
+
+::: {.callout-note}
+## Class Objectives
+1. Measure your code’s speed – Know exactly how fast (or slow) your code is running
+2. Parallel computing magic – Get free speed boosts by using multiple CPU cores
+3. Turbocharge your data wrangling – Swap tidyverse functions with faster engines under the hood.
+:::
+
+R sometimes gets a bad rap for being slower than languages like C++ or Julia. That's partly true: if you are really serious about performance, you might want to learn another language. However, **you can make R much faster without rewriting your code or learning a new language.** 
+
+Let's start by loading the old packages:
+
+```{r}
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(palmerpenguins)
+```
+
+Note that we are not using the `tidylog` package this time. `tidylog` marks up the verbs with comments so that you know what happens in each step. This is great for understanding what the code is doing, but it slows down the execution. 
+
+## Figure Out How Fast Your Code Is 
+
+### Quick Check with `tictoc`
+
+The `tictoc` package (no relation to social media platform) lets you time code chunks easily:
+
+```{r}
+#| message: false
+#| warning: false
+
+library(tictoc)
+
+tic() # <1>
+
+model_r2 <- penguins |> # <2>
+  group_by(species) |> # <2>
+  nest() |> 
+  mutate(r2 = map_vec(data, \(x) summary(lm(bill_length_mm ~ bill_depth_mm, data = x))$r.squared)) |>
+  ungroup() # <2>
+
+toc() # <3>
+```
+1. Start the timer!
+2. Your code goes in between `tic()` and `toc()`.
+3. Stop the timer and print the time
+
+### Compare Methods with `microbenchmark`
+
+Want to test multiple approaches? `microbenchmark` runs code repeatedly and compares results:
+
+```{r}
+#| warning: false
+
+library(microbenchmark)
+
+benchmark <- microbenchmark(
+  method_rowwise = penguins |>  # <1>
+    group_by(species) |> 
+    nest() |> 
+    rowwise() |>
+    mutate(r2 = summary(lm(bill_length_mm ~ bill_depth_mm, data = data))$r.squared) |>
+    ungroup(),
+  method_map = penguins |>  # <2>
+    group_by(species) |> 
+    nest() |> 
+    mutate(r2 = map_vec(data, \(x) summary(lm(bill_length_mm ~ bill_depth_mm, data = x))$r.squared)),
+  times = 10 # <3>
+) 
+
+print(benchmark) # <4>
+```
+1. Name the method on the left and the code on the right.
+2. Use another method
+3. Run each code 10 times
+4. Print the time it took to run each method
+
+It might be helpful to visualize the results. You can use the `autoplot` function to do this easily.
+
+```{r}
+#| warning: false
+
+autoplot(benchmark)
+```
+
+It is clear that the `nest + map` method is faster than the `nest + rowwise` method.
+
+## Parallel Computing – Let Your CPU Do the Heavy Lifting 💪
+
+R usually uses one CPU core. But most computers have 4-8 cores! By sending the same task to multiple cores, you get automatic speedups for free!
+
+::: {.callout-tip}
+
+## `furrr`
+
+We can use the `furrr` package to parallelize the map functions. 
+
+```{r}
+#| message: false
+#| warning: false
+
+library(furrr)
+plan(multisession, workers = 3)  # Set up parallel processing with 4 cores
+tic()
+model_r2 <- penguins |> 
+  group_by(species) |> 
+  nest() |> 
+  mutate(r2 = future_map_dbl(data, \(x) summary(lm(bill_length_mm ~ bill_depth_mm, data = x))$r.squared))
+toc()
+```
+
+The syntax is almost identical to `purrr`, just replace `map` with `future_map`, and set before the code how many cores you want to use (set it lower than the number of cores on your computer).
+
+Note: Parallelizing adds some overhead (think of the leader needs time to coordinate the workers). Thus, use it for big datasets or slow tasks—not for quick calculations!
+
+## Parallelizing with `mirai`
+
+This is a feature in development version of `purrr` ([version 1.0.4.0](https://purrr.tidyverse.org/dev/reference/parallelization.html)). However, I have little doubt that it will be merged into the main version anytime soon: it is so much easier to use with and is up to 1000 times faster compared to `furrr`.
+
+To try it out, you need to install the development versions of `purrr` and `mirai`:
+
+```{r}
+#| eval: false
+pak::pak("tidyverse/purrr")
+pak::pak("shikokuchuo/mirai")
+```
+
+Then we simply need to add `.parallel = TRUE` to the `map` function. How easy is that?
+
+```{r}
+#| message: false
+#| warning: false
+
+tic()
+model_r2 <- penguins |> 
+  group_by(species) |> 
+  nest() |> 
+  mutate(r2 = map_vec(data, 
+  \(x) summary(lm(bill_length_mm ~ bill_depth_mm, data = x))$r.squared),
+  .parallel = TRUE)
+toc()
+```
+
+:::
+
+## Swap Tidyverse for Speed Demons
+
+::: {.panel-tabset}
+
+## `dtplyr` (Tidy Grammar + `data.table` Speed)
+
+`data.table` is blazing fast but has a steep learning curve. `dtplyr` lets you write tidyverse code that gets translated to `data.table` behind the scenes:
+
+```{r}
+#| message: false
+#| warning: false
+
+library(dtplyr)
+
+# Convert to lazy data.table
+penguins_dt <- lazy_dt(penguins) # <1>
+
+penguins_dt |> 
+  group_by(species) |> # <2>
+  summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE)) |> # <2>
+  as_tibble() # <3>
+```
+1. Convert the tibble to a data table
+2. Use all the `dplyr` functions you know
+3. Convert the data table back to a tibble
+
+## `duckplyr`
+
+DuckDB is a fast database engine, which works super well if you have a lot of data (like millions of rows). `duckplyr` is a package that translates `dplyr` code to `duckdb` code behind the scenes. So again, you can write as usual and do not need to worry about the underlying heavy machinery.
+
+```{r}
+#| message: false
+#| warning: false
+
+library(duckplyr)
+
+penguins |> 
+  group_by(species) |> 
+  summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE)) |> 
+  as_tibble()
+```
+
+:::
+
+## Additional Resources
+
+Making code faster is a very broad topic. Here are some additional resources that you might find useful:
+
+- [`collapse`](https://sebkrantz.github.io/collapse/)
+- [`tidypolars`](https://www.tidypolars.etiennebacher.com/)
+- [`arrow`](https://arrow.apache.org/docs/r/index.html)
+
+All of these packages are under active development, and it is hard to say which one is the fastest (they all have their own strengths). The good news is that they all follow the `dplyr` grammar, so once you understand `dplyr` (data manipulation in tidyverse), you can easily switch to these packages.
+
+And, as always, remember: Premature optimization is the root of all evil! Only optimize when you need to. 🚀
+
+
+
+

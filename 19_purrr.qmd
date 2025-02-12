@@ -1,4 +1,4 @@
-# Using `map()`
+# Functional Programming
 
 ::: {.callout-note}
 ## Class Objectives
@@ -10,6 +10,10 @@
 When you work with data in R, you often need to apply a function repeatedly—whether to every row in a tibble or every element in a vector. You might recall using `rowwise()` in past tutorials to apply functions to each row of nested data. In this session, we introduce `map()`, a function from the `purrr` package (part of the `tidyverse`) that makes these operations more concise and, in many cases, more powerful.
 
 Think of `map()` as saying, “Take this function and apply it to each element in this list or vector.” While the idea might seem a little abstract at first, with some practice you’ll appreciate its flexibility and efficiency.
+
+And, just for fun, `purrr` has the best logo among all `tidyverse` packages:
+
+![From https://purrr.tidyverse.org/](img/purrr.png)
 
 Let's dive in by loading our "best buddy" packages:
 

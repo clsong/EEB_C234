@@ -1,32 +1,68 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "EE BIOL C234",
+    "objectID": "19_purrr.html",
+    "href": "19_purrr.html",
+    "title": "19  Functional Programming",
     "section": "",
-    "text": "Weclome\nWelcome to EE BIOL C234: Practical Computing for Evolutionary Biologists and Ecologists—or, as I like to say, a crash course in “computational Kung-Fu”.",
+    "text": "19.1 Basics of Mapping\nWhen you work with data in R, you often need to apply a function repeatedly—whether to every row in a tibble or every element in a vector. You might recall using rowwise() in past tutorials to apply functions to each row of nested data. In this session, we introduce map(), a function from the purrr package (part of the tidyverse) that makes these operations more concise and, in many cases, more powerful.\nThink of map() as saying, “Take this function and apply it to each element in this list or vector.” While the idea might seem a little abstract at first, with some practice you’ll appreciate its flexibility and efficiency.\nAnd, just for fun, purrr has the best logo among all tidyverse packages:\nLet’s dive in by loading our “best buddy” packages:",
     "crumbs": [
-      "Weclome"
+      "R Programming",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Functional Programming</span>"
     ]
   },
   {
-    "objectID": "index.html#course-info",
-    "href": "index.html#course-info",
-    "title": "EE BIOL C234",
-    "section": "Course Info",
-    "text": "Course Info\n\nWhere and When: We’ll be meeting Mondays and Wednesdays, 11:00 AM to 11:50 AM, in Botany 108.\nOffice Hours: Wednesdays, 3 PM to 4 PM, in Botany 210H.\nThe Grind: Yes, there will be weekly assignments (non-graded) and 3 PSETs. If you want to build computational muscle, you’re going to have to sweat a bit.\nWhat to Bring: Just your laptop and a healthy dose of intellectual curiosity. If you have played with R before, great; if not, don’t worry—you’ll pick it up.\nCourse Material: This lecture note will be updated as the course progresses. \n\nThis is the inaugural run of this course for me. So if I’m losing you, boring you, talking too fast, too slow, whatever – speak up! Your feedback is my compass.",
+    "objectID": "19_purrr.html#basics-of-mapping",
+    "href": "19_purrr.html#basics-of-mapping",
+    "title": "19  Functional Programming",
+    "section": "",
+    "text": "19.1.1 Example: Calculate the number of characters in several words\nImagine you have a few words and you want to count the number of characters in each word. Previously, you might have used rowwise() as follows:\n\ntibble(words = c(\"mango\", \"lychee\", \"blueberry\")) |&gt;\n    rowwise() |&gt;\n    mutate(length = nchar(words)) |&gt;\n    ungroup()\n\n\n  \n\n\n\nHere, we had to explicitly mark the tibble as rowwise and then ungroup the results. This works fine, but it can be a bit verbose.\nWe can use map() instead:\n\ntibble(words = c(\"mango\", \"lychee\", \"blueberry\")) |&gt;\n    mutate(length = map(words, nchar))\n\n\n  \n\n\n\nWhat’s happening here?\n\nmap(words, nchar) tells R: “For every element in the words vector, calculate the number of characters using nchar().”\nThe result is a list column because, by default, map() returns a list.\n\n\n\n19.1.2 How map() Works\nThe basic syntax is very simple:\n\nmap(.x, .f)\n\n\n.x: The list or vector you want to iterate over.\n.f: The function to apply to each element.\n\nmap() takes each element from .x and sends it through the function .f, collecting the results in a new list. It is not that scary, right?\n\n\n19.1.3 Getting a Vector Instead of a List\nSince map() always returns a list, you might sometimes want to convert the results into a vector format. There are two common ways to do this:\n\nUnnest the ResultUse map_vec()\n\n\nAfter applying map(), you can “unnest” the list column to turn it into a regular vector:\n\ntibble(words = c(\"mango\", \"lychee\", \"blueberry\")) |&gt;\n    mutate(length = map(words, nchar)) |&gt;\n    unnest(length)\n\nmutate: new variable 'length' (list) with 3 unique values and 0% NA\n\n\n\n  \n\n\n\n\n\nThe function map_vec() directly returns a vector, so you don’t have to unnest later:\n\ntibble(words = c(\"mango\", \"lychee\", \"blueberry\")) |&gt;\n    mutate(length = map_vec(words, nchar))\n\n\n  \n\n\n\n\n\n\n\n\n\nother map_*()\n\n\n\n\n\nSurprisingly, map_vec() is a recent introduction to tidyverse (specifically, the end of 2022, see here). Before that, you could use map_dbl() or map_lgl() to get a vector, but you need to specify the type of vector you want to return, which is annoying! Luckily, this is not something you need to worry about anymore.",
     "crumbs": [
-      "Weclome"
+      "R Programming",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Functional Programming</span>"
     ]
   },
   {
-    "objectID": "index.html#how-to-use-the-lecture-notes",
-    "href": "index.html#how-to-use-the-lecture-notes",
-    "title": "EE BIOL C234",
-    "section": "How to Use the Lecture Notes",
-    "text": "How to Use the Lecture Notes\nYour left sidebar is your map to the course, showing all lectures—just a click away. On the right, you’ll see a table of contents specific to each lecture.\nIn this course, code examples will appear in blocks like this:\n\n1x &lt;- 1+1\n2x^2\n\n\n1\n\nCalculate 1+1 and assign it to the variable x.\n\n2\n\nCalculate the square of x.\n\n\n\n\nSee the little circle on the right? Hover over it for a quick explanation of the code. When you hover over the code block itself, you’ll also spot a “copy” button—perfect for copying and pasting it into your R console to try it out yourself (fun fact: that’s how a large portion of coding is done in real life).\nTo show stepped progress, we’ll often add to existing code blocks. New additions are highlighted for clarity. For example:\n\nx &lt;- 1+1 \nx^2 \n1x^3\n\n\n1\n\nCalculate the cube of x.\n\n\n\n\nYou’ll find key computational tools and R packages highlighted in purple (e.g., GitHub and ggplot2). R functions are indicated in red and always include parentheses, such as sum().\nThroughout the course, expect tips, tricks, and even a few fun facts sprinkled in. While not essential, these extras might give you an edge or deeper insight. Some of them are collapsible, so you can click to expand and explore them at your own pace. Look out for these in green boxes, like this:\n\n\n\n\n\n\nTips\n\n\n\n\n\n\n\n\nAs advertised, this is a tips box.\n\n\n\n\n\nI have included many exercises throughout the notes. These are your chance to practice what you’ve learned. Just fill in ____ with the correct answer and then run the code block to check your work. If you ever get stuck, the Solution is just next to it. For example,\n\nExercise: Calculate 2+2Solution\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "objectID": "19_purrr.html#anonymous-functions-with-map",
+    "href": "19_purrr.html#anonymous-functions-with-map",
+    "title": "19  Functional Programming",
+    "section": "19.2 Anonymous Functions with map()",
+    "text": "19.2 Anonymous Functions with map()\nSo far, it might not be clear why map() is better than rowwise() except that it is shorter to write. Below I will show you one of the huge advantages of map() - you can use anonymous functions (a.k.a. lambda function): These are functions you define “on the fly” without formally naming them, which can make your code more concise when you only need a function once.\n\n19.2.1 Using rowwise()\nLet’s say you want to generate a series of random samples from a uniform distribution. Using rowwise(), you’d first have to define a separate function:\n\n# Define a function to generate samples\nsample_distribution &lt;- function(n) {\n1  runif(n, min = -1, max = 1)\n}\n\n# Apply the function rowwise\ntibble(n = c(10, 20, 30)) |&gt;\n  rowwise() |&gt;\n  mutate(sample = list(sample_distribution(n))) |&gt;\n  ungroup()\n\n## Equivalent `map()` approach\ntibble(n = c(10, 20, 30)) |&gt;\n  mutate(sample = map(n, sample_distribution))\n\n\n1\n\nGenerate n random samples from a uniform distribution from -1 to 1.\n\n\n\n\n\n\n19.2.2 Using Anonymous Functions\nIf the function is only needed once, you can define it right in the call to map():\n\ntibble(\n    num_samples = c(10, 20, 30)\n) |&gt;\n    mutate(\n        sample = map(num_samples, \\(x) runif(x, min = -1, max = 1))\n    )\n\nmutate: new variable 'sample' (list) with 3 unique values and 0% NA\n\n\n\n  \n\n\n\nExplanation:\n\n\\(x) defines an anonymous function with x as its argument.\nThe body of the function (runif(x, min = -1, max = 1)) uses x directly.\nThis means “for each value in num_samples, generate x random numbers using runif().”\n\n\n\n\n\n\n\nAlternative Syntax for Anonymous Functions\n\n\n\n\n\nOlder code might use a formula-style notation for anonymous functions. Although less common now, it’s still seen in many codebases, so it’s good to know about it. The syntax is as follows:\n\ntibble(\n    num_samples = c(10, 20, 30)\n) |&gt;\n    mutate(\n        sample = map(num_samples, ~ runif(., min = -1, max = 1))\n    )\n\nIn this version, ~ denotes an anonymous function and . is a placeholder for the argument.\n\n\n\n:::",
     "crumbs": [
-      "Weclome"
+      "R Programming",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Functional Programming</span>"
+    ]
+  },
+  {
+    "objectID": "19_purrr.html#mapping-with-multiple-inputs",
+    "href": "19_purrr.html#mapping-with-multiple-inputs",
+    "title": "19  Functional Programming",
+    "section": "19.3 Mapping with Multiple Inputs",
+    "text": "19.3 Mapping with Multiple Inputs\nSometimes, you need to work with more than one column simultaneously. Purrr provides two handy functions: map2() and pmap().\n\n19.3.1 map2(): Working with Two Inputs\nmap2() applies a function to two vectors element-wise. For example:\n\ntibble(\n    num_samples = c(10, 20, 30),\n    sample_min = c(-1, -2, -3)\n) |&gt;\n    mutate(\n        sample = map2(\n            num_samples, sample_min,\n            \\(n, min) runif(n, min = min, max = 1)\n        )\n    )\n\nmutate: new variable 'sample' (list) with 3 unique values and 0% NA\n\n\n\n  \n\n\n\nHow It Works:\n\nmap2() takes the first element from num_samples and the first element from sample_min\nWe pass them as n and min to the anonymous function \\(n, min) runif(n, min = min, max = 1).\nThis is repeated for all corresponding pairs.",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Functional Programming</span>"
+    ]
+  },
+  {
+    "objectID": "19_purrr.html#pmap-working-with-multiple-inputs",
+    "href": "19_purrr.html#pmap-working-with-multiple-inputs",
+    "title": "19  Functional Programming",
+    "section": "19.4 pmap(): Working with Multiple Inputs",
+    "text": "19.4 pmap(): Working with Multiple Inputs\nIf you have more than two vectors, use pmap():\n\ntibble(\n    num_samples = c(10, 20, 30),\n    sample_min = c(-1, -2, -3),\n    sample_max = c(2, 3, 4)\n) |&gt;\n    mutate(\n        sample = pmap(\n1            list(num_samples, sample_min, sample_max),\n2            \\(n, min, max) runif(n, min = min, max = max)\n        )\n    )\n\n\n1\n\nThe pmap() function takes a list of columns. So you need to wrap your columns in a list.\n\n2\n\nThe anonymous function takes three arguments as what you input in pmap().\n\n\n\n\nmutate: new variable 'sample' (list) with 3 unique values and 0% NA",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Functional Programming</span>"
+    ]
+  },
+  {
+    "objectID": "19_purrr.html#when-to-use-map-vs-rowwise",
+    "href": "19_purrr.html#when-to-use-map-vs-rowwise",
+    "title": "19  Functional Programming",
+    "section": "19.5 When to use map() vs rowwise()",
+    "text": "19.5 When to use map() vs rowwise()\nBoth map() and rowwise() help you loop over your data, but they have different vibes:\n\nmap() is your go-to for functional programming. It’s built to apply a function to every element in a vector or list and is extra handy when you’re juggling multiple inputs with helpers like map2() or pmap(). If you dig writing concise code with anonymous functions, map() is where it’s at.\nrowwise() is more about thinking in rows. It’s great if you want to work row by row in a tibble, and it feels pretty intuitive—like taking it one row at a time. Just keep in mind that once you’re done, you’ll usually want to call ungroup() to tidy up your tibble.\n\nUsually, map() leads to cleaner and more streamlined code, especially if you’re comfortable with a functional programming approach. That said, if you’re just dipping your toes into these concepts, rowwise() can be a nice stepping stone—a sort of “gateway drug” into the world of functional programming.\nIn most turorials, rowwise() is simply not taught. While I agree that map() is more powerful and you do not need to use it if you do not want to, I personally find that rowwise() is much easier to write and read. It is a natural building step (gateway drug) to functional programming!.",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Functional Programming</span>"
     ]
   },
   {
@@ -1137,69 +1173,69 @@
     ]
   },
   {
-    "objectID": "19_purrr.html",
-    "href": "19_purrr.html",
-    "title": "19  Using map()",
+    "objectID": "20_fast_code.html",
+    "href": "20_fast_code.html",
+    "title": "20  Making R Faster",
     "section": "",
-    "text": "19.1 Basics of Mapping\nWhen you work with data in R, you often need to apply a function repeatedly—whether to every row in a tibble or every element in a vector. You might recall using rowwise() in past tutorials to apply functions to each row of nested data. In this session, we introduce map(), a function from the purrr package (part of the tidyverse) that makes these operations more concise and, in many cases, more powerful.\nThink of map() as saying, “Take this function and apply it to each element in this list or vector.” While the idea might seem a little abstract at first, with some practice you’ll appreciate its flexibility and efficiency.\nLet’s dive in by loading our “best buddy” packages:",
+    "text": "20.1 How to check how fast your code is\nR has the bad reputation of being slow. This is true, compared to other languages like C++ or Julia. So if you are really serious about performance, you might need to learn other languages. However, you can easily make R run faster without modifying your codes much, let alone learning other languages.\nLet’s start with the old packages:\nWe will not use the tidylog package this time. As we mentioned before, tidylog marks up the code with comments to show you what happens in each step. This is great for understanding the code, but it slows down the execution. Thus, for the steps that need to be fast, we will not use tidylog.",
     "crumbs": [
       "R Programming",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Using `map()`</span>"
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Making R Faster</span>"
     ]
   },
   {
-    "objectID": "19_purrr.html#basics-of-mapping",
-    "href": "19_purrr.html#basics-of-mapping",
-    "title": "19  Using map()",
+    "objectID": "20_fast_code.html#parallel-computing",
+    "href": "20_fast_code.html#parallel-computing",
+    "title": "20  Making R Faster",
+    "section": "20.2 Parallel Computing",
+    "text": "20.2 Parallel Computing\nR is a single-threaded language. This means that it can only use one core of your CPU. However, you can use multiple cores (think of your CPU as a car engine, and the cores as the cylinders). The hard work we have been doing with vectorization is paying off.\nWe can use the furrr package to parallelize the map functions. It’s like having multiple workers doing the same task simultaneously instead of one worker doing everything sequentially. Thus, you get automatic speedups for free.\nLet’s compare the performance of sequential and parallel execution of the same code.\n\nSequential execution with purrrParallel execution with furrrParallelizing with mirai\n\n\n\ntic()\nmodel_r2 &lt;- penguins |&gt; \n  group_by(species) |&gt; \n  nest() |&gt; \n  mutate(r2 = map_vec(data, \\(x) summary(lm(bill_length_mm ~ bill_depth_mm, data = x))$r.squared)) \ntoc()\n\n0.008 sec elapsed\n\n\n\n\n\nlibrary(furrr)\nplan(multisession, workers = 3)  # Set up parallel processing with 4 cores\ntic()\nmodel_r2 &lt;- penguins |&gt; \n  group_by(species) |&gt; \n  nest() |&gt; \n  mutate(r2 = future_map_dbl(data, \\(x) summary(lm(bill_length_mm ~ bill_depth_mm, data = x))$r.squared))\ntoc()\n\n0.16 sec elapsed\n\n\nThe syntax is almost identical to purrr, just replace map with future_map. The main differences are:\n\nYou need to set up a plan for parallel processing using plan()\nAs map_vec is relatively a new introudciton to tidyvese, future_map_vec is not yet implemented. You can use future_map_* where * is the type of output you want.\nThere is overhead to setting up the parallel processing, so it is not suitable for small datasets (like this one).\n\n\n\nThis is a feature in development version of purrr (version 1.0.4.0). However, I have little doubt that it will be merged into the main version anytime soon.\nTo try it out, you need to install the development version of purrr and mirai:\n\npak::pak(\"tidyverse/purrr\")\npak::pak(\"shikokuchuo/mirai\")\n\n#| message: false\n\ntic()\nmodel_r2 &lt;- penguins |&gt; \n  group_by(species) |&gt; \n  nest() |&gt; \n  mutate(r2 = map_vec(data, \n  \\(x) summary(lm(bill_length_mm ~ bill_depth_mm, data = x))$r.squared),\n  .progress = TRUE)\ntoc()\n\n0.009 sec elapsed",
+    "crumbs": [
+      "R Programming",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Making R Faster</span>"
+    ]
+  },
+  {
+    "objectID": "20_fast_code.html#how-to-check-how-fast-your-code-is",
+    "href": "20_fast_code.html#how-to-check-how-fast-your-code-is",
+    "title": "20  Making R Faster",
     "section": "",
-    "text": "19.1.1 Example: Calculate the number of characters in several words\nImagine you have a few words and you want to count the number of characters in each word. Previously, you might have used rowwise() as follows:\n\ntibble(words = c(\"mango\", \"lychee\", \"blueberry\")) |&gt;\n    rowwise() |&gt;\n    mutate(length = nchar(words)) |&gt;\n    ungroup()\n\n\n  \n\n\n\nHere, we had to explicitly mark the tibble as rowwise and then ungroup the results. This works fine, but it can be a bit verbose.\nWe can use map() instead:\n\ntibble(words = c(\"mango\", \"lychee\", \"blueberry\")) |&gt;\n    mutate(length = map(words, nchar))\n\n\n  \n\n\n\nWhat’s happening here?\n\nmap(words, nchar) tells R: “For every element in the words vector, calculate the number of characters using nchar().”\nThe result is a list column because, by default, map() returns a list.\n\n\n\n19.1.2 How map() Works\nThe basic syntax is very simple:\n\nmap(.x, .f)\n\n\n.x: The list or vector you want to iterate over.\n.f: The function to apply to each element.\n\nmap() takes each element from .x and sends it through the function .f, collecting the results in a new list. It is not that scary, right?\n\n\n19.1.3 Getting a Vector Instead of a List\nSince map() always returns a list, you might sometimes want to convert the results into a vector format. There are two common ways to do this:\n\nUnnest the ResultUse map_vec()\n\n\nAfter applying map(), you can “unnest” the list column to turn it into a regular vector:\n\ntibble(words = c(\"mango\", \"lychee\", \"blueberry\")) |&gt;\n    mutate(length = map(words, nchar)) |&gt;\n    unnest(length)\n\nmutate: new variable 'length' (list) with 3 unique values and 0% NA\n\n\n\n  \n\n\n\n\n\nThe function map_vec() directly returns a vector, so you don’t have to unnest later:\n\ntibble(words = c(\"mango\", \"lychee\", \"blueberry\")) |&gt;\n    mutate(length = map_vec(words, nchar))\n\n\n  \n\n\n\n\n\n\n\n\n\nother map_*()\n\n\n\n\n\nSurprisingly, map_vec() is a recent introduction to tidyverse (specifically, the end of 2022, see here). Before that, you could use map_dbl() or map_lgl() to get a vector, but you need to specify the type of vector you want to return, which is annoying! Luckily, this is not something you need to worry about anymore.",
+    "text": "20.1.1 Quick glance using tictoc\nYou can use the tictoc (not the social media platform) package to check how fast your code is.\n\nlibrary(tictoc)\n\n1tic()\n\n2model_r2 &lt;- penguins |&gt;\n  group_by(species) |&gt;\n  nest() |&gt; \n  mutate(r2 = map_vec(data, \\(x) summary(lm(bill_length_mm ~ bill_depth_mm, data = x))$r.squared)) |&gt;\n  ungroup()\n\n3toc()\n\n\n1\n\ntic() starts the timer.\n\n2\n\nYour code goes in between tic() and toc().\n\n3\n\ntoc() stops the timer and prints the time it took.\n\n\n\n\n0.022 sec elapsed\n\n\n\n\n20.1.2 Comparing multiple methods\nFor a more systematic way to compare the performance of different methods, you can use the microbenchmark package. The grammar is very simple and pretty self-explanatory:\n\nlibrary(microbenchmark)\n\nbenchmark &lt;- microbenchmark(\n  rowwise = penguins |&gt; \n    group_by(species) |&gt; \n    nest() |&gt; \n    rowwise() |&gt;\n    mutate(r2 = summary(lm(bill_length_mm ~ bill_depth_mm, data = data))$r.squared) |&gt;\n    ungroup(),\n  map = penguins |&gt; \n    group_by(species) |&gt; \n    nest() |&gt; \n    mutate(r2 = map_vec(data, \\(x) summary(lm(bill_length_mm ~ bill_depth_mm, data = x))$r.squared)),\n  times = 10\n) \n\nprint(benchmark)\n\nUnit: milliseconds\n    expr      min       lq     mean   median       uq      max neval cld\n rowwise 5.527579 5.965623 6.788846 6.572751 7.475120 8.517586    10  a \n     map 5.370549 5.473377 5.880179 5.781636 6.103711 7.152081    10   b\n\n\nYou can also use the autoplot function to visualize the results.\n\nautoplot(benchmark)\n\n\n\n\n\n\n\n\nIt is clear that the nest + map method is the fastest, and the nest + rowwise method is the slowest.",
     "crumbs": [
       "R Programming",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Using `map()`</span>"
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Making R Faster</span>"
     ]
   },
   {
-    "objectID": "19_purrr.html#anonymous-functions-with-map",
-    "href": "19_purrr.html#anonymous-functions-with-map",
-    "title": "19  Using map()",
-    "section": "19.2 Anonymous Functions with map()",
-    "text": "19.2 Anonymous Functions with map()\nSo far, it might not be clear why map() is better than rowwise() except that it is shorter to write. Below I will show you one of the huge advantages of map() - you can use anonymous functions (a.k.a. lambda function): These are functions you define “on the fly” without formally naming them, which can make your code more concise when you only need a function once.\n\n19.2.1 Using rowwise()\nLet’s say you want to generate a series of random samples from a uniform distribution. Using rowwise(), you’d first have to define a separate function:\n\n# Define a function to generate samples\nsample_distribution &lt;- function(n) {\n1  runif(n, min = -1, max = 1)\n}\n\n# Apply the function rowwise\ntibble(n = c(10, 20, 30)) |&gt;\n  rowwise() |&gt;\n  mutate(sample = list(sample_distribution(n))) |&gt;\n  ungroup()\n\n## Equivalent `map()` approach\ntibble(n = c(10, 20, 30)) |&gt;\n  mutate(sample = map(n, sample_distribution))\n\n\n1\n\nGenerate n random samples from a uniform distribution from -1 to 1.\n\n\n\n\n\n\n19.2.2 Using Anonymous Functions\nIf the function is only needed once, you can define it right in the call to map():\n\ntibble(\n    num_samples = c(10, 20, 30)\n) |&gt;\n    mutate(\n        sample = map(num_samples, \\(x) runif(x, min = -1, max = 1))\n    )\n\nmutate: new variable 'sample' (list) with 3 unique values and 0% NA\n\n\n\n  \n\n\n\nExplanation:\n\n\\(x) defines an anonymous function with x as its argument.\nThe body of the function (runif(x, min = -1, max = 1)) uses x directly.\nThis means “for each value in num_samples, generate x random numbers using runif().”\n\n\n\n\n\n\n\nAlternative Syntax for Anonymous Functions\n\n\n\n\n\nOlder code might use a formula-style notation for anonymous functions. Although less common now, it’s still seen in many codebases, so it’s good to know about it. The syntax is as follows:\n\ntibble(\n    num_samples = c(10, 20, 30)\n) |&gt;\n    mutate(\n        sample = map(num_samples, ~ runif(., min = -1, max = 1))\n    )\n\nIn this version, ~ denotes an anonymous function and . is a placeholder for the argument.\n\n\n\n:::",
+    "objectID": "20_fast_code.html#fastverse",
+    "href": "20_fast_code.html#fastverse",
+    "title": "20  Making R Faster",
+    "section": "20.3 Fastverse",
+    "text": "20.3 Fastverse\nThe fastverse is a collection of high-performance packages designed to make R faster. It’s like a sports car version of the tidyverse! 🏎️\n\n# Install fastverse if you haven't\n# install.packages(\"fastverse\")\nlibrary(fastverse)\n\n# Example using data.table (included in fastverse)\nlibrary(data.table)\n\n# Convert to data.table\npenguins_dt &lt;- as.data.table(penguins)\n\n# Compare performance\nbenchmark &lt;- microbenchmark(\n  tidyverse = penguins |&gt; \n    group_by(species) |&gt; \n    summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE)),\n  data.table = penguins_dt[, .(mean_bill_length = mean(bill_length_mm, na.rm = TRUE)), \n                          by = species],\n  times = 100\n)\n\nprint(benchmark)\n\nUnit: microseconds\n       expr     min       lq      mean  median       uq      max neval cld\n  tidyverse 891.340 920.6755 1042.0962 935.292 1028.629 4045.429   100  a \n data.table 183.844 200.7360  265.3401 221.236  230.461 4176.055   100   b",
     "crumbs": [
       "R Programming",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Using `map()`</span>"
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Making R Faster</span>"
     ]
   },
   {
-    "objectID": "19_purrr.html#mapping-with-multiple-inputs",
-    "href": "19_purrr.html#mapping-with-multiple-inputs",
-    "title": "19  Using map()",
-    "section": "19.3 Mapping with Multiple Inputs",
-    "text": "19.3 Mapping with Multiple Inputs\nSometimes, you need to work with more than one column simultaneously. Purrr provides two handy functions: map2() and pmap().\n\n19.3.1 map2(): Working with Two Inputs\nmap2() applies a function to two vectors element-wise. For example:\n\ntibble(\n    num_samples = c(10, 20, 30),\n    sample_min = c(-1, -2, -3)\n) |&gt;\n    mutate(\n        sample = map2(\n            num_samples, sample_min,\n            \\(n, min) runif(n, min = min, max = 1)\n        )\n    )\n\nmutate: new variable 'sample' (list) with 3 unique values and 0% NA\n\n\n\n  \n\n\n\nHow It Works:\n\nmap2() takes the first element from num_samples and the first element from sample_min\nWe pass them as n and min to the anonymous function \\(n, min) runif(n, min = min, max = 1).\nThis is repeated for all corresponding pairs.",
+    "objectID": "20_fast_code.html#dtplyr-best-of-both-worlds",
+    "href": "20_fast_code.html#dtplyr-best-of-both-worlds",
+    "title": "20  Making R Faster",
+    "section": "20.4 dtplyr: Best of Both Worlds",
+    "text": "20.4 dtplyr: Best of Both Worlds\nWhat if you love tidyverse syntax but need better performance? That’s where dtplyr comes in! It translates dplyr code to data.table code behind the scenes.\n\nlibrary(dtplyr)\n\n# Convert to lazy data.table\npenguins_lazy &lt;- lazy_dt(penguins)\n\n# Use regular dplyr syntax\nresult &lt;- penguins_lazy |&gt;\n  group_by(species) |&gt;\n  summarise(mean_bill_length = mean(bill_length_mm, na.rm = TRUE)) |&gt;\n  as_tibble()  # Convert back to tibble\n\n# Show the data.table translation\npenguins_lazy |&gt;\n  group_by(species) |&gt;\n  summarise(mean_bill_length = mean(bill_length_mm, \n                                    na.rm = TRUE)) |&gt;\n  show_query()\n\n`_DT1`[, .(mean_bill_length = mean(bill_length_mm, na.rm = TRUE)), \n    keyby = .(species)]\n\n\n\n\n\n\n\n\nWhen to Use What?\n\n\n\n\nUse base R for simple operations\nUse tidyverse for development and readability\nUse data.table/dtplyr for large datasets\nUse furrr when you have many independent operations",
     "crumbs": [
       "R Programming",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Using `map()`</span>"
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Making R Faster</span>"
     ]
   },
   {
-    "objectID": "19_purrr.html#pmap-working-with-multiple-inputs",
-    "href": "19_purrr.html#pmap-working-with-multiple-inputs",
-    "title": "19  Using map()",
-    "section": "19.4 pmap(): Working with Multiple Inputs",
-    "text": "19.4 pmap(): Working with Multiple Inputs\nIf you have more than two vectors, use pmap():\n\ntibble(\n    num_samples = c(10, 20, 30),\n    sample_min = c(-1, -2, -3),\n    sample_max = c(2, 3, 4)\n) |&gt;\n    mutate(\n        sample = pmap(\n1            list(num_samples, sample_min, sample_max),\n2            \\(n, min, max) runif(n, min = min, max = max)\n        )\n    )\n\n\n1\n\nThe pmap() function takes a list of columns. So you need to wrap your columns in a list.\n\n2\n\nThe anonymous function takes three arguments as what you input in pmap().\n\n\n\n\nmutate: new variable 'sample' (list) with 3 unique values and 0% NA",
+    "objectID": "20_fast_code.html#summary",
+    "href": "20_fast_code.html#summary",
+    "title": "20  Making R Faster",
+    "section": "20.5 Summary",
+    "text": "20.5 Summary\nMaking R code faster doesn’t always mean learning a new language. Here’s your toolkit:\n\nProfile First: Use tictoc or microbenchmark to identify slow parts\nStart Simple: Try vectorization and efficient data structures\nGo Parallel: Use furrr for independent operations\nSwitch Engines: Consider data.table/dtplyr for large data operations\n\nRemember: Premature optimization is the root of all evil! Only optimize when you need to. 🚀",
     "crumbs": [
       "R Programming",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Using `map()`</span>"
-    ]
-  },
-  {
-    "objectID": "19_purrr.html#when-to-use-map-vs-rowwise",
-    "href": "19_purrr.html#when-to-use-map-vs-rowwise",
-    "title": "19  Using map()",
-    "section": "19.5 When to use map() vs rowwise()",
-    "text": "19.5 When to use map() vs rowwise()\nBoth map() and rowwise() help you loop over your data, but they have different vibes:\n\nmap() is your go-to for functional programming. It’s built to apply a function to every element in a vector or list and is extra handy when you’re juggling multiple inputs with helpers like map2() or pmap(). If you dig writing concise code with anonymous functions, map() is where it’s at.\nrowwise() is more about thinking in rows. It’s great if you want to work row by row in a tibble, and it feels pretty intuitive—like taking it one row at a time. Just keep in mind that once you’re done, you’ll usually want to call ungroup() to tidy up your tibble.\n\nUsually, map() leads to cleaner and more streamlined code, especially if you’re comfortable with a functional programming approach. That said, if you’re just dipping your toes into these concepts, rowwise() can be a nice stepping stone—a sort of “gateway drug” into the world of functional programming.\nIn most turorials, rowwise() is simply not taught. While I agree that map() is more powerful and you do not need to use it if you do not want to, I personally find that rowwise() is much easier to write and read. It is a natural building step (gateway drug) to functional programming!.",
-    "crumbs": [
-      "R Programming",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Using `map()`</span>"
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Making R Faster</span>"
     ]
   }
 ]
