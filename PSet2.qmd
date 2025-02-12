@@ -16,7 +16,7 @@ Welcome to your second problem set! In this assignment, you will import and tidy
 
    - **Create a New Project**: Start a new RStudio project.
    - **Download Data**:
-     - Download the full data archive from [here](http://clsong.com/assets/class_data/PSet2.zip).
+     - Download the full data archive from [here](https://clsong.com/assets/class_data/PSet2.zip).
      - This archive contains two CSV files:
        - Snail Data: `PSet2_snail.csv`
        - Vegetation Zone Totals: `PSet2_vegzonetotals.csv`
