@@ -85,13 +85,29 @@ It might be helpful to visualize the results. You can use the `autoplot` functio
 autoplot(benchmark)
 ```
 
+### Estimate how long it will take to run your code
+
+A great new feature in `purrr` is the introduction of `.progress` argument. This allows you to estimate how long it will take to run your code.
+
+As the codes above runs very fast, we use a more time-consuming task (just for illustration purposes).
+```{r}
+#| message: false
+#| warning: false
+#| eval: false
+
+tibble(x = 1:500) |>
+  mutate(y = map_dbl(x, \(x) {
+    Sys.sleep(0.01) # <1>
+    x
+  },
+  .progress = TRUE)) # <2>
+```
+1. Sleep for 0.01 seconds
+2. Show a progress bar
+
 ## Parallel Computing
 
-R usually uses one CPU core. But most computers have 4-8 cores! By sending the same task to multiple cores, you get automatic speedups for free!
-
-::: {.panel-tabset}
-
-## `furrr`
+R usually uses one CPU core. But most computers have 4-8 cores! By sending the same task to multiple cores, you get automatic speedups for free! 
 
 We can use the `furrr` package to parallelize the map functions. 
 
@@ -109,11 +125,14 @@ model_r2 <- flights |>
 toc()
 ```
 
-The syntax is almost identical to `purrr`, just replace `map` with `future_map`, and set before the code how many cores you want to use (set it lower than the number of cores on your computer).
+The syntax is almost identical to `purrr`, just replace `map` with `future_map` (you can even use the `.progress` argument to show a progress bar), and set before the code how many cores you want to use (set it lower than the number of cores on your computer).
 
-Note: Parallelizing adds some overhead (think of the leader needs time to coordinate the workers). Thus, use it for big datasets or slow tasks—not for quick calculations!
+Note: Parallelizing adds some overhead (think of the leader needs time to coordinate the workers). Thus, it may cost more time than the non-parallelized version for small datasets or quick calculations.
+
+::: {.callout-tip}
 
 ## The magic of `mirai`
+
 
 This is a feature in development version of `purrr` ([version 1.0.4.0](https://purrr.tidyverse.org/dev/reference/parallelization.html)). However, I have little doubt that it will be merged into the main version anytime soon: it is so much easier to use with and is up to 1000 times faster compared to `furrr`.
 
@@ -125,7 +144,7 @@ pak::pak("tidyverse/purrr")
 pak::pak("shikokuchuo/mirai")
 ```
 
-Then we simply need to add `.parallel = TRUE` to the `map` function. How easy is that?
+Then we simply need to add `.parallel = TRUE` to the `map` function.
 
 ```{r}
 #| message: false
@@ -136,16 +155,19 @@ library(mirai)
 mirai::daemons(4) # <1>
 
 tic()
+
 model_r2 <- flights |> 
   group_by(carrier, origin, year) |> 
   nest() |> 
-  mutate(r2 = map_vec(data, 
-  \(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared),
-  .parallel = TRUE) # <2>
+  mutate(r2 = map(data, 
+                  \(x) x$arr_delay - x$dep_delay,
+                  .parallel = TRUE)) # <2>
+
 toc()
 ```
 1. Set the number of cores you want to use
 2. Add `.parallel = TRUE` to the `map` function
+
 :::
 
 ## Swap Tidyverse for Speed Demons

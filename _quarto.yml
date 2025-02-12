@@ -49,6 +49,7 @@ book:
         - 18_function.qmd
         - 19_purrr.qmd
         - 20_fast_code.qmd
+        # - 21_neutral_theory.qmd
     #     - PSet3.qmd
     #- part: "Advanced Visualization"
     # - part: "Reproducible Research"
