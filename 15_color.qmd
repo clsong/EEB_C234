@@ -49,6 +49,8 @@ ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, fill = body_mass_g))
     theme(legend.position = "top")
 ```
 
+Check more about this topic [here](https://nrennie.rbind.io/blog/monochrome-data-visualisations/).
+
 ## Continuous sequential variables (Multi Hue)
 
 Transitioning between hues to indicate progression. For example, we want to use the color class to show the species, and then the color varariton within the same class to show the body mass.

@@ -446,7 +446,7 @@ Class Objectives
 </dl>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>0.785 sec elapsed</code></pre>
+<pre data-code-line-numbers=""><code>0.711 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -494,9 +494,12 @@ Class Objectives
 </div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Unit: milliseconds
-           expr      min       lq     mean   median       uq      max neval cld
- method_rowwise 81.55359 85.03765 97.48185 86.84774 116.2765 118.8993    10   a
-     method_map 82.67220 85.88823 98.10977 87.31877 114.4661 122.6155    10   a</code></pre>
+           expr      min       lq      mean    median       uq      max neval
+ method_rowwise 80.45213 83.82024  94.14546  85.31606 113.8149 118.0371    10
+     method_map 79.67354 84.43228 101.11504 101.05764 117.2734 123.6665    10
+ cld
+   a
+   a</code></pre>
 </div>
 </div>
 <p>It might be helpful to visualize the results. You can use the <code>autoplot</code> function to do this easily.</p>
@@ -551,7 +554,7 @@ Class Objectives
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">r2 =</span> <span class="fu">future_map_dbl</span>(data, \(x) <span class="fu">summary</span>(<span class="fu">lm</span>(arr_delay <span class="sc">~</span> dep_delay, <span class="at">data =</span> x))<span class="sc">$</span>r.squared))</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>5.872 sec elapsed</code></pre>
+<pre data-code-line-numbers=""><code>5.745 sec elapsed</code></pre>
 </div>
 </div>
 <p>The syntax is almost identical to <code>purrr</code>, just replace <code>map</code> with <code>future_map</code> (you can even use the <code>.progress</code> argument to show a progress bar), and set before the code how many cores you want to use (set it lower than the number of cores on your computer).</p>
@@ -602,7 +605,7 @@ The magic of <code>mirai</code>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 4
-0.307 sec elapsed</code></pre>
+0.284 sec elapsed</code></pre>
 </div>
 </div>
 </div>

@@ -164,6 +164,72 @@ penguins |>
     ungroup()
 ```
 
+## Programming with `dplyr`: Tidy Evaluation
+
+We now touch a (used to be scary) topic known as `tidy evaluation`. In tidyverse, a gereat feature is that we do not need to use `"variable"` to refer to a variable. Instead, we can use the variable itself without quoting. However, this feature can be a bit tricky when we want to write functions that uses variables as arguments. 
+
+I know it sounds abstract. Let's imagine you’re analyzing the `penguins` dataset and want to calculate the mean `bill_length_mm` grouped by different groups. Your code looks like this:
+
+```{r}
+#| eval: false
+
+# Group by species
+penguins |>
+    group_by(species) |>
+    summarise(mean = mean(bill_length_mm, na.rm = TRUE))
+# Group by sex
+penguins |>
+    group_by(sex) |>
+    summarise(mean = mean(bill_length_mm, na.rm = TRUE))
+# ... and so on for island, year, etc. 😩
+```
+
+It gets a bit tedious to write the same code over and over again. Let’s write a function to automate this.
+
+### The Naive Attempt (Spoiler: It Breaks)
+
+With what we know so far, you might try this:
+```{r}
+grouped_mean <- function(data, variable) {
+    data |>
+        group_by(variable) |>
+        summarise(mean = mean(bill_length_mm, na.rm = TRUE))
+}
+```
+
+However, this function does not work:
+
+```{r error = TRUE}
+grouped_mean(penguins, "species")
+```
+
+R thinks you’re literally grouping by a column named "variable" in the dataset (which doesn’t exist). 
+
+### The Fix: Embrace the Curly-Curly {{ }} 
+
+Luckily, it is super easy to fix this. To tell R, “Hey, use the variable I’m giving you, not the word ‘variable’!” wrap your argument in `{{ }}`:
+
+```{r}
+grouped_mean_corrected <- function(data, variable) {
+    data |>
+        group_by({{ variable }}) |> # <1>
+        summarise(mean = mean(bill_length_mm, na.rm = TRUE))
+}
+
+grouped_mean_corrected(penguins, species)
+```
+1. ✅ Magic happens here!  
+
+In other words, `{{ }}` tells tidyverse: “Treat variable as the column I pass into the function, not as a literal name.”
+
+::: {.callout-tip collapse="true"}
+### Fun Fact: This Took Years to Build 🛠️
+
+It does not look complicated, right? Actually, the tidyverse team spent ages perfecting this feature. Check [here](https://hadley.github.io/25-tidyverse-history/#sec-tidy-eval) for its history. 
+
+![From [here](https://yourdailycoffee.substack.com/p/overnight-success-is-a-lie)](img/path_success.png)
+:::
+
 ## Best Practices
 
 When writing functions, follow these guidelines:
