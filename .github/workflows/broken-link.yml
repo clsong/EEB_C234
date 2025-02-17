@@ -1,9 +1,11 @@
 name: Check for broken links on site
 
 on:
-  workflow_run:
-    workflows: [Deploy site]
-    types: [completed]
+  push:
+  schedule:
+    - cron: "0 0 1 * *"
+  repository_dispatch:
+    types: [check-link]
 
 jobs:
   check-links-on-site:
