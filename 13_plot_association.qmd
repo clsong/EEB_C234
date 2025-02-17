@@ -16,7 +16,7 @@ theme_set(cowplot::theme_cowplot())
 
 Marginal distributions show the distribution of each variable along the axes of a scatter plot. They provide additional context to understand the spread and density of the data.
 
-A simple way to add marginal information is by using geom_rug(), which adds tick marks along the axes:
+A simple way to add marginal information is by using `geom_rug()`, which adds tick marks along the axes:
 
 ```{r}
 #| warning: false
@@ -24,6 +24,16 @@ penguins |>
     ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
     geom_point() +
     geom_rug()
+```
+
+With many points, it becomes difficult to see the marginal distributions. I prefer to use `geom_hdr_rug()` from `ggdensity` package:
+
+```{r}
+#| warning: false
+penguins |>
+    ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
+    geom_point() +
+    ggdensity::geom_hdr_rug()
 ```
 
 Despite its usefulness, when we have multiple groups, it would be difficult to differentiate the marginal distributions among groups. 
