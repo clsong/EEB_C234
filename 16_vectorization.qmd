@@ -98,13 +98,13 @@ At its heart, vectorization means that a function automatically applies to each 
 
 ::: {.callout-important}
 
-## What is vectorized?
+## Definition of vectorized
 
 Say we have a function `f()` and we pass a vector `x` to it. If `f()` is vectorized, it will apply `f()` to each element of `x` and return a vector of results: `f(x[1]), f(x[2]), ...`.
 
 :::
 
-Some common examples of vectorized functions in R include arithmetic operators like `+`, `-`, `*`, `/` and many functions like `sum()` and `mean()`. 
+Some common examples of vectorized functions in R include arithmetic operators like `+`, `-`, `*`, `/`. In contrast, `sum()` is not vectorized as it takes a vector as a single input (and returns a single value instead of a vector of results).
 
 More importantly, most verbs we have learned--like `mutate()` and `summarize()`--in the `tidyverse` are vectorized! 
 

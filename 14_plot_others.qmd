@@ -12,6 +12,94 @@ For researchers in evolutionary biology, phylogenetic trees are essential for il
 
 ## Spatial data
 
-Spatial data visualization is both challenging and rewarding. By combining spatial data with `ggplot2` (often alongside the `sf` package for handling spatial data), you can create beautiful maps and geospatial plots. Spatial visualizations often provide visually striking representations of data. Check out some outstanding examples [here](https://r-graph-gallery.com/best-r-chart-examples.html).
+Spatial data visualization allows you to create maps and geospatial plots, providing visually compelling representations of data tied to geographic locations. This tutorial introduces the basics of creating maps using ggplot2 and the sf package. While spatial data analysis is a vast topic, hopefully this guide provides a foundation for getting started.
 
+### Getting Started: Essential Packages
+We'll use a new package `sf`, a modern package for handling spatial data in R. It represents geographic features (like points, lines, and polygons) in a way that ggplot2 understands.
 
+```{r}
+#| warning: false
+#| message: false
+library(tidyverse)
+library(sf) # <1>
+library(maps) # <2>
+```
+1. Deal with spatial data
+2. Load the data pakage
+
+Let's start by creating a simple world map.
+
+```{r}
+world_map <- map_data("world") # <1>
+
+ggplot(world_map, aes(x = long, y = lat, group = group)) + # <2>
+    geom_polygon(fill = "lightgray", colour = "white") + # <3>
+    theme_void() # <4>
+```
+1. Load Map Data: The maps package provides pre-built map data. We'll use map_data("world") to get a data frame representing the world's countries.
+2. Use longitude and latitude to plot the map
+3. Plot with geom_polygon: ggplot2's geom_polygon is used to draw shapes, which in this case are the country outlines. We need to tell it how the points are connected to form the polygons using the group aesthetic.
+4. Clean Up with theme_void: theme_void() removes axis lines, labels, and the background, giving us a clean map.
+
+We can easily create maps of specific regions by filtering the world map data.
+
+```{r}
+# Retrieve the map data for some asian countries
+some_asia_maps <- map_data("world", region = c(
+  "Malaysia",
+  "Philippines",
+  "Thailand",
+  "Vietnam"
+))
+
+# Calculate the center of each country for labels
+asia_lab_data <- some_asia_maps %>%
+  group_by(region) %>%
+  summarise(long = mean(long), lat = mean(lat))
+
+# Plot the map
+ggplot(some_asia_maps, aes(x = long, y = lat)) +
+  geom_polygon(aes( group = group, fill = region))+
+  ggrepel::geom_text_repel(aes(label = region), data = asia_lab_data,  size = 3)+
+  scale_fill_viridis_d()+
+  theme_void()+
+  theme(legend.position = "none")
+```
+
+### Mapping Data onto a Map
+
+Now, let's combine a map with external data. We'll use the `USArrests` dataset and visualize assault rates across US states.
+
+```{r}
+arrests_map <- USArrests  |> 
+    as_tibble(rownames = "state")  |> 
+    mutate(region = tolower(state))  |> 
+    right_join(map_data("state"), by = "region")  
+
+arrests_map  |> 
+    ggplot(aes(long, lat, group = group))+
+    geom_polygon(aes(fill = Assault), color = "white")+
+    scale_fill_viridis_c(option = "D")+
+    theme_void()
+```
+
+Importantly, it does not always not to be geogropahically accurate. We can use `statebins` package to make a useful visualization.
+
+```{r}
+library(statebins)
+
+arrests_map |> 
+    drop_na(state) |> 
+    ggplot(aes(state = state, fill = Assault))+
+    geom_statebins(color = "white")+
+    scale_fill_viridis_c(option = "D")+
+    theme_void()
+```
+
+### Further Exploration
+
+If you want to learn more about mapping, here are some useful packages:
+- `ggmap`: For integrating with Google Maps and other map services. See the ggmap [tutorial](https://cran.r-project.org/web/packages/ggmap/readme/README.html) for details. This allows you to use map tiles from various providers as your base map.
+- `ggspatial`: Provides tools for adding annotations like scale bars and north arrows to your maps.
+
+Additionally, you can learn a lot from well-documented examples. Check out the following website for some outstanding examples with codes [here](https://r-graph-gallery.com/best-r-chart-examples.html).

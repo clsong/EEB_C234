@@ -2332,14 +2332,14 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-What is vectorized?
+Definition of vectorized
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Say we have a function <code>f()</code> and we pass a vector <code>x</code> to it. If <code>f()</code> is vectorized, it will apply <code>f()</code> to each element of <code>x</code> and return a vector of results: <code>f(x[1]), f(x[2]), ...</code>.</p>
 </div>
 </div>
-<p>Some common examples of vectorized functions in R include arithmetic operators like <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> and many functions like <code>sum()</code> and <code>mean()</code>.</p>
+<p>Some common examples of vectorized functions in R include arithmetic operators like <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>. In contrast, <code>sum()</code> is not vectorized as it takes a vector as a single input (and returns a single value instead of a vector of results).</p>
 <p>More importantly, most verbs we have learned–like <code>mutate()</code> and <code>summarize()</code>–in the <code>tidyverse</code> are vectorized!</p>
 </section>
 <section id="beware-the-pitfalls" class="level2" data-number="16.3">
