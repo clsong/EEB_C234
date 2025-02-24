@@ -145,7 +145,7 @@ library(palmerpenguins)
 penguins |>
     ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
     geom_point() +
-    scale_fill_discrete_qualitative() +
+    scale_color_discrete_qualitative() +
     jtools::theme_nice()
 ```
 
@@ -180,6 +180,6 @@ However, it is mainly optimized for continuous sequential variables and might no
 
 - [color-palette-finder](https://r-graph-gallery.com/color-palette-finder): An interactive tool to help you choose the right color palette for your visualization.
 - [配色事典](https://moom.cat/tw/item/a-dictionary-of-color-combinations-2-volume-set): A visually rich resource with a wide range of palettes. I like having a physical copy when choosing colors.
-- [Traditional colors](https://color-term.com/): A collection of traditional colors used in China and Japan.
+- [Traditional colors](https://color-term.com/): A collection of traditional colors used in China and Japan. There are many other color palettes avaiable online from different cultures. Try to explore them!
 - [ColorPick Eye Dropper](https://chromewebstore.google.com/detail/colorpick-eyedropper/ohcpnigalekghcmgcdcenkpelffpdolg?hl=en): A tool in Chrome that allows you to pick colors from any image and convert them to HEX code.
 

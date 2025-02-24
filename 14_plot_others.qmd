@@ -99,6 +99,7 @@ arrests_map |>
 ### Further Exploration
 
 If you want to learn more about mapping, here are some useful packages:
+
 - `ggmap`: For integrating with Google Maps and other map services. See the ggmap [tutorial](https://cran.r-project.org/web/packages/ggmap/readme/README.html) for details. This allows you to use map tiles from various providers as your base map.
 - `ggspatial`: Provides tools for adding annotations like scale bars and north arrows to your maps.
 
