@@ -220,7 +220,7 @@ grouped_mean_corrected(penguins, species)
 ```
 1. ✅ Magic happens here!  
 
-In other words, `{{ }}` tells tidyverse: “Treat variable as the column I pass into the function, not as a literal name.”
+In other words, `{{{ }}}` tells tidyverse: “Treat variable as the column I pass into the function, not as a literal name.”
 
 ::: {.callout-tip collapse="true"}
 ### Fun Fact: This Took Years to Build 🛠️

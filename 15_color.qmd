@@ -6,6 +6,8 @@ Effective use of color in data visualization is crucial for communicating your m
 
 As mentioned in Chapter 6, you can have a lot of fun with choosing color palettes (e.g., [MetBrewer](https://github.com/BlakeRMills/MetBrewer)). However, there are caveats you need to be aware of.
 
+### Think about the nature of the variable
+
 First thing, before selecting a color palette, determine the nature of the variable you want to display. In general, there are four categories:
 
 ::: {.panel-tabset}
@@ -118,7 +120,13 @@ penguins |>
 
 :::
 
-Additionally, whenever possible, always verify that your plot is color-blind friendly. Many modern palettes are designed to be distinguishable for viewers with common forms of color vision deficiency. It is a more nuanced topic, so I will not go into detail here. But if you are interested, you can read more [here](https://markusmeister.com/2021/07/26/figure-design-for-colorblind-readers-is-outdated/). 
+### Reduce Chroma
+
+[link](https://clauswilke.com/art/post/colors-reduce-chroma)
+
+### Be aware of color-vision deficiency
+
+Additionally, whenever possible, always verify that your plot is color-blind friendly. Many modern palettes are designed to be distinguishable for viewers with common forms of color vision deficiency. If you are interested, you can read more [here](https://markusmeister.com/2021/07/26/figure-design-for-colorblind-readers-is-outdated/). 
 
 ## My Go-To Solution: The `colorspace` Package
 

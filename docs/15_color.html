@@ -335,7 +335,14 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#what-to-consider" id="toc-what-to-consider" class="nav-link active" data-scroll-target="#what-to-consider"><span class="header-section-number">15.1</span> What to consider?</a></li>
+<li>
+<a href="#what-to-consider" id="toc-what-to-consider" class="nav-link active" data-scroll-target="#what-to-consider"><span class="header-section-number">15.1</span> What to consider?</a>
+  <ul class="collapse">
+<li><a href="#think-about-the-nature-of-the-variable" id="toc-think-about-the-nature-of-the-variable" class="nav-link" data-scroll-target="#think-about-the-nature-of-the-variable"><span class="header-section-number">15.1.1</span> Think about the nature of the variable</a></li>
+  <li><a href="#reduce-chroma" id="toc-reduce-chroma" class="nav-link" data-scroll-target="#reduce-chroma"><span class="header-section-number">15.1.2</span> Reduce Chroma</a></li>
+  <li><a href="#be-aware-of-color-vision-deficiency" id="toc-be-aware-of-color-vision-deficiency" class="nav-link" data-scroll-target="#be-aware-of-color-vision-deficiency"><span class="header-section-number">15.1.3</span> Be aware of color-vision deficiency</a></li>
+  </ul>
+</li>
   <li><a href="#my-go-to-solution-the-colorspace-package" id="toc-my-go-to-solution-the-colorspace-package" class="nav-link" data-scroll-target="#my-go-to-solution-the-colorspace-package"><span class="header-section-number">15.2</span> My Go-To Solution: The <code>colorspace</code> Package</a></li>
   <li><a href="#additional-useful-resources" id="toc-additional-useful-resources" class="nav-link" data-scroll-target="#additional-useful-resources"><span class="header-section-number">15.3</span> Additional Useful Resources</a></li>
   </ul></nav>
@@ -362,6 +369,8 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
 <section id="what-to-consider" class="level2" data-number="15.1"><h2 data-number="15.1" class="anchored" data-anchor-id="what-to-consider">
 <span class="header-section-number">15.1</span> What to consider?</h2>
 <p>As mentioned in Chapter 6, you can have a lot of fun with choosing color palettes (e.g., <a href="https://github.com/BlakeRMills/MetBrewer">MetBrewer</a>). However, there are caveats you need to be aware of.</p>
+<section id="think-about-the-nature-of-the-variable" class="level3" data-number="15.1.1"><h3 data-number="15.1.1" class="anchored" data-anchor-id="think-about-the-nature-of-the-variable">
+<span class="header-section-number">15.1.1</span> Think about the nature of the variable</h3>
 <p>First thing, before selecting a color palette, determine the nature of the variable you want to display. In general, there are four categories:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
@@ -477,8 +486,13 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<p>Additionally, whenever possible, always verify that your plot is color-blind friendly. Many modern palettes are designed to be distinguishable for viewers with common forms of color vision deficiency. It is a more nuanced topic, so I will not go into detail here. But if you are interested, you can read more <a href="https://markusmeister.com/2021/07/26/figure-design-for-colorblind-readers-is-outdated/">here</a>.</p>
-</section><section id="my-go-to-solution-the-colorspace-package" class="level2" data-number="15.2"><h2 data-number="15.2" class="anchored" data-anchor-id="my-go-to-solution-the-colorspace-package">
+</section><section id="reduce-chroma" class="level3" data-number="15.1.2"><h3 data-number="15.1.2" class="anchored" data-anchor-id="reduce-chroma">
+<span class="header-section-number">15.1.2</span> Reduce Chroma</h3>
+<p><a href="https://clauswilke.com/art/post/colors-reduce-chroma">link</a></p>
+</section><section id="be-aware-of-color-vision-deficiency" class="level3" data-number="15.1.3"><h3 data-number="15.1.3" class="anchored" data-anchor-id="be-aware-of-color-vision-deficiency">
+<span class="header-section-number">15.1.3</span> Be aware of color-vision deficiency</h3>
+<p>Additionally, whenever possible, always verify that your plot is color-blind friendly. Many modern palettes are designed to be distinguishable for viewers with common forms of color vision deficiency. If you are interested, you can read more <a href="https://markusmeister.com/2021/07/26/figure-design-for-colorblind-readers-is-outdated/">here</a>.</p>
+</section></section><section id="my-go-to-solution-the-colorspace-package" class="level2" data-number="15.2"><h2 data-number="15.2" class="anchored" data-anchor-id="my-go-to-solution-the-colorspace-package">
 <span class="header-section-number">15.2</span> My Go-To Solution: The <code>colorspace</code> Package</h2>
 <p>Based on these considerations, my preferred tool is the <a href="https://colorspace.r-forge.r-project.org/index.html">colorspace</a> package. It provides a unified and flexible interface to generate color palettes tailored to the type of data you are visualizing.</p>
 <p>For example, consider the following code that uses colorspace to create a scatterplot of penguins data:</p>
