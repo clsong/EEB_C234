@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./21_simulation.html" rel="next">
 <link href="./19_purrr.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -342,7 +343,17 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Making R Faster 🚀</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_simulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Workflow for Simulation</span></span></a>
+  </div>
+</li>
       </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Reproducible Research</span></span>
   </li>
     </ul>
     </div>
@@ -446,7 +457,7 @@ Class Objectives
 </dl>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>0.706 sec elapsed</code></pre>
+<pre data-code-line-numbers=""><code>0.799 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -494,12 +505,9 @@ Class Objectives
 </div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Unit: milliseconds
-           expr      min       lq     mean   median        uq      max neval
- method_rowwise 78.58035 80.34602 91.29249 85.85170 109.06131 113.3834    10
-     method_map 79.23935 79.97235 88.02359 82.80159  84.36414 114.3099    10
- cld
-   a
-   a</code></pre>
+           expr      min       lq     mean   median       uq      max neval cld
+ method_rowwise 81.47024 85.04630 107.2914 104.1367 120.3971 152.1609    10   a
+     method_map 83.91056 87.28433 108.4344 108.7771 119.2889 156.1228    10   a</code></pre>
 </div>
 </div>
 <p>It might be helpful to visualize the results. You can use the <code>autoplot</code> function to do this easily.</p>
@@ -554,20 +562,22 @@ Class Objectives
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">r2 =</span> <span class="fu">future_map_dbl</span>(data, \(x) <span class="fu">summary</span>(<span class="fu">lm</span>(arr_delay <span class="sc">~</span> dep_delay, <span class="at">data =</span> x))<span class="sc">$</span>r.squared))</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>5.784 sec elapsed</code></pre>
+<pre data-code-line-numbers=""><code>5.803 sec elapsed</code></pre>
 </div>
 </div>
 <p>The syntax is almost identical to <code>purrr</code>, just replace <code>map</code> with <code>future_map</code> (you can even use the <code>.progress</code> argument to show a progress bar), and set before the code how many cores you want to use (set it lower than the number of cores on your computer).</p>
 <p>Note: Parallelizing adds some overhead (think of the leader needs time to coordinate the workers). Thus, it may cost more time than the non-parallelized version for small datasets or quick calculations.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 The magic of <code>mirai</code>
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This is a feature in development version of <code>purrr</code> (<a href="https://purrr.tidyverse.org/dev/reference/parallelization.html">version 1.0.4.0</a>). However, I have little doubt that it will be merged into the main version anytime soon: it is so much easier to use with and is up to 1000 times faster compared to <code>furrr</code>.</p>
 <p>To try it out, you need to install the development versions of <code>purrr</code> and <code>mirai</code>:</p>
@@ -605,7 +615,8 @@ The magic of <code>mirai</code>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 4
-0.363 sec elapsed</code></pre>
+0.358 sec elapsed</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -1161,6 +1172,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./21_simulation.html" class="pagination-link" aria-label="Workflow for Simulation">
+        <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Workflow for Simulation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

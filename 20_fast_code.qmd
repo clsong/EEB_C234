@@ -129,7 +129,7 @@ The syntax is almost identical to `purrr`, just replace `map` with `future_map` 
 
 Note: Parallelizing adds some overhead (think of the leader needs time to coordinate the workers). Thus, it may cost more time than the non-parallelized version for small datasets or quick calculations.
 
-::: {.callout-tip}
+::: {.callout-tip collapse="true"}
 
 ## The magic of `mirai`
 

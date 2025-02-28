@@ -49,12 +49,12 @@ book:
         - 18_function.qmd
         - 19_purrr.qmd
         - 20_fast_code.qmd
+        - 21_simulation.qmd
         # - 21_neutral_theory.qmd
-    #     - PSet3.qmd
+    - part: "Reproducible Research"
+      # chapters:
+        # - 22_quarto.qmd
     #- part: "Advanced Visualization"
-    # - part: "Reproducible Research"
-    #   chapters:
-    #     - quarto.qmd
     # - references.qmd
 
 

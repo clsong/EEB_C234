@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>9&nbsp; Import and Join Data – EE BIOL C234</title>
+<title>21&nbsp; Workflow for Simulation – EE BIOL C234</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./10_plot_amount.html" rel="next">
-<link href="./08_tidyr.html" rel="prev">
+<link href="./20_fast_code.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -414,7 +413,7 @@ globalThis.qwebrCustomizedWebROptions = {
 };
 
 // Store cell data
-globalThis.qwebrCellDetails = [{"code":"library(tidyverse)\n\n_____  |> \n   left_join(\n        ____, \n        by = _____\n   )","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-1","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
+globalThis.qwebrCellDetails = [{"code":"library(tidyverse)\nlibrary(palmerpenguins)\n\n# Set seed for reproducibility\nset.seed(123)\n\n# Number of bootstrap samples\nn_bootstraps <- 500\n\n# Complete the code to bootstrap the median flipper length\nbootstrap_median <- penguins |>\n    select(species, flipper_length_mm) |>\n    group_by(species) |>\n    nest() |>\n    expand_grid(\n        bootstrap_id = 1:n_bootstraps\n    ) |>\n    mutate(\n        bootstrap_sample = map(data, \\(x) __________)  # How do we resample?\n    ) |>\n    mutate(\n        median_flipper = map_vec(bootstrap_sample, _________) # Which function finds the median?\n    ) |>\n    group_by(species) |>\n    summarise(\n        median_estimate = mean(median_flipper),\n        se_estimate = sd(median_flipper),\n        lower_ci = quantile(median_flipper, 0.025),\n        upper_ci = quantile(median_flipper, 0.975)\n    )\n\n# View results\nbootstrap_median","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-1","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"library(tidyverse)\nlibrary(palmerpenguins)\n\n# Set seed for reproducibility\nset.seed(123)\n\n# Number of bootstrap samples\nn_bootstraps <- 500\n\n# Bootstrap the median flipper length\nbootstrap_median <- penguins |>\n    select(species, flipper_length_mm) |>\n    group_by(species) |>\n    nest() |>\n    expand_grid(\n        bootstrap_id = 1:n_bootstraps\n    ) |>\n    mutate(\n        bootstrap_sample = map(data, \\(x) sample_n(x, size = nrow(x), replace = TRUE))\n    ) |>\n    mutate(\n        median_flipper = map_vec(bootstrap_sample, ~ median(.x$flipper_length_mm, na.rm = TRUE))\n    ) |>\n    group_by(species) |>\n    summarise(\n        median_estimate = mean(median_flipper),\n        se_estimate = sd(median_flipper),\n        lower_ci = quantile(median_flipper, 0.025),\n        upper_ci = quantile(median_flipper, 0.975)\n    )\n\n# View results\nbootstrap_median","id":2,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-2","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
 
 </script>
 <script type="module">
@@ -1668,6 +1667,35 @@ globalThis.qwebrExecuteCode = async function (
 
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -1680,7 +1708,7 @@ globalThis.qwebrExecuteCode = async function (
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07_dplyr.html">Data Wrangling</a></li><li class="breadcrumb-item"><a href="./09_import_data.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Import and Join Data</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./16_vectorization.html">R Programming</a></li><li class="breadcrumb-item"><a href="./21_simulation.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Workflow for Simulation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -1798,7 +1826,7 @@ globalThis.qwebrExecuteCode = async function (
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09_import_data.html" class="sidebar-item-text sidebar-link active">
+  <a href="./09_import_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Import and Join Data</span></span></a>
   </div>
 </li>
@@ -1898,7 +1926,7 @@ globalThis.qwebrExecuteCode = async function (
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./21_simulation.html" class="sidebar-item-text sidebar-link">
+  <a href="./21_simulation.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Workflow for Simulation</span></span></a>
   </div>
 </li>
@@ -1918,12 +1946,15 @@ globalThis.qwebrExecuteCode = async function (
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#file-structure" id="toc-file-structure" class="nav-link active" data-scroll-target="#file-structure"><span class="header-section-number">9.1</span> File structure</a></li>
-  <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data"><span class="header-section-number">9.2</span> Import data</a></li>
-  <li><a href="#join-relational-data" id="toc-join-relational-data" class="nav-link" data-scroll-target="#join-relational-data"><span class="header-section-number">9.3</span> Join Relational Data</a>
+  <li><a href="#organization-simulation" id="toc-organization-simulation" class="nav-link active" data-scroll-target="#organization-simulation"><span class="header-section-number">21.1</span> Organization Simulation</a></li>
+  <li><a href="#bootstrap-your-statistical-superpower" id="toc-bootstrap-your-statistical-superpower" class="nav-link" data-scroll-target="#bootstrap-your-statistical-superpower"><span class="header-section-number">21.2</span> Bootstrap: Your Statistical Superpower</a>
   <ul class="collapse">
-  <li><a href="#exercise" id="toc-exercise" class="nav-link" data-scroll-target="#exercise">Exercise</a></li>
+  <li><a href="#example-how-heavy-are-these-penguins-really" id="toc-example-how-heavy-are-these-penguins-really" class="nav-link" data-scroll-target="#example-how-heavy-are-these-penguins-really"><span class="header-section-number">21.2.1</span> Example: How Heavy Are These Penguins, Really?</a></li>
+  <li><a href="#what-just-happened-the-bootstrap-breakdown" id="toc-what-just-happened-the-bootstrap-breakdown" class="nav-link" data-scroll-target="#what-just-happened-the-bootstrap-breakdown"><span class="header-section-number">21.2.2</span> What Just Happened? The Bootstrap Breakdown</a></li>
+  <li><a href="#exercise-bootstrap-the-median" id="toc-exercise-bootstrap-the-median" class="nav-link" data-scroll-target="#exercise-bootstrap-the-median">Exercise: Bootstrap the Median!</a></li>
   </ul></li>
+  <li><a href="#chaos-theory-when-tiny-changes-make-a-huge-difference" id="toc-chaos-theory-when-tiny-changes-make-a-huge-difference" class="nav-link" data-scroll-target="#chaos-theory-when-tiny-changes-make-a-huge-difference"><span class="header-section-number">21.3</span> Chaos Theory: When Tiny Changes Make a Huge Difference!</a></li>
+  <li><a href="#summary-your-simulation-workflow-cheat-sheet" id="toc-summary-your-simulation-workflow-cheat-sheet" class="nav-link" data-scroll-target="#summary-your-simulation-workflow-cheat-sheet"><span class="header-section-number">21.4</span> Summary: Your Simulation Workflow Cheat Sheet</a></li>
   </ul>
 </nav>
     </div>
@@ -2214,9 +2245,9 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 }
 </script>
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07_dplyr.html">Data Wrangling</a></li><li class="breadcrumb-item"><a href="./09_import_data.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Import and Join Data</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./16_vectorization.html">R Programming</a></li><li class="breadcrumb-item"><a href="./21_simulation.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Workflow for Simulation</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Import and Join Data</span></h1>
+<h1 class="title"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Workflow for Simulation</span></h1>
 </div>
 
 
@@ -2244,270 +2275,318 @@ Class Objectives
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li>How to create and use RStudio Projects</li>
-<li>How to import data from files</li>
-<li>How to join relational data</li>
+<li>Master thw workflow of simulation in data analysis</li>
+<li>Learn how to implement bootstrap resampling</li>
+<li>Learn how to simulate population dynamics</li>
 </ol>
 </div>
 </div>
-<p>So far, we’ve only worked with data bundled inside packages. In real-world scenarios, however, data is often stored in external files—like Excel or CSV—and may be spread across multiple files. To get it all into one tidy tibble, we typically import the data first, then merge the datasets using the appropriate joining functions. Let’s begin by loading the packages we’ve been using all along:</p>
+<section id="organization-simulation" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="organization-simulation"><span class="header-section-number">21.1</span> Organization Simulation</h2>
+<p>Simulation can cover everything from simple statistical tests to differential equations or even complex individual-based models. We won’t dive into every type here, but it’s important to know how to structure your simulation so that your analysis stays organized and reproducible. In our examples, we’ll stick with the <code>tibble</code> as our main data structure.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidylog)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="file-structure" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="file-structure"><span class="header-section-number">9.1</span> File structure</h2>
-<p>The layout of your files and directories can be crucial for smooth data work. As someone who routinely run other people’s code, I can’t stress enough how important it is to adopt good file-management practices.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/here_package.png" class="img-fluid figure-img"></p>
-<figcaption>By Jenny Bryan, <a href="https://x.com/hadleywickham/status/940021008764846080/photo/1">source</a></figcaption>
-</figure>
-</div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Proper approach: Using an RStudio Project</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Shortcut: Opening R code in RStudio</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>An excellent practice is to create an RStudio Project. This makes it easier to keep all your scripts, data, and output in one organized place and ensures file paths don’t become nightmares. See official <a href="https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects">Guideline</a></p>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>If you’re short on time and simply want to test a single script, you can open the R code file directly in RStudio. But remember, it’s best to use a Project in the long run.</p>
-</div>
-</div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="import-data" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="import-data"><span class="header-section-number">9.2</span> Import data</h2>
-<p>The simplest way to import data in RStudio is to click <strong>Import Dataset</strong>, navigate to your file, and let RStudio generate the code for you. Here’s an example where we import a CSV containing per-capita CO₂ data, taken from <a href="https://ourworldindata.org/co2-and-greenhouse-gas-emissions?insight=human-greenhouse-gas-emissions-have-increased-global-average-temperatures#key-insights">Our World in Data</a>:</p>
+<section id="bootstrap-your-statistical-superpower" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="bootstrap-your-statistical-superpower"><span class="header-section-number">21.2</span> Bootstrap: Your Statistical Superpower</h2>
+<p>Ever been asked, “How sure are you about that number?” and wished you could give a more precise answer than “Pretty sure”? That’s where simulation—and specifically bootstrap—comes in.</p>
+<p>Imagine being able to collect your data again and again—even if you only have one sample. Bootstrap lets you do just that by resampling your original data many times. Here’s how it works in plain English:</p>
+<ol type="1">
+<li>Resample: Randomly pick data points from your original sample (with replacement, so you might pick the same point more than once).</li>
+<li>Calculate: Compute the statistic you’re interested in (like the mean or median) on each resample.</li>
+<li>Repeat: Do this many times.</li>
+<li>Summarize: Look at the distribution of your computed statistics to gauge your uncertainty.</li>
+</ol>
+<section id="example-how-heavy-are-these-penguins-really" class="level3" data-number="21.2.1">
+<h3 data-number="21.2.1" class="anchored" data-anchor-id="example-how-heavy-are-these-penguins-really"><span class="header-section-number">21.2.1</span> Example: How Heavy Are These Penguins, Really?</h3>
+<p>Let’s start by checking out the average body mass for each penguin species:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"data/per-capita-co-emissions.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's see what we're working with</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean_body_mass =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["Entity"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Annual CO₂ emissions (per capita)"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"World","2":"1750","3":"0.01235390"},{"1":"World","2":"1760","3":"0.01333874"},{"1":"World","2":"1770","3":"0.01581882"},{"1":"World","2":"1780","3":"0.01762452"},{"1":"World","2":"1790","3":"0.02164801"},{"1":"World","2":"1800","3":"0.03434769"},{"1":"World","2":"1810","3":"0.03838183"},{"1":"World","2":"1820","3":"0.04760881"},{"1":"World","2":"1830","3":"0.07750224"},{"1":"World","2":"1840","3":"0.09820878"},{"1":"World","2":"1850","3":"0.15294671"},{"1":"World","2":"1860","3":"0.24686126"},{"1":"World","2":"1870","3":"0.39808285"},{"1":"World","2":"1880","3":"0.60099760"},{"1":"World","2":"1890","3":"0.84383000"},{"1":"World","2":"1900","3":"1.17409840"},{"1":"World","2":"1910","3":"1.69053050"},{"1":"World","2":"1920","3":"1.83511360"},{"1":"World","2":"1930","3":"1.87907540"},{"1":"World","2":"1940","3":"2.09780880"},{"1":"World","2":"1950","3":"2.37866930"},{"1":"World","2":"1951","3":"2.51541660"},{"1":"World","2":"1952","3":"2.50280360"},{"1":"World","2":"1953","3":"2.52491140"},{"1":"World","2":"1954","3":"2.52784600"},{"1":"World","2":"1955","3":"2.71653840"},{"1":"World","2":"1956","3":"2.83536700"},{"1":"World","2":"1957","3":"2.86952000"},{"1":"World","2":"1958","3":"2.89126250"},{"1":"World","2":"1959","3":"2.98544760"},{"1":"World","2":"1960","3":"3.11295030"},{"1":"World","2":"1961","3":"3.07192250"},{"1":"World","2":"1962","3":"3.12075540"},{"1":"World","2":"1963","3":"3.21559360"},{"1":"World","2":"1964","3":"3.31582400"},{"1":"World","2":"1965","3":"3.39195850"},{"1":"World","2":"1966","3":"3.48487190"},{"1":"World","2":"1967","3":"3.52315430"},{"1":"World","2":"1968","3":"3.64022610"},{"1":"World","2":"1969","3":"3.80213200"},{"1":"World","2":"1970","3":"4.03258400"},{"1":"World","2":"1971","3":"4.11259400"},{"1":"World","2":"1972","3":"4.21975140"},{"1":"World","2":"1973","3":"4.35754730"},{"1":"World","2":"1974","3":"4.25658200"},{"1":"World","2":"1975","3":"4.18910840"},{"1":"World","2":"1976","3":"4.34074400"},{"1":"World","2":"1977","3":"4.38578300"},{"1":"World","2":"1978","3":"4.44288400"},{"1":"World","2":"1979","3":"4.48869040"},{"1":"World","2":"1980","3":"4.38180070"},{"1":"World","2":"1981","3":"4.20045000"},{"1":"World","2":"1982","3":"4.09114070"},{"1":"World","2":"1983","3":"4.04313100"},{"1":"World","2":"1984","3":"4.10854860"},{"1":"World","2":"1985","3":"4.17172670"},{"1":"World","2":"1986","3":"4.15785800"},{"1":"World","2":"1987","3":"4.20814700"},{"1":"World","2":"1988","3":"4.29505300"},{"1":"World","2":"1989","3":"4.27680350"},{"1":"World","2":"1990","3":"4.26610900"},{"1":"World","2":"1991","3":"4.27887700"},{"1":"World","2":"1992","3":"4.09157500"},{"1":"World","2":"1993","3":"4.06967800"},{"1":"World","2":"1994","3":"4.05122700"},{"1":"World","2":"1995","3":"4.08622650"},{"1":"World","2":"1996","3":"4.15233400"},{"1":"World","2":"1997","3":"4.11861300"},{"1":"World","2":"1998","3":"4.04586460"},{"1":"World","2":"1999","3":"4.08173800"},{"1":"World","2":"2000","3":"4.13347050"},{"1":"World","2":"2001","3":"4.10976080"},{"1":"World","2":"2002","3":"4.14610100"},{"1":"World","2":"2003","3":"4.30964660"},{"1":"World","2":"2004","3":"4.40271330"},{"1":"World","2":"2005","3":"4.49590540"},{"1":"World","2":"2006","3":"4.59096430"},{"1":"World","2":"2007","3":"4.66674600"},{"1":"World","2":"2008","3":"4.68615630"},{"1":"World","2":"2009","3":"4.54968800"},{"1":"World","2":"2010","3":"4.75038100"},{"1":"World","2":"2011","3":"4.85232900"},{"1":"World","2":"2012","3":"4.86030240"},{"1":"World","2":"2013","3":"4.84128570"},{"1":"World","2":"2014","3":"4.80248400"},{"1":"World","2":"2015","3":"4.73929930"},{"1":"World","2":"2016","3":"4.68563900"},{"1":"World","2":"2017","3":"4.70725800"},{"1":"World","2":"2018","3":"4.75173200"},{"1":"World","2":"2019","3":"4.75008060"},{"1":"World","2":"2020","3":"4.45372400"},{"1":"World","2":"2021","3":"4.65044600"},{"1":"World","2":"2022","3":"4.64928800"},{"1":"World","2":"2023","3":"4.67039160"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["mean_body_mass"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Adelie","2":"3700.662"},{"1":"Chinstrap","2":"3733.088"},{"1":"Gentoo","2":"5076.016"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
-<p>For cleaner column names, the <code>janitor</code> package offers a handy function called <code>clean_names()</code>. It converts column headers into lower-case words separated by underscores (among other things). Let’s see it in action:</p>
+<p>Cool, but how confident are we in these averages? Let’s use bootstrap to find out!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if you don't have the janitor package installed, you can install it with the following command</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pak::pkg_install("janitor")</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"data/per-capita-co-emissions.csv"</span>)  <span class="sc">|&gt;</span> </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["entity"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["annual_co2_emissions_per_capita"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"World","2":"1750","3":"0.01235390"},{"1":"World","2":"1760","3":"0.01333874"},{"1":"World","2":"1770","3":"0.01581882"},{"1":"World","2":"1780","3":"0.01762452"},{"1":"World","2":"1790","3":"0.02164801"},{"1":"World","2":"1800","3":"0.03434769"},{"1":"World","2":"1810","3":"0.03838183"},{"1":"World","2":"1820","3":"0.04760881"},{"1":"World","2":"1830","3":"0.07750224"},{"1":"World","2":"1840","3":"0.09820878"},{"1":"World","2":"1850","3":"0.15294671"},{"1":"World","2":"1860","3":"0.24686126"},{"1":"World","2":"1870","3":"0.39808285"},{"1":"World","2":"1880","3":"0.60099760"},{"1":"World","2":"1890","3":"0.84383000"},{"1":"World","2":"1900","3":"1.17409840"},{"1":"World","2":"1910","3":"1.69053050"},{"1":"World","2":"1920","3":"1.83511360"},{"1":"World","2":"1930","3":"1.87907540"},{"1":"World","2":"1940","3":"2.09780880"},{"1":"World","2":"1950","3":"2.37866930"},{"1":"World","2":"1951","3":"2.51541660"},{"1":"World","2":"1952","3":"2.50280360"},{"1":"World","2":"1953","3":"2.52491140"},{"1":"World","2":"1954","3":"2.52784600"},{"1":"World","2":"1955","3":"2.71653840"},{"1":"World","2":"1956","3":"2.83536700"},{"1":"World","2":"1957","3":"2.86952000"},{"1":"World","2":"1958","3":"2.89126250"},{"1":"World","2":"1959","3":"2.98544760"},{"1":"World","2":"1960","3":"3.11295030"},{"1":"World","2":"1961","3":"3.07192250"},{"1":"World","2":"1962","3":"3.12075540"},{"1":"World","2":"1963","3":"3.21559360"},{"1":"World","2":"1964","3":"3.31582400"},{"1":"World","2":"1965","3":"3.39195850"},{"1":"World","2":"1966","3":"3.48487190"},{"1":"World","2":"1967","3":"3.52315430"},{"1":"World","2":"1968","3":"3.64022610"},{"1":"World","2":"1969","3":"3.80213200"},{"1":"World","2":"1970","3":"4.03258400"},{"1":"World","2":"1971","3":"4.11259400"},{"1":"World","2":"1972","3":"4.21975140"},{"1":"World","2":"1973","3":"4.35754730"},{"1":"World","2":"1974","3":"4.25658200"},{"1":"World","2":"1975","3":"4.18910840"},{"1":"World","2":"1976","3":"4.34074400"},{"1":"World","2":"1977","3":"4.38578300"},{"1":"World","2":"1978","3":"4.44288400"},{"1":"World","2":"1979","3":"4.48869040"},{"1":"World","2":"1980","3":"4.38180070"},{"1":"World","2":"1981","3":"4.20045000"},{"1":"World","2":"1982","3":"4.09114070"},{"1":"World","2":"1983","3":"4.04313100"},{"1":"World","2":"1984","3":"4.10854860"},{"1":"World","2":"1985","3":"4.17172670"},{"1":"World","2":"1986","3":"4.15785800"},{"1":"World","2":"1987","3":"4.20814700"},{"1":"World","2":"1988","3":"4.29505300"},{"1":"World","2":"1989","3":"4.27680350"},{"1":"World","2":"1990","3":"4.26610900"},{"1":"World","2":"1991","3":"4.27887700"},{"1":"World","2":"1992","3":"4.09157500"},{"1":"World","2":"1993","3":"4.06967800"},{"1":"World","2":"1994","3":"4.05122700"},{"1":"World","2":"1995","3":"4.08622650"},{"1":"World","2":"1996","3":"4.15233400"},{"1":"World","2":"1997","3":"4.11861300"},{"1":"World","2":"1998","3":"4.04586460"},{"1":"World","2":"1999","3":"4.08173800"},{"1":"World","2":"2000","3":"4.13347050"},{"1":"World","2":"2001","3":"4.10976080"},{"1":"World","2":"2002","3":"4.14610100"},{"1":"World","2":"2003","3":"4.30964660"},{"1":"World","2":"2004","3":"4.40271330"},{"1":"World","2":"2005","3":"4.49590540"},{"1":"World","2":"2006","3":"4.59096430"},{"1":"World","2":"2007","3":"4.66674600"},{"1":"World","2":"2008","3":"4.68615630"},{"1":"World","2":"2009","3":"4.54968800"},{"1":"World","2":"2010","3":"4.75038100"},{"1":"World","2":"2011","3":"4.85232900"},{"1":"World","2":"2012","3":"4.86030240"},{"1":"World","2":"2013","3":"4.84128570"},{"1":"World","2":"2014","3":"4.80248400"},{"1":"World","2":"2015","3":"4.73929930"},{"1":"World","2":"2016","3":"4.68563900"},{"1":"World","2":"2017","3":"4.70725800"},{"1":"World","2":"2018","3":"4.75173200"},{"1":"World","2":"2019","3":"4.75008060"},{"1":"World","2":"2020","3":"4.45372400"},{"1":"World","2":"2021","3":"4.65044600"},{"1":"World","2":"2022","3":"4.64928800"},{"1":"World","2":"2023","3":"4.67039160"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="sourceCode cell-code" id="annotated-cell-3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a>n_bootstraps <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-3-3"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>penguins_bootstrapped <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-4" class="code-annotation-target"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(species, body_mass_g) <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="3">3</button><span id="annotated-cell-3-5" class="code-annotation-target"><a href="#annotated-cell-3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="4">4</button><span id="annotated-cell-3-6" class="code-annotation-target"><a href="#annotated-cell-3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nest</span>() <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-3-7"><a href="#annotated-cell-3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expand_grid</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="5">5</button><span id="annotated-cell-3-8" class="code-annotation-target"><a href="#annotated-cell-3-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">bootstrap_id =</span> <span class="dv">1</span><span class="sc">:</span>n_bootstraps</span>
+<span id="annotated-cell-3-9"><a href="#annotated-cell-3-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-3-10"><a href="#annotated-cell-3-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="7">7</button><span id="annotated-cell-3-11" class="code-annotation-target"><a href="#annotated-cell-3-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">bootstrap_sample =</span> <span class="fu">map</span>(data, \(x) <span class="fu">sample_n</span>(x, <span class="at">size =</span> <span class="fu">nrow</span>(x), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="annotated-cell-3-12"><a href="#annotated-cell-3-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span>    </span>
+<span id="annotated-cell-3-13"><a href="#annotated-cell-3-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="annotated-cell-3-14"><a href="#annotated-cell-3-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean_body_mass =</span> <span class="fu">map_vec</span>(bootstrap_sample, <span class="sc">~</span> <span class="fu">mean</span>(.x<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="annotated-cell-3-15"><a href="#annotated-cell-3-15" aria-hidden="true" tabindex="-1"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="1" data-code-annotation="1">Let’s do 1,000 bootstrap samples (why not?)</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="4" data-code-annotation="2">Just grab what we need</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="5" data-code-annotation="3">Group by species (we want separate bootstraps for each)</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="6" data-code-annotation="4">Nest the data (create a tibble for each species)</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="8" data-code-annotation="5">Create 1,000 bootstrap samples for EACH species</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="7">7</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="11" data-code-annotation="7">Calculate the mean for each bootstrap sample</span>
+</dd>
+</dl>
 </div>
 </div>
-</div>
-<p>This often saves you time and frustration, especially when working with large or messy real-world datasets. It has been a time-saver for me on many occasions.</p>
-<p>Additionally, we should <code>rename()</code> the columns to make them more readable.</p>
+<p>Here’s what we did:</p>
+<ol type="1">
+<li>Select: We kept only the columns we need.</li>
+<li>Group &amp; Nest: Each species’ data gets its own little tibble.</li>
+<li>Expand: We create 100 copies of the data for each species.</li>
+<li>Resample: We randomly sample (with replacement) from each species’ data.</li>
+<li>Calculate: For each bootstrap sample, we compute the mean body mass.</li>
+</ol>
+<p>Now, let’s summarize our bootstrap results:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>data_co2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/per-capita-co-emissions.csv"</span>)  <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>    janitor<span class="sc">::</span><span class="fu">clean_names</span>()  <span class="sc">|&gt;</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2">2</button><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="3">3</button><span id="annotated-cell-4-4" class="code-annotation-target"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">co2 =</span> annual_co2_emissions_per_capita</span>
-<span id="annotated-cell-4-5"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>penguins_bootstrapped <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-4-3"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2">2</button><span id="annotated-cell-4-4" class="code-annotation-target"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean_estimate =</span> <span class="fu">mean</span>(mean_body_mass),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="3">3</button><span id="annotated-cell-4-5" class="code-annotation-target"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">se_estimate =</span> <span class="fu">sd</span>(mean_body_mass),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="4">4</button><span id="annotated-cell-4-6" class="code-annotation-target"><a href="#annotated-cell-4-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">lower_ci =</span> <span class="fu">quantile</span>(mean_body_mass, <span class="fl">0.025</span>),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="5">5</button><span id="annotated-cell-4-7" class="code-annotation-target"><a href="#annotated-cell-4-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">upper_ci =</span> <span class="fu">quantile</span>(mean_body_mass, <span class="fl">0.975</span>)</span>
+<span id="annotated-cell-4-8"><a href="#annotated-cell-4-8" aria-hidden="true" tabindex="-1"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="2" data-code-annotation="1">We use the <code>clean_names()</code> function to make column names more readable.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="2" data-code-annotation="1">Group by species</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="2">We use the <code>rename()</code> function to rename the column.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="4" data-code-annotation="2">Calculate the mean estimate</span>
 </dd>
 <dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="4" data-code-annotation="3">We rename the column <code>annual_co2_emissions_per_capita</code> to <code>co2</code>.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="5" data-code-annotation="3">Calculate the standard error</span>
 </dd>
-</dl>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre data-code-line-numbers=""><code>Rows: 94 Columns: 3
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (1): Entity
-dbl (2): Year, Annual CO₂ emissions (per capita)
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-rename: renamed one variable (co2)</code></pre>
-</div>
-</div>
-<p>As always, let’s do a quick plot to sense-check our data:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>data_co2 <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> co2)) <span class="sc">+</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-3" class="code-annotation-target"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
-<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Year"</span>,</span>
-<span id="annotated-cell-5-6"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Annual CO2 emissions per capita"</span></span>
-<span id="annotated-cell-5-7"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a>    jtools<span class="sc">::</span><span class="fu">theme_nice</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-lines="3" data-code-annotation="1">We use a line plot to show the evolution of CO2 emissions over time.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="6" data-code-annotation="4">Calculate the lower confidence intervals</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="7" data-code-annotation="5">Calculate the upper confidence intervals</span>
 </dd>
 </dl>
 </div>
 <div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["mean_estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["se_estimate"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["lower_ci"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["upper_ci"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Adelie","2":"3693.138","3":"36.95252","4":"3624.113","5":"3762.745"},{"1":"Chinstrap","2":"3733.419","3":"43.96464","4":"3656.875","5":"3818.915"},{"1":"Gentoo","2":"5079.266","3":"49.23260","4":"4981.154","5":"5164.339"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>And let’s visualize the bootstrap distributions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#penguins_bootstrapped</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>penguins_bootstrapped  <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mean_body_mass, <span class="at">fill =</span> species, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Bootstrap Distributions of Mean Body Mass"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Each curve shows 1,000 bootstrap samples - look at all that uncertainty!"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Mean Body Mass (g)"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Density"</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="09_import_data_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="21_simulation_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>We see emissions rising across the years, but the real question might be how CO₂ levels relate to global temperature. For that, we’ll need to import temperature data and then join both datasets together.</p>
 </section>
-<section id="join-relational-data" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="join-relational-data"><span class="header-section-number">9.3</span> Join Relational Data</h2>
-<p>We can fetch temperature data—also from <a href="https://ourworldindata.org/co2-and-greenhouse-gas-emissions?insight=human-greenhouse-gas-emissions-have-increased-global-average-temperatures#key-insights">Our World in Data</a>—and load it similarly:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data_temp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/temperature-anomaly.csv"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    janitor<span class="sc">::</span><span class="fu">clean_names</span>()  <span class="sc">|&gt;</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(year, global_average_temperature_anomaly_relative_to_1961_1990) <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">temp_anomaly =</span> global_average_temperature_anomaly_relative_to_1961_1990)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>data_temp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["temp_anomaly"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1850","2":"-0.417711400"},{"1":"1851","2":"-0.233349800"},{"1":"1852","2":"-0.229399070"},{"1":"1853","2":"-0.270354450"},{"1":"1854","2":"-0.291520830"},{"1":"1855","2":"-0.296916750"},{"1":"1856","2":"-0.320353720"},{"1":"1857","2":"-0.467230050"},{"1":"1858","2":"-0.388765700"},{"1":"1859","2":"-0.281265170"},{"1":"1860","2":"-0.390165180"},{"1":"1861","2":"-0.429112940"},{"1":"1862","2":"-0.536369400"},{"1":"1863","2":"-0.344244060"},{"1":"1864","2":"-0.465465070"},{"1":"1865","2":"-0.332481320"},{"1":"1866","2":"-0.341287500"},{"1":"1867","2":"-0.356994120"},{"1":"1868","2":"-0.351827140"},{"1":"1869","2":"-0.316591950"},{"1":"1870","2":"-0.327927530"},{"1":"1871","2":"-0.368562760"},{"1":"1872","2":"-0.328110580"},{"1":"1873","2":"-0.341296900"},{"1":"1874","2":"-0.373251200"},{"1":"1875","2":"-0.375625940"},{"1":"1876","2":"-0.424109900"},{"1":"1877","2":"-0.101108840"},{"1":"1878","2":"-0.011315192"},{"1":"1879","2":"-0.303634320"},{"1":"1880","2":"-0.315832050"},{"1":"1881","2":"-0.232245520"},{"1":"1882","2":"-0.295530080"},{"1":"1883","2":"-0.346474400"},{"1":"1884","2":"-0.492320060"},{"1":"1885","2":"-0.471123580"},{"1":"1886","2":"-0.420903620"},{"1":"1887","2":"-0.498785760"},{"1":"1888","2":"-0.379378890"},{"1":"1889","2":"-0.249895560"},{"1":"1890","2":"-0.506858170"},{"1":"1891","2":"-0.401314940"},{"1":"1892","2":"-0.507558500"},{"1":"1893","2":"-0.494619220"},{"1":"1894","2":"-0.483763930"},{"1":"1895","2":"-0.448751600"},{"1":"1896","2":"-0.284007280"},{"1":"1897","2":"-0.259800170"},{"1":"1898","2":"-0.485792130"},{"1":"1899","2":"-0.355433640"},{"1":"1900","2":"-0.234493900"},{"1":"1901","2":"-0.293410240"},{"1":"1902","2":"-0.438956530"},{"1":"1903","2":"-0.533287100"},{"1":"1904","2":"-0.597511050"},{"1":"1905","2":"-0.407793220"},{"1":"1906","2":"-0.319108780"},{"1":"1907","2":"-0.504076300"},{"1":"1908","2":"-0.513819700"},{"1":"1909","2":"-0.535687150"},{"1":"1910","2":"-0.530909500"},{"1":"1911","2":"-0.539079000"},{"1":"1912","2":"-0.475538640"},{"1":"1913","2":"-0.467011100"},{"1":"1914","2":"-0.262436570"},{"1":"1915","2":"-0.191672190"},{"1":"1916","2":"-0.420023140"},{"1":"1917","2":"-0.542819700"},{"1":"1918","2":"-0.424364100"},{"1":"1919","2":"-0.325289070"},{"1":"1920","2":"-0.298355070"},{"1":"1921","2":"-0.240444350"},{"1":"1922","2":"-0.339013700"},{"1":"1923","2":"-0.317681880"},{"1":"1924","2":"-0.311801700"},{"1":"1925","2":"-0.282141980"},{"1":"1926","2":"-0.122555000"},{"1":"1927","2":"-0.229113600"},{"1":"1928","2":"-0.206465810"},{"1":"1929","2":"-0.392443030"},{"1":"1930","2":"-0.176805420"},{"1":"1931","2":"-0.103397675"},{"1":"1932","2":"-0.145461710"},{"1":"1933","2":"-0.322344420"},{"1":"1934","2":"-0.174336850"},{"1":"1935","2":"-0.206059230"},{"1":"1936","2":"-0.169520940"},{"1":"1937","2":"-0.019198947"},{"1":"1938","2":"-0.012200737"},{"1":"1939","2":"-0.040797204"},{"1":"1940","2":"0.075935820"},{"1":"1941","2":"0.038129300"},{"1":"1942","2":"0.001406068"},{"1":"1943","2":"0.006421582"},{"1":"1944","2":"0.144105140"},{"1":"1945","2":"0.043088354"},{"1":"1946","2":"-0.118814610"},{"1":"1947","2":"-0.091205610"},{"1":"1948","2":"-0.124661270"},{"1":"1949","2":"-0.143802230"},{"1":"1950","2":"-0.226621800"},{"1":"1951","2":"-0.061153960"},{"1":"1952","2":"0.015354548"},{"1":"1953","2":"0.077630750"},{"1":"1954","2":"-0.116750230"},{"1":"1955","2":"-0.197309940"},{"1":"1956","2":"-0.263165620"},{"1":"1957","2":"-0.035334915"},{"1":"1958","2":"-0.017632563"},{"1":"1959","2":"-0.048004813"},{"1":"1960","2":"-0.115459580"},{"1":"1961","2":"-0.019999769"},{"1":"1962","2":"-0.064042720"},{"1":"1963","2":"-0.036810614"},{"1":"1964","2":"-0.305861530"},{"1":"1965","2":"-0.204420480"},{"1":"1966","2":"-0.148897600"},{"1":"1967","2":"-0.117539294"},{"1":"1968","2":"-0.168647560"},{"1":"1969","2":"-0.031386240"},{"1":"1970","2":"-0.085064080"},{"1":"1971","2":"-0.205889050"},{"1":"1972","2":"-0.093791310"},{"1":"1973","2":"0.049950160"},{"1":"1974","2":"-0.172526570"},{"1":"1975","2":"-0.110754214"},{"1":"1976","2":"-0.215836900"},{"1":"1977","2":"0.103088500"},{"1":"1978","2":"0.005255972"},{"1":"1979","2":"0.090858140"},{"1":"1980","2":"0.196072040"},{"1":"1981","2":"0.250012040"},{"1":"1982","2":"0.034268282"},{"1":"1983","2":"0.223809840"},{"1":"1984","2":"0.047993520"},{"1":"1985","2":"0.049729742"},{"1":"1986","2":"0.095686980"},{"1":"1987","2":"0.243026400"},{"1":"1988","2":"0.282151700"},{"1":"1989","2":"0.179250300"},{"1":"1990","2":"0.360582380"},{"1":"1991","2":"0.338896540"},{"1":"1992","2":"0.124896830"},{"1":"1993","2":"0.165707190"},{"1":"1994","2":"0.233549790"},{"1":"1995","2":"0.376866130"},{"1":"1996","2":"0.276689380"},{"1":"1997","2":"0.422308500"},{"1":"1998","2":"0.577341700"},{"1":"1999","2":"0.324484970"},{"1":"2000","2":"0.331084760"},{"1":"2001","2":"0.489280340"},{"1":"2002","2":"0.543466500"},{"1":"2003","2":"0.544170140"},{"1":"2004","2":"0.467370720"},{"1":"2005","2":"0.606862500"},{"1":"2006","2":"0.572552700"},{"1":"2007","2":"0.591701300"},{"1":"2008","2":"0.465649840"},{"1":"2009","2":"0.596781600"},{"1":"2010","2":"0.680371400"},{"1":"2011","2":"0.537697730"},{"1":"2012","2":"0.577607040"},{"1":"2013","2":"0.623575300"},{"1":"2014","2":"0.672871650"},{"1":"2015","2":"0.825114400"},{"1":"2016","2":"0.932927100"},{"1":"2017","2":"0.845174250"},{"1":"2018","2":"0.762654070"},{"1":"2019","2":"0.891072600"},{"1":"2020","2":"0.922920500"},{"1":"2021","2":"0.761905550"},{"1":"2022","2":"0.801305300"},{"1":"2023","2":"1.100312700"},{"1":"2024","2":"1.177693600"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<p>Now we have two data frames: <code>data_co2</code> and <code>data_temp</code>. Both contain a year column, which we can use as the “key” for joining. The <code>left_join()</code> function retains all rows of the left data frame (data_co2 in this case) and matches where possible:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data_co2  <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        data_temp, </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">by =</span> <span class="st">"year"</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["entity"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["co2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["temp_anomaly"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"World","2":"1750","3":"0.01235390","4":"NA"},{"1":"World","2":"1760","3":"0.01333874","4":"NA"},{"1":"World","2":"1770","3":"0.01581882","4":"NA"},{"1":"World","2":"1780","3":"0.01762452","4":"NA"},{"1":"World","2":"1790","3":"0.02164801","4":"NA"},{"1":"World","2":"1800","3":"0.03434769","4":"NA"},{"1":"World","2":"1810","3":"0.03838183","4":"NA"},{"1":"World","2":"1820","3":"0.04760881","4":"NA"},{"1":"World","2":"1830","3":"0.07750224","4":"NA"},{"1":"World","2":"1840","3":"0.09820878","4":"NA"},{"1":"World","2":"1850","3":"0.15294671","4":"-0.417711400"},{"1":"World","2":"1860","3":"0.24686126","4":"-0.390165180"},{"1":"World","2":"1870","3":"0.39808285","4":"-0.327927530"},{"1":"World","2":"1880","3":"0.60099760","4":"-0.315832050"},{"1":"World","2":"1890","3":"0.84383000","4":"-0.506858170"},{"1":"World","2":"1900","3":"1.17409840","4":"-0.234493900"},{"1":"World","2":"1910","3":"1.69053050","4":"-0.530909500"},{"1":"World","2":"1920","3":"1.83511360","4":"-0.298355070"},{"1":"World","2":"1930","3":"1.87907540","4":"-0.176805420"},{"1":"World","2":"1940","3":"2.09780880","4":"0.075935820"},{"1":"World","2":"1950","3":"2.37866930","4":"-0.226621800"},{"1":"World","2":"1951","3":"2.51541660","4":"-0.061153960"},{"1":"World","2":"1952","3":"2.50280360","4":"0.015354548"},{"1":"World","2":"1953","3":"2.52491140","4":"0.077630750"},{"1":"World","2":"1954","3":"2.52784600","4":"-0.116750230"},{"1":"World","2":"1955","3":"2.71653840","4":"-0.197309940"},{"1":"World","2":"1956","3":"2.83536700","4":"-0.263165620"},{"1":"World","2":"1957","3":"2.86952000","4":"-0.035334915"},{"1":"World","2":"1958","3":"2.89126250","4":"-0.017632563"},{"1":"World","2":"1959","3":"2.98544760","4":"-0.048004813"},{"1":"World","2":"1960","3":"3.11295030","4":"-0.115459580"},{"1":"World","2":"1961","3":"3.07192250","4":"-0.019999769"},{"1":"World","2":"1962","3":"3.12075540","4":"-0.064042720"},{"1":"World","2":"1963","3":"3.21559360","4":"-0.036810614"},{"1":"World","2":"1964","3":"3.31582400","4":"-0.305861530"},{"1":"World","2":"1965","3":"3.39195850","4":"-0.204420480"},{"1":"World","2":"1966","3":"3.48487190","4":"-0.148897600"},{"1":"World","2":"1967","3":"3.52315430","4":"-0.117539294"},{"1":"World","2":"1968","3":"3.64022610","4":"-0.168647560"},{"1":"World","2":"1969","3":"3.80213200","4":"-0.031386240"},{"1":"World","2":"1970","3":"4.03258400","4":"-0.085064080"},{"1":"World","2":"1971","3":"4.11259400","4":"-0.205889050"},{"1":"World","2":"1972","3":"4.21975140","4":"-0.093791310"},{"1":"World","2":"1973","3":"4.35754730","4":"0.049950160"},{"1":"World","2":"1974","3":"4.25658200","4":"-0.172526570"},{"1":"World","2":"1975","3":"4.18910840","4":"-0.110754214"},{"1":"World","2":"1976","3":"4.34074400","4":"-0.215836900"},{"1":"World","2":"1977","3":"4.38578300","4":"0.103088500"},{"1":"World","2":"1978","3":"4.44288400","4":"0.005255972"},{"1":"World","2":"1979","3":"4.48869040","4":"0.090858140"},{"1":"World","2":"1980","3":"4.38180070","4":"0.196072040"},{"1":"World","2":"1981","3":"4.20045000","4":"0.250012040"},{"1":"World","2":"1982","3":"4.09114070","4":"0.034268282"},{"1":"World","2":"1983","3":"4.04313100","4":"0.223809840"},{"1":"World","2":"1984","3":"4.10854860","4":"0.047993520"},{"1":"World","2":"1985","3":"4.17172670","4":"0.049729742"},{"1":"World","2":"1986","3":"4.15785800","4":"0.095686980"},{"1":"World","2":"1987","3":"4.20814700","4":"0.243026400"},{"1":"World","2":"1988","3":"4.29505300","4":"0.282151700"},{"1":"World","2":"1989","3":"4.27680350","4":"0.179250300"},{"1":"World","2":"1990","3":"4.26610900","4":"0.360582380"},{"1":"World","2":"1991","3":"4.27887700","4":"0.338896540"},{"1":"World","2":"1992","3":"4.09157500","4":"0.124896830"},{"1":"World","2":"1993","3":"4.06967800","4":"0.165707190"},{"1":"World","2":"1994","3":"4.05122700","4":"0.233549790"},{"1":"World","2":"1995","3":"4.08622650","4":"0.376866130"},{"1":"World","2":"1996","3":"4.15233400","4":"0.276689380"},{"1":"World","2":"1997","3":"4.11861300","4":"0.422308500"},{"1":"World","2":"1998","3":"4.04586460","4":"0.577341700"},{"1":"World","2":"1999","3":"4.08173800","4":"0.324484970"},{"1":"World","2":"2000","3":"4.13347050","4":"0.331084760"},{"1":"World","2":"2001","3":"4.10976080","4":"0.489280340"},{"1":"World","2":"2002","3":"4.14610100","4":"0.543466500"},{"1":"World","2":"2003","3":"4.30964660","4":"0.544170140"},{"1":"World","2":"2004","3":"4.40271330","4":"0.467370720"},{"1":"World","2":"2005","3":"4.49590540","4":"0.606862500"},{"1":"World","2":"2006","3":"4.59096430","4":"0.572552700"},{"1":"World","2":"2007","3":"4.66674600","4":"0.591701300"},{"1":"World","2":"2008","3":"4.68615630","4":"0.465649840"},{"1":"World","2":"2009","3":"4.54968800","4":"0.596781600"},{"1":"World","2":"2010","3":"4.75038100","4":"0.680371400"},{"1":"World","2":"2011","3":"4.85232900","4":"0.537697730"},{"1":"World","2":"2012","3":"4.86030240","4":"0.577607040"},{"1":"World","2":"2013","3":"4.84128570","4":"0.623575300"},{"1":"World","2":"2014","3":"4.80248400","4":"0.672871650"},{"1":"World","2":"2015","3":"4.73929930","4":"0.825114400"},{"1":"World","2":"2016","3":"4.68563900","4":"0.932927100"},{"1":"World","2":"2017","3":"4.70725800","4":"0.845174250"},{"1":"World","2":"2018","3":"4.75173200","4":"0.762654070"},{"1":"World","2":"2019","3":"4.75008060","4":"0.891072600"},{"1":"World","2":"2020","3":"4.45372400","4":"0.922920500"},{"1":"World","2":"2021","3":"4.65044600","4":"0.761905550"},{"1":"World","2":"2022","3":"4.64928800","4":"0.801305300"},{"1":"World","2":"2023","3":"4.67039160","4":"1.100312700"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<p>Notice that joins are asymmetric. Switching the order to <code>left_join(data_temp, data_co2, by = "year")</code> wouldn’t produce the same result. A left join always keeps every row from the left-hand dataset, filling missing matches from the right dataset with <code>NA</code>. I highly recommend to stick to <code>left_join()</code> for consistency (and also forces you to think about which dataset is your primary source of information). However, you can also use <code>right_join()</code>, <code>inner_join()</code>, or <code>full_join()</code> depending on your needs.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/dplyr-joins.png" class="img-fluid figure-img"></p>
-<figcaption>From https://mikoontz.github.io/data-carpentry-week/lesson_joins.html</figcaption>
-</figure>
-</div>
-<p>With our combined data, we can see how temperature anomaly compares to per-capita CO₂ emissions:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data_co2  <span class="sc">|&gt;</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        data_temp, </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">by =</span> <span class="st">"year"</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    )  <span class="sc">|&gt;</span> </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">|&gt;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">aes</span>(<span class="at">x =</span> co2, </span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> temp_anomaly)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">+</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> year)) <span class="sc">+</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_viridis_c</span>() <span class="sc">+</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Annual CO2 emissions per capita"</span>,</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Average temperature anomaly"</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    jtools<span class="sc">::</span><span class="fu">theme_nice</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre data-code-line-numbers=""><code>left_join: added one column (temp_anomaly)
-           &gt; rows only in data_co2   10
-           &gt; rows only in data_temp (91)
-           &gt; matched rows            84
-           &gt;                        ====
-           &gt; rows total              94
-drop_na: removed 10 rows (11%), 84 rows remaining
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="09_import_data_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<section id="exercise" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise">Exercise</h3>
-<p>We will use the <code>band_members</code> dataset and <code>band_instruments</code> dataset to practice joining data. Take a look at the datasets first, and then check how the two ways of joining data give different results.</p>
+<section id="what-just-happened-the-bootstrap-breakdown" class="level3" data-number="21.2.2">
+<h3 data-number="21.2.2" class="anchored" data-anchor-id="what-just-happened-the-bootstrap-breakdown"><span class="header-section-number">21.2.2</span> What Just Happened? The Bootstrap Breakdown</h3>
+<p>Let’s break down what we did with our bootstrap code:</p>
+<ol type="1">
+<li><strong>Data Nesting</strong>: We grouped by species and nested the data (like putting each species’ data in its own little box)</li>
+<li><strong>Bootstrap Creation</strong>: We used <code>expand_grid()</code> to make 1,000 copies of each species’ box</li>
+<li><strong>Resampling</strong>: We used <code>map()</code> to randomly grab data from each box (with replacement)</li>
+<li><strong>Calculating</strong>: We found the mean for each bootstrap sample</li>
+<li><strong>Summarizing</strong>: We calculated the average mean, standard error, and confidence intervals</li>
+</ol>
+<p>Most importantly, this workflow works for other statistics too! The only thing specific here is the third step, and you can replace it with any other complex operations like uncertainty for regression coefficients, etc.</p>
+</section>
+<section id="exercise-bootstrap-the-median" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-bootstrap-the-median">Exercise: Bootstrap the Median!</h3>
+<p>Now it’s your turn! Try bootstrapping to estimate the median flipper length for each species.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Exercise</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Solution</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Exercise</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Solution</a></li></ul>
 <div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
 <div id="qwebr-insertion-location-1"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>band_members  <span class="sc">|&gt;</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">left_join</span>(</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        band_instruments, </span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">by =</span> <span class="st">"name"</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre data-code-line-numbers=""><code>left_join: added one column (plays)
-           &gt; rows only in band_members      1
-           &gt; rows only in band_instruments (1)
-           &gt; matched rows                   2
-           &gt;                               ===
-           &gt; rows total                     3</code></pre>
-</div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["band"],"name":[2],"type":["chr"],"align":["left"]},{"label":["plays"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"Mick","2":"Stones","3":"NA"},{"1":"John","2":"Beatles","3":"guitar"},{"1":"Paul","2":"Beatles","3":"bass"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb11" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>band_instruments  <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>          band_members, </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">by =</span> <span class="st">"name"</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre data-code-line-numbers=""><code>left_join: added one column (band)
-           &gt; rows only in band_instruments  1
-           &gt; rows only in band_members     (1)
-           &gt; matched rows                   2
-           &gt;                               ===
-           &gt; rows total                     3</code></pre>
-</div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["plays"],"name":[2],"type":["chr"],"align":["left"]},{"label":["band"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"John","2":"guitar","3":"Beatles"},{"1":"Paul","2":"bass","3":"Beatles"},{"1":"Keith","2":"guitar","3":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div id="qwebr-insertion-location-2"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 </div>
 </div>
-<p>Notice that when we flip the order of the data frames in left_join(), the results change, because a left join always “favors” the data frame that comes first.</p>
 </div>
-</div>
-</div>
-
-
 </section>
+</section>
+<section id="chaos-theory-when-tiny-changes-make-a-huge-difference" class="level2" data-number="21.3">
+<h2 data-number="21.3" class="anchored" data-anchor-id="chaos-theory-when-tiny-changes-make-a-huge-difference"><span class="header-section-number">21.3</span> Chaos Theory: When Tiny Changes Make a Huge Difference!</h2>
+<p>Ever heard the saying about a butterfly flapping its wings in Brazil causing a tornado in Texas? That’s chaos theory in action! We’ll explore this concept using a classic example: the logistic map.</p>
+<p>The logistic map is a simple equation that can generate wildly complex behavior, often used to model population growth with limited resources. Mathematically, it looks like this: <span class="math display">\[x(t+1) = r x(t) (1-x(t))\]</span></p>
+<p>where <span class="math inline">\(x(t)\)</span> is the population at time <span class="math inline">\(t\)</span>, and <span class="math inline">\(r\)</span> is a parameter that controls the growth rate.</p>
+<p>Let’s write a function to simulate the logistic map:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This function simulates the logistic map equation: </span></span>
+<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># x(t+1) = r*x(t)*(1-x(t))</span></span>
+<span id="annotated-cell-6-3"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># We're using r=4, which produces chaotic behavior</span></span>
+<span id="annotated-cell-6-4"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a>simulate_logistic <span class="ot">&lt;-</span> <span class="cf">function</span>(init_condition, total_time) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-5" class="code-annotation-target"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a>    population <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">length =</span> total_time)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2">2</button><span id="annotated-cell-6-6" class="code-annotation-target"><a href="#annotated-cell-6-6" aria-hidden="true" tabindex="-1"></a>    population[<span class="dv">1</span>] <span class="ot">&lt;-</span> init_condition</span>
+<span id="annotated-cell-6-7"><a href="#annotated-cell-6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>total_time) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="3">3</button><span id="annotated-cell-6-8" class="code-annotation-target"><a href="#annotated-cell-6-8" aria-hidden="true" tabindex="-1"></a>        population[t] <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="sc">*</span> population[t<span class="dv">-1</span>] <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> population[t<span class="dv">-1</span>])</span>
+<span id="annotated-cell-6-9"><a href="#annotated-cell-6-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="annotated-cell-6-10"><a href="#annotated-cell-6-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">time =</span> <span class="dv">1</span><span class="sc">:</span>total_time, </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="4">4</button><span id="annotated-cell-6-11" class="code-annotation-target"><a href="#annotated-cell-6-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">population =</span> population)</span>
+<span id="annotated-cell-6-12"><a href="#annotated-cell-6-12" aria-hidden="true" tabindex="-1"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="5" data-code-annotation="1">Create an empty vector to store our population values</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="6" data-code-annotation="2">Set the initial condition</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="8" data-code-annotation="3">Calculate each new population value based on the previous one</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="11" data-code-annotation="4">Return a tidy tibble with time and population</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>Now, let’s see chaos in action by simulating 10 starting conditions that are nearly identical and watching how they evolve over different time periods:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-7-1"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's create 10 different starting conditions that are VERY close to each other</span></span>
+<span id="annotated-cell-7-2"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a>population_dynamics <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-3" class="code-annotation-target"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">init_condition =</span> <span class="fu">runif</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">min =</span> <span class="fl">0.49</span>, <span class="at">max =</span> <span class="fl">0.51</span>)</span>
+<span id="annotated-cell-7-4"><a href="#annotated-cell-7-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-7-5"><a href="#annotated-cell-7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expand_grid</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2">2</button><span id="annotated-cell-7-6" class="code-annotation-target"><a href="#annotated-cell-7-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">total_time =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">50</span>)</span>
+<span id="annotated-cell-7-7"><a href="#annotated-cell-7-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-7-8"><a href="#annotated-cell-7-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="annotated-cell-7-9"><a href="#annotated-cell-7-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">trajectory =</span> <span class="fu">map2</span>(init_condition, total_time,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="3">3</button><span id="annotated-cell-7-10" class="code-annotation-target"><a href="#annotated-cell-7-10" aria-hidden="true" tabindex="-1"></a>                          \(init, time) <span class="fu">simulate_logistic</span>(init, time))</span>
+<span id="annotated-cell-7-11"><a href="#annotated-cell-7-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="4">4</button><span id="annotated-cell-7-12" class="code-annotation-target"><a href="#annotated-cell-7-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(trajectory)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="3" data-code-annotation="1">Create 10 different starting conditions that are VERY close to each other</span>
+</dd>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="6" data-code-annotation="2">For each starting condition, we’ll simulate for 5, 10, and 50 time steps</span>
+</dd>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="10" data-code-annotation="3">Run our simulation for each combination of starting condition and time</span>
+</dd>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="12" data-code-annotation="4">Unnest to get all our simulation results in one tidy tibble</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>Let’s plot the results. Each line represents a different starting condition, and you can see how their paths diverge as time goes on:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>population_dynamics <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> population, <span class="at">group =</span> init_condition, <span class="at">color =</span> <span class="fu">factor</span>(init_condition))) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>total_time, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Chaos in Action: The Butterfly Effect"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Tiny differences in starting values lead to completely different outcomes over time"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Time"</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Population"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"Starting Value"</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)  <span class="co"># The legend gets too crowded with 10 values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="21_simulation_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Look at that! In the first 5 time steps, all trajectories follow almost the same path. By 10 time steps, they’re starting to diverge. And by 50 time steps? Complete chaos! The trajectories are totally different, even though the starting conditions were nearly identical.</p>
+<p>This is the essence of chaos theory - tiny differences in initial conditions can lead to wildly different outcomes over time. This has huge implications for:</p>
+<ul>
+<li>Weather forecasting (why it’s so hard to predict more than a few days ahead)</li>
+<li>Population biology (why some populations can seem stable, then suddenly crash)</li>
+<li>And many other complex systems!</li>
+</ul>
+</section>
+<section id="summary-your-simulation-workflow-cheat-sheet" class="level2" data-number="21.4">
+<h2 data-number="21.4" class="anchored" data-anchor-id="summary-your-simulation-workflow-cheat-sheet"><span class="header-section-number">21.4</span> Summary: Your Simulation Workflow Cheat Sheet</h2>
+<p>Here’s a quick recap of our simulation workflow:</p>
+<ol type="1">
+<li>Set Up: Create a parameter tibble to define your simulation settings.</li>
+<li>Function: Write a function that performs a single simulation run.</li>
+<li>Functional Programming: Use <code>map()</code> (or <code>rowwise() + mutate()</code>) to run your simulation across all parameter combinations.</li>
+<li>Analyze: Summarize and visualize the results to understand what happened.</li>
+</ol>
+<p>Using this structured approach not only saves time and reduces errors but also makes your analysis easier to share and explain.</p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -2969,14 +3048,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./08_tidyr.html" class="pagination-link" aria-label="Five verbs for tidying data">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Five verbs for tidying data</span></span>
+      <a href="./20_fast_code.html" class="pagination-link" aria-label="Making R Faster 🚀">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Making R Faster 🚀</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./10_plot_amount.html" class="pagination-link" aria-label="Visualizing Amount">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Visualizing Amount</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
