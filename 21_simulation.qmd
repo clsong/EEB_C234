@@ -1,4 +1,4 @@
-# Workflow for Simulation
+# Tibble-centric Workflow for Simulation
 
 ::: {.callout-note}
 ## Class Objectives
@@ -280,6 +280,84 @@ This is the essence of chaos theory - tiny differences in initial conditions can
 - Weather forecasting (why it's so hard to predict more than a few days ahead)
 - Population biology (why some populations can seem stable, then suddenly crash)
 - And many other complex systems!
+
+### Exercise: How growth rates modulate dyanmics {-}
+
+Let's explore how changing the growth rate $r$ in the logistic map changes the behavior of the system. We'll simulate the logistic map for different growth rates (2, 3, and 4) and see how the population dynamics evolve over time.
+
+::: {.panel-tabset}
+
+## Exercise
+
+```{webr}
+library(tidyverse)
+
+simulate_logistic <- function(init_condition, growth_rate, total_time = 50) {
+    population <- c(length = total_time) 
+    population[1] <- init_condition 
+    for (t in 2:total_time) {
+        population[t] <- _____ * population[t-1] * (1 - population[t-1]) 
+    }
+    tibble(time = 1:total_time, 
+           population = population) 
+}
+
+population_dynamics <- tibble(
+    init_condition = runif(n = 10, min = 0.49, max = 0.51) 
+) |>
+    expand_grid(
+        growth_rate = ______
+    ) |>
+    mutate(
+        trajectory = map2(init_condition, growth_rate,
+                          \(init, r) simulate_logistic(init, r)) 
+    ) |>
+    unnest(trajectory)
+
+population_dynamics |>
+    ggplot(aes(x = time, y = population, group = init_condition, color = factor(init_condition))) +
+    geom_line() +
+    facet_wrap(~growth_rate, scales = "free_x") +
+    theme_minimal() +
+    theme(legend.position = "none")
+```
+
+## Solution
+
+```{webr}
+library(tidyverse)
+
+simulate_logistic <- function(init_condition, growth_rate, total_time = 50) {
+    population <- c(length = total_time) 
+    population[1] <- init_condition 
+    for (t in 2:total_time) {
+        population[t] <- growth_rate * population[t-1] * (1 - population[t-1]) 
+    }
+    tibble(time = 1:total_time, 
+           population = population) 
+}
+
+population_dynamics <- tibble(
+    init_condition = runif(n = 10, min = 0.49, max = 0.51)
+) |>
+    expand_grid(
+        growth_rate = c(2, 3, 4)
+    ) |>
+    mutate(
+        trajectory = map2(init_condition, growth_rate,
+                          \(init, r) simulate_logistic(init, r))
+    ) |>
+    unnest(trajectory)
+
+population_dynamics |>
+    ggplot(aes(x = time, y = population, group = init_condition, color = factor(init_condition))) +
+    geom_line() +
+    facet_wrap(~growth_rate, scales = "free_x") +
+    theme_minimal() +
+    theme(legend.position = "none")
+```
+:::
+
 
 ## Summary: Your Simulation Workflow Cheat Sheet
 

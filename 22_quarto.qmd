@@ -1,36 +1,31 @@
-# Introduction to Quarto
+# Basics of Quarto
 
 ::: {.callout-note}
-## Class Objectives
-1. Understand what Quarto is and why it's useful for data science
-2. Learn the basic structure and syntax of Quarto documents
-3. Master how to combine text, code, and visualizations in a single document
-4. Create your own reproducible reports with Quarto
+## What You’ll Learn Today
+1. **The Quarto Setup**: Learn about the key parts of a Quarto document.
+2. **Mixing Text, Code, Visuals & Equations**: See how you can combine explanations, code, and mathematical formulas in one neat file.
+3. **Making Reproducible Reports**  
 :::
 
-## What is Quarto?
+## What’s Quarto All About?
 
-Quarto is a next-generation open-source publishing system that lets you create beautiful, dynamic documents that combine your text, code, and results all in one place. Think of it as a supercharged version of R Markdown that works with multiple languages (R, Python, Julia, and more) and can output to various formats (HTML, PDF, Word, presentations, and websites).
+Imagine a tool that lets you write your story and run your code at the same time. That’s Quarto for you! It’s like R Markdown on steroids—it works with R, Python, Julia, and more, and lets you output to HTML, PDF, Word, presentations, and even websites.
 
-Why should you care about Quarto? Because it solves one of the biggest challenges in data science: **reproducibility**. With Quarto, your analysis, visualizations, and explanations live together in a single document that anyone can run to get the same results.
+**Why should you care?**  
+Because Quarto keeps your analysis, visualizations, and text all in one place. This means anyone can re-run your report and see exactly the same results—making your work truly reproducible and shareable.
 
-```{r}
-#| message: false
-#| warning: false
-library(tidyverse)
-library(palmerpenguins)
-```
+## Getting Started with a Quarto Document
 
-## Quarto Basics: Structure and Syntax
+A typical Quarto file has two parts:
 
-A Quarto document (with the `.qmd` extension) has two main components:
-
-1. **YAML Header**: At the top of the document, controls document-wide settings
-2. **Document Body**: Contains a mix of text (in Markdown) and code chunks
+1. **YAML Header**:  
+   This is where you set up your document’s settings—think title, author, format, and more.
+2. **Document Body**:  
+   Here’s where you mix regular text, code, cool visuals, and even equations!
 
 ### The YAML Header
 
-The YAML header is enclosed by three dashes (`---`) at the top of your document:
+The header sits at the very top and is surrounded by three dashes. Here’s a simple example:
 
 ```yaml
 ---
@@ -40,59 +35,54 @@ format: html
 ---
 ```
 
-This is where you control the overall document settings, like:
-- Output format (HTML, PDF, Word, etc.)
-- Document title, author, date
-- Theme and styling options
-- Table of contents settings
+In this section, you tell Quarto:
 
-### Text with Markdown
+- Which format you’re aiming for (HTML, PDF, etc.)
+- What your document’s title, author, and date are
+- What style or theme you’d like to use
+- And even settings for your table of contents!
 
-In the document body, you write text using Markdown syntax:
+### Writing with Markdown
+
+In the body of your document, you write in Markdown—a simple way to format your text. For example:
 
 ```markdown
-# This is a level 1 heading
+# Level 1 Heading
 
-## This is a level 2 heading
+## Level 2 Heading
 
-Regular paragraph text goes here. You can make things **bold** or *italic*.
+This is your regular paragraph text. You can make text **bold** or *italic*.
 
-- This is a bullet point
-- Another bullet point
-  - A sub-bullet
+- Bullet point one
+- Bullet point two
+  - Nested bullet
 
-1. Numbered list
-2. Second item
+1. First numbered item
+2. Second numbered item
 
-> This is a blockquote
+> This is a blockquote that highlights something cool.
 
-[This is a link](https://quarto.org)
+[Check out Quarto](https://quarto.org)
 ```
 
-### Code Chunks
+Markdown makes it super easy to structure your document without any fuss.
 
-Code chunks are where the magic happens! They let you run code and display the results right in your document:
+## Mixing in Some Code: Code Chunks
 
-````markdown
-```{{r}}
-#| label: penguin-summary
-#| echo: true
+Now, the magic happens when you include code chunks. These let you run code and show the results directly in your document.
 
-penguins |>
-  group_by(species) |>
-  summarize(
-    count = n(),
-    mean_bill_length = mean(bill_length_mm, na.rm = TRUE),
-    mean_body_mass = mean(body_mass_g, na.rm = TRUE)
-  )
-```
-````
+### How to Add a Code Chunk
 
-Let's try this for real:
+Here’s a basic example in R:
 
 ```{r}
 #| label: penguin-summary
 #| echo: true
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(palmerpenguins)
 
 penguins |>
     group_by(species) |>
@@ -103,253 +93,141 @@ penguins |>
     )
 ```
 
-### Chunk Options
+This code chunk groups the penguins dataset by species and summarizes key stats. Notice the `#|` options—these let you control what shows up in your final document.
 
-Code chunks can be customized with options that control how they behave:
+### Customizing Your Code Chunks
 
-- `echo: false` - Run the code but don't show it
-- `eval: false` - Show the code but don't run it
-- `warning: false` - Hide warning messages
-- `message: false` - Hide messages
-- `fig-width: 8` - Set figure width
-- `fig-height: 6` - Set figure height
+You can tweak each chunk with options like:
 
-These options can be specified in the YAML header (to apply to all chunks) or in individual chunks using the `#|` syntax.
+- **echo: false** – Run the code, but hide it.
+- **eval: false** – Show the code without running it.
+- **warning: false** – Skip those pesky warning messages.
+- **message: false** – Keep it clean by hiding messages.
+- **fig-width / fig-height** – Set your figure dimensions.
 
-## Creating Visualizations in Quarto
+These options can be set per chunk or globally in your YAML header.
 
-One of Quarto's strengths is how beautifully it displays visualizations. Let's create a plot:
+## Adding Figures and Tables
+
+### Including Figures
+
+It’s super simple to add plots. Just write the code for your plot in a code chunk, and Quarto will display it in your document.
+
+```markdown
+#| label: penguin-plot
+#| fig-cap: "Bill length vs. bill depth by species"
+#| fig-width: 8
+#| fig-height: 5
+#| warning: false
+
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
+    geom_point(alpha = 0.7) +
+    geom_smooth(method = "lm", se = FALSE) +
+    theme_minimal()
+```
 
 ```{r}
 #| label: penguin-plot
 #| fig-cap: "Bill length vs. bill depth by species"
 #| fig-width: 8
 #| fig-height: 5
+#| warning: false
+#| echo: false
 
 ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
     geom_point(alpha = 0.7) +
     geom_smooth(method = "lm", se = FALSE) +
-    labs(
-        title = "Penguin Bill Dimensions",
-        subtitle = "Bill length vs. bill depth for three penguin species",
-        x = "Bill Length (mm)",
-        y = "Bill Depth (mm)",
-        color = "Species"
-    ) +
     theme_minimal()
 ```
 
-Notice how we added a caption with `fig-cap` and controlled the dimensions with `fig-width` and `fig-height`.
+This chunk adds a neat caption and custom dimensions for the plot.
 
-## Tables in Quarto
+### Creating Tables
 
-Quarto can also display beautiful tables. Here's a simple example:
+You can easily turn a tibble into a table in your document with `knitr::kabel()`. Here’s an example:
+```{r}
+penguins |>
+    group_by(species) |>
+    summarise(
+        number = n(),
+        mean_bill_length = mean(bill_length_mm, na.rm = TRUE),
+    ) |>
+    knitr::kable()
+```
+
+
+Quarto can also display stunning tables. In R, there is a package called `gt` (Grammar of Tables) that makes it easy to create and style tables. Here’s an example:
 
 ```{r}
 #| label: penguin-table
 #| tbl-cap: "Summary statistics by species and island"
+#| echo: false
 
-penguins |>
-    group_by(species, island) |>
-    summarize(
-        count = n(),
-        mean_bill_length = mean(bill_length_mm, na.rm = TRUE),
-        mean_body_mass = mean(body_mass_g, na.rm = TRUE)
+library(gt)
+penguin_counts_wider <- penguins |>
+    mutate(year = as.character(year)) |>
+    group_by(species, island, sex, year) |>
+    summarise(n = n(), .groups = "drop") |>
+    pivot_wider(
+        names_from = c(species, sex),
+        values_from = n
     ) |>
-    knitr::kable()
-```
+    mutate(across(.cols = -(1:2), .fns = ~ replace_na(., replace = 0))) |>
+    arrange(island, year)
 
-## Cross-References and Callouts
+actual_colnames <- colnames(penguin_counts_wider)
+desired_colnames <- actual_colnames |>
+    str_remove("(Adelie|Gentoo|Chinstrap)_") |>
+    str_to_title()
+names(desired_colnames) <- actual_colnames
 
-Quarto makes it easy to reference figures, tables, and sections:
+spanners_and_header <- function(gt_tbl) {
+    gt_tbl |>
+        tab_spanner(
+            label = md("**Adelie**"),
+            columns = 3:4
+        ) |>
+        tab_spanner(
+            label = md("**Chinstrap**"),
+            columns = c("Chinstrap_female", "Chinstrap_male")
+        ) |>
+        tab_spanner(
+            label = md("**Gentoo**"),
+            columns = contains("Gentoo")
+        ) |>
+        tab_header(
+            title = "Penguins in the Palmer Archipelago",
+            subtitle = "Data is courtesy of the {palmerpenguins} R package"
+        )
+}
 
-- Reference a figure: `@fig-penguin-plot`
-- Reference a table: `@tbl-penguin-table`
-- Reference a section: `@sec-cross-references`
-
-You can also create callout blocks to highlight important information:
-
-::: {.callout-tip}
-## Pro Tip
-Use callouts to highlight important information or tips for your readers!
-:::
-
-::: {.callout-warning}
-Make sure to save your Quarto document frequently.
-:::
-
-::: {.callout-important}
-Always cite your data sources in your reports.
-:::
-
-## Tabsets for Compact Organization
-
-Quarto lets you create tabsets to organize related content:
-
-::: {.panel-tabset}
-## Data
-
-Here's a glimpse of our penguin data:
-
-```{r}
-glimpse(penguins)
-```
-
-## Plot
-
-```{r}
-ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
-    geom_violin(alpha = 0.5) +
-    geom_jitter(width = 0.2, alpha = 0.5) +
-    labs(title = "Body mass distribution by species") +
-    theme_minimal() +
-    theme(legend.position = "none")
-```
-
-## Code
-
-```r
-ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
-  geom_violin(alpha = 0.5) +
-  geom_jitter(width = 0.2, alpha = 0.5) +
-  labs(title = "Body mass distribution by species") +
-  theme_minimal() +
-  theme(legend.position = "none")
-```
-:::
-
-## Exercise: Create Your First Quarto Document {-}
-
-Now it's your turn to create a simple Quarto document!
-
-::: {.panel-tabset}
-
-## Exercise
-
-1. Create a new Quarto document with the following YAML header:
-   ```yaml
-   ---
-   title: "Penguin Analysis"
-   author: "Your Name"
-   format: html
-   ---
-   ```
-
-2. Add a brief introduction explaining what the document will cover.
-
-3. Create a code chunk that loads the necessary libraries and the penguins dataset.
-
-4. Add a section with a summary table of the penguins dataset.
-
-5. Create a visualization showing the relationship between flipper length and body mass.
-
-6. Add a conclusion section summarizing your findings.
-
-7. Render the document to HTML.
-
-## Solution
-
-Here's a sample solution:
-
-```markdown
----
-title: "Penguin Analysis"
-author: "Your Name"
-format: html
----
-
-## Introduction
-
-In this document, we'll analyze the Palmer Penguins dataset to explore relationships between physical characteristics of three penguin species.
-
-```{r}
-#| message: false
-#| warning: false
-library(tidyverse)
-library(palmerpenguins)
-```
-
-## Data Summary
-
-Let's first look at a summary of our dataset:
-
-```{r}
-penguins |>
-    group_by(species) |>
-    summarize(
-        count = n(),
-        mean_flipper_length = mean(flipper_length_mm, na.rm = TRUE),
-        mean_body_mass = mean(body_mass_g, na.rm = TRUE)
+penguin_counts_wider |>
+    mutate(across(.cols = -(1:2), ~ if_else(. == 0, NA_integer_, .))) |>
+    mutate(
+        island = as.character(island),
+        year = as.numeric(year),
+        island = paste0("Island: ", island)
     ) |>
-    knitr::kable()
+    gt(groupname_col = "island", rowname_col = "year") |>
+    cols_label(.list = desired_colnames) |>
+    spanners_and_header() |>
+    sub_missing(missing_text = "-") |>
+    summary_rows(
+        groups = TRUE,
+        fns = list(
+            "Maximum" = ~ max(.),
+            "Total" = ~ sum(.)
+        ),
+        formatter = fmt_number,
+        decimals = 0,
+        missing_text = "-"
+    ) |>
+    tab_options(
+        data_row.padding = px(2),
+        summary_row.padding = px(3), # A bit more padding for summaries
+        row_group.padding = px(4) # And even more for our groups
+    ) |>
+    opt_stylize(style = 6, color = "gray")
 ```
 
-## Visualization
-
-Now let's explore the relationship between flipper length and body mass:
-
-```{r}
-#| fig-cap: "Relationship between flipper length and body mass"
-ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
-    geom_point(alpha = 0.7) +
-    geom_smooth(method = "lm", se = FALSE) +
-    labs(
-        title = "Penguin Size Measurements",
-        x = "Flipper Length (mm)",
-        y = "Body Mass (g)",
-        color = "Species"
-    ) +
-    theme_minimal()
-```
-
-## Conclusion
-
-From our analysis, we can see that there's a positive relationship between flipper length and body mass across all three penguin species. Gentoo penguins tend to be larger overall, with both longer flippers and higher body mass compared to Adelie and Chinstrap penguins.
-```
-:::
-
-## Quarto Output Formats
-
-One of Quarto's strengths is its ability to produce different output formats from the same source document:
-
-- **HTML**: Interactive web pages with features like folding code, tabsets, and interactive plots
-- **PDF**: Publication-quality documents (requires LaTeX)
-- **Word**: For sharing with colleagues who prefer Microsoft Office
-- **Presentations**: Create slides with formats like Revealjs, PowerPoint, or Beamer
-- **Websites and Books**: Build multi-page websites or online books
-
-To change the output format, just modify the `format` field in your YAML header:
-
-```yaml
-format: pdf  # For PDF output
-```
-
-or
-
-```yaml
-format: revealjs  # For HTML presentations
-```
-
-## Advanced Features
-
-Quarto has many advanced features that make it powerful for data science communication:
-
-1. **Interactive Widgets**: Add interactive elements with htmlwidgets or Shiny
-2. **Multiple Languages**: Mix R, Python, Julia, and more in a single document
-3. **Citations and Bibliography**: Easily cite sources and generate bibliographies
-4. **Custom Templates**: Create your own templates for consistent branding
-5. **Extensions**: Add new functionality with Quarto extensions
-
-## Summary: Why Quarto Matters
-
-Quarto represents a significant step forward for reproducible data science:
-
-1. **One Tool, Many Outputs**: Write once, publish anywhere (HTML, PDF, Word, presentations)
-2. **Language Agnostic**: Works with R, Python, Julia, and more
-3. **Reproducibility**: Code, results, and narrative all live together
-4. **Beautiful by Default**: Creates professional-looking documents with minimal effort
-5. **Open Source**: Free to use and constantly improving
-
-By mastering Quarto, you're not just learning a tool—you're adopting a workflow that makes your data science more reproducible, shareable, and impactful.
-
-In the next chapter, we'll explore how to use Quarto for creating more complex documents like dashboards and websites.
+Check the [official document](https://gt.rstudio.com/) and [tutorial](https://gt.albert-rapp.de/quarto_gt) for how to creat tables with `gt`.

@@ -52,8 +52,10 @@ book:
         - 21_simulation.qmd
         # - 21_neutral_theory.qmd
     - part: "Reproducible Research"
-      # chapters:
-        # - 22_quarto.qmd
+      chapters:
+        - 22_quarto.qmd
+        - 23_scholarly_writing.qmd
+        - Project.qmd
     #- part: "Advanced Visualization"
     # - references.qmd
 

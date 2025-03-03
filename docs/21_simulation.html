@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>21&nbsp; Workflow for Simulation – EE BIOL C234</title>
+<title>21&nbsp; Tibble-centric Workflow for Simulation – EE BIOL C234</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./22_quarto.html" rel="next">
 <link href="./20_fast_code.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -413,7 +414,7 @@ globalThis.qwebrCustomizedWebROptions = {
 };
 
 // Store cell data
-globalThis.qwebrCellDetails = [{"code":"library(tidyverse)\nlibrary(palmerpenguins)\n\n# Set seed for reproducibility\nset.seed(123)\n\n# Number of bootstrap samples\nn_bootstraps <- 500\n\n# Complete the code to bootstrap the median flipper length\nbootstrap_median <- penguins |>\n    select(species, flipper_length_mm) |>\n    group_by(species) |>\n    nest() |>\n    expand_grid(\n        bootstrap_id = 1:n_bootstraps\n    ) |>\n    mutate(\n        bootstrap_sample = map(data, \\(x) __________)  # How do we resample?\n    ) |>\n    mutate(\n        median_flipper = map_vec(bootstrap_sample, _________) # Which function finds the median?\n    ) |>\n    group_by(species) |>\n    summarise(\n        median_estimate = mean(median_flipper),\n        se_estimate = sd(median_flipper),\n        lower_ci = quantile(median_flipper, 0.025),\n        upper_ci = quantile(median_flipper, 0.975)\n    )\n\n# View results\nbootstrap_median","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-1","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"library(tidyverse)\nlibrary(palmerpenguins)\n\n# Set seed for reproducibility\nset.seed(123)\n\n# Number of bootstrap samples\nn_bootstraps <- 500\n\n# Bootstrap the median flipper length\nbootstrap_median <- penguins |>\n    select(species, flipper_length_mm) |>\n    group_by(species) |>\n    nest() |>\n    expand_grid(\n        bootstrap_id = 1:n_bootstraps\n    ) |>\n    mutate(\n        bootstrap_sample = map(data, \\(x) sample_n(x, size = nrow(x), replace = TRUE))\n    ) |>\n    mutate(\n        median_flipper = map_vec(bootstrap_sample, ~ median(.x$flipper_length_mm, na.rm = TRUE))\n    ) |>\n    group_by(species) |>\n    summarise(\n        median_estimate = mean(median_flipper),\n        se_estimate = sd(median_flipper),\n        lower_ci = quantile(median_flipper, 0.025),\n        upper_ci = quantile(median_flipper, 0.975)\n    )\n\n# View results\nbootstrap_median","id":2,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-2","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
+globalThis.qwebrCellDetails = [{"code":"library(tidyverse)\nlibrary(palmerpenguins)\n\n# Set seed for reproducibility\nset.seed(123)\n\n# Number of bootstrap samples\nn_bootstraps <- 500\n\n# Complete the code to bootstrap the median flipper length\nbootstrap_median <- penguins |>\n    select(species, flipper_length_mm) |>\n    group_by(species) |>\n    nest() |>\n    expand_grid(\n        bootstrap_id = 1:n_bootstraps\n    ) |>\n    mutate(\n        bootstrap_sample = map(data, \\(x) __________)  # How do we resample?\n    ) |>\n    mutate(\n        median_flipper = map_vec(bootstrap_sample, _________) # Which function finds the median?\n    ) |>\n    group_by(species) |>\n    summarise(\n        median_estimate = mean(median_flipper),\n        se_estimate = sd(median_flipper),\n        lower_ci = quantile(median_flipper, 0.025),\n        upper_ci = quantile(median_flipper, 0.975)\n    )\n\n# View results\nbootstrap_median","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-1","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"library(tidyverse)\nlibrary(palmerpenguins)\n\n# Set seed for reproducibility\nset.seed(123)\n\n# Number of bootstrap samples\nn_bootstraps <- 500\n\n# Bootstrap the median flipper length\nbootstrap_median <- penguins |>\n    select(species, flipper_length_mm) |>\n    group_by(species) |>\n    nest() |>\n    expand_grid(\n        bootstrap_id = 1:n_bootstraps\n    ) |>\n    mutate(\n        bootstrap_sample = map(data, \\(x) sample_n(x, size = nrow(x), replace = TRUE))\n    ) |>\n    mutate(\n        median_flipper = map_vec(bootstrap_sample, ~ median(.x$flipper_length_mm, na.rm = TRUE))\n    ) |>\n    group_by(species) |>\n    summarise(\n        median_estimate = mean(median_flipper),\n        se_estimate = sd(median_flipper),\n        lower_ci = quantile(median_flipper, 0.025),\n        upper_ci = quantile(median_flipper, 0.975)\n    )\n\n# View results\nbootstrap_median","id":2,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-2","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"library(tidyverse)\n\nsimulate_logistic <- function(init_condition, growth_rate, total_time = 50) {\n    population <- c(length = total_time) \n    population[1] <- init_condition \n    for (t in 2:total_time) {\n        population[t] <- _____ * population[t-1] * (1 - population[t-1]) \n    }\n    tibble(time = 1:total_time, \n           population = population) \n}\n\npopulation_dynamics <- tibble(\n    init_condition = runif(n = 10, min = 0.49, max = 0.51) \n) |>\n    expand_grid(\n        growth_rate = ______\n    ) |>\n    mutate(\n        trajectory = map2(init_condition, growth_rate,\n                          \\(init, r) simulate_logistic(init, r)) \n    ) |>\n    unnest(trajectory)\n\npopulation_dynamics |>\n    ggplot(aes(x = time, y = population, group = init_condition, color = factor(init_condition))) +\n    geom_line() +\n    facet_wrap(~growth_rate, scales = \"free_x\") +\n    theme_minimal() +\n    theme(legend.position = \"none\")","id":3,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-3","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"library(tidyverse)\n\nsimulate_logistic <- function(init_condition, growth_rate, total_time = 50) {\n    population <- c(length = total_time) \n    population[1] <- init_condition \n    for (t in 2:total_time) {\n        population[t] <- growth_rate * population[t-1] * (1 - population[t-1]) \n    }\n    tibble(time = 1:total_time, \n           population = population) \n}\n\npopulation_dynamics <- tibble(\n    init_condition = runif(n = 10, min = 0.49, max = 0.51)\n) |>\n    expand_grid(\n        growth_rate = c(2, 3, 4)\n    ) |>\n    mutate(\n        trajectory = map2(init_condition, growth_rate,\n                          \\(init, r) simulate_logistic(init, r))\n    ) |>\n    unnest(trajectory)\n\npopulation_dynamics |>\n    ggplot(aes(x = time, y = population, group = init_condition, color = factor(init_condition))) +\n    geom_line() +\n    facet_wrap(~growth_rate, scales = \"free_x\") +\n    theme_minimal() +\n    theme(legend.position = \"none\")","id":4,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-4","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
 
 </script>
 <script type="module">
@@ -1708,7 +1709,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./16_vectorization.html">R Programming</a></li><li class="breadcrumb-item"><a href="./21_simulation.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Workflow for Simulation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./16_vectorization.html">R Programming</a></li><li class="breadcrumb-item"><a href="./21_simulation.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Tibble-centric Workflow for Simulation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -1927,14 +1928,39 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./21_simulation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Workflow for Simulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Tibble-centric Workflow for Simulation</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Reproducible Research</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reproducible Research</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Basics of Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23_scholarly_writing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Academic Publishing with Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Final Project</span></a>
+  </div>
+</li>
+      </ul>
   </li>
     </ul>
     </div>
@@ -1953,7 +1979,10 @@ window.Quarto = {
   <li><a href="#what-just-happened-the-bootstrap-breakdown" id="toc-what-just-happened-the-bootstrap-breakdown" class="nav-link" data-scroll-target="#what-just-happened-the-bootstrap-breakdown"><span class="header-section-number">21.2.2</span> What Just Happened? The Bootstrap Breakdown</a></li>
   <li><a href="#exercise-bootstrap-the-median" id="toc-exercise-bootstrap-the-median" class="nav-link" data-scroll-target="#exercise-bootstrap-the-median">Exercise: Bootstrap the Median!</a></li>
   </ul></li>
-  <li><a href="#chaos-theory-when-tiny-changes-make-a-huge-difference" id="toc-chaos-theory-when-tiny-changes-make-a-huge-difference" class="nav-link" data-scroll-target="#chaos-theory-when-tiny-changes-make-a-huge-difference"><span class="header-section-number">21.3</span> Chaos Theory: When Tiny Changes Make a Huge Difference!</a></li>
+  <li><a href="#chaos-theory-when-tiny-changes-make-a-huge-difference" id="toc-chaos-theory-when-tiny-changes-make-a-huge-difference" class="nav-link" data-scroll-target="#chaos-theory-when-tiny-changes-make-a-huge-difference"><span class="header-section-number">21.3</span> Chaos Theory: When Tiny Changes Make a Huge Difference!</a>
+  <ul class="collapse">
+  <li><a href="#exercise-how-growth-rates-modulate-dyanmics" id="toc-exercise-how-growth-rates-modulate-dyanmics" class="nav-link" data-scroll-target="#exercise-how-growth-rates-modulate-dyanmics">Exercise: How growth rates modulate dyanmics</a></li>
+  </ul></li>
   <li><a href="#summary-your-simulation-workflow-cheat-sheet" id="toc-summary-your-simulation-workflow-cheat-sheet" class="nav-link" data-scroll-target="#summary-your-simulation-workflow-cheat-sheet"><span class="header-section-number">21.4</span> Summary: Your Simulation Workflow Cheat Sheet</a></li>
   </ul>
 </nav>
@@ -2245,9 +2274,9 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 }
 </script>
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./16_vectorization.html">R Programming</a></li><li class="breadcrumb-item"><a href="./21_simulation.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Workflow for Simulation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./16_vectorization.html">R Programming</a></li><li class="breadcrumb-item"><a href="./21_simulation.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Tibble-centric Workflow for Simulation</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Workflow for Simulation</span></h1>
+<h1 class="title"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Tibble-centric Workflow for Simulation</span></h1>
 </div>
 
 
@@ -2408,7 +2437,7 @@ Class Objectives
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["mean_estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["se_estimate"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["lower_ci"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["upper_ci"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Adelie","2":"3693.138","3":"36.95252","4":"3624.113","5":"3762.745"},{"1":"Chinstrap","2":"3733.419","3":"43.96464","4":"3656.875","5":"3818.915"},{"1":"Gentoo","2":"5079.266","3":"49.23260","4":"4981.154","5":"5164.339"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["mean_estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["se_estimate"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["lower_ci"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["upper_ci"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Adelie","2":"3703.609","3":"35.02873","4":"3641.886","5":"3762.249"},{"1":"Chinstrap","2":"3736.298","3":"42.18522","4":"3664.108","5":"3812.895"},{"1":"Gentoo","2":"5076.976","3":"38.37179","4":"5008.382","5":"5150.766"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -2574,6 +2603,27 @@ Class Objectives
 <li>Population biology (why some populations can seem stable, then suddenly crash)</li>
 <li>And many other complex systems!</li>
 </ul>
+<section id="exercise-how-growth-rates-modulate-dyanmics" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercise-how-growth-rates-modulate-dyanmics">Exercise: How growth rates modulate dyanmics</h3>
+<p>Let’s explore how changing the growth rate <span class="math inline">\(r\)</span> in the logistic map changes the behavior of the system. We’ll simulate the logistic map for different growth rates (2, 3, and 4) and see how the population dynamics evolve over time.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Exercise</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Solution</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div id="qwebr-insertion-location-3"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div id="qwebr-insertion-location-4"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="summary-your-simulation-workflow-cheat-sheet" class="level2" data-number="21.4">
 <h2 data-number="21.4" class="anchored" data-anchor-id="summary-your-simulation-workflow-cheat-sheet"><span class="header-section-number">21.4</span> Summary: Your Simulation Workflow Cheat Sheet</h2>
@@ -3053,6 +3103,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./22_quarto.html" class="pagination-link" aria-label="Basics of Quarto">
+        <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Basics of Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

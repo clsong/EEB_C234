@@ -1,0 +1,188 @@
+# Academic Publishing with Quarto
+
+::: {.callout-note}
+## What You'll Learn Today
+1. **Citations and Bibliography Management**: Learn how to add and manage references in your document
+2. **Academic Journal Formatting**: Customize output for journal requirements
+3. **Advanced Equation Support**: Work with complex mathematical notation 
+4. **Cross-referencing**: Link between sections, figures, tables, and equations
+:::
+
+## Why Quarto for Academic Writing?
+
+Academic publishing requires precision, consistency, and proper attribution. Quarto excels in these areas by providing:
+
+- **Reproducible research**: Code, analysis, and narratives in one document
+- **Citation management**: Seamless integration with reference managers
+- **Journal-specific formats**: Templates for various academic publishers
+- **Cross-platform compatibility**: Collaborate regardless of operating system
+- **Multi-language support**: Use R, Python, Julia, or other languages as needed
+
+## Setting Up for Academic Writing
+
+For academic documents, your YAML header often needs more details:
+
+```yaml
+---
+title: "Analysis of Penguin Morphology in the Antarctic Region"
+author:
+  - name: "Your Name"
+    affiliation: "Your University"
+    email: "your.email@university.edu"
+    orcid: "0000-1234-5678-9101"
+  - name: "Co-Author Name"
+    affiliation: "Their University"
+format: 
+  pdf:
+    documentclass: article
+    classoption: [twocolumn, 11pt]
+    toc: true
+    number-sections: true
+    cite-method: biblatex
+bibliography: references.bib
+csl: apa.csl
+abstract: |
+  This is the abstract of your paper. It should be concise and explain the main 
+  findings of your work in about 150-250 words.
+keywords: [keyword1, keyword2, keyword3]
+---
+```
+
+This header provides complete metadata for academic publishing, including proper author information, citation style, and document formatting.
+
+## Managing Citations in Quarto
+
+### Setting Up Your Bibliography
+
+The first step is to link your bibliography file in the YAML header:
+
+```yaml
+bibliography: references.bib
+csl: journal-of-ecology.csl
+```
+
+- `bibliography`: Points to your BibTeX or CSL JSON file
+- `csl`: (Optional) Specifies the Citation Style Language file
+
+### Creating a BibTeX File
+
+Your BibTeX file contains all your references in a structured format. Here's a sample:
+
+```bibtex
+@article{smith2023,
+  author = {Smith, John and Johnson, Sarah},
+  title = {Analysis of Antarctic Penguin Species Distribution},
+  journal = {Journal of Antarctic Biology},
+  volume = {45},
+  number = {2},
+  pages = {112-128},
+  year = {2023},
+  doi = {10.1234/jab.2023.45.2.112}
+}
+
+@book{wilson2020,
+  author = {Wilson, Maria},
+  title = {Ecological Methodologies in Polar Regions},
+  publisher = {Cambridge Academic Press},
+  year = {2020},
+  isbn = {978-3-16-148410-0}
+}
+```
+
+### Citing Sources in Your Text
+
+Once your bibliography is set up, citing sources is straightforward:
+
+```markdown
+According to @smith2023, penguin populations have declined in recent years.
+
+Multiple studies [@smith2023; @wilson2020] have documented this trend.
+
+As Wilson noted [-@wilson2020], methodology is critical in polar research.
+```
+
+These render as:
+
+"According to Smith and Johnson (2023), penguin populations have declined in recent years."
+
+"Multiple studies (Smith and Johnson, 2023; Wilson, 2020) have documented this trend."
+
+"As Wilson noted (2020), methodology is critical in polar research."
+
+## Advanced Equation Support
+
+Academic papers often require complex mathematical notation. Quarto uses LaTeX syntax for equations:
+
+### Inline Equations
+
+For inline equations, use single dollar signs:
+
+```markdown
+The probability is given by $P(X > x) = \int_x^{\infty} f(t) \, dt$
+```
+
+### Display Equations
+
+For standalone equations, use double dollar signs:
+
+```markdown
+$$
+\begin{align}
+\frac{\partial f}{\partial x} = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}
+\end{align}
+$$
+```
+
+## Cross-References in Academic Writing
+
+Cross-references help readers navigate your document. Quarto makes this simple with labels and references:
+
+::: {.panel-tabset}
+
+## Figures
+
+```{r}
+#| label: fig-penguins
+#| fig-cap: "Bill dimensions of three penguin species"
+#| warning: false
+#| message: false
+#| echo: true
+
+library(tidyverse)
+library(palmerpenguins)
+
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
+    geom_point(alpha = 0.7) +
+    theme_minimal() +
+    labs(x = "Bill Length (mm)", y = "Bill Depth (mm)")
+```
+
+You can then reference this figure: "As shown in @fig-penguins, the bill dimensions clearly differentiate species."
+
+## Sections
+
+You can reference sections using their headers:
+
+```markdown
+## Data Collection Methodology {#sec-methodology}
+
+... content ...
+
+As described in @sec-methodology, our approach controls for seasonal variation.
+```
+
+
+## Equation Numbering
+
+For numbered equations you can reference later:
+
+```markdown
+$$
+\begin{align}
+E = mc^2 \tag{1}\label{eq-einstein}
+\end{align}
+$$
+
+As shown in Equation @eq-einstein, energy and mass are equivalent.
+```
+:::

@@ -1229,7 +1229,7 @@
     "href": "20_fast_code.html#figure-out-how-fast-your-code-is",
     "title": "20  Making R Faster 🚀",
     "section": "",
-    "text": "20.1.1 Quick Check with tictoc\nThe tictoc package (no relation to social media platform) lets you time code chunks easily:\n\nlibrary(tictoc)\n\n1tic()\n\n2model_r2 &lt;- flights |&gt;\n  group_by(carrier, origin, year) |&gt;\n  nest() |&gt;\n  mutate(r2 = map_vec(data, \\(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared))\n\n3toc()\n\n\n1\n\nStart the timer!\n\n2\n\nYour code goes in between tic() and toc().\n\n3\n\nStop the timer and print the time\n\n\n\n\n0.799 sec elapsed\n\n\n\n\n20.1.2 Compare Methods with microbenchmark\nWant to test multiple approaches? microbenchmark runs code repeatedly and compares results:\n\nlibrary(microbenchmark)\n\nbenchmark &lt;- microbenchmark(\n1  method_rowwise = flights |&gt;\n    group_by(carrier, origin, year) |&gt; \n    nest() |&gt; \n    rowwise() |&gt;\n    mutate(r2 = summary(lm(arr_delay ~ dep_delay, data = data))$r.squared) |&gt;\n    ungroup(),\n2  method_map = flights |&gt;\n    group_by(carrier, origin, year) |&gt; \n    nest() |&gt;   \n    mutate(r2 = map_vec(data, \\(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared))\n  ,\n3  times = 10\n) \n\n4print(benchmark)\n\n\n1\n\nName the method on the left and the code on the right.\n\n2\n\nUse another method\n\n3\n\nRun each code 10 times\n\n4\n\nPrint the time it took to run each method\n\n\n\n\nUnit: milliseconds\n           expr      min       lq     mean   median       uq      max neval cld\n method_rowwise 81.47024 85.04630 107.2914 104.1367 120.3971 152.1609    10   a\n     method_map 83.91056 87.28433 108.4344 108.7771 119.2889 156.1228    10   a\n\n\nIt might be helpful to visualize the results. You can use the autoplot function to do this easily.\n\nautoplot(benchmark)\n\n\n\n\n\n\n\n\n\n\n20.1.3 Estimate how long it will take to run your code\nA great new feature in purrr is the introduction of .progress argument. This allows you to estimate how long it will take to run your code.\nAs the codes above runs very fast, we use a more time-consuming task (just for illustration purposes).\n\ntibble(x = 1:500) |&gt;\n  mutate(y = map_dbl(x, \\(x) {\n1    Sys.sleep(0.01)\n    x\n  },\n2  .progress = TRUE))\n\n\n1\n\nSleep for 0.01 seconds\n\n2\n\nShow a progress bar",
+    "text": "20.1.1 Quick Check with tictoc\nThe tictoc package (no relation to social media platform) lets you time code chunks easily:\n\nlibrary(tictoc)\n\n1tic()\n\n2model_r2 &lt;- flights |&gt;\n  group_by(carrier, origin, year) |&gt;\n  nest() |&gt;\n  mutate(r2 = map_vec(data, \\(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared))\n\n3toc()\n\n\n1\n\nStart the timer!\n\n2\n\nYour code goes in between tic() and toc().\n\n3\n\nStop the timer and print the time\n\n\n\n\n0.762 sec elapsed\n\n\n\n\n20.1.2 Compare Methods with microbenchmark\nWant to test multiple approaches? microbenchmark runs code repeatedly and compares results:\n\nlibrary(microbenchmark)\n\nbenchmark &lt;- microbenchmark(\n1  method_rowwise = flights |&gt;\n    group_by(carrier, origin, year) |&gt; \n    nest() |&gt; \n    rowwise() |&gt;\n    mutate(r2 = summary(lm(arr_delay ~ dep_delay, data = data))$r.squared) |&gt;\n    ungroup(),\n2  method_map = flights |&gt;\n    group_by(carrier, origin, year) |&gt; \n    nest() |&gt;   \n    mutate(r2 = map_vec(data, \\(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared))\n  ,\n3  times = 10\n) \n\n4print(benchmark)\n\n\n1\n\nName the method on the left and the code on the right.\n\n2\n\nUse another method\n\n3\n\nRun each code 10 times\n\n4\n\nPrint the time it took to run each method\n\n\n\n\nUnit: milliseconds\n           expr      min       lq     mean   median       uq      max neval cld\n method_rowwise 86.29557 90.31045 100.2290 90.84944 121.9171 125.4834    10   a\n     method_map 88.41478 90.08557 103.6614 91.54275 122.2210 127.6583    10   a\n\n\nIt might be helpful to visualize the results. You can use the autoplot function to do this easily.\n\nautoplot(benchmark)\n\n\n\n\n\n\n\n\n\n\n20.1.3 Estimate how long it will take to run your code\nA great new feature in purrr is the introduction of .progress argument. This allows you to estimate how long it will take to run your code.\nAs the codes above runs very fast, we use a more time-consuming task (just for illustration purposes).\n\ntibble(x = 1:500) |&gt;\n  mutate(y = map_dbl(x, \\(x) {\n1    Sys.sleep(0.01)\n    x\n  },\n2  .progress = TRUE))\n\n\n1\n\nSleep for 0.01 seconds\n\n2\n\nShow a progress bar",
     "crumbs": [
       "R Programming",
       "<span class='chapter-number'>20</span>  <span class='chapter-title'>Making R Faster 🚀</span>"
@@ -1240,7 +1240,7 @@
     "href": "20_fast_code.html#parallel-computing",
     "title": "20  Making R Faster 🚀",
     "section": "20.2 Parallel Computing",
-    "text": "20.2 Parallel Computing\nR usually uses one CPU core. But most computers have 4-8 cores! By sending the same task to multiple cores, you get automatic speedups for free!\nWe can use the furrr package to parallelize the map functions.\n\nlibrary(furrr)\nplan(multisession, workers = 4)  # Set up parallel processing with 4 cores\ntic()\nmodel_r2 &lt;- flights |&gt; \n  group_by(carrier, origin, year) |&gt; \n  nest() |&gt; \n  mutate(r2 = future_map_dbl(data, \\(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared))\ntoc()\n\n5.803 sec elapsed\n\n\nThe syntax is almost identical to purrr, just replace map with future_map (you can even use the .progress argument to show a progress bar), and set before the code how many cores you want to use (set it lower than the number of cores on your computer).\nNote: Parallelizing adds some overhead (think of the leader needs time to coordinate the workers). Thus, it may cost more time than the non-parallelized version for small datasets or quick calculations.\n\n\n\n\n\n\nThe magic of mirai\n\n\n\n\n\nThis is a feature in development version of purrr (version 1.0.4.0). However, I have little doubt that it will be merged into the main version anytime soon: it is so much easier to use with and is up to 1000 times faster compared to furrr.\nTo try it out, you need to install the development versions of purrr and mirai:\n\npak::pak(\"tidyverse/purrr\")\npak::pak(\"shikokuchuo/mirai\")\n\nThen we simply need to add .parallel = TRUE to the map function.\n\nlibrary(purrr)\nlibrary(mirai)\n1mirai::daemons(4)\n\ntic()\n\nmodel_r2 &lt;- flights |&gt; \n  group_by(carrier, origin, year) |&gt; \n  nest() |&gt; \n  mutate(r2 = map(data, \n                  \\(x) x$arr_delay - x$dep_delay,\n2                  .parallel = TRUE))\n\ntoc()\n\n\n1\n\nSet the number of cores you want to use\n\n2\n\nAdd .parallel = TRUE to the map function\n\n\n\n\n[1] 4\n0.358 sec elapsed",
+    "text": "20.2 Parallel Computing\nR usually uses one CPU core. But most computers have 4-8 cores! By sending the same task to multiple cores, you get automatic speedups for free!\nWe can use the furrr package to parallelize the map functions.\n\nlibrary(furrr)\nplan(multisession, workers = 4)  # Set up parallel processing with 4 cores\ntic()\nmodel_r2 &lt;- flights |&gt; \n  group_by(carrier, origin, year) |&gt; \n  nest() |&gt; \n  mutate(r2 = future_map_dbl(data, \\(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared))\ntoc()\n\n6.148 sec elapsed\n\n\nThe syntax is almost identical to purrr, just replace map with future_map (you can even use the .progress argument to show a progress bar), and set before the code how many cores you want to use (set it lower than the number of cores on your computer).\nNote: Parallelizing adds some overhead (think of the leader needs time to coordinate the workers). Thus, it may cost more time than the non-parallelized version for small datasets or quick calculations.\n\n\n\n\n\n\nThe magic of mirai\n\n\n\n\n\nThis is a feature in development version of purrr (version 1.0.4.0). However, I have little doubt that it will be merged into the main version anytime soon: it is so much easier to use with and is up to 1000 times faster compared to furrr.\nTo try it out, you need to install the development versions of purrr and mirai:\n\npak::pak(\"tidyverse/purrr\")\npak::pak(\"shikokuchuo/mirai\")\n\nThen we simply need to add .parallel = TRUE to the map function.\n\nlibrary(purrr)\nlibrary(mirai)\n1mirai::daemons(4)\n\ntic()\n\nmodel_r2 &lt;- flights |&gt; \n  group_by(carrier, origin, year) |&gt; \n  nest() |&gt; \n  mutate(r2 = map(data, \n                  \\(x) x$arr_delay - x$dep_delay,\n2                  .parallel = TRUE))\n\ntoc()\n\n\n1\n\nSet the number of cores you want to use\n\n2\n\nAdd .parallel = TRUE to the map function\n\n\n\n\n[1] 4\n0.41 sec elapsed",
     "crumbs": [
       "R Programming",
       "<span class='chapter-number'>20</span>  <span class='chapter-title'>Making R Faster 🚀</span>"
@@ -1282,45 +1282,188 @@
   {
     "objectID": "21_simulation.html",
     "href": "21_simulation.html",
-    "title": "21  Workflow for Simulation",
+    "title": "21  Tibble-centric Workflow for Simulation",
     "section": "",
     "text": "21.1 Organization Simulation\nSimulation can cover everything from simple statistical tests to differential equations or even complex individual-based models. We won’t dive into every type here, but it’s important to know how to structure your simulation so that your analysis stays organized and reproducible. In our examples, we’ll stick with the tibble as our main data structure.\nlibrary(tidyverse)\nlibrary(palmerpenguins)",
     "crumbs": [
       "R Programming",
-      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Workflow for Simulation</span>"
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Tibble-centric Workflow for Simulation</span>"
     ]
   },
   {
     "objectID": "21_simulation.html#bootstrap-your-statistical-superpower",
     "href": "21_simulation.html#bootstrap-your-statistical-superpower",
-    "title": "21  Workflow for Simulation",
+    "title": "21  Tibble-centric Workflow for Simulation",
     "section": "21.2 Bootstrap: Your Statistical Superpower",
     "text": "21.2 Bootstrap: Your Statistical Superpower\nEver been asked, “How sure are you about that number?” and wished you could give a more precise answer than “Pretty sure”? That’s where simulation—and specifically bootstrap—comes in.\nImagine being able to collect your data again and again—even if you only have one sample. Bootstrap lets you do just that by resampling your original data many times. Here’s how it works in plain English:\n\nResample: Randomly pick data points from your original sample (with replacement, so you might pick the same point more than once).\nCalculate: Compute the statistic you’re interested in (like the mean or median) on each resample.\nRepeat: Do this many times.\nSummarize: Look at the distribution of your computed statistics to gauge your uncertainty.\n\n\n21.2.1 Example: How Heavy Are These Penguins, Really?\nLet’s start by checking out the average body mass for each penguin species:\n\n# Let's see what we're working with\npenguins |&gt;\n    group_by(species) |&gt;\n    summarise(\n        mean_body_mass = mean(body_mass_g, na.rm = TRUE)\n    )\n\n\n  \n\n\n\nCool, but how confident are we in these averages? Let’s use bootstrap to find out!\n\n1n_bootstraps &lt;- 100\n\npenguins_bootstrapped &lt;- penguins |&gt;\n2    select(species, body_mass_g) |&gt;\n3    group_by(species) |&gt;\n4    nest() |&gt;\n    expand_grid(\n5        bootstrap_id = 1:n_bootstraps\n    ) |&gt;\n    mutate(\n7        bootstrap_sample = map(data, \\(x) sample_n(x, size = nrow(x), replace = TRUE))\n    ) |&gt;    \n    mutate(\n        mean_body_mass = map_vec(bootstrap_sample, ~ mean(.x$body_mass_g, na.rm = TRUE))\n    )\n\n\n1\n\nLet’s do 1,000 bootstrap samples (why not?)\n\n2\n\nJust grab what we need\n\n3\n\nGroup by species (we want separate bootstraps for each)\n\n4\n\nNest the data (create a tibble for each species)\n\n5\n\nCreate 1,000 bootstrap samples for EACH species\n\n7\n\nCalculate the mean for each bootstrap sample\n\n\n\n\nHere’s what we did:\n\nSelect: We kept only the columns we need.\nGroup & Nest: Each species’ data gets its own little tibble.\nExpand: We create 100 copies of the data for each species.\nResample: We randomly sample (with replacement) from each species’ data.\nCalculate: For each bootstrap sample, we compute the mean body mass.\n\nNow, let’s summarize our bootstrap results:\n\npenguins_bootstrapped |&gt;\n1    group_by(species) |&gt;\n    summarise(\n2        mean_estimate = mean(mean_body_mass),\n3        se_estimate = sd(mean_body_mass),\n4        lower_ci = quantile(mean_body_mass, 0.025),\n5        upper_ci = quantile(mean_body_mass, 0.975)\n    )\n\n\n1\n\nGroup by species\n\n2\n\nCalculate the mean estimate\n\n3\n\nCalculate the standard error\n\n4\n\nCalculate the lower confidence intervals\n\n5\n\nCalculate the upper confidence intervals\n\n\n\n\n\n  \n\n\n\nAnd let’s visualize the bootstrap distributions:\n\n#penguins_bootstrapped\npenguins_bootstrapped  |&gt; \n    ggplot(aes(x = mean_body_mass, fill = species, color = species)) +\n    geom_density(alpha = 0.5) +\n    labs(\n        title = \"Bootstrap Distributions of Mean Body Mass\",\n        subtitle = \"Each curve shows 1,000 bootstrap samples - look at all that uncertainty!\",\n        x = \"Mean Body Mass (g)\",\n        y = \"Density\"\n    ) +\n    theme_minimal() \n\n\n\n\n\n\n\n\n\n\n21.2.2 What Just Happened? The Bootstrap Breakdown\nLet’s break down what we did with our bootstrap code:\n\nData Nesting: We grouped by species and nested the data (like putting each species’ data in its own little box)\nBootstrap Creation: We used expand_grid() to make 1,000 copies of each species’ box\nResampling: We used map() to randomly grab data from each box (with replacement)\nCalculating: We found the mean for each bootstrap sample\nSummarizing: We calculated the average mean, standard error, and confidence intervals\n\nMost importantly, this workflow works for other statistics too! The only thing specific here is the third step, and you can replace it with any other complex operations like uncertainty for regression coefficients, etc.\n\n\nExercise: Bootstrap the Median!\nNow it’s your turn! Try bootstrapping to estimate the median flipper length for each species.\n\nExerciseSolution\n\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
     "crumbs": [
       "R Programming",
-      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Workflow for Simulation</span>"
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Tibble-centric Workflow for Simulation</span>"
     ]
   },
   {
     "objectID": "21_simulation.html#chaos-theory-when-tiny-changes-make-a-huge-difference",
     "href": "21_simulation.html#chaos-theory-when-tiny-changes-make-a-huge-difference",
-    "title": "21  Workflow for Simulation",
+    "title": "21  Tibble-centric Workflow for Simulation",
     "section": "21.3 Chaos Theory: When Tiny Changes Make a Huge Difference!",
-    "text": "21.3 Chaos Theory: When Tiny Changes Make a Huge Difference!\nEver heard the saying about a butterfly flapping its wings in Brazil causing a tornado in Texas? That’s chaos theory in action! We’ll explore this concept using a classic example: the logistic map.\nThe logistic map is a simple equation that can generate wildly complex behavior, often used to model population growth with limited resources. Mathematically, it looks like this: \\[x(t+1) = r x(t) (1-x(t))\\]\nwhere \\(x(t)\\) is the population at time \\(t\\), and \\(r\\) is a parameter that controls the growth rate.\nLet’s write a function to simulate the logistic map:\n\n# This function simulates the logistic map equation: \n# x(t+1) = r*x(t)*(1-x(t))\n# We're using r=4, which produces chaotic behavior\nsimulate_logistic &lt;- function(init_condition, total_time) {\n1    population &lt;- c(length = total_time)\n2    population[1] &lt;- init_condition\n    for (t in 2:total_time) {\n3        population[t] &lt;- 4 * population[t-1] * (1 - population[t-1])\n    }\n    tibble(time = 1:total_time, \n4           population = population)\n}\n\n\n1\n\nCreate an empty vector to store our population values\n\n2\n\nSet the initial condition\n\n3\n\nCalculate each new population value based on the previous one\n\n4\n\nReturn a tidy tibble with time and population\n\n\n\n\nNow, let’s see chaos in action by simulating 10 starting conditions that are nearly identical and watching how they evolve over different time periods:\n\n# Let's create 10 different starting conditions that are VERY close to each other\npopulation_dynamics &lt;- tibble(\n1    init_condition = runif(n = 10, min = 0.49, max = 0.51)\n) |&gt;\n    expand_grid(\n2        total_time = c(5, 10, 50)\n    ) |&gt;\n    mutate(\n        trajectory = map2(init_condition, total_time,\n3                          \\(init, time) simulate_logistic(init, time))\n    ) |&gt;\n4    unnest(trajectory)\n\n\n1\n\nCreate 10 different starting conditions that are VERY close to each other\n\n2\n\nFor each starting condition, we’ll simulate for 5, 10, and 50 time steps\n\n3\n\nRun our simulation for each combination of starting condition and time\n\n4\n\nUnnest to get all our simulation results in one tidy tibble\n\n\n\n\nLet’s plot the results. Each line represents a different starting condition, and you can see how their paths diverge as time goes on:\n\npopulation_dynamics |&gt;\n    ggplot(aes(x = time, y = population, group = init_condition, color = factor(init_condition))) +\n    geom_line() +\n    facet_wrap(~total_time, scales = \"free_x\") +\n    labs(\n        title = \"Chaos in Action: The Butterfly Effect\",\n        subtitle = \"Tiny differences in starting values lead to completely different outcomes over time\",\n        x = \"Time\",\n        y = \"Population\",\n        color = \"Starting Value\"\n    ) +\n    theme_minimal() +\n    theme(legend.position = \"none\")  # The legend gets too crowded with 10 values\n\n\n\n\n\n\n\n\nLook at that! In the first 5 time steps, all trajectories follow almost the same path. By 10 time steps, they’re starting to diverge. And by 50 time steps? Complete chaos! The trajectories are totally different, even though the starting conditions were nearly identical.\nThis is the essence of chaos theory - tiny differences in initial conditions can lead to wildly different outcomes over time. This has huge implications for:\n\nWeather forecasting (why it’s so hard to predict more than a few days ahead)\nPopulation biology (why some populations can seem stable, then suddenly crash)\nAnd many other complex systems!",
+    "text": "21.3 Chaos Theory: When Tiny Changes Make a Huge Difference!\nEver heard the saying about a butterfly flapping its wings in Brazil causing a tornado in Texas? That’s chaos theory in action! We’ll explore this concept using a classic example: the logistic map.\nThe logistic map is a simple equation that can generate wildly complex behavior, often used to model population growth with limited resources. Mathematically, it looks like this: \\[x(t+1) = r x(t) (1-x(t))\\]\nwhere \\(x(t)\\) is the population at time \\(t\\), and \\(r\\) is a parameter that controls the growth rate.\nLet’s write a function to simulate the logistic map:\n\n# This function simulates the logistic map equation: \n# x(t+1) = r*x(t)*(1-x(t))\n# We're using r=4, which produces chaotic behavior\nsimulate_logistic &lt;- function(init_condition, total_time) {\n1    population &lt;- c(length = total_time)\n2    population[1] &lt;- init_condition\n    for (t in 2:total_time) {\n3        population[t] &lt;- 4 * population[t-1] * (1 - population[t-1])\n    }\n    tibble(time = 1:total_time, \n4           population = population)\n}\n\n\n1\n\nCreate an empty vector to store our population values\n\n2\n\nSet the initial condition\n\n3\n\nCalculate each new population value based on the previous one\n\n4\n\nReturn a tidy tibble with time and population\n\n\n\n\nNow, let’s see chaos in action by simulating 10 starting conditions that are nearly identical and watching how they evolve over different time periods:\n\n# Let's create 10 different starting conditions that are VERY close to each other\npopulation_dynamics &lt;- tibble(\n1    init_condition = runif(n = 10, min = 0.49, max = 0.51)\n) |&gt;\n    expand_grid(\n2        total_time = c(5, 10, 50)\n    ) |&gt;\n    mutate(\n        trajectory = map2(init_condition, total_time,\n3                          \\(init, time) simulate_logistic(init, time))\n    ) |&gt;\n4    unnest(trajectory)\n\n\n1\n\nCreate 10 different starting conditions that are VERY close to each other\n\n2\n\nFor each starting condition, we’ll simulate for 5, 10, and 50 time steps\n\n3\n\nRun our simulation for each combination of starting condition and time\n\n4\n\nUnnest to get all our simulation results in one tidy tibble\n\n\n\n\nLet’s plot the results. Each line represents a different starting condition, and you can see how their paths diverge as time goes on:\n\npopulation_dynamics |&gt;\n    ggplot(aes(x = time, y = population, group = init_condition, color = factor(init_condition))) +\n    geom_line() +\n    facet_wrap(~total_time, scales = \"free_x\") +\n    labs(\n        title = \"Chaos in Action: The Butterfly Effect\",\n        subtitle = \"Tiny differences in starting values lead to completely different outcomes over time\",\n        x = \"Time\",\n        y = \"Population\",\n        color = \"Starting Value\"\n    ) +\n    theme_minimal() +\n    theme(legend.position = \"none\")  # The legend gets too crowded with 10 values\n\n\n\n\n\n\n\n\nLook at that! In the first 5 time steps, all trajectories follow almost the same path. By 10 time steps, they’re starting to diverge. And by 50 time steps? Complete chaos! The trajectories are totally different, even though the starting conditions were nearly identical.\nThis is the essence of chaos theory - tiny differences in initial conditions can lead to wildly different outcomes over time. This has huge implications for:\n\nWeather forecasting (why it’s so hard to predict more than a few days ahead)\nPopulation biology (why some populations can seem stable, then suddenly crash)\nAnd many other complex systems!\n\n\nExercise: How growth rates modulate dyanmics\nLet’s explore how changing the growth rate \\(r\\) in the logistic map changes the behavior of the system. We’ll simulate the logistic map for different growth rates (2, 3, and 4) and see how the population dynamics evolve over time.\n\nExerciseSolution\n\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n\n\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
     "crumbs": [
       "R Programming",
-      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Workflow for Simulation</span>"
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Tibble-centric Workflow for Simulation</span>"
     ]
   },
   {
     "objectID": "21_simulation.html#summary-your-simulation-workflow-cheat-sheet",
     "href": "21_simulation.html#summary-your-simulation-workflow-cheat-sheet",
-    "title": "21  Workflow for Simulation",
+    "title": "21  Tibble-centric Workflow for Simulation",
     "section": "21.4 Summary: Your Simulation Workflow Cheat Sheet",
     "text": "21.4 Summary: Your Simulation Workflow Cheat Sheet\nHere’s a quick recap of our simulation workflow:\n\nSet Up: Create a parameter tibble to define your simulation settings.\nFunction: Write a function that performs a single simulation run.\nFunctional Programming: Use map() (or rowwise() + mutate()) to run your simulation across all parameter combinations.\nAnalyze: Summarize and visualize the results to understand what happened.\n\nUsing this structured approach not only saves time and reduces errors but also makes your analysis easier to share and explain.",
     "crumbs": [
       "R Programming",
-      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Workflow for Simulation</span>"
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>Tibble-centric Workflow for Simulation</span>"
+    ]
+  },
+  {
+    "objectID": "22_quarto.html",
+    "href": "22_quarto.html",
+    "title": "\n22  Basics of Quarto\n",
+    "section": "",
+    "text": "22.1 What’s Quarto All About?\nImagine a tool that lets you write your story and run your code at the same time. That’s Quarto for you! It’s like R Markdown on steroids—it works with R, Python, Julia, and more, and lets you output to HTML, PDF, Word, presentations, and even websites.\nWhy should you care?\nBecause Quarto keeps your analysis, visualizations, and text all in one place. This means anyone can re-run your report and see exactly the same results—making your work truly reproducible and shareable.",
+    "crumbs": [
+      "Reproducible Research",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Basics of Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "22_quarto.html#getting-started-with-a-quarto-document",
+    "href": "22_quarto.html#getting-started-with-a-quarto-document",
+    "title": "\n22  Basics of Quarto\n",
+    "section": "\n22.2 Getting Started with a Quarto Document",
+    "text": "22.2 Getting Started with a Quarto Document\nA typical Quarto file has two parts:\n\n\nYAML Header:\nThis is where you set up your document’s settings—think title, author, format, and more.\n\nDocument Body:\nHere’s where you mix regular text, code, cool visuals, and even equations!\n\n\n22.2.1 The YAML Header\nThe header sits at the very top and is surrounded by three dashes. Here’s a simple example:\n---\ntitle: \"My First Quarto Document\"\nauthor: \"Your Name\"\nformat: html\n---\nIn this section, you tell Quarto:\n\nWhich format you’re aiming for (HTML, PDF, etc.)\nWhat your document’s title, author, and date are\nWhat style or theme you’d like to use\nAnd even settings for your table of contents!\n\n22.2.2 Writing with Markdown\nIn the body of your document, you write in Markdown—a simple way to format your text. For example:\n# Level 1 Heading\n\n## Level 2 Heading\n\nThis is your regular paragraph text. You can make text **bold** or *italic*.\n\n- Bullet point one\n- Bullet point two\n  - Nested bullet\n\n1. First numbered item\n2. Second numbered item\n\n&gt; This is a blockquote that highlights something cool.\n\n[Check out Quarto](https://quarto.org)\nMarkdown makes it super easy to structure your document without any fuss.",
+    "crumbs": [
+      "Reproducible Research",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Basics of Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "22_quarto.html#mixing-in-some-code-code-chunks",
+    "href": "22_quarto.html#mixing-in-some-code-code-chunks",
+    "title": "\n22  Basics of Quarto\n",
+    "section": "\n22.3 Mixing in Some Code: Code Chunks",
+    "text": "22.3 Mixing in Some Code: Code Chunks\nNow, the magic happens when you include code chunks. These let you run code and show the results directly in your document.\n\n22.3.1 How to Add a Code Chunk\nHere’s a basic example in R:\n\nlibrary(tidyverse)\nlibrary(palmerpenguins)\n\npenguins |&gt;\n    group_by(species) |&gt;\n    summarize(\n        count = n(),\n        mean_bill_length = mean(bill_length_mm, na.rm = TRUE),\n        mean_body_mass = mean(body_mass_g, na.rm = TRUE)\n    )\n\n\n  \n\n\n\nThis code chunk groups the penguins dataset by species and summarizes key stats. Notice the #| options—these let you control what shows up in your final document.\n\n22.3.2 Customizing Your Code Chunks\nYou can tweak each chunk with options like:\n\n\necho: false – Run the code, but hide it.\n\neval: false – Show the code without running it.\n\nwarning: false – Skip those pesky warning messages.\n\nmessage: false – Keep it clean by hiding messages.\n\nfig-width / fig-height – Set your figure dimensions.\n\nThese options can be set per chunk or globally in your YAML header.",
+    "crumbs": [
+      "Reproducible Research",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Basics of Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "22_quarto.html#adding-figures-and-tables",
+    "href": "22_quarto.html#adding-figures-and-tables",
+    "title": "\n22  Basics of Quarto\n",
+    "section": "\n22.4 Adding Figures and Tables",
+    "text": "22.4 Adding Figures and Tables\n\n22.4.1 Including Figures\nIt’s super simple to add plots. Just write the code for your plot in a code chunk, and Quarto will display it in your document.\n#| label: penguin-plot\n#| fig-cap: \"Bill length vs. bill depth by species\"\n#| fig-width: 8\n#| fig-height: 5\n#| warning: false\n\nggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +\n    geom_point(alpha = 0.7) +\n    geom_smooth(method = \"lm\", se = FALSE) +\n    theme_minimal()\n\n\n\n\nBill length vs. bill depth by species\n\n\n\nThis chunk adds a neat caption and custom dimensions for the plot.\n\n22.4.2 Creating Tables\nYou can easily turn a tibble into a table in your document with knitr::kabel(). Here’s an example:\n\npenguins |&gt;\n    group_by(species) |&gt;\n    summarise(\n        number = n(),\n        mean_bill_length = mean(bill_length_mm, na.rm = TRUE),\n    ) |&gt;\n    knitr::kable()\n\n\n\nspecies\nnumber\nmean_bill_length\n\n\n\nAdelie\n152\n38.79139\n\n\nChinstrap\n68\n48.83382\n\n\nGentoo\n124\n47.50488\n\n\n\n\n\nQuarto can also display stunning tables. In R, there is a package called gt (Grammar of Tables) that makes it easy to create and style tables. Here’s an example:\n\n\n\n\n\nSummary statistics by species and island\n\n\n\n\n\n\n\n\n\n\n\n\n\nPenguins in the Palmer Archipelago\n\n\nData is courtesy of the {palmerpenguins} R package\n\n\n\n\nAdelie\n\nNa\n\nChinstrap\n\n\nGentoo\n\n\n\nFemale\nMale\nFemale\nMale\nFemale\nMale\nNa\n\n\n\n\nIsland: Biscoe\n\n\n2007\n5\n5\n-\n-\n-\n16\n17\n1\n\n\n2008\n9\n9\n-\n-\n-\n22\n23\n1\n\n\n2009\n8\n8\n-\n-\n-\n20\n21\n3\n\n\nIsland: Dream\n\n\n2007\n9\n10\n1\n13\n13\n-\n-\n-\n\n\n2008\n8\n8\n-\n9\n9\n-\n-\n-\n\n\n2009\n10\n10\n-\n12\n12\n-\n-\n-\n\n\nIsland: Torgersen\n\n\n2007\n8\n7\n5\n-\n-\n-\n-\n-\n\n\n2008\n8\n8\n-\n-\n-\n-\n-\n-\n\n\n2009\n8\n8\n-\n-\n-\n-\n-\n-\n\n\n\n\n\n\nCheck the official document and tutorial for how to creat tables with gt.",
+    "crumbs": [
+      "Reproducible Research",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Basics of Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "23_scholarly_writing.html",
+    "href": "23_scholarly_writing.html",
+    "title": "\n23  Academic Publishing with Quarto\n",
+    "section": "",
+    "text": "23.1 Why Quarto for Academic Writing?\nAcademic publishing requires precision, consistency, and proper attribution. Quarto excels in these areas by providing:",
+    "crumbs": [
+      "Reproducible Research",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing with Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "23_scholarly_writing.html#why-quarto-for-academic-writing",
+    "href": "23_scholarly_writing.html#why-quarto-for-academic-writing",
+    "title": "\n23  Academic Publishing with Quarto\n",
+    "section": "",
+    "text": "Reproducible research: Code, analysis, and narratives in one document\n\nCitation management: Seamless integration with reference managers\n\nJournal-specific formats: Templates for various academic publishers\n\nCross-platform compatibility: Collaborate regardless of operating system\n\nMulti-language support: Use R, Python, Julia, or other languages as needed",
+    "crumbs": [
+      "Reproducible Research",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing with Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "23_scholarly_writing.html#setting-up-for-academic-writing",
+    "href": "23_scholarly_writing.html#setting-up-for-academic-writing",
+    "title": "\n23  Academic Publishing with Quarto\n",
+    "section": "\n23.2 Setting Up for Academic Writing",
+    "text": "23.2 Setting Up for Academic Writing\nFor academic documents, your YAML header often needs more details:\n---\ntitle: \"Analysis of Penguin Morphology in the Antarctic Region\"\nauthor:\n  - name: \"Your Name\"\n    affiliation: \"Your University\"\n    email: \"your.email@university.edu\"\n    orcid: \"0000-1234-5678-9101\"\n  - name: \"Co-Author Name\"\n    affiliation: \"Their University\"\nformat: \n  pdf:\n    documentclass: article\n    classoption: [twocolumn, 11pt]\n    toc: true\n    number-sections: true\n    cite-method: biblatex\nbibliography: references.bib\ncsl: apa.csl\nabstract: |\n  This is the abstract of your paper. It should be concise and explain the main \n  findings of your work in about 150-250 words.\nkeywords: [keyword1, keyword2, keyword3]\n---\nThis header provides complete metadata for academic publishing, including proper author information, citation style, and document formatting.",
+    "crumbs": [
+      "Reproducible Research",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing with Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "23_scholarly_writing.html#managing-citations-in-quarto",
+    "href": "23_scholarly_writing.html#managing-citations-in-quarto",
+    "title": "\n23  Academic Publishing with Quarto\n",
+    "section": "\n23.3 Managing Citations in Quarto",
+    "text": "23.3 Managing Citations in Quarto\n\n23.3.1 Setting Up Your Bibliography\nThe first step is to link your bibliography file in the YAML header:\nbibliography: references.bib\ncsl: journal-of-ecology.csl\n\n\nbibliography: Points to your BibTeX or CSL JSON file\n\ncsl: (Optional) Specifies the Citation Style Language file\n\n23.3.2 Creating a BibTeX File\nYour BibTeX file contains all your references in a structured format. Here’s a sample:\n@article{smith2023,\n  author = {Smith, John and Johnson, Sarah},\n  title = {Analysis of Antarctic Penguin Species Distribution},\n  journal = {Journal of Antarctic Biology},\n  volume = {45},\n  number = {2},\n  pages = {112-128},\n  year = {2023},\n  doi = {10.1234/jab.2023.45.2.112}\n}\n\n@book{wilson2020,\n  author = {Wilson, Maria},\n  title = {Ecological Methodologies in Polar Regions},\n  publisher = {Cambridge Academic Press},\n  year = {2020},\n  isbn = {978-3-16-148410-0}\n}\n\n23.3.3 Citing Sources in Your Text\nOnce your bibliography is set up, citing sources is straightforward:\nAccording to @smith2023, penguin populations have declined in recent years.\n\nMultiple studies [@smith2023; @wilson2020] have documented this trend.\n\nAs Wilson noted [-@wilson2020], methodology is critical in polar research.\nThese render as:\n“According to Smith and Johnson (2023), penguin populations have declined in recent years.”\n“Multiple studies (Smith and Johnson, 2023; Wilson, 2020) have documented this trend.”\n“As Wilson noted (2020), methodology is critical in polar research.”",
+    "crumbs": [
+      "Reproducible Research",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing with Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "23_scholarly_writing.html#advanced-equation-support",
+    "href": "23_scholarly_writing.html#advanced-equation-support",
+    "title": "\n23  Academic Publishing with Quarto\n",
+    "section": "\n23.4 Advanced Equation Support",
+    "text": "23.4 Advanced Equation Support\nAcademic papers often require complex mathematical notation. Quarto uses LaTeX syntax for equations:\n\n23.4.1 Inline Equations\nFor inline equations, use single dollar signs:\nThe probability is given by $P(X &gt; x) = \\int_x^{\\infty} f(t) \\, dt$\n\n23.4.2 Display Equations\nFor standalone equations, use double dollar signs:\n$$\n\\begin{align}\n\\frac{\\partial f}{\\partial x} = \\lim_{h \\to 0} \\frac{f(x + h) - f(x)}{h}\n\\end{align}\n$$",
+    "crumbs": [
+      "Reproducible Research",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing with Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "23_scholarly_writing.html#cross-references-in-academic-writing",
+    "href": "23_scholarly_writing.html#cross-references-in-academic-writing",
+    "title": "\n23  Academic Publishing with Quarto\n",
+    "section": "\n23.5 Cross-References in Academic Writing",
+    "text": "23.5 Cross-References in Academic Writing\nCross-references help readers navigate your document. Quarto makes this simple with labels and references:\n\n\nFigures\nSections\nEquation Numbering\n\n\n\n\nlibrary(tidyverse)\nlibrary(palmerpenguins)\n\nggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +\n    geom_point(alpha = 0.7) +\n    theme_minimal() +\n    labs(x = \"Bill Length (mm)\", y = \"Bill Depth (mm)\")\n\n\n\n\n\n\nFigure 23.1: Bill dimensions of three penguin species\n\n\n\n\nYou can then reference this figure: “As shown in Figure 23.1, the bill dimensions clearly differentiate species.”\n\n\nYou can reference sections using their headers:\n## Data Collection Methodology {#sec-methodology}\n\n... content ...\n\nAs described in @sec-methodology, our approach controls for seasonal variation.\n\n\nFor numbered equations you can reference later:\n$$\n\\begin{align}\nE = mc^2 \\tag{1}\\label{eq-einstein}\n\\end{align}\n$$\n\nAs shown in Equation @eq-einstein, energy and mass are equivalent.",
+    "crumbs": [
+      "Reproducible Research",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing with Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "Project.html",
+    "href": "Project.html",
+    "title": "Final Project",
+    "section": "",
+    "text": "Due Date: March 20th, 2025\nWelcome to the final project! In this assignment, you will learn to use the lessons we have covered in the class.",
+    "crumbs": [
+      "Reproducible Research",
+      "Final Project"
+    ]
+  },
+  {
+    "objectID": "Project.html#what-to-turn-in",
+    "href": "Project.html#what-to-turn-in",
+    "title": "Final Project",
+    "section": "What to Turn In",
+    "text": "What to Turn In\nSubmit a single zipped folder. This folder must contain the following:\n\nRStudio Project\nData Folder: Inside the RStudio project folder, create a folder named data. This folder should contain the dataset you used for your analysis. The dataset must be in a readily readable format (e.g., CSV, TXT, XLSX).\nQuarto Document: A Quarto file named final_project.qmd in the root of your RStudio Project Folder (NOT within the data directory). This file contains your entire analysis, code, narrative, and visualizations.\nTwo Rendered Files:\n\nHTML Output File: The rendered HTML output of your Quarto document.\nPDF Output File: The rendered PDF output of your Quarto document.\n\nBib file (references.bib): file to contain all your citations.\n\n\n\n\n\n\n\nImportant Notes on Submission\n\n\n\n\nReproducibility: Your project must be fully reproducible. This means that I should be able to download your zipped folder, open the RStudio project, open the final_project.qmd file, click “Render,” and generate the exact same HTML and PDF outputs without any errors. If your project is not reproducible, you will lose significant points.\nFile Paths: Use relative file paths within your Quarto document to refer to your dataset (e.g., “data/my_data.csv”). Do not use absolute file paths (e.g., “C:/Users/YourName/Documents/…”). Absolute paths will break reproducibility.\nNo External Dependencies (Beyond Packages): Do not rely on files outside your project folder. Everything needed to run your analysis should be within the submitted zip file.\nClean Code: Your code should be well-commented, readable, and organized. Use meaningful variable names.",
+    "crumbs": [
+      "Reproducible Research",
+      "Final Project"
+    ]
+  },
+  {
+    "objectID": "Project.html#assignment-instructions",
+    "href": "Project.html#assignment-instructions",
+    "title": "Final Project",
+    "section": "Assignment Instructions",
+    "text": "Assignment Instructions\nYour task is to perform a data analysis and create a report documenting your findings. You can choose one of the following options:\n\nOption 1: Analyze Your Own Data: Use a dataset that you have collected or found online (from a reputable source). The dataset should not be one we used directly in class examples.\nOption 2: Reproduce/Extend a Published Analysis: Find a published research paper that includes data analysis. Your task is to reproduce (as closely as possible) some results of the paper.\n\nThe Quato file must at least include the following elements:\n\nYAML Header:\n\ntitle: A descriptive title for your project.\nauthor: Your name and affiliation (e.g., “Your Name, Your University”).\n\nIntroduction: Provide a brief introduction that explains the purpose of your analysis, the dataset you are using, and the research question(s) you are addressing.\nData Analysis: Conduct some analysis to address your research question(s). Ideally use what we learnt with vectorization/functionally programming, but this is not required. Data analysis could involve (but definitely not limited to): :\n\nCalculating descriptive statistics.\nPerforming statistical tests.\n\nAdditionally, you should clearly explain your findings in words. Do not just show code and output; interpret the results.\nVisualization: Include at least one publication-quality figure.\nReferences: Cite at least two relevant sources. Use a BibTeX file (references.bib) to manage your citations. You can use any citation style (e.g., APA, MLA).",
+    "crumbs": [
+      "Reproducible Research",
+      "Final Project"
     ]
   }
 ]

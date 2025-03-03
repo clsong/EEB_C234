@@ -1,0 +1,55 @@
+# Final Project {-}
+
+Welcome to the final project! In this assignment, you will learn to use the lessons we have covered in the class.
+
+## Due Date: March 20th, 2025
+
+## What to Turn In
+
+Submit a single zipped folder. This folder *must* contain the following:
+
+- **RStudio Project**
+- **Data Folder**: Inside the RStudio project folder, create a folder named *data*. This folder should contain the dataset you used for your analysis. The dataset must be in a readily readable format (e.g., CSV, TXT, XLSX).
+- **Quarto Document**: A Quarto file named `final_project.qmd` in the root of your RStudio Project Folder (NOT within the data directory). This file contains your entire analysis, code, narrative, and visualizations.
+- **Two Rendered Files**: 
+   -  HTML Output File: The rendered HTML output of your Quarto document.
+   -  PDF Output File: The rendered PDF output of your Quarto document.
+- **Bib file** (references.bib): file to contain all your citations.
+
+::: {.callout-important}
+
+## Important Notes on Submission
+
+- **Reproducibility**: Your project must be fully reproducible. This means that I should be able to download your zipped folder, open the RStudio project, open the final_project.qmd file, click "Render," and generate the exact same HTML and PDF outputs without any errors. If your project is not reproducible, you will lose significant points.
+
+- **File Paths**: Use relative file paths within your Quarto document to refer to your dataset (e.g., "data/my_data.csv"). Do not use absolute file paths (e.g., "C:/Users/YourName/Documents/..."). Absolute paths will break reproducibility.
+
+- **No External Dependencies (Beyond Packages)**: Do not rely on files outside your project folder. Everything needed to run your analysis should be within the submitted zip file.
+
+- **Clean Code**: Your code should be well-commented, readable, and organized. Use meaningful variable names.
+:::
+
+
+
+## Assignment Instructions
+
+Your task is to perform a data analysis and create a report documenting your findings. You can choose one of the following options:
+
+- **Option 1: Analyze Your Own Data**: Use a dataset that you have collected or found online (from a reputable source). The dataset should not be one we used directly in class examples.
+
+- **Option 2: Reproduce/Extend a Published Analysis**: Find a published research paper that includes data analysis. Your task is to reproduce (as closely as possible) some results of the paper. 
+
+The Quato file must at least include the following elements:
+
+- **YAML Header**:
+  - title: A descriptive title for your project.
+  - author: Your name and affiliation (e.g., "Your Name, Your University").
+- **Introduction**: Provide a brief introduction that explains the purpose of your analysis, the dataset you are using, and the research question(s) you are addressing.
+- **Data Analysis**: Conduct some analysis to address your research question(s). 
+  Ideally use what we learnt with vectorization/functionally programming, but this is not required. Data analysis could involve (but definitely not limited to): :
+  - Calculating descriptive statistics.
+  - Performing statistical tests.
+  
+  Additionally, you should clearly explain your findings in words. Do not just show code and output; interpret the results. 
+- **Visualization**: Include at least one *publication-quality* figure. 
+- **References**: Cite at least two relevant sources. Use a BibTeX file (references.bib) to manage your citations. You can use any citation style (e.g., APA, MLA). 
