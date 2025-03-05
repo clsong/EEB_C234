@@ -369,7 +369,7 @@ gtag('config', 'G-WQWBVET0L7', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./23_scholarly_writing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Academic Publishing with Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Academic Publishing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -482,7 +482,7 @@ Class Objectives
 </dl>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>0.762 sec elapsed</code></pre>
+<pre data-code-line-numbers=""><code>0.798 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -530,9 +530,12 @@ Class Objectives
 </div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Unit: milliseconds
-           expr      min       lq     mean   median       uq      max neval cld
- method_rowwise 86.29557 90.31045 100.2290 90.84944 121.9171 125.4834    10   a
-     method_map 88.41478 90.08557 103.6614 91.54275 122.2210 127.6583    10   a</code></pre>
+           expr      min       lq     mean    median       uq      max neval
+ method_rowwise 87.98784 91.31405 108.3617 107.65704 124.0977 129.2585    10
+     method_map 86.97691 91.14923 102.4713  94.94475 124.1238 131.6464    10
+ cld
+   a
+   a</code></pre>
 </div>
 </div>
 <p>It might be helpful to visualize the results. You can use the <code>autoplot</code> function to do this easily.</p>
@@ -576,18 +579,33 @@ Class Objectives
 <section id="parallel-computing" class="level2" data-number="20.2">
 <h2 data-number="20.2" class="anchored" data-anchor-id="parallel-computing"><span class="header-section-number">20.2</span> Parallel Computing</h2>
 <p>R usually uses one CPU core. But most computers have 4-8 cores! By sending the same task to multiple cores, you get automatic speedups for free!</p>
-<p>We can use the <code>furrr</code> package to parallelize the map functions.</p>
+<p>We can use the <code>furrr</code> package to parallelize the map functions. When setting the number of workers, be sure to leave one core for the leader (the one that coordinates the workers).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(furrr)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span>(multisession, <span class="at">workers =</span> <span class="dv">4</span>)  <span class="co"># Set up parallel processing with 4 cores</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>model_r2 <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier, origin, year) <span class="sc">|&gt;</span> </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">r2 =</span> <span class="fu">future_map_dbl</span>(data, \(x) <span class="fu">summary</span>(<span class="fu">lm</span>(arr_delay <span class="sc">~</span> dep_delay, <span class="at">data =</span> x))<span class="sc">$</span>r.squared))</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(furrr)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-2" class="code-annotation-target"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>parallelly<span class="sc">::</span><span class="fu">availableCores</span>()</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2">2</button><span id="annotated-cell-6-3" class="code-annotation-target"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span>(multisession, <span class="at">workers =</span> <span class="dv">4</span>)</span>
+<span id="annotated-cell-6-4"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
+<span id="annotated-cell-6-5"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a>model_r2 <span class="ot">&lt;-</span> flights <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-6-6"><a href="#annotated-cell-6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier, origin, year) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-6-7"><a href="#annotated-cell-6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>() <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-6-8"><a href="#annotated-cell-6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">r2 =</span> <span class="fu">future_map_dbl</span>(data, \(x) <span class="fu">summary</span>(<span class="fu">lm</span>(arr_delay <span class="sc">~</span> dep_delay, <span class="at">data =</span> x))<span class="sc">$</span>r.squared))</span>
+<span id="annotated-cell-6-9"><a href="#annotated-cell-6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="2" data-code-annotation="1">Check how many cores are available</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="3" data-code-annotation="2">Set the number of workers to 4</span>
+</dd>
+</dl>
+</div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>6.148 sec elapsed</code></pre>
+<pre data-code-line-numbers=""><code>system 
+    11 
+6.091 sec elapsed</code></pre>
 </div>
 </div>
 <p>The syntax is almost identical to <code>purrr</code>, just replace <code>map</code> with <code>future_map</code> (you can even use the <code>.progress</code> argument to show a progress bar), and set before the code how many cores you want to use (set it lower than the number of cores on your computer).</p>
@@ -607,8 +625,8 @@ The magic of <code>mirai</code>
 <p>This is a feature in development version of <code>purrr</code> (<a href="https://purrr.tidyverse.org/dev/reference/parallelization.html">version 1.0.4.0</a>). However, I have little doubt that it will be merged into the main version anytime soon: it is so much easier to use with and is up to 1000 times faster compared to <code>furrr</code>.</p>
 <p>To try it out, you need to install the development versions of <code>purrr</code> and <code>mirai</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"tidyverse/purrr"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"shikokuchuo/mirai"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"tidyverse/purrr"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"shikokuchuo/mirai"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then we simply need to add <code>.parallel = TRUE</code> to the <code>map</code> function.</p>
 <div class="cell">
@@ -640,7 +658,7 @@ The magic of <code>mirai</code>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 4
-0.41 sec elapsed</code></pre>
+0.381 sec elapsed</code></pre>
 </div>
 </div>
 </div>
@@ -705,9 +723,9 @@ The magic of <code>mirai</code>
 </div>
 <p>Then we just do what we always do.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier, origin, year) <span class="sc">|&gt;</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_arr_delay =</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9" data-source-line-numbers="nil" data-code-line-numbers="nil"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier, origin, year) <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_arr_delay =</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>

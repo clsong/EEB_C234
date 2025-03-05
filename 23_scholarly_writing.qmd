@@ -1,4 +1,4 @@
-# Academic Publishing with Quarto
+# Academic Publishing
 
 ::: {.callout-note}
 ## What You'll Learn Today

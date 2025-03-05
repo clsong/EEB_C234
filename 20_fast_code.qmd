@@ -109,14 +109,15 @@ tibble(x = 1:500) |>
 
 R usually uses one CPU core. But most computers have 4-8 cores! By sending the same task to multiple cores, you get automatic speedups for free! 
 
-We can use the `furrr` package to parallelize the map functions. 
+We can use the `furrr` package to parallelize the map functions. When setting the number of workers, be sure to leave one core for the leader (the one that coordinates the workers).
 
 ```{r}
 #| message: false
 #| warning: false
 
 library(furrr)
-plan(multisession, workers = 4)  # Set up parallel processing with 4 cores
+parallelly::availableCores() # <1>
+plan(multisession, workers = 4)  # <2>
 tic()
 model_r2 <- flights |> 
   group_by(carrier, origin, year) |> 
@@ -124,6 +125,8 @@ model_r2 <- flights |>
   mutate(r2 = future_map_dbl(data, \(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared))
 toc()
 ```
+1. Check how many cores are available
+2. Set the number of workers to 4
 
 The syntax is almost identical to `purrr`, just replace `map` with `future_map` (you can even use the `.progress` argument to show a progress bar), and set before the code how many cores you want to use (set it lower than the number of cores on your computer).
 

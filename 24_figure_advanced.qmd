@@ -1,3 +1,13 @@
+# Annotation
+
+https://docs.r4photobiology.info/ggpp/articles/grammar-extensions.html
+
+
+## Faceting
+
+It is common to encounter nested data. 
+
+
 # Overview of Visualization
 
 Plotting is a huge topic. We will not be able to cover all. 

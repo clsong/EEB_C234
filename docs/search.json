@@ -1229,7 +1229,7 @@
     "href": "20_fast_code.html#figure-out-how-fast-your-code-is",
     "title": "20  Making R Faster 🚀",
     "section": "",
-    "text": "20.1.1 Quick Check with tictoc\nThe tictoc package (no relation to social media platform) lets you time code chunks easily:\n\nlibrary(tictoc)\n\n1tic()\n\n2model_r2 &lt;- flights |&gt;\n  group_by(carrier, origin, year) |&gt;\n  nest() |&gt;\n  mutate(r2 = map_vec(data, \\(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared))\n\n3toc()\n\n\n1\n\nStart the timer!\n\n2\n\nYour code goes in between tic() and toc().\n\n3\n\nStop the timer and print the time\n\n\n\n\n0.762 sec elapsed\n\n\n\n\n20.1.2 Compare Methods with microbenchmark\nWant to test multiple approaches? microbenchmark runs code repeatedly and compares results:\n\nlibrary(microbenchmark)\n\nbenchmark &lt;- microbenchmark(\n1  method_rowwise = flights |&gt;\n    group_by(carrier, origin, year) |&gt; \n    nest() |&gt; \n    rowwise() |&gt;\n    mutate(r2 = summary(lm(arr_delay ~ dep_delay, data = data))$r.squared) |&gt;\n    ungroup(),\n2  method_map = flights |&gt;\n    group_by(carrier, origin, year) |&gt; \n    nest() |&gt;   \n    mutate(r2 = map_vec(data, \\(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared))\n  ,\n3  times = 10\n) \n\n4print(benchmark)\n\n\n1\n\nName the method on the left and the code on the right.\n\n2\n\nUse another method\n\n3\n\nRun each code 10 times\n\n4\n\nPrint the time it took to run each method\n\n\n\n\nUnit: milliseconds\n           expr      min       lq     mean   median       uq      max neval cld\n method_rowwise 86.29557 90.31045 100.2290 90.84944 121.9171 125.4834    10   a\n     method_map 88.41478 90.08557 103.6614 91.54275 122.2210 127.6583    10   a\n\n\nIt might be helpful to visualize the results. You can use the autoplot function to do this easily.\n\nautoplot(benchmark)\n\n\n\n\n\n\n\n\n\n\n20.1.3 Estimate how long it will take to run your code\nA great new feature in purrr is the introduction of .progress argument. This allows you to estimate how long it will take to run your code.\nAs the codes above runs very fast, we use a more time-consuming task (just for illustration purposes).\n\ntibble(x = 1:500) |&gt;\n  mutate(y = map_dbl(x, \\(x) {\n1    Sys.sleep(0.01)\n    x\n  },\n2  .progress = TRUE))\n\n\n1\n\nSleep for 0.01 seconds\n\n2\n\nShow a progress bar",
+    "text": "20.1.1 Quick Check with tictoc\nThe tictoc package (no relation to social media platform) lets you time code chunks easily:\n\nlibrary(tictoc)\n\n1tic()\n\n2model_r2 &lt;- flights |&gt;\n  group_by(carrier, origin, year) |&gt;\n  nest() |&gt;\n  mutate(r2 = map_vec(data, \\(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared))\n\n3toc()\n\n\n1\n\nStart the timer!\n\n2\n\nYour code goes in between tic() and toc().\n\n3\n\nStop the timer and print the time\n\n\n\n\n0.798 sec elapsed\n\n\n\n\n20.1.2 Compare Methods with microbenchmark\nWant to test multiple approaches? microbenchmark runs code repeatedly and compares results:\n\nlibrary(microbenchmark)\n\nbenchmark &lt;- microbenchmark(\n1  method_rowwise = flights |&gt;\n    group_by(carrier, origin, year) |&gt; \n    nest() |&gt; \n    rowwise() |&gt;\n    mutate(r2 = summary(lm(arr_delay ~ dep_delay, data = data))$r.squared) |&gt;\n    ungroup(),\n2  method_map = flights |&gt;\n    group_by(carrier, origin, year) |&gt; \n    nest() |&gt;   \n    mutate(r2 = map_vec(data, \\(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared))\n  ,\n3  times = 10\n) \n\n4print(benchmark)\n\n\n1\n\nName the method on the left and the code on the right.\n\n2\n\nUse another method\n\n3\n\nRun each code 10 times\n\n4\n\nPrint the time it took to run each method\n\n\n\n\nUnit: milliseconds\n           expr      min       lq     mean    median       uq      max neval\n method_rowwise 87.98784 91.31405 108.3617 107.65704 124.0977 129.2585    10\n     method_map 86.97691 91.14923 102.4713  94.94475 124.1238 131.6464    10\n cld\n   a\n   a\n\n\nIt might be helpful to visualize the results. You can use the autoplot function to do this easily.\n\nautoplot(benchmark)\n\n\n\n\n\n\n\n\n\n\n20.1.3 Estimate how long it will take to run your code\nA great new feature in purrr is the introduction of .progress argument. This allows you to estimate how long it will take to run your code.\nAs the codes above runs very fast, we use a more time-consuming task (just for illustration purposes).\n\ntibble(x = 1:500) |&gt;\n  mutate(y = map_dbl(x, \\(x) {\n1    Sys.sleep(0.01)\n    x\n  },\n2  .progress = TRUE))\n\n\n1\n\nSleep for 0.01 seconds\n\n2\n\nShow a progress bar",
     "crumbs": [
       "R Programming",
       "<span class='chapter-number'>20</span>  <span class='chapter-title'>Making R Faster 🚀</span>"
@@ -1240,7 +1240,7 @@
     "href": "20_fast_code.html#parallel-computing",
     "title": "20  Making R Faster 🚀",
     "section": "20.2 Parallel Computing",
-    "text": "20.2 Parallel Computing\nR usually uses one CPU core. But most computers have 4-8 cores! By sending the same task to multiple cores, you get automatic speedups for free!\nWe can use the furrr package to parallelize the map functions.\n\nlibrary(furrr)\nplan(multisession, workers = 4)  # Set up parallel processing with 4 cores\ntic()\nmodel_r2 &lt;- flights |&gt; \n  group_by(carrier, origin, year) |&gt; \n  nest() |&gt; \n  mutate(r2 = future_map_dbl(data, \\(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared))\ntoc()\n\n6.148 sec elapsed\n\n\nThe syntax is almost identical to purrr, just replace map with future_map (you can even use the .progress argument to show a progress bar), and set before the code how many cores you want to use (set it lower than the number of cores on your computer).\nNote: Parallelizing adds some overhead (think of the leader needs time to coordinate the workers). Thus, it may cost more time than the non-parallelized version for small datasets or quick calculations.\n\n\n\n\n\n\nThe magic of mirai\n\n\n\n\n\nThis is a feature in development version of purrr (version 1.0.4.0). However, I have little doubt that it will be merged into the main version anytime soon: it is so much easier to use with and is up to 1000 times faster compared to furrr.\nTo try it out, you need to install the development versions of purrr and mirai:\n\npak::pak(\"tidyverse/purrr\")\npak::pak(\"shikokuchuo/mirai\")\n\nThen we simply need to add .parallel = TRUE to the map function.\n\nlibrary(purrr)\nlibrary(mirai)\n1mirai::daemons(4)\n\ntic()\n\nmodel_r2 &lt;- flights |&gt; \n  group_by(carrier, origin, year) |&gt; \n  nest() |&gt; \n  mutate(r2 = map(data, \n                  \\(x) x$arr_delay - x$dep_delay,\n2                  .parallel = TRUE))\n\ntoc()\n\n\n1\n\nSet the number of cores you want to use\n\n2\n\nAdd .parallel = TRUE to the map function\n\n\n\n\n[1] 4\n0.41 sec elapsed",
+    "text": "20.2 Parallel Computing\nR usually uses one CPU core. But most computers have 4-8 cores! By sending the same task to multiple cores, you get automatic speedups for free!\nWe can use the furrr package to parallelize the map functions. When setting the number of workers, be sure to leave one core for the leader (the one that coordinates the workers).\n\nlibrary(furrr)\n1parallelly::availableCores()\n2plan(multisession, workers = 4)\ntic()\nmodel_r2 &lt;- flights |&gt; \n  group_by(carrier, origin, year) |&gt; \n  nest() |&gt; \n  mutate(r2 = future_map_dbl(data, \\(x) summary(lm(arr_delay ~ dep_delay, data = x))$r.squared))\ntoc()\n\n\n1\n\nCheck how many cores are available\n\n2\n\nSet the number of workers to 4\n\n\n\n\nsystem \n    11 \n6.091 sec elapsed\n\n\nThe syntax is almost identical to purrr, just replace map with future_map (you can even use the .progress argument to show a progress bar), and set before the code how many cores you want to use (set it lower than the number of cores on your computer).\nNote: Parallelizing adds some overhead (think of the leader needs time to coordinate the workers). Thus, it may cost more time than the non-parallelized version for small datasets or quick calculations.\n\n\n\n\n\n\nThe magic of mirai\n\n\n\n\n\nThis is a feature in development version of purrr (version 1.0.4.0). However, I have little doubt that it will be merged into the main version anytime soon: it is so much easier to use with and is up to 1000 times faster compared to furrr.\nTo try it out, you need to install the development versions of purrr and mirai:\n\npak::pak(\"tidyverse/purrr\")\npak::pak(\"shikokuchuo/mirai\")\n\nThen we simply need to add .parallel = TRUE to the map function.\n\nlibrary(purrr)\nlibrary(mirai)\n1mirai::daemons(4)\n\ntic()\n\nmodel_r2 &lt;- flights |&gt; \n  group_by(carrier, origin, year) |&gt; \n  nest() |&gt; \n  mutate(r2 = map(data, \n                  \\(x) x$arr_delay - x$dep_delay,\n2                  .parallel = TRUE))\n\ntoc()\n\n\n1\n\nSet the number of cores you want to use\n\n2\n\nAdd .parallel = TRUE to the map function\n\n\n\n\n[1] 4\n0.381 sec elapsed",
     "crumbs": [
       "R Programming",
       "<span class='chapter-number'>20</span>  <span class='chapter-title'>Making R Faster 🚀</span>"
@@ -1370,67 +1370,67 @@
   {
     "objectID": "23_scholarly_writing.html",
     "href": "23_scholarly_writing.html",
-    "title": "\n23  Academic Publishing with Quarto\n",
+    "title": "\n23  Academic Publishing\n",
     "section": "",
     "text": "23.1 Why Quarto for Academic Writing?\nAcademic publishing requires precision, consistency, and proper attribution. Quarto excels in these areas by providing:",
     "crumbs": [
       "Reproducible Research",
-      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing with Quarto</span>"
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing</span>"
     ]
   },
   {
     "objectID": "23_scholarly_writing.html#why-quarto-for-academic-writing",
     "href": "23_scholarly_writing.html#why-quarto-for-academic-writing",
-    "title": "\n23  Academic Publishing with Quarto\n",
+    "title": "\n23  Academic Publishing\n",
     "section": "",
     "text": "Reproducible research: Code, analysis, and narratives in one document\n\nCitation management: Seamless integration with reference managers\n\nJournal-specific formats: Templates for various academic publishers\n\nCross-platform compatibility: Collaborate regardless of operating system\n\nMulti-language support: Use R, Python, Julia, or other languages as needed",
     "crumbs": [
       "Reproducible Research",
-      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing with Quarto</span>"
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing</span>"
     ]
   },
   {
     "objectID": "23_scholarly_writing.html#setting-up-for-academic-writing",
     "href": "23_scholarly_writing.html#setting-up-for-academic-writing",
-    "title": "\n23  Academic Publishing with Quarto\n",
+    "title": "\n23  Academic Publishing\n",
     "section": "\n23.2 Setting Up for Academic Writing",
     "text": "23.2 Setting Up for Academic Writing\nFor academic documents, your YAML header often needs more details:\n---\ntitle: \"Analysis of Penguin Morphology in the Antarctic Region\"\nauthor:\n  - name: \"Your Name\"\n    affiliation: \"Your University\"\n    email: \"your.email@university.edu\"\n    orcid: \"0000-1234-5678-9101\"\n  - name: \"Co-Author Name\"\n    affiliation: \"Their University\"\nformat: \n  pdf:\n    documentclass: article\n    classoption: [twocolumn, 11pt]\n    toc: true\n    number-sections: true\n    cite-method: biblatex\nbibliography: references.bib\ncsl: apa.csl\nabstract: |\n  This is the abstract of your paper. It should be concise and explain the main \n  findings of your work in about 150-250 words.\nkeywords: [keyword1, keyword2, keyword3]\n---\nThis header provides complete metadata for academic publishing, including proper author information, citation style, and document formatting.",
     "crumbs": [
       "Reproducible Research",
-      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing with Quarto</span>"
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing</span>"
     ]
   },
   {
     "objectID": "23_scholarly_writing.html#managing-citations-in-quarto",
     "href": "23_scholarly_writing.html#managing-citations-in-quarto",
-    "title": "\n23  Academic Publishing with Quarto\n",
+    "title": "\n23  Academic Publishing\n",
     "section": "\n23.3 Managing Citations in Quarto",
     "text": "23.3 Managing Citations in Quarto\n\n23.3.1 Setting Up Your Bibliography\nThe first step is to link your bibliography file in the YAML header:\nbibliography: references.bib\ncsl: journal-of-ecology.csl\n\n\nbibliography: Points to your BibTeX or CSL JSON file\n\ncsl: (Optional) Specifies the Citation Style Language file\n\n23.3.2 Creating a BibTeX File\nYour BibTeX file contains all your references in a structured format. Here’s a sample:\n@article{smith2023,\n  author = {Smith, John and Johnson, Sarah},\n  title = {Analysis of Antarctic Penguin Species Distribution},\n  journal = {Journal of Antarctic Biology},\n  volume = {45},\n  number = {2},\n  pages = {112-128},\n  year = {2023},\n  doi = {10.1234/jab.2023.45.2.112}\n}\n\n@book{wilson2020,\n  author = {Wilson, Maria},\n  title = {Ecological Methodologies in Polar Regions},\n  publisher = {Cambridge Academic Press},\n  year = {2020},\n  isbn = {978-3-16-148410-0}\n}\n\n23.3.3 Citing Sources in Your Text\nOnce your bibliography is set up, citing sources is straightforward:\nAccording to @smith2023, penguin populations have declined in recent years.\n\nMultiple studies [@smith2023; @wilson2020] have documented this trend.\n\nAs Wilson noted [-@wilson2020], methodology is critical in polar research.\nThese render as:\n“According to Smith and Johnson (2023), penguin populations have declined in recent years.”\n“Multiple studies (Smith and Johnson, 2023; Wilson, 2020) have documented this trend.”\n“As Wilson noted (2020), methodology is critical in polar research.”",
     "crumbs": [
       "Reproducible Research",
-      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing with Quarto</span>"
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing</span>"
     ]
   },
   {
     "objectID": "23_scholarly_writing.html#advanced-equation-support",
     "href": "23_scholarly_writing.html#advanced-equation-support",
-    "title": "\n23  Academic Publishing with Quarto\n",
+    "title": "\n23  Academic Publishing\n",
     "section": "\n23.4 Advanced Equation Support",
     "text": "23.4 Advanced Equation Support\nAcademic papers often require complex mathematical notation. Quarto uses LaTeX syntax for equations:\n\n23.4.1 Inline Equations\nFor inline equations, use single dollar signs:\nThe probability is given by $P(X &gt; x) = \\int_x^{\\infty} f(t) \\, dt$\n\n23.4.2 Display Equations\nFor standalone equations, use double dollar signs:\n$$\n\\begin{align}\n\\frac{\\partial f}{\\partial x} = \\lim_{h \\to 0} \\frac{f(x + h) - f(x)}{h}\n\\end{align}\n$$",
     "crumbs": [
       "Reproducible Research",
-      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing with Quarto</span>"
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing</span>"
     ]
   },
   {
     "objectID": "23_scholarly_writing.html#cross-references-in-academic-writing",
     "href": "23_scholarly_writing.html#cross-references-in-academic-writing",
-    "title": "\n23  Academic Publishing with Quarto\n",
+    "title": "\n23  Academic Publishing\n",
     "section": "\n23.5 Cross-References in Academic Writing",
     "text": "23.5 Cross-References in Academic Writing\nCross-references help readers navigate your document. Quarto makes this simple with labels and references:\n\n\nFigures\nSections\nEquation Numbering\n\n\n\n\nlibrary(tidyverse)\nlibrary(palmerpenguins)\n\nggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +\n    geom_point(alpha = 0.7) +\n    theme_minimal() +\n    labs(x = \"Bill Length (mm)\", y = \"Bill Depth (mm)\")\n\n\n\n\n\n\nFigure 23.1: Bill dimensions of three penguin species\n\n\n\n\nYou can then reference this figure: “As shown in Figure 23.1, the bill dimensions clearly differentiate species.”\n\n\nYou can reference sections using their headers:\n## Data Collection Methodology {#sec-methodology}\n\n... content ...\n\nAs described in @sec-methodology, our approach controls for seasonal variation.\n\n\nFor numbered equations you can reference later:\n$$\n\\begin{align}\nE = mc^2 \\tag{1}\\label{eq-einstein}\n\\end{align}\n$$\n\nAs shown in Equation @eq-einstein, energy and mass are equivalent.",
     "crumbs": [
       "Reproducible Research",
-      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing with Quarto</span>"
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>Academic Publishing</span>"
     ]
   },
   {
