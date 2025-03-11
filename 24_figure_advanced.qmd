@@ -1,27 +1,230 @@
-# Annotation
+# Additional Topics in Data Visualization
 
-https://docs.r4photobiology.info/ggpp/articles/grammar-extensions.html
+::: {.callout-note}
+## Class Objectives
+1. Combine multiple plots using the awesome patchwork package.
+2. Make interactive plots to let your audience dive into your data.
+3. Create animated visualizations to clearly show patterns and changes over time.
+:::
+
+You've done great exploring data visualization so far. Now, let's dive into some exciting extras that'll really make your visualizations stand out—perfect for your papers, presentations, or blog posts!
+
+## Combining Plots with `patchwork`
+
+Did you know that most academic journals limit you to about 6 figures per paper? To squeeze more information into fewer figures, you can combine multiple plots into one tidy visual (just a random [exmaple](https://www.cell.com/cell/fulltext/S0092-8674(24)01471-5) I found online). The easiest and most intuitive way to do this is with the `patchwork` package—seriously, once you try it, you'll never go back!
+
+```{r}
+#| message: false
+#| warning: false
+#| label: fig-patchwork-basic
+#| fig-cap: "Basic patchwork composition with two plots side by side"
+
+library(tidyverse)
+library(patchwork)
+library(palmerpenguins)
+
+# First plot: Scatter plot
+p1 <- ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
+    geom_point(alpha = 0.7) +
+    theme_minimal()
+
+# Second plot: Density plot
+p2 <- ggplot(penguins, aes(x = flipper_length_mm, fill = species)) +
+    geom_density(alpha = 0.5) +
+    theme_minimal()
+```
 
 
-## Faceting
+::: {.panel-tabset}
 
-It is common to encounter nested data. 
+## Combining Plots Horizontally
+
+Use the `+` operator to combine plots horizontally:
+
+```{r}
+#| message: false
+#| warning: false
+
+p1 + p2
+```
+
+## Combining Plots Vertically
+
+Use the `/` operator to combine plots vertically:
+
+```{r}
+#| message: false
+#| warning: false
+
+p1 / p2
+```
+
+## More Complex Layouts
+
+Combine multiple plots in a single line of code:
+
+```{r}
+#| message: false
+#| warning: false
+p3 <- ggplot(penguins, aes(x = species, y = body_mass_g)) +
+    geom_boxplot(aes(fill = species)) +
+    labs(title = "Body Mass by Species") +
+    theme_minimal()
 
 
-# Overview of Visualization
+(p1 | (p2 / p3)) # <1>
+```
+1. Complex layout: p1 on top, p2 and p3 side-by-side below
+:::
 
-Plotting is a huge topic. We will not be able to cover all. 
+Let's explore the advanced features of `patchwork` with one practical example:
 
-Luckily, ggplot2 is one of the most popular visualization scheme out there. There are tons of extensions for your needs. My bet is that most of the time, you will find what you need. Below are some useful (more specific and niche) extensions that may of intrerest to you.
+```{r}
+#| message: false
+#| warning: false
+p1 +
+  (p2 + guides(colour = "none")) + # <1>
+  plot_layout(
+    widths = c(1, 2) # <2>
+  ) +
+  plot_layout(guides = "collect") +
+  plot_annotation(
+    tag_levels = "A" # <3> 
+  ) & # <4>
+  hrbrthemes::theme_ipsum() # <5>
+```
+1. Remove the legend from the first plot
+2. Left plot takes up 1/3 of the width
+3. Add a title to the entire composition
+4. Use Roman numerals for panel labels
+5. Using `&` as this applies the theme to the entire composition
+6. Apply a custom theme to the entire composition
 
-- Reveal: [ggreveal](https://www.weverthon.com/ggreveal/)
-- Foundry: [ggfoundry](https://github.com/cgoo4/ggfoundry/)
-- Star: [ggstar](https://github.com/xiangpin/ggstar)
+## Creating Interactive Plots
+
+Unfortunately, interactive plots can't be included in traditional academic papers (bummer!), but they're incredibly effective for presentations, blogs, or web-based content, letting viewers actively explore your data.
+
+::: {.panel-tabset}
+
+## plotly
+
+`Plotly` offers the easist way to turn a ggplot2 static figure to an interactive version. Just plot as alwas, then use `ggplotly()` to convert it to an interactive plot.
+
+```{r}
+#| message: false
+#| warning: false
+#| label: fig-plotly
+#| fig-cap: "Interactive plot with hover data using plotly"
+
+library(plotly)
+
+# Create basic ggplot as usual
+p_plotly <- penguins  |> 
+    ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
+    geom_point(
+        aes(text = paste(
+            "Species:", species, 
+            "<br>Island:", island, #<1>
+            "<br>Body mass:", body_mass_g, "g"
+        )),
+        alpha = 0.7
+    ) +
+    theme_minimal() 
+
+# Convert to plotly
+ggplotly(p_plotly, tooltip = "text")
+```
+1. <br> is used to create a line break in the tooltip
 
 
-Intereactive graphs:
+## ggiraph
 
-- [plotly](https://plotly.com/r/)
-- [dygraphs](https://rstudio.github.io/dygraphs/)
-- [ggiraph](https://davidgohel.github.io/ggiraph/index.html)
-- [gganimate](https://gganimate.com/)
+The `ggiraph` package converts ggplot2 graphics to interactive SVG elements. You need to specify clearly what geom you want to be interactive, but is generally more flexible than `plotly`.
+
+```{r}
+#| message: false
+#| warning: false
+#| label: fig-ggiraph
+#| fig-cap: "Interactive plot with hover tooltips using ggiraph"
+
+library(ggiraph)
+
+# Create interactive scatter plot with tooltips
+p_ggiraph <- penguins  |> 
+    ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
+    geom_point_interactive(
+        aes(
+            tooltip = paste( # <1>
+                "Species:", species, # <1>
+                "<br>Bill length:", bill_length_mm, "mm", # <1>
+                "<br>Bill depth:", bill_depth_mm, "mm" # <1>
+            ), # <1>
+            data_id = sex # <2>
+        ),
+        size = 3, alpha = 0.7
+    ) +
+    theme_minimal()
+
+girafe(ggobj = p_ggiraph) |>  # <3>
+    girafe_options(opts_zoom(max = 5)) # <4>
+```
+1. Specify the tooltip content 
+2. Specify the data_id to be used as a unique identifier 
+3. Render the interactive plot
+4. Add zooming functionality
+:::
+
+::: {.callout-tip collapse="true"}
+# `dygraphs` for time series
+A great tool for interactive time series plots is the `dygraphs` package. It allows you to zoom in and out of the time series, highlight specific time periods, and display additional information on hover. It has a different syntax than ggplot2, but it's worth learning if you work with time series data.
+:::
+
+## Animated Visualizations
+
+Animations are awesome for illustrating changes over time or differences between groups. They're engaging and clearly communicate your story, especially during presentations.
+
+::: {.panel-tabset}
+
+## `gganimate`
+
+Smoothly animate plots over continuous changes (like time). The key new function is `transition_reveal()` which reveals data points, lines (or other geom) over time.
+```{r}
+#| message: false
+#| warning: false
+
+library(gganimate)
+
+economics  |> 
+    ggplot(aes(x = date, y = unemploy)) +
+    geom_line(linewidth = 1, color = "#0072B2") +
+    geom_point(color = "white", fill = "#0072B2", shape = 21, size = 4) +
+    transition_reveal(date) + # <1>
+    labs(title = "Unemployment Rate Over Time") +
+    theme_minimal()
+```
+1. Transition the plot by revealing data points over time
+
+To save the animation as a GIF, use the [`anim_save()`](https://gganimate.com/reference/anim_save.html) function.
+
+## `ggreveal`
+
+For discrete groups, sometimes it is easier to just use `ggreveal`. It creates a series of plots, showing how this plot is being built
+```{r}
+#| message: false
+#| warning: false
+
+library(ggreveal)
+
+p <- penguins  |> 
+    filter(!is.na(sex))  |> 
+    ggplot(aes(body_mass_g, bill_length_mm,
+               group=sex, color=sex)) +
+    geom_point() +
+    geom_smooth(method="lm", formula = 'y ~ x', linewidth=1) +
+    facet_wrap(~species) +
+    theme_minimal()
+
+reveal_groups(p)
+```
+
+:::

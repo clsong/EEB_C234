@@ -56,6 +56,7 @@ book:
         - 22_quarto.qmd
         - 23_scholarly_writing.qmd
         - Project.qmd
+        - 24_figure_advanced.qmd
     #- part: "Advanced Visualization"
     # - references.qmd
 
