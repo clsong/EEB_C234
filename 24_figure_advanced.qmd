@@ -82,10 +82,11 @@ Let's explore the advanced features of `patchwork` with one practical example:
 ```{r}
 #| message: false
 #| warning: false
+#| eval: false
 p1 +
-  (p2 + guides(colour = "none")) + # <1>
+  (p2 + guides(fill = "none")) + # <1>
   plot_layout(
-    widths = c(1, 2) # <2>
+    widths = c(5, 2) # <2>
   ) +
   plot_layout(guides = "collect") +
   plot_annotation(

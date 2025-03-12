@@ -488,7 +488,7 @@ Class Objectives
 </dl>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre data-code-line-numbers=""><code>0.779 sec elapsed</code></pre>
+<pre data-code-line-numbers=""><code>0.788 sec elapsed</code></pre>
 </div>
 </div>
 </section>
@@ -536,9 +536,12 @@ Class Objectives
 </div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>Unit: milliseconds
-           expr      min       lq     mean   median       uq      max neval cld
- method_rowwise 91.79330 92.29506 106.3680 97.11264 124.4558 126.4009    10   a
-     method_map 90.27286 91.29310 103.4634 93.90445 127.5173 129.9985    10   a</code></pre>
+           expr      min       lq     mean   median        uq      max neval
+ method_rowwise 87.30007 87.66973 100.0767 91.89543  92.55004 160.9993    10
+     method_map 88.09162 90.37433 104.1159 91.00762 124.56636 126.6370    10
+ cld
+   a
+   a</code></pre>
 </div>
 </div>
 <p>It might be helpful to visualize the results. You can use the <code>autoplot</code> function to do this easily.</p>
@@ -608,7 +611,7 @@ Class Objectives
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>system 
     11 
-6.298 sec elapsed</code></pre>
+6.125 sec elapsed</code></pre>
 </div>
 </div>
 <p>The syntax is almost identical to <code>purrr</code>, just replace <code>map</code> with <code>future_map</code> (you can even use the <code>.progress</code> argument to show a progress bar), and set before the code how many cores you want to use (set it lower than the number of cores on your computer).</p>
@@ -661,7 +664,7 @@ The magic of <code>mirai</code>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre data-code-line-numbers=""><code>[1] 4
-0.352 sec elapsed</code></pre>
+0.447 sec elapsed</code></pre>
 </div>
 </div>
 </div>
