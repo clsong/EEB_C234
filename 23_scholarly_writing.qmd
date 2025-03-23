@@ -35,7 +35,7 @@ author:
 format: 
   pdf:
     documentclass: article
-    classoption: [twocolumn, 11pt]
+    classoption: [11pt]
     toc: true
     number-sections: true
     cite-method: biblatex
@@ -47,6 +47,10 @@ abstract: |
 keywords: [keyword1, keyword2, keyword3]
 ---
 ```
+
+Importantly, to render as pdf, you need to install `tinytex` package. It is a small package that allows you to compile LaTeX documents using Quarto. You can install it by running `tinytex::install_tinytex()`. 
+
+An alternative choice to render pdf is to use `typst` instead of `pdf`. `typst` is a modern alternative to LaTeX that provides a more flexible and user-friendly way. It is already included in Quarto and does not require any additional installation.
 
 This header provides complete metadata for academic publishing, including proper author information, citation style, and document formatting.
 
