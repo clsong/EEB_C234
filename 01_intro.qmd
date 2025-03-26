@@ -36,7 +36,7 @@ But it's not a one-person show—the tidyverse thrives because of a vibrant comm
 
 With `ggplot2`, you’ll learn the Grammar of Graphics, one of the most powerful plotting systems out there. Beyond just producing high-quality figures, it will teach you a *structured* approach to data visualization.
 
-While `ggplot2` is powerful, its defaults aren’t always perfect. We’ll cover design principles that enhance both the appeal and informativeness of your figures. This skill is quite useful—after all, figures often make the first impression on your readers. By the end of the course, you'll be capable of creating figures like this: By the end of the course, you'll be capable of creating figures like this:
+While `ggplot2` is powerful, its defaults aren’t always perfect. We’ll cover design principles that enhance both the appeal and informativeness of your figures. This skill is quite useful—after all, figures often make the first impression on your readers. By the end of the course, you'll be capable of creating figures like this: 
 
 ![by Cédric Scherer](img/intro_ggplot.png)
 
